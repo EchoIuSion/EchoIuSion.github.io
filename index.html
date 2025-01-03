@@ -2,19 +2,19 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>影视点播</title>
     <style>
-        /* 嵌入的 CSS 代码 */
+        /* 基础样式 */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-image: url('https://img.ou8.top/img/2025/01/02/677689233db35.jpg');
-            background-size: cover; /* 让图片覆盖整个页面 */
-            background-position: center; /* 图片居中显示 */
-            background-repeat: no-repeat; /* 防止图片重复 */
-            background-attachment: fixed; /* 固定背景图片，不随页面滚动 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #ffffff;
             line-height: 1.6;
         }
@@ -23,10 +23,11 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         header {
-            padding: 60px 0;
+            padding: 40px 0;
             text-align: center;
             position: relative;
         }
@@ -36,91 +37,133 @@
             position: absolute;
             left: 50%;
             bottom: 0;
-            width: 65%;
-            height: 3px;
+            width: 35%;
+            height: 2px;
             background: linear-gradient(to right, #00ffcc, #ff00cc);
             transform: translateX(-50%);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* 添加发光效果 */
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
         }
 
         header h1 {
-            font-size: 3em;
+            font-size: 2em;
             margin: 0;
-            color: #ffffff; /* 白色大标题 */
-            text-shadow: 0 0 5px #00ffcc; /* 柔和的发光效果 */
+            color: #ffffff;
+            text-shadow: 0 0 5px #00ffcc;
         }
 
         header p {
-            font-size: 1.2em;
+            font-size: 1em;
             color: #cccccc;
         }
 
         .link-section {
-            background-color: rgba(10, 10, 10, 0.8); /* 深色半透明背景 */
-            padding: 20px;
+            background-color: rgba(10, 10, 10, 0.8);
+            padding: 15px;
             border-radius: 10px;
-            margin: 40px 0;
-            border: 1px solid #ffffff; /* 青色边框 */
-            box-shadow: 0 0 8px rgba(0, 255, 204, 0.2); /* 柔和的发光效果 */
+            margin: 20px 0;
+            border: 1px solid #ffffff;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
         }
 
         .section-title {
-            font-size: 2.5em;
-            color: #ffffff; /* 青色标题 */
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ffffff; /* 青色下划线 */
+            font-size: 1.8em;
+            color: #ffffff;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffffff;
             display: inline-block;
             padding-bottom: 5px;
-            text-shadow: 0 0 5px #00ffcc; /* 柔和的发光效果 */
+            text-shadow: 0 0 5px #00ffcc;
         }
 
         .link-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         .link-card {
-            background-color: rgba(26, 26, 26, 0.8); /* 深色半透明背景 */
-            padding: 20px;
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 15px;
             border-radius: 10px;
-            border: 1px solid #ffffff; /* 青色边框 */
+            border: 1px solid #ffffff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .link-card:hover {
-            transform: translateY(-5px); /* 悬停时上浮 */
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3); /* 柔和的发光效果 */
+            transform: translateY(-5px);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
         }
 
         .link-card h3 {
-            font-size: 1.5em;
+            font-size: 1.2em;
             margin: 0 0 10px;
-            color: #ffffff; /* 青色标题 */
-            text-shadow: 0 0 3px #ffffff; /* 柔和的发光效果 */
+            color: #ffffff;
+            text-shadow: 0 0 3px #ffffff;
         }
 
         .link-card p {
-            font-size: 1em;
-            color: #ffffff; /* 白色文字 */
+            font-size: 0.9em;
+            color: #ffffff;
             margin: 0;
-            word-break: break-all; /* 长链接自动换行 */
-            cursor: text; /* 提示文字可选中 */
-            user-select: text; /* 允许选中文字 */
+            word-break: break-all;
+            cursor: text;
+            user-select: text;
         }
 
         footer {
-            background-color: rgba(10, 10, 10, 0.9); /* 深色半透明背景 */
-            padding: 20px 0;
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 15px 0;
             text-align: center;
-            border-top: 2px solid #ffffff; /* 青色边框 */
-            margin-top: 40px;
+            border-top: 2px solid #ffffff;
+            margin-top: 20px;
         }
 
         footer p {
             margin: 0;
-            color: #ffffff; /* 青色文字 */
-            text-shadow: 0 0 5px #ffffff; /* 柔和的发光效果 */
+            color: #ffffff;
+            text-shadow: 0 0 5px #ffffff;
+        }
+
+        /* 媒体查询：适配小屏幕 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .link-container {
+                grid-template-columns: 1fr; /* 单列布局 */
+            }
+
+            .link-card h3 {
+                font-size: 1.1em;
+            }
+
+            .link-card p {
+                font-size: 0.85em;
+            }
+        }
+
+        /* 媒体查询：适配超小屏幕（如手机竖屏） */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .link-card h3 {
+                font-size: 1em;
+            }
+
+            .link-card p {
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
