@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVbox影视接口</title>
+    <title>影视点播</title>
     <style>
         /* 嵌入的 CSS 代码 */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0a0a0a; /* 深色背景 */
+            background-image: url('https://img.ou8.top/img/2025/01/02/677689233db35.jpg');
+            background-size: cover; /* 让图片覆盖整个页面 */
+            background-position: center; /* 图片居中显示 */
+            background-repeat: no-repeat; /* 防止图片重复 */
+            background-attachment: fixed; /* 固定背景图片，不随页面滚动 */
             color: #ffffff;
             line-height: 1.6;
-            background-image: url('tech-background-2.jpg'); /* 新的科技感背景图片 */
-            background-size: cover;
-            background-position: center;
         }
 
         .container {
@@ -25,16 +26,27 @@
         }
 
         header {
-            background-color: rgba(10, 10, 10, 0.9); /* 深色半透明背景 */
             padding: 60px 0;
             text-align: center;
-            border-bottom: 2px solid #00ffcc; /* 青色边框 */
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 65%;
+            height: 3px;
+            background: linear-gradient(to right, #00ffcc, #ff00cc);
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* 添加发光效果 */
         }
 
         header h1 {
             font-size: 3em;
             margin: 0;
-            color: #00ffcc; /* 青色标题 */
+            color: #ffffff; /* 白色大标题 */
             text-shadow: 0 0 5px #00ffcc; /* 柔和的发光效果 */
         }
 
@@ -48,15 +60,15 @@
             padding: 20px;
             border-radius: 10px;
             margin: 40px 0;
-            border: 1px solid #00ffcc; /* 青色边框 */
+            border: 1px solid #ffffff; /* 青色边框 */
             box-shadow: 0 0 8px rgba(0, 255, 204, 0.2); /* 柔和的发光效果 */
         }
 
         .section-title {
             font-size: 2.5em;
-            color: #00ffcc; /* 青色标题 */
+            color: #ffffff; /* 青色标题 */
             margin-bottom: 20px;
-            border-bottom: 2px solid #00ffcc; /* 青色下划线 */
+            border-bottom: 2px solid #ffffff; /* 青色下划线 */
             display: inline-block;
             padding-bottom: 5px;
             text-shadow: 0 0 5px #00ffcc; /* 柔和的发光效果 */
@@ -72,7 +84,7 @@
             background-color: rgba(26, 26, 26, 0.8); /* 深色半透明背景 */
             padding: 20px;
             border-radius: 10px;
-            border: 1px solid #00ffcc; /* 青色边框 */
+            border: 1px solid #ffffff; /* 青色边框 */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -84,8 +96,8 @@
         .link-card h3 {
             font-size: 1.5em;
             margin: 0 0 10px;
-            color: #00ffcc; /* 青色标题 */
-            text-shadow: 0 0 3px #00ffcc; /* 柔和的发光效果 */
+            color: #ffffff; /* 青色标题 */
+            text-shadow: 0 0 3px #ffffff; /* 柔和的发光效果 */
         }
 
         .link-card p {
@@ -101,22 +113,21 @@
             background-color: rgba(10, 10, 10, 0.9); /* 深色半透明背景 */
             padding: 20px 0;
             text-align: center;
-            border-top: 2px solid #00ffcc; /* 青色边框 */
+            border-top: 2px solid #ffffff; /* 青色边框 */
             margin-top: 40px;
         }
 
         footer p {
             margin: 0;
-            color: #00ffcc; /* 青色文字 */
-            text-shadow: 0 0 5px #00ffcc; /* 柔和的发光效果 */
+            color: #ffffff; /* 青色文字 */
+            text-shadow: 0 0 5px #ffffff; /* 柔和的发光效果 */
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>TVbox影视接口</h1>
-            <p>好用的接口地址</p>
+            <h1>影视点播接口</h1>
         </div>
     </header>
 
@@ -127,15 +138,15 @@
                 <h2 class="section-title">❤️小米</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>主用接口 推荐</h3>
+                        <h3>推荐 主用接口</h3>
                         <p>https://mpanso.me/DEMO.json</p>
                     </div>
                     <div class="link-card">
-                        <h3>② 接口</h3>
+                        <h3>② 备用接口</h3>
                         <p>https://tv.mpanso.me/DEMO.json</p>
                     </div>
                     <div class="link-card">
-                        <h3>③ 接口</h3>
+                        <h3>③ 备用接口</h3>
                         <p>https://mi.mpanso.me/DEMO.json</p>
                     </div>
                 </div>
@@ -146,11 +157,11 @@
                 <h2 class="section-title">❤️OK 杰克</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>内部 接口</h3>
+                        <h3>推荐 内部接口</h3>
                         <p>http://ok321.top/tv</p>
                     </div>
                     <div class="link-card">
-                        <h3>公开 接口</h3>
+                        <h3>公开接口</h3>
                         <p>http://ok321.top/ok</p>
                     </div>
                 </div>
@@ -161,7 +172,7 @@
                 <h2 class="section-title">❤️饭太硬</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>饭太硬 接口</h3>
+                        <h3>主用接口</h3>
                         <p>http://www.xn--sss604efuw.com/tv/</p>
                     </div>
                 </div>
@@ -195,7 +206,7 @@
                 <h2 class="section-title">❤️肥猫</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>接口</h3>
+                        <h3>主用接口</h3>
                         <p>http://肥猫.live</p>
                     </div>
                 </div>
@@ -206,7 +217,7 @@
                 <h2 class="section-title">❤️纯一骚零</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>接口</h3>
+                        <h3>主用接口</h3>
                         <p>https://100km.top/0</p>
                     </div>
                 </div>
@@ -217,7 +228,7 @@
                 <h2 class="section-title">❤️我不是摸鱼</h2>
                 <div class="link-container">
                     <div class="link-card">
-                        <h3>主用接口 推荐</h3>
+                        <h3> 推荐 主用接口</h3>
                         <p>http://我不是.摸鱼儿.com</p>
                     </div>
                     <div class="link-card">
