@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>劉很Ok</title>
+    <title>影视点播</title>
     <style>
         /* 基础样式 */
         body {
@@ -19,15 +19,56 @@
             line-height: 1.6;
         }
 
+        /* 头像样式 */
+        .avatar {
+            position: absolute; /* 固定在左上角 */
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%; /* 圆形 */
+            border: 2px solid #00ffcc; /* 边框 */
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* 发光效果 */
+            overflow: hidden; /* 隐藏超出部分 */
+            animation: rotate 5s linear infinite; /* 旋转动画 */
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 图片填充 */
+        }
+
+        /* 头像旁边的文字样式 */
+        .avatar-text {
+            position: absolute; /* 固定在左上角 */
+            top: 40px; /* 调整文字垂直位置 */
+            left: 90px; /* 调整文字水平位置 */
+            font-size: 1.2em;
+            color: #ffffff;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        /* 旋转动画 */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 容器样式 */
         .container {
-            width: 90%;
-            max-width: 1200px;
+            width: 80%; /* 缩小容器宽度 */
+            max-width: 1000px; /* 调整最大宽度 */
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px; /* 减少内边距 */
         }
 
         header {
-            padding: 40px 0;
+            padding: 20px 0; /* 减少头部内边距 */
             text-align: center;
             position: relative;
         }
@@ -45,30 +86,30 @@
         }
 
         header h1 {
-            font-size: 2em;
+            font-size: 1.8em; /* 缩小标题字体大小 */
             margin: 0;
             color: #ffffff;
             text-shadow: 0 0 5px #00ffcc;
         }
 
         header p {
-            font-size: 1em;
+            font-size: 0.9em; /* 缩小副标题字体大小 */
             color: #cccccc;
         }
 
         .link-section {
             background-color: rgba(10, 10, 10, 0.8);
-            padding: 15px;
+            padding: 10px; /* 减少内边距 */
             border-radius: 10px;
-            margin: 20px 0;
+            margin: 15px 0; /* 减少外边距 */
             border: 1px solid #ffffff;
             box-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
         }
 
         .section-title {
-            font-size: 1.8em;
+            font-size: 1.5em; /* 缩小标题字体大小 */
             color: #ffffff;
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* 减少标题下边距 */
             border-bottom: 2px solid #ffffff;
             display: inline-block;
             padding-bottom: 5px;
@@ -77,13 +118,13 @@
 
         .link-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 缩小卡片宽度 */
+            gap: 10px; /* 减少卡片间距 */
         }
 
         .link-card {
             background-color: rgba(26, 26, 26, 0.8);
-            padding: 15px;
+            padding: 10px; /* 减少卡片内边距 */
             border-radius: 10px;
             border: 1px solid #ffffff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -95,14 +136,14 @@
         }
 
         .link-card h3 {
-            font-size: 1.2em;
-            margin: 0 0 10px;
+            font-size: 1.1em; /* 缩小卡片标题字体大小 */
+            margin: 0 0 8px; /* 减少标题下边距 */
             color: #ffffff;
             text-shadow: 0 0 3px #ffffff;
         }
 
         .link-card p {
-            font-size: 0.9em;
+            font-size: 0.85em; /* 缩小卡片内容字体大小 */
             color: #ffffff;
             margin: 0;
             word-break: break-all;
@@ -110,28 +151,47 @@
             user-select: text;
         }
 
+        /* 修改 footer 样式 */
         footer {
-            background-color: rgba(10, 10, 10, 0.9);
-            padding: 15px 0;
+            background-color: transparent;
+            padding: 10px 0; /* 减少底部内边距 */
             text-align: center;
-            border-top: 2px solid #ffffff;
-            margin-top: 20px;
+            margin-top: 15px; /* 减少顶部外边距 */
+            position: relative; /* 确保伪元素相对于 footer 定位 */
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 65%;
+            height: 2px;
+            background: linear-gradient(to right, #00ffcc, #ff00cc);
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
         }
 
         footer p {
             margin: 0;
             color: #ffffff;
             text-shadow: 0 0 5px #ffffff;
+            font-size: 0.9em; /* 缩小底部文字字体大小 */
         }
 
         /* 媒体查询：适配小屏幕 */
         @media (max-width: 768px) {
+            .container {
+                width: 90%; /* 在小屏幕上增加宽度 */
+                padding: 5px; /* 减少内边距 */
+            }
+
             header h1 {
-                font-size: 1.8em;
+                font-size: 1.5em; /* 缩小标题字体大小 */
             }
 
             .section-title {
-                font-size: 1.5em;
+                font-size: 1.3em; /* 缩小标题字体大小 */
             }
 
             .link-container {
@@ -139,40 +199,53 @@
             }
 
             .link-card h3 {
-                font-size: 1.1em;
+                font-size: 1em; /* 缩小卡片标题字体大小 */
             }
 
             .link-card p {
-                font-size: 0.85em;
+                font-size: 0.8em; /* 缩小卡片内容字体大小 */
             }
         }
 
         /* 媒体查询：适配超小屏幕（如手机竖屏） */
         @media (max-width: 480px) {
+            .container {
+                width: 95%; /* 在超小屏幕上增加宽度 */
+            }
+
             header h1 {
-                font-size: 1.5em;
+                font-size: 1.3em; /* 缩小标题字体大小 */
             }
 
             .section-title {
-                font-size: 1.3em;
+                font-size: 1.1em; /* 缩小标题字体大小 */
             }
 
             .link-card h3 {
-                font-size: 1em;
+                font-size: 0.9em; /* 缩小卡片标题字体大小 */
             }
 
             .link-card p {
-                font-size: 0.8em;
+                font-size: 0.75em; /* 缩小卡片内容字体大小 */
             }
         }
     </style>
 </head>
 <body>
+    <!-- 头像 -->
+    <div class="avatar">
+        <img src="https://m.qpic.cn/psc?/V50TiYPa2zVh1X01TNS726XAB43oVyrH/TmEUgtj9EK6.7V8ajmQrEGbdHmQOhF.xtmbnOabbQaa4j1patzeKIDkH8kiL4*R5uE5CeBuuMO8HN4j7JN.8suDpiD1yKXfMd3a3nuyXvbk!/b&bo=AAUABQAFAAUBByA!&rf=viewer_4" alt="头像"> <!-- 替换为你的头像链接 -->
+    </div>
+    <span class="avatar-text">劉Ok</span> <!-- 添加的文字 -->
+
     <header>
         <div class="container">
             <h1>影视点播接口</h1>
+        <p style="color: #ffffff; text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;">精选才能更好看</p> <!-- 添加颜色和发光效果 -->
         </div>
     </header>
+
+
 
     <main>
         <div class="container">
@@ -277,6 +350,38 @@
                     <div class="link-card">
                         <h3>备用接口</h3>
                         <p>http://我不是.摸鱼儿.xyz</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 影视软件下载地址 -->
+            <section class="link-section">
+                <h2 class="section-title">❤️OK影视 推荐</h2>
+                <div class="link-container">
+                    <div class="link-card">
+                        <h3>下载链接</h3>
+                        <p>
+                        UC盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" style="color: #00ffcc; text-decoration: none;">https://drive.uc.cn/s/de96fa4eed364</a><br>
+                        夸克：<a href="https://pan.quark.cn/s/3334d8f93c64" target="_blank" style="color: #00ffcc; text-decoration: none;">https://pan.quark.cn/s/3334d8f93c64</a><br>
+                        迅雷：<a href="https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc" target="_blank" style="color: #00ffcc; text-decoration: none;">https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc</a>
+                                    </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 使用教程 -->
+            <section class="link-section">
+                <h2 class="section-title">使用教程</h2>
+                <div class="link-container">
+                    <div class="link-card">
+                        <p>
+                            1. 复制网页上面的点播接口 。<br>
+                            2. 打开影视软件页面。<br>
+                            3. 点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。<br>
+                            4. 手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。<br>
+                            5. 复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。 <br>
+                            6. 影视软件返回主页面 即可享用。
+                        </p>
                     </div>
                 </div>
             </section>
