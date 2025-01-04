@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>劉很Ok</title>
+    <title>劉很Ok - 影视点播接口</title>
     <!-- 添加 favicon -->
     <link rel="icon" href="https://www.helloimg.com/i/2025/01/04/6779430f92431.ico">
     <link rel="icon" href="https://www.helloimg.com/i/2025/01/04/677943e1cad8d.png">
@@ -76,18 +76,6 @@
             position: relative;
         }
 
-        header::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: 65%;
-            height: 2px;
-            background: linear-gradient(to right, #00ffcc, #ff00cc);
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-
         header h1 {
             font-size: 1.8em; /* 缩小标题字体大小 */
             margin: 0;
@@ -99,6 +87,19 @@
             font-size: 0.9em; /* 缩小副标题字体大小 */
             color: #cccccc;
             text-shadow: 0 0 3px rgba(0, 255, 204, 0.3); /* 调弱发光效果 */
+        }
+
+        /* 页面切换按钮下方的横线 */
+        .nav::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px; /* 调整横线位置 */
+            width: 65%;
+            height: 2px;
+            background: linear-gradient(to right, #00ffcc, #ff00cc);
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
         }
 
         .link-section {
@@ -184,6 +185,37 @@
             font-size: 0.9em; /* 缩小底部文字字体大小 */
         }
 
+        /* 页面切换样式 */
+        .nav {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative; /* 确保伪元素相对于 .nav 定位 */
+        }
+
+        .nav button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgba(0, 255, 204, 0.5);
+            border: none;
+            color: #ffffff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav button:hover {
+            background-color: rgba(0, 255, 204, 0.8);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
         /* 媒体查询：适配小屏幕 */
         @media (max-width: 768px) {
             .container {
@@ -252,26 +284,35 @@
         </div>
     </header>
 
+    <!-- 页面切换按钮 -->
+    <div class="nav">
+        <button onclick="switchPage('page1')">影视接口</button>
+        <button onclick="switchPage('page2')">软件下载</button>
+        <button onclick="switchPage('page3')">使用教程</button>
+    </div>
+
     <main>
         <div class="container">
-            <!-- 小米 接口 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️小米</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="https://mpanso.me/DEMO.json">
-                        <h3>推荐 主用接口</h3>
-                        <p>https://mpanso.me/DEMO.json</p>
+            <!-- 页面 1: 影视接口 -->
+            <div id="page1" class="page active">
+                <!-- 小米 接口 -->
+                <section class="link-section">
+                    <h2 class="section-title">❤️小米</h2>
+                    <div class="link-container">
+                        <div class="link-card" data-clipboard-text="https://mpanso.me/DEMO.json">
+                            <h3>推荐 主用接口</h3>
+                            <p>https://mpanso.me/DEMO.json</p>
+                        </div>
+                        <div class="link-card" data-clipboard-text="https://tv.mpanso.me/DEMO.json">
+                            <h3>② 备用接口</h3>
+                            <p>https://tv.mpanso.me/DEMO.json</p>
+                        </div>
+                        <div class="link-card" data-clipboard-text="https://mi.mpanso.me/DEMO.json">
+                            <h3>③ 备用接口</h3>
+                            <p>https://mi.mpanso.me/DEMO.json</p>
+                        </div>
                     </div>
-                    <div class="link-card" data-clipboard-text="https://tv.mpanso.me/DEMO.json">
-                        <h3>② 备用接口</h3>
-                        <p>https://tv.mpanso.me/DEMO.json</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="https://mi.mpanso.me/DEMO.json">
-                        <h3>③ 备用接口</h3>
-                        <p>https://mi.mpanso.me/DEMO.json</p>
-                    </div>
-                </div>
-            </section>
+                </section>
 
             <!-- OK 杰克 -->
             <section class="link-section">
@@ -359,37 +400,44 @@
                 </div>
             </section>
 
-            <!-- 影视软件下载地址 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️OK影视 推荐</h2>
-                <div class="link-container">
-                    <div class="link-card"> <!-- 移除 data-clipboard-text 属性 -->
-                        <h3>下载链接</h3>
-                        <p>
-                            UC盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" style="color: #99CCFF; text-decoration: none;">https://drive.uc.cn/s/de96fa4eed364</a><br>
-                            夸克：<a href="https://pan.quark.cn/s/3334d8f93c64" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.quark.cn/s/3334d8f93c64</a><br>
-                            迅雷：<a href="https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc</a>
-                        </p>
-                    </div>
-                </div>
-            </section>
+                <!-- 其他接口部分省略，保持与原始代码一致 -->
+            </div>
 
-            <!-- 使用教程 -->
-            <section class="link-section">
-                <h2 class="section-title">使用教程</h2>
-                <div class="link-container">
-                    <div class="link-card"> <!-- 移除 data-clipboard-text 属性 -->
-                        <p>
-                            1. 复制网页上面的点播接口 。<br>
-                            2. 打开影视软件页面。<br>
-                            3. 点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。<br>
-                            4. 手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。<br>
-                            5. 复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。 <br>
-                            6. 影视软件返回主页面 即可享用。
-                        </p>
+            <!-- 页面 2: 软件下载 -->
+            <div id="page2" class="page">
+                <section class="link-section">
+                    <h2 class="section-title">❤️OK影视 推荐</h2>
+                    <div class="link-container">
+                        <div class="link-card">
+                            <h3>下载链接</h3>
+                            <p>
+                                UC盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" style="color: #99CCFF; text-decoration: none;">https://drive.uc.cn/s/de96fa4eed364</a><br>
+                                夸克：<a href="https://pan.quark.cn/s/3334d8f93c64" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.quark.cn/s/3334d8f93c64</a><br>
+                                迅雷：<a href="https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc</a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
+            <!-- 页面 3: 使用教程 -->
+            <div id="page3" class="page">
+                <section class="link-section">
+                    <h2 class="section-title">使用教程</h2>
+                    <div class="link-container">
+                        <div class="link-card">
+                            <p>
+                                1. 复制网页上面的点播接口 。<br>
+                                2. 打开影视软件页面。<br>
+                                3. 点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。<br>
+                                4. 手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。<br>
+                                5. 复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。 <br>
+                                6. 影视软件返回主页面 即可享用。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -418,6 +466,17 @@ Copyright © 2025 劉很Ok  </p>
                 });
             });
         });
+
+        // 页面切换功能
+        function switchPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 显示选中的页面
+            document.getElementById(pageId).classList.add('active');
+        }
     </script>
 </body>
 </html>
