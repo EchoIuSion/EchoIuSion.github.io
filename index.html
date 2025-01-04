@@ -89,19 +89,6 @@
             text-shadow: 0 0 3px rgba(0, 255, 204, 0.3); /* 调弱发光效果 */
         }
 
-        /* 页面切换按钮下方的横线 */
-        .nav::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -10px; /* 调整横线位置 */
-            width: 65%;
-            height: 2px;
-            background: linear-gradient(to right, #00ffcc, #ff00cc);
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-
         .link-section {
             background-color: rgba(255, 255, 255, 0.2);
             padding: 10px; /* 减少内边距 */
@@ -189,7 +176,6 @@
         .nav {
             text-align: center;
             margin-bottom: 20px;
-            position: relative; /* 确保伪元素相对于 .nav 定位 */
         }
 
         .nav button {
@@ -399,8 +385,6 @@
                     </div>
                 </div>
             </section>
-
-                <!-- 其他接口部分省略，保持与原始代码一致 -->
             </div>
 
             <!-- 页面 2: 软件下载 -->
