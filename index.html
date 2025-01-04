@@ -128,6 +128,7 @@
             border-radius: 10px;
             border: 1px solid #ffffff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* 显示为可点击 */
         }
 
         .link-card:hover {
@@ -230,6 +231,8 @@
             }
         }
     </style>
+    <!-- 引入 clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
 </head>
 <body>
     <!-- 头像 -->
@@ -241,7 +244,7 @@
     <header>
         <div class="container">
             <h1>影视点播接口</h1>
-        <p style="color: #ffffff; text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;">精选才能更好看</p> <!-- 添加颜色和发光效果 -->
+            <p style="color: #ffffff; text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;">精选才能更好看</p> <!-- 添加颜色和发光效果 -->
         </div>
     </header>
 
@@ -251,15 +254,15 @@
             <section class="link-section">
                 <h2 class="section-title">❤️小米</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('https://mpanso.me/DEMO.json')">
+                    <div class="link-card" data-clipboard-text="https://mpanso.me/DEMO.json">
                         <h3>推荐 主用接口</h3>
                         <p>https://mpanso.me/DEMO.json</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('https://tv.mpanso.me/DEMO.json')">
+                    <div class="link-card" data-clipboard-text="https://tv.mpanso.me/DEMO.json">
                         <h3>② 备用接口</h3>
                         <p>https://tv.mpanso.me/DEMO.json</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('https://mi.mpanso.me/DEMO.json')">
+                    <div class="link-card" data-clipboard-text="https://mi.mpanso.me/DEMO.json">
                         <h3>③ 备用接口</h3>
                         <p>https://mi.mpanso.me/DEMO.json</p>
                     </div>
@@ -270,11 +273,11 @@
             <section class="link-section">
                 <h2 class="section-title">❤️OK 杰克</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('http://ok321.top/tv')">
+                    <div class="link-card" data-clipboard-text="http://ok321.top/tv">
                         <h3>推荐 内部接口</h3>
                         <p>http://ok321.top/tv</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('http://ok321.top/ok')">
+                    <div class="link-card" data-clipboard-text="http://ok321.top/ok">
                         <h3>公开接口</h3>
                         <p>http://ok321.top/ok</p>
                     </div>
@@ -285,7 +288,7 @@
             <section class="link-section">
                 <h2 class="section-title">❤️饭太硬</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('http://www.xn--sss604efuw.com/tv/')">
+                    <div class="link-card" data-clipboard-text="http://www.xn--sss604efuw.com/tv/">
                         <h3>主用接口</h3>
                         <p>http://www.xn--sss604efuw.com/tv/</p>
                     </div>
@@ -296,19 +299,19 @@
             <section class="link-section">
                 <h2 class="section-title">❤️王二小放牛娃</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('https://9280.kstore.space/wex.json')">
+                    <div class="link-card" data-clipboard-text="https://9280.kstore.space/wex.json">
                         <h3>推荐 防屏蔽接口</h3>
                         <p>https://9280.kstore.space/wex.json</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('http://tvbox.xn--4kq62z5rby2qupq9ub.top')">
+                    <div class="link-card" data-clipboard-text="http://tvbox.xn--4kq62z5rby2qupq9ub.top">
                         <h3>常规Top</h3>
                         <p>http://tvbox.xn--4kq62z5rby2qupq9ub.top</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('http://tv.999888987.xyz')">
+                    <div class="link-card" data-clipboard-text="http://tv.999888987.xyz">
                         <h3>数字Top</h3>
                         <p>http://tv.999888987.xyz</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('http://tvbox.王二小放牛娃.top')">
+                    <div class="link-card" data-clipboard-text="http://tvbox.王二小放牛娃.top">
                         <h3>中文Top</h3>
                         <p>http://tvbox.王二小放牛娃.top</p>
                     </div>
@@ -319,7 +322,7 @@
             <section class="link-section">
                 <h2 class="section-title">❤️肥猫</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('http://肥猫.live')">
+                    <div class="link-card" data-clipboard-text="http://肥猫.live">
                         <h3>主用接口</h3>
                         <p>http://肥猫.live</p>
                     </div>
@@ -330,7 +333,7 @@
             <section class="link-section">
                 <h2 class="section-title">❤️纯一骚零</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('https://100km.top/0')">
+                    <div class="link-card" data-clipboard-text="https://100km.top/0">
                         <h3>主用接口</h3>
                         <p>https://100km.top/0</p>
                     </div>
@@ -341,11 +344,11 @@
             <section class="link-section">
                 <h2 class="section-title">❤️我不是摸鱼</h2>
                 <div class="link-container">
-                    <div class="link-card" onclick="copyToClipboard('http://我不是.摸鱼儿.com')">
+                    <div class="link-card" data-clipboard-text="http://我不是.摸鱼儿.com">
                         <h3> 推荐 主用接口</h3>
                         <p>http://我不是.摸鱼儿.com</p>
                     </div>
-                    <div class="link-card" onclick="copyToClipboard('http://我不是.摸鱼儿.xyz')">
+                    <div class="link-card" data-clipboard-text="http://我不是.摸鱼儿.xyz">
                         <h3>备用接口</h3>
                         <p>http://我不是.摸鱼儿.xyz</p>
                     </div>
@@ -356,7 +359,7 @@
             <section class="link-section">
                 <h2 class="section-title">❤️OK影视 推荐</h2>
                 <div class="link-container">
-                    <div class="link-card">
+                    <div class="link-card"> <!-- 移除 data-clipboard-text 属性 -->
                         <h3>下载链接</h3>
                         <p>
                             UC盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" style="color: #99CCFF; text-decoration: none;">https://drive.uc.cn/s/de96fa4eed364</a><br>
@@ -371,7 +374,7 @@
             <section class="link-section">
                 <h2 class="section-title">使用教程</h2>
                 <div class="link-container">
-                    <div class="link-card">
+                    <div class="link-card"> <!-- 移除 data-clipboard-text 属性 -->
                         <p>
                             1. 复制网页上面的点播接口 。<br>
                             2. 打开影视软件页面。<br>
@@ -394,17 +397,23 @@ Copyright © 2025 劉很Ok  </p>
     </footer>
 
     <script>
-        // 复制到剪贴板的函数
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    alert('已复制到剪贴板: ' + text);
-                })
-                .catch((err) => {
-                    console.error('复制失败: ', err);
-                    alert('复制失败，请手动复制');
+        // 初始化 clipboard.js
+        document.addEventListener('DOMContentLoaded', function () {
+            // 为每个 .link-card 添加复制功能（仅适用于带有 data-clipboard-text 属性的卡片）
+            new ClipboardJS('.link-card[data-clipboard-text]', {
+                text: function (trigger) {
+                    // 返回需要复制的文本
+                    return trigger.querySelector('p').innerText;
+                }
+            });
+
+            // 添加复制成功提示（仅适用于带有 data-clipboard-text 属性的卡片）
+            document.querySelectorAll('.link-card[data-clipboard-text]').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    alert('已复制到剪贴板: ' + card.querySelector('p').innerText);
                 });
-        }
+            });
+        });
     </script>
 </body>
 </html>
