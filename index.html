@@ -174,7 +174,7 @@
 
         .feature {
             flex: 1 1 calc(33.333% - 40px); /* 默认布局 */
-            background-color:#f5f5f5;/* 小卡片的颜色 */
+            background-color: #f5f5f5; /* 小卡片的颜色 */
             border: 1px solid #ddd;
             padding: 20px; /* 默认内边距（适用于电脑） */
             border-radius: 8px;
@@ -222,7 +222,7 @@
             }
 
             .main-content {
-                padding: 20px 10px; /* 手机内边距 */
+                padding: 60px 10px 20px; /* 调整顶部内边距，避免 Logo 遮挡 */
             }
 
             .main-content h1 {
@@ -233,15 +233,19 @@
                 font-size: 16px; /* 手机字体大小 */
             }
 
+            .logo-container {
+                margin-top: -50px; /* 进一步往上移动，避免遮挡 */
+            }
+
             .logo-link {
-                width: 80px; /* 手机尺寸 */
-                height: 80px; /* 手机尺寸 */
-                padding: 6px; /* 手机内边距 */
+                width: 60px; /* 手机尺寸 */
+                height: 60px; /* 手机尺寸 */
+                padding: 4px; /* 手机内边距 */
             }
 
             .logo-link img {
-                width: 68px; /* 手机尺寸 */
-                height: 68px; /* 手机尺寸 */
+                width: 52px; /* 手机尺寸 */
+                height: 52px; /* 手机尺寸 */
             }
 
             .buttons a {
@@ -300,7 +304,7 @@
     </div>
 
     <!-- LOGO 区域 -->
-    <div class="logo-container" style="margin-top: -85px;"> <!-- 往上移动 -->
+    <div class="logo-container">
         <div class="logo-link">
             <img src="https://raw.githubusercontent.com/EchoIuSion/EchoIuSion.github.io/main/images/logo.png" alt="Logo">
         </div>
@@ -443,19 +447,6 @@
                     <h4>备用接口②</h4>
                     <div class="link-content">
                         <p>地址：<span class="link-text">http://我不是.摸鱼儿.xyz</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 分类 8 -->
-        <div class="category">
-            <div class="category-title">❤️这是还未添加的接口地址</div>
-            <div class="features">
-                <div class="feature" data-link="还未添加哦">
-                    <h4>还未添加哦</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">还未添加哦</span></p>
                     </div>
                 </div>
             </div>
