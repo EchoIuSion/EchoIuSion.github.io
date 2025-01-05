@@ -2,464 +2,597 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>劉很Ok</title>
-    <!-- 添加 favicon -->
-    <link rel="icon" href="https://www.helloimg.com/i/2025/01/04/6779430f92431.ico">
-    <link rel="icon" href="https://www.helloimg.com/i/2025/01/04/677943e1cad8d.png">
     <style>
-        /* 基础样式 */
-        body {
-            font-family: 'Arial', sans-serif;
+        /* 全局样式 */
+        * {
             margin: 0;
             padding: 0;
-            background-image: url('https://www.helloimg.com/i/2025/01/04/67791b21492f7.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #ffffff;
-            line-height: 1.6;
+            box-sizing: border-box;
         }
 
-        /* 头像样式 */
-        .avatar {
-            position: absolute; /* 固定在左上角 */
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%; /* 圆形 */
-            border: 2px solid #00ffcc; /* 边框 */
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* 发光效果 */
-            overflow: hidden; /* 隐藏超出部分 */
-            animation: rotate 5s linear infinite; /* 旋转动画 */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fbc2eb, #a6c1ee, #f6d365, #fda085); /* 渐变色背景 */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 使页面高度至少为视口高度 */
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
         }
 
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 图片填充 */
-        }
-
-        /* 头像旁边的文字样式 */
-        .avatar-text {
-            position: absolute; /* 固定在左上角 */
-            top: 40px; /* 调整文字垂直位置 */
-            left: 90px; /* 调整文字水平位置 */
-            font-size: 1.2em;
-            color: #ffffff;
-            text-shadow: 0 0 3px rgba(0, 255, 204, 0.5); /* 调弱发光效果 */
-        }
-
-        /* 旋转动画 */
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* 容器样式 */
-        .container {
-            width: 80%; /* 缩小容器宽度 */
-            max-width: 1000px; /* 调整最大宽度 */
-            margin: 0 auto;
-            padding: 10px; /* 减少内边距 */
-        }
-
+        /* 顶部导航栏 */
         header {
-            padding: 20px 0; /* 减少头部内边距 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px; /* 默认内边距（适用于电脑） */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 保留阴影 */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* 默认间距（适用于电脑） */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* 主内容区域 */
+        .main-content {
             text-align: center;
-            position: relative;
+            padding: 80px 20px; /* 默认内边距（适用于电脑） */
+            flex: 1; /* 使内容区域占据剩余空间 */
         }
 
-        header h1 {
-            font-size: 1.8em; /* 缩小标题字体大小 */
-            margin: 0;
-            color: #ffffff;
-            text-shadow: 0 0 3px rgba(0, 255, 204, 0.5); /* 调弱发光效果 */
+        .main-content h1 {
+            font-size: 40px; /* 默认字体大小（适用于电脑） */
+            font-weight: bold;
+            margin-bottom: 20px; /* 默认间距（适用于电脑） */
         }
 
-        header p {
-            font-size: 0.9em; /* 缩小副标题字体大小 */
-            color: #cccccc;
-            text-shadow: 0 0 3px rgba(0, 255, 204, 0.3); /* 调弱发光效果 */
+        .main-content p {
+            font-size: 20px; /* 默认字体大小（适用于电脑） */
+            margin-bottom: 40px; /* 默认间距（适用于电脑） */
+            color: #666;
         }
 
-        .link-section {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px; /* 减少内边距 */
-            border-radius: 10px;
-            margin: 15px 0; /* 减少外边距 */
-            border: 1px solid #ffffff;
-            box-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+        /* LOGO 旋转效果 */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px; /* 默认间距（适用于电脑） */
         }
 
-        .section-title {
-            font-size: 1.5em; /* 缩小标题字体大小 */
-            color: #ffffff;
-            margin-bottom: 10px; /* 减少标题下边距 */
-            border-bottom: 2px solid #ffffff;
+        .logo-link {
             display: inline-block;
-            padding-bottom: 5px;
-            text-shadow: 0 0 3px rgba(0, 255, 204, 0.5); /* 调弱发光效果 */
+            position: relative;
+            width: 100px; /* 默认尺寸（适用于电脑） */
+            height: 100px; /* 默认尺寸（适用于电脑） */
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f, #feb47b);
+            background-size: 200% 200%;
+            animation: rotateBorder 4s linear infinite;
+            padding: 8px; /* 默认内边距（适用于电脑） */
         }
 
-        .link-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 缩小卡片宽度 */
-            gap: 10px; /* 减少卡片间距 */
-        }
-
-        .link-card {
-            background-color: rgba(50, 50, 50, 0.8); /* 调浅背景颜色 */
-            padding: 10px; /* 减少卡片内边距 */
-            border-radius: 10px;
-            border: 1px solid #ffffff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer; /* 显示为可点击 */
-        }
-
-        .link-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-        }
-
-        .link-card h3 {
-            font-size: 1.1em; /* 缩小卡片标题字体大小 */
-            margin: 0 0 8px; /* 减少标题下边距 */
-            color: #ffffff;
-            text-shadow: 0 0 2px rgba(255, 255, 255, 0.3); /* 调弱发光效果 */
-        }
-
-        .link-card p {
-            font-size: 0.85em; /* 缩小卡片内容字体大小 */
-            color: #ffffff;
-            margin: 0;
-            word-break: break-all;
-            cursor: text;
-            user-select: text;
-        }
-
-        /* 修改 footer 样式 */
-        footer {
-            background-color: transparent;
-            padding: 10px 0; /* 减少底部内边距 */
-            text-align: center;
-            margin-top: 15px; /* 减少顶部外边距 */
-            position: relative; /* 确保伪元素相对于 footer 定位 */
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 65%;
-            height: 2px;
-            background: linear-gradient(to right, #00ffcc, #ff00cc);
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-
-        footer p {
-            margin: 0;
-            color: #ffffff;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.3); /* 调弱发光效果 */
-            font-size: 0.9em; /* 缩小底部文字字体大小 */
-        }
-
-        /* 页面切换样式 */
-        .nav {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .nav button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: rgba(0, 255, 204, 0.5);
-            border: none;
-            color: #ffffff;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav button:hover {
-            background-color: rgba(0, 255, 204, 0.8);
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
+        .logo-link img {
+            width: 84px; /* 默认尺寸（适用于电脑） */
+            height: 84px; /* 默认尺寸（适用于电脑） */
+            border-radius: 50%;
             display: block;
         }
 
-        /* 媒体查询：适配小屏幕 */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%; /* 在小屏幕上增加宽度 */
-                padding: 5px; /* 减少内边距 */
+        /* 边框旋转动画 */
+        @keyframes rotateBorder {
+            0% {
+                transform: rotate(0deg);
+                background-position: 0% 50%;
             }
-
-            header h1 {
-                font-size: 1.5em; /* 缩小标题字体大小 */
-            }
-
-            .section-title {
-                font-size: 1.3em; /* 缩小标题字体大小 */
-            }
-
-            .link-container {
-                grid-template-columns: 1fr; /* 单列布局 */
-            }
-
-            .link-card h3 {
-                font-size: 1em; /* 缩小卡片标题字体大小 */
-            }
-
-            .link-card p {
-                font-size: 0.8em; /* 缩小卡片内容字体大小 */
+            100% {
+                transform: rotate(360deg);
+                background-position: 100% 50%;
             }
         }
 
-        /* 媒体查询：适配超小屏幕（如手机竖屏） */
-        @media (max-width: 480px) {
-            .container {
-                width: 95%; /* 在超小屏幕上增加宽度 */
+        /* 按钮区域 */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 默认间距（适用于电脑） */
+        }
+
+        .buttons a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
+            padding: 10px 30px; /* 默认内边距（适用于电脑） */
+            border-radius: 5px;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+
+        /* 内容区域样式 */
+        .content-section {
+            background-color: #f8f9fa;
+            padding: 40px 20px; /* 默认内边距（适用于电脑） */
+            border-radius: 16px; /* 默认圆角（适用于电脑） */
+            margin: 40px auto; /* 默认外边距（适用于电脑） */
+            max-width: 1200px;
+            width: 90%;
+            display: none; /* 默认隐藏 */
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* 分类标题 */
+        .category {
+            margin-bottom: 20px; /* 默认间距（适用于电脑） */
+        }
+
+        .category-title {
+            font-size: 24px; /* 默认字体大小（适用于电脑） */
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 默认间距（适用于电脑） */
+        }
+
+        .category-title::after {
+            content: "👇";
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
+            transition: transform 0.3s ease;
+        }
+
+        .category-title.expanded::after {
+            content: "☝️"; /* 展开时使用向下的手指图标 */
+            transform: rotate(360deg);
+        }
+
+        /* 功能块区域 */
+        .features {
+            display: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px; /* 默认间距（适用于电脑） */
+            margin: 20px 0; /* 默认间距（适用于电脑） */
+        }
+
+        .feature {
+            flex: 1 1 calc(33.333% - 40px); /* 默认布局 */
+            background-color:#f5f5f5;/* 小卡片的颜色 */
+            border: 1px solid #ddd;
+            padding: 20px; /* 默认内边距（适用于电脑） */
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
+            max-width: 200px; /* 默认最大宽度（适用于电脑） */
+            width: 100%;
+            overflow: hidden; /* 防止内容溢出 */
+            cursor: pointer; /* 鼠标指针样式为手型 */
+        }
+
+        .feature h4 {
+            margin: 0;
+            font-size: 16px; /* 默认字体大小（适用于电脑） */
+            color: #333; /* 标题颜色 */
+            word-wrap: break-word; /* 标题换行 */
+        }
+
+        .feature .link-content {
+            margin-top: 10px; /* 默认间距（适用于电脑） */
+            font-size: 14px; /* 默认字体大小（适用于电脑） */
+            color: #666; /* 地址颜色 */
+            word-wrap: break-word; /* 地址换行 */
+        }
+
+        .feature .link-text {
+            color: inherit; /* 继承父元素颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            cursor: pointer; /* 鼠标指针样式为手型 */
+        }
+
+        /* 媒体查询：手机样式 */
+        @media (max-width: 767px) {
+            body {
+                font-size: 14px; /* 手机字体大小 */
             }
 
-            header h1 {
-                font-size: 1.3em; /* 缩小标题字体大小 */
+            header {
+                padding: 10px 20px; /* 手机内边距 */
             }
 
-            .section-title {
-                font-size: 1.1em; /* 缩小标题字体大小 */
+            .nav-links a {
+                font-size: 14px; /* 手机字体大小 */
             }
 
-            .link-card h3 {
-                font-size: 0.9em; /* 缩小卡片标题字体大小 */
+            .main-content {
+                padding: 20px 10px; /* 手机内边距 */
             }
 
-            .link-card p {
-                font-size: 0.75em; /* 缩小卡片内容字体大小 */
+            .main-content h1 {
+                font-size: 24px; /* 手机字体大小 */
+            }
+
+            .main-content p {
+                font-size: 16px; /* 手机字体大小 */
+            }
+
+            .logo-link {
+                width: 80px; /* 手机尺寸 */
+                height: 80px; /* 手机尺寸 */
+                padding: 6px; /* 手机内边距 */
+            }
+
+            .logo-link img {
+                width: 68px; /* 手机尺寸 */
+                height: 68px; /* 手机尺寸 */
+            }
+
+            .buttons a {
+                font-size: 14px; /* 手机字体大小 */
+                padding: 8px 20px; /* 手机内边距 */
+            }
+
+            .content-section {
+                padding: 20px 10px; /* 手机内边距 */
+            }
+
+            .category-title {
+                font-size: 18px; /* 手机字体大小 */
+            }
+
+            .feature {
+                flex: 1 1 calc(50% - 20px); /* 手机布局 */
+                max-width: 150px; /* 手机最大宽度 */
+                padding: 10px; /* 手机内边距 */
+            }
+        }
+
+        /* 底部区域 */
+        footer {
+            text-align: center;
+            padding: 20px; /* 默认内边距（适用于电脑） */
+            box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1); /* 保留阴影 */
+            font-size: 14px; /* 默认字体大小（适用于电脑） */
+            color: #666;
+            margin-top: auto; /* 使底部栏始终位于页面最下方 */
+        }
+
+        @media (max-width: 767px) {
+            footer {
+                padding: 10px; /* 手机内边距 */
+                font-size: 12px; /* 手机字体大小 */
             }
         }
     </style>
-    <!-- 引入 clipboard.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
 </head>
 <body>
-    <!-- 头像 -->
-    <div class="avatar">
-        <img src="https://www.helloimg.com/i/2025/01/04/67791af1e0805.jpg" alt="头像"> <!-- 替换为你的头像链接 -->
-    </div>
-    <span class="avatar-text"></span> <!-- 添加的文字 -->
-
+    <!-- 顶部导航栏 -->
     <header>
-        <div class="container">
-            <h1>点播接口</h1>
-            <p style="color: #ffffff; text-shadow: 0 0 3px rgba(0, 255, 204, 0.3);">精选才能更好看</p> <!-- 调弱发光效果 -->
+        <div class="logo">
+            <span style="font-weight: bold; font-size: 29px;">劉很Oook!</span>
         </div>
+        <nav class="nav-links">
+            <a href="#">Video on demand interface</a>
+        </nav>
     </header>
 
-    <!-- 页面切换按钮 -->
-    <div class="nav">
-        <button onclick="switchPage('page1')">影视接口</button>
-        <button onclick="switchPage('page2')">软件下载</button>
-        <button onclick="switchPage('page3')">使用教程</button>
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <h1 style="font-size: 48px;">影视点播接口</h1> <!-- 调大字体 -->
+        <p style="font-weight: bold;">精选的才能更好看</p> <!-- 加黑加粗 -->
     </div>
 
-    <main>
-        <div class="container">
-            <!-- 页面 1: 影视接口 -->
-            <div id="page1" class="page active">
-                <!-- 小米 接口 -->
-                <section class="link-section">
-                    <h2 class="section-title">❤️小米</h2>
-                    <div class="link-container">
-                        <div class="link-card" data-clipboard-text="https://mpanso.me/DEMO.json">
-                            <h3>推荐 主用接口</h3>
-                            <p>https://mpanso.me/DEMO.json</p>
-                        </div>
-                        <div class="link-card" data-clipboard-text="https://tv.mpanso.me/DEMO.json">
-                            <h3>② 备用接口</h3>
-                            <p>https://tv.mpanso.me/DEMO.json</p>
-                        </div>
-                        <div class="link-card" data-clipboard-text="https://mi.mpanso.me/DEMO.json">
-                            <h3>③ 备用接口</h3>
-                            <p>https://mi.mpanso.me/DEMO.json</p>
-                        </div>
-                    </div>
-                </section>
+    <!-- LOGO 区域 -->
+    <div class="logo-container" style="margin-top: -85px;"> <!-- 往上移动 -->
+        <div class="logo-link">
+            <img src="https://raw.githubusercontent.com/EchoIuSion/EchoIuSion.github.io/main/images/logo.png" alt="Logo">
+        </div>
+    </div>
 
-            <!-- OK 杰克 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️OK 杰克</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="http://ok321.top/tv">
-                        <h3>推荐 内部接口</h3>
-                        <p>http://ok321.top/tv</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="http://ok321.top/ok">
-                        <h3>公开接口</h3>
-                        <p>http://ok321.top/ok</p>
+    <!-- 按钮区域 -->
+    <div class="buttons">
+        <a href="#" id="vod-button">点播接口</a>
+        <a href="#" id="guide-button">使用指南</a>
+        <a href="#" id="software-button">软件下载</a>
+    </div>
+
+    <!-- 点播接口内容区域 -->
+    <div class="content-section" id="vod-section">
+        <!-- 分类 1 -->
+        <div class="category">
+            <div class="category-title">❤️小米</div>
+            <div class="features">
+                <div class="feature" data-link="https://mpanso.me/DEMO.json">
+                    <h4>主用接口① 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">https://mpanso.me/DEMO.json</span></p>
                     </div>
                 </div>
-            </section>
-
-            <!-- ❤️饭太硬 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️饭太硬</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="http://www.xn--sss604efuw.com/tv/">
-                        <h3>主用接口</h3>
-                        <p>http://www.xn--sss604efuw.com/tv/</p>
+                <div class="feature" data-link="https://tv.mpanso.me/DEMO.json">
+                    <h4>备用接口②</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">https://tv.mpanso.me/DEMO.json</span></p>
                     </div>
                 </div>
-            </section>
-
-            <!-- ❤️王二小放牛娃 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️王二小放牛娃</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="https://9280.kstore.space/wex.json">
-                        <h3>推荐 防屏蔽接口</h3>
-                        <p>https://9280.kstore.space/wex.json</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="http://tvbox.xn--4kq62z5rby2qupq9ub.top">
-                        <h3>常规Top</h3>
-                        <p>http://tvbox.xn--4kq62z5rby2qupq9ub.top</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="http://tv.999888987.xyz">
-                        <h3>数字Top</h3>
-                        <p>http://tv.999888987.xyz</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="http://tvbox.王二小放牛娃.top">
-                        <h3>中文Top</h3>
-                        <p>http://tvbox.王二小放牛娃.top</p>
+                <div class="feature" data-link="https://mi.mpanso.me/DEMO.json">
+                    <h4>备用接口③</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">https://mi.mpanso.me/DEMO.json</span></p>
                     </div>
                 </div>
-            </section>
-
-            <!-- ❤️肥猫-->
-            <section class="link-section">
-                <h2 class="section-title">❤️肥猫</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="http://肥猫.live">
-                        <h3>主用接口</h3>
-                        <p>http://肥猫.live</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ❤️纯一骚零 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️纯一骚零</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="https://100km.top/0">
-                        <h3>主用接口</h3>
-                        <p>https://100km.top/0</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 我不是摸鱼 -->
-            <section class="link-section">
-                <h2 class="section-title">❤️我不是摸鱼</h2>
-                <div class="link-container">
-                    <div class="link-card" data-clipboard-text="http://我不是.摸鱼儿.com">
-                        <h3> 推荐 主用接口</h3>
-                        <p>http://我不是.摸鱼儿.com</p>
-                    </div>
-                    <div class="link-card" data-clipboard-text="http://我不是.摸鱼儿.xyz">
-                        <h3>备用接口</h3>
-                        <p>http://我不是.摸鱼儿.xyz</p>
-                    </div>
-                </div>
-            </section>
-            </div>
-
-            <!-- 页面 2: 软件下载 -->
-            <div id="page2" class="page">
-                <section class="link-section">
-                    <h2 class="section-title">❤️OK影视 推荐</h2>
-                    <div class="link-container">
-                        <div class="link-card">
-                            <h3>下载链接</h3>
-                            <p>
-                                UC盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" style="color: #99CCFF; text-decoration: none;">https://drive.uc.cn/s/de96fa4eed364</a><br>
-                                夸克：<a href="https://pan.quark.cn/s/3334d8f93c64" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.quark.cn/s/3334d8f93c64</a><br>
-                                迅雷：<a href="https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc" target="_blank" style="color: #99CCFF; text-decoration: none;">https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc</a>
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- 页面 3: 使用教程 -->
-            <div id="page3" class="page">
-                <section class="link-section">
-                    <h2 class="section-title">❤️使用教程</h2>
-                    <div class="link-container">
-                        <div class="link-card">
-                            <p>
-                                1. 复制网页上面的点播接口 。<br>
-                                2. 打开影视软件页面。<br>
-                                3. 点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。<br>
-                                4. 手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。<br>
-                                5. 复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。 <br>
-                                6. 影视软件返回主页面 即可享用。
-                            </p>
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
-    </main>
 
+        <!-- 分类 2 -->
+        <div class="category">
+            <div class="category-title">❤️OJBK屌炸天</div>
+            <div class="features">
+                <div class="feature" data-link="http://ok321.top/tv">
+                    <h4>内部接口① 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://ok321.top/tv</span></p>
+                    </div>
+                </div>
+                <div class="feature" data-link="http://ok321.top/ok">
+                    <h4>公用接口②</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://ok321.top/ok</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 3 -->
+        <div class="category">
+            <div class="category-title">❤️饭太硬</div>
+            <div class="features">
+                <div class="feature" data-link="http://www.xn--sss604efuw.com/tv/">
+                    <h4>主用接口 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://www.xn--sss604efuw.com/tv/</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 4 -->
+        <div class="category">
+            <div class="category-title">❤️王二小放牛娃</div>
+            <div class="features">
+                <div class="feature" data-link="https://9280.kstore.space/wex.json">
+                    <h4>防屏蔽接口① 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">https://9280.kstore.space/wex.json</span></p>
+                    </div>
+                </div>
+                <div class="feature" data-link="http://tvbox.王二小放牛娃.top">
+                    <h4>备用接口②</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://tvbox.王二小放牛娃.top</span></p>
+                    </div>
+                </div>
+                <div class="feature" data-link="http://tv.999888987.xyz">
+                    <h4>备用接口③</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://tv.999888987.xyz</span></p>
+                    </div>
+                </div>
+                <div class="feature" data-link="http://tvbox.xn--4kq62z5rby2qupq9ub.top">
+                    <h4>备用接口④</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://tvbox.xn--4kq62z5rby2qupq9ub.top</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 5 -->
+        <div class="category">
+            <div class="category-title">❤️肥猫</div>
+            <div class="features">
+                <div class="feature" data-link="http://肥猫.live">
+                    <h4>主用接口 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://肥猫.live</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 6 -->
+        <div class="category">
+            <div class="category-title">❤️纯一骚零</div>
+            <div class="features">
+                <div class="feature" data-link="https://100km.top/0">
+                    <h4>主用接口 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">https://100km.top/0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 7 -->
+        <div class="category">
+            <div class="category-title">❤️我不是摸鱼</div>
+            <div class="features">
+                <div class="feature" data-link="http://我不是.摸鱼儿.com">
+                    <h4>主用接口① 推荐使用</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://我不是.摸鱼儿.com</span></p>
+                    </div>
+                </div>
+                <div class="feature" data-link="http://我不是.摸鱼儿.xyz">
+                    <h4>备用接口②</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">http://我不是.摸鱼儿.xyz</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类 8 -->
+        <div class="category">
+            <div class="category-title">❤️这是还未添加的接口地址</div>
+            <div class="features">
+                <div class="feature" data-link="还未添加哦">
+                    <h4>还未添加哦</h4>
+                    <div class="link-content">
+                        <p>地址：<span class="link-text">还未添加哦</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用指南内容区域 -->
+    <div class="content-section" id="guide-section">
+        <h2>❤️使用指南</h2><br>
+            <li>复制网页上面的点播接口。</li><br>
+            <li>打开影视软件页面。</li><br>
+            <li>点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。</li><br>
+            <li>手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。</li><br>
+            <li>复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。</li><br>
+            <li>影视软件返回主页面 即可享用。</li><br>
+        </ul>
+    </div>
+
+    <!-- 软件下载内容区域 -->
+    <div class="content-section" id="software-section">
+        <h2>❤️OK影视软件 下载</h2><br>
+        <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高并且功能更多。例如： 搜索弹幕、AI去广告等...。</p></li><br>
+            <li>UC 网盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" class="link-text">https://drive.uc.cn/s/de96fa4eed364</a></li><br>
+            <li>夸克 网盘：<a href="https://pan.quark.cn/s/3334d8f93c64" target="_blank" class="link-text">https://pan.quark.cn/s/3334d8f93c64</a></li><br>
+            <li>迅雷 网盘：<a href="https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc" target="_blank" class="link-text">https://pan.xunlei.com/s/VNpD7k6FLpuz5kIVU1E4Sd9AA1?pwd=mzsc</a></li><br>
+        </ul>
+    </div>
+
+    <!-- 底部 -->
     <footer>
-        <div class="container">
-            <p> 本站所有内容来自互联网收集，仅供用于学习和交流，请勿用于商业用途。如有侵权、不妥之处，将第一时间删除！<br>
-Copyright © 2025 劉很Ok  </p>
+        本站所有内容来自互联网收集，仅供用于学习和交流，请勿用于商业用途。如有侵权、不妥之处，将第一时间删除！
+        <div class="link-content">
+            Copyright © 2025 劉很Ok
         </div>
     </footer>
 
     <script>
-        // 初始化 clipboard.js
-        document.addEventListener('DOMContentLoaded', function () {
-            // 为每个 .link-card 添加复制功能（仅适用于带有 data-clipboard-text 属性的卡片）
-            new ClipboardJS('.link-card[data-clipboard-text]', {
-                text: function (trigger) {
-                    // 返回需要复制的文本
-                    return trigger.querySelector('p').innerText;
-                }
-            });
+        // 获取按钮和内容区域
+        const vodButton = document.getElementById('vod-button');
+        const guideButton = document.getElementById('guide-button');
+        const softwareButton = document.getElementById('software-button');
 
-            // 添加复制成功提示（仅适用于带有 data-clipboard-text 属性的卡片）
-            document.querySelectorAll('.link-card[data-clipboard-text]').forEach(function (card) {
-                card.addEventListener('click', function () {
-                    alert('已复制到剪贴板: ' + card.querySelector('p').innerText);
-                });
+        const vodSection = document.getElementById('vod-section');
+        const guideSection = document.getElementById('guide-section');
+        const softwareSection = document.getElementById('software-section');
+
+        // 默认显示点播点播内容
+        vodSection.style.display = 'block';
+
+        // 点播点播按钮点击事件
+        vodButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            vodSection.style.display = 'block';
+            guideSection.style.display = 'none';
+            softwareSection.style.display = 'none';
+        });
+
+        // 使用指南按钮点击事件
+        guideButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            vodSection.style.display = 'none';
+            guideSection.style.display = 'block';
+            softwareSection.style.display = 'none';
+        });
+
+        // 软件下载按钮点击事件
+        softwareButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            vodSection.style.display = 'none';
+            guideSection.style.display = 'none';
+            softwareSection.style.display = 'block';
+        });
+
+        // 分类展开/收起功能
+        const categories = document.querySelectorAll('.category');
+        let currentExpandedCategory = null;
+
+        categories.forEach(category => {
+            const title = category.querySelector('.category-title');
+            const features = category.querySelector('.features');
+
+            title.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                if (title.classList.contains('expanded')) {
+                    title.classList.remove('expanded');
+                    features.style.display = 'none';
+                    currentExpandedCategory = null;
+                } else {
+                    if (currentExpandedCategory) {
+                        currentExpandedCategory.classList.remove('expanded');
+                        currentExpandedCategory.nextElementSibling.style.display = 'none';
+                    }
+
+                    title.classList.add('expanded');
+                    features.style.display = 'flex';
+                    currentExpandedCategory = title;
+                }
             });
         });
 
-        // 页面切换功能
-        function switchPage(pageId) {
-            // 隐藏所有页面
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+        // 点击卡片复制链接到剪切板
+        const features = document.querySelectorAll('.feature');
+        features.forEach(feature => {
+            feature.addEventListener('click', (e) => {
+                const link = feature.getAttribute('data-link');
+                if (link) {
+                    // 使用备用方法复制链接
+                    copyToClipboard(link);
+                }
             });
+        });
 
-            // 显示选中的页面
-            document.getElementById(pageId).classList.add('active');
+        // 复制到剪切板的备用方法
+        function copyToClipboard(text) {
+            // 创建一个临时的 textarea 元素
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed'; // 避免页面滚动
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                // 尝试使用 execCommand 复制
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('链接已复制到剪切板：' + text);
+                } else {
+                    throw new Error('复制失败');
+                }
+            } catch (err) {
+                // 如果 execCommand 失败，提示用户手动复制
+                alert('复制失败，请手动复制链接：' + text);
+            } finally {
+                // 移除临时的 textarea 元素
+                document.body.removeChild(textarea);
+            }
         }
     </script>
 </body>
