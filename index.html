@@ -208,6 +208,96 @@
             cursor: pointer; /* 鼠标指针样式为手型 */
         }
 
+        /* 模态框背景 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 固定在屏幕上 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* 确保在最上层 */
+        }
+
+        /* 模态框内容 */
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 45%; /* 调整宽度以适应两个模态框 */
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-height: 80vh; /* 设置最大高度 */
+            overflow-y: auto; /* 支持垂直滚动 */
+        }
+
+        /* 隐藏模态框中的滚动条 */
+        .modal-content::-webkit-scrollbar {
+            display: none; /* 隐藏滚动条 */
+        }
+
+        /* 兼容 Firefox */
+        .modal-content {
+            scrollbar-width: none; /* 隐藏滚动条 */
+        }
+
+        /* 兼容 IE 和 Edge */
+        .modal-content {
+            -ms-overflow-style: none; /* 隐藏滚动条 */
+        }
+
+        /* 关闭按钮 */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* 图片样式 */
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            cursor: pointer; /* 鼠标指针样式为手型 */
+            transition: transform 0.3s ease; /* 添加过渡效果 */
+        }
+
+        /* 全屏图片容器 */
+        #fullscreen-image-container,
+        #fullscreen-image-container-2 {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* 黑色半透明背景 */
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* 确保在最上层 */
+        }
+
+        /* 全屏图片 */
+        #fullscreen-image,
+        #fullscreen-image-2 {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            cursor: pointer; /* 鼠标指针样式为手型 */
+        }
+
         /* 媒体查询：手机样式 */
         @media (max-width: 767px) {
             body {
@@ -266,6 +356,11 @@
                 flex: 1 1 calc(50% - 20px); /* 手机布局 */
                 max-width: 150px; /* 手机最大宽度 */
                 padding: 10px; /* 手机内边距 */
+            }
+
+            /* 手机端模态框宽度调整 */
+            .modal-content {
+                width: 90%; /* 手机端模态框宽度 */
             }
         }
 
@@ -463,12 +558,50 @@
             <li>手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。</li><br>
             <li>复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。</li><br>
             <li>影视软件返回主页面 即可享用。</li><br>
+        <p><li> <a href="#" id="openGuideModal">电视使用教程（图片）</a> </p><br>
+        <p><li> <a href="#" id="openSecondModal">手机使用教程（图片）</a> </p>
         </ul>
+    </div>
+
+    <!-- 第一个模态框 -->
+    <div id="guideModal" class="modal">
+        <div class="modal-content">
+            <span id="closeGuideModal" class="close">&times;</span>
+            <h2>图片使用教程</h2><br>
+            第一步：<img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="图片" class="zoomable-image"><br>
+            第二步：<img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="图片" class="zoomable-image"><br>
+            第三步：<img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="图片" class="zoomable-image"><br>
+            第四步：<img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="图片" class="zoomable-image"><br>
+            <p>最后返回软件主页面即可观看想看的影视以及剧集。</p>
+        </div>
+    </div>
+
+    <!-- 第二个模态框 -->
+    <div id="secondModal" class="modal">
+        <div class="modal-content">
+            <span id="closeSecondModal" class="close">&times;</span>
+            <h2>手机使用教程</h2><br>
+            <p>这是手机使用教程的内容。</p>
+            第一步：<img src="https://echoiusion.github.io/phonejx/phone1.png" alt="图片" class="zoomable-image"><br>
+            第二步：<img src="https://echoiusion.github.io/phonejx/phone2.png" alt="图片" class="zoomable-image"><br>
+            第三步：<img src="https://echoiusion.github.io/phonejx/phone3.png" alt="图片" class="zoomable-image"><br>
+            <p>最后返回软件主页面即可观看想看的影视以及剧集。</p>
+        </div>
+    </div>
+
+    <!-- 全屏图片容器 -->
+    <div id="fullscreen-image-container">
+        <img id="fullscreen-image" src="" alt="全屏图片">
+    </div>
+
+    <!-- 第二个全屏图片容器 -->
+    <div id="fullscreen-image-container-2">
+        <img id="fullscreen-image-2" src="" alt="全屏图片">
     </div>
 
     <!-- 软件下载内容区域 -->
     <div class="content-section" id="software-section">
-        <h2>❤️OK影视软件 下载</h2><br>
+        <h2>❤️OK影视（安卓）软甲下载 注：不支持IOS系统！</h2><br>
         <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高并且功能更多。例如： 搜索弹幕、AI去广告等...。</p></li><br>
         <p>下载链接里面的手机版App不支持IOS系统！仅支持Android（安卓系统）。</p></li><br>
         <p>安卓(Android)电视机，例如：小米电视、海信电视等可直接下载Pro版本放进U盘，利用U盘插入电视机进行安装，亦或者下载到手机，利用电视端的远程管理进行传输上传。</p></li><br>
@@ -588,6 +721,63 @@
                 document.body.removeChild(textarea);
             }
         }
+
+        // 获取模态框元素
+        const guideModal = document.getElementById('guideModal');
+        const secondModal = document.getElementById('secondModal');
+        const openGuideModal = document.getElementById('openGuideModal');
+        const openSecondModal = document.getElementById('openSecondModal');
+        const closeGuideModal = document.getElementById('closeGuideModal');
+        const closeSecondModal = document.getElementById('closeSecondModal');
+
+        // 点击触发文字，显示第一个模态框
+        openGuideModal.addEventListener('click', (e) => {
+            e.preventDefault(); // 阻止默认链接行为
+            guideModal.style.display = 'flex'; // 显示模态框
+        });
+
+        // 点击关闭按钮，隐藏第一个模态框
+        closeGuideModal.addEventListener('click', () => {
+            guideModal.style.display = 'none'; // 隐藏模态框
+        });
+
+        // 点击触发文字，显示第二个模态框
+        openSecondModal.addEventListener('click', (e) => {
+            e.preventDefault(); // 阻止默认链接行为
+            secondModal.style.display = 'flex'; // 显示模态框
+        });
+
+        // 点击关闭按钮，隐藏第二个模态框
+        closeSecondModal.addEventListener('click', () => {
+            secondModal.style.display = 'none'; // 隐藏模态框
+        });
+
+        // 点击模态框外部，隐藏模态框
+        window.addEventListener('click', (e) => {
+            if (e.target === guideModal) {
+                guideModal.style.display = 'none'; // 隐藏模态框
+            }
+            if (e.target === secondModal) {
+                secondModal.style.display = 'none'; // 隐藏模态框
+            }
+        });
+
+        // 图片点击放大功能
+        const zoomableImages = document.querySelectorAll('.zoomable-image');
+        const fullscreenImageContainer = document.getElementById('fullscreen-image-container');
+        const fullscreenImage = document.getElementById('fullscreen-image');
+
+        zoomableImages.forEach(img => {
+            img.addEventListener('click', () => {
+                fullscreenImage.src = img.src; // 设置全屏图片的src
+                fullscreenImageContainer.style.display = 'flex'; // 显示全屏容器
+            });
+        });
+
+        // 点击全屏图片或外部区域关闭
+        fullscreenImageContainer.addEventListener('click', () => {
+            fullscreenImageContainer.style.display = 'none'; // 隐藏全屏容器
+        });
     </script>
 </body>
 </html>
