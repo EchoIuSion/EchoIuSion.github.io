@@ -253,14 +253,14 @@
         }
 
         .category-title::after {
-            content: "👇";
+            content: "🤐";
             font-size: 16px; /* 默认字体大小（适用于电脑） */
             transition: transform 0.3s ease;
         }
 
         .category-title.expanded::after {
-            content: "☝️"; /* 展开时使用向下的手指图标 */
-            transform: rotate(360deg);
+            content: "🤪"; /* 展开时使用向下的手指图标 */
+            transform: rotate(0deg);
         }
 
         /* 功能块区域 */
@@ -478,6 +478,29 @@
         .modal-content img {
             border-bottom: none; /* 移除图片下方的横线 */
         }
+
+        /* 修复长蓝色背景条问题 */
+        .category-title:focus,
+        .feature:focus {
+            outline: none;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .category-title,
+        .feature {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        /* 移除使用指南中链接的下划线 */
+        #guide-section a {
+            text-decoration: none; /* 移除下划线 */
+        }
+
+        #guide-section a:hover {
+            text-decoration: underline; /* 鼠标悬停时显示下划线 */
+        }
     </style>
 </head>
 <body>
@@ -656,8 +679,8 @@
             <li>手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。</li><br>
             <li>复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。</li><br>
             <li>影视软件返回主页面 即可享用。</li><br>
-         <li><a href="#" id="openGuideModal">电视使用教程（图片）</a><br>
-         <li><a href="#" id="openSecondModal">手机使用教程（图片）</a><br>
+         </p><li><a href="#" id="openGuideModal">电视端APP使用教程（图片）</a></p><br>
+                 <li><a href="#" id="openSecondModal">手机端APP使用教程（图片）</a><br>
         </ul>
     </div>
 
@@ -665,7 +688,7 @@
     <div id="guideModal" class="modal">
         <div class="modal-content">
             <span id="closeGuideModal" class="close">&times;</span>
-            <h2>图片使用教程</h2><br>
+            <h2>电视端APP使用教程（图片）</h2><br>
             第一步：<img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="图片" class="zoomable-image"><br>
             第二步：<img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="图片" class="zoomable-image"><br>
             第三步：<img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="图片" class="zoomable-image"><br>
@@ -678,8 +701,7 @@
     <div id="secondModal" class="modal">
         <div class="modal-content">
             <span id="closeSecondModal" class="close">&times;</span>
-            <h2>手机使用教程</h2><br>
-            <p>这是手机使用教程的内容。</p>
+            <h2>手机端APP使用教程（图片）</h2><br>
             第一步：<img src="https://echoiusion.github.io/phonejx/phone1.png" alt="图片" class="zoomable-image"><br>
             第二步：<img src="https://echoiusion.github.io/phonejx/phone2.png" alt="图片" class="zoomable-image"><br>
             第三步：<img src="https://echoiusion.github.io/phonejx/phone3.png" alt="图片" class="zoomable-image"><br>
@@ -699,8 +721,8 @@
 
     <!-- 软件下载内容区域 -->
     <div class="content-section" id="software-section">
-        <h2>❤️OK影视软件 下载</h2><br>
-        <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高并且功能更多。例如： 搜索弹幕、AI去广告等...。</p></li><br>
+        <h2>❤️OK影视安卓(Android)软件下载　不支持IOS系统！</h2><br>
+        <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高、功能更多。例如： 搜索弹幕、AI去广告等等...</p></li><br>
         <p>下载链接里面的手机版App不支持IOS系统！仅支持Android（安卓系统）。</p></li><br>
         <p>安卓(Android)电视机，例如：小米电视、海信电视等可直接下载Pro版本放进U盘，利用U盘插入电视机进行安装，亦或者下载到手机，利用电视端的远程管理进行传输上传。</p></li><br>
             <li>UC 网盘：<a href="https://drive.uc.cn/s/de96fa4eed364" target="_blank" class="link-text">https://drive.uc.cn/s/de96fa4eed364</a></li><br>
@@ -875,6 +897,13 @@
         // 点击全屏图片或外部区域关闭
         fullscreenImageContainer.addEventListener('click', () => {
             fullscreenImageContainer.style.display = 'none'; // 隐藏全屏容器
+        });
+
+        // 禁用点击时的焦点行为
+        document.querySelectorAll('.category-title, .feature').forEach(element => {
+            element.addEventListener('mousedown', (e) => {
+                e.preventDefault(); // 阻止默认的焦点行为
+            });
         });
     </script>
 </body>
