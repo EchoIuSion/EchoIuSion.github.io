@@ -284,6 +284,7 @@
             width: 100%;
             overflow: hidden; /* 防止内容溢出 */
             cursor: pointer; /* 鼠标指针样式为手型 */
+            transition: transform 0.1s ease; /* 添加过渡效果 */
         }
 
         .feature h4 {
@@ -302,6 +303,11 @@
             color: inherit; /* 继承父元素颜色 */
             text-decoration: none; /* 去掉下划线 */
             cursor: pointer; /* 鼠标指针样式为手型 */
+        }
+
+        /* 添加点击时的放大效果 */
+        .feature:active {
+            transform: scale(1.05); /* 微微放大 */
         }
 
         /* 模态框背景 */
@@ -809,15 +815,16 @@
         features.forEach(feature => {
             feature.addEventListener('click', (e) => {
                 const link = feature.getAttribute('data-link');
+                const title = feature.querySelector('h4').innerText; // 获取小卡片的标题
                 if (link) {
                     // 使用备用方法复制链接
-                    copyToClipboard(link);
+                    copyToClipboard(link, title);
                 }
             });
         });
 
         // 复制到剪切板的备用方法
-        function copyToClipboard(text) {
+        function copyToClipboard(text, title) {
             // 创建一个临时的 textarea 元素
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -829,7 +836,7 @@
                 // 尝试使用 execCommand 复制
                 const successful = document.execCommand('copy');
                 if (successful) {
-                    alert('链接已复制到剪切板：' + text);
+                    alert(`${title}：已复制`); // 显示复制成功和小卡片标题
                 } else {
                     throw new Error('复制失败');
                 }
