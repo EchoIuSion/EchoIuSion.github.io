@@ -2,895 +2,1053 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>劉很Cool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>劉很Cool - 影视点播接口</title>
     <style>
-        /* 全局样式 */
+        /* 现代科技感风格 */
+        :root {
+            --primary-color: #5e72e4;  /* 科技蓝紫色 */
+            --secondary-color: #11cdef; /* 科技青色 */
+            --accent-color: #f5365c;   /* 活力粉色 */
+            --dark-color: #32325d;    /* 深科技蓝 */
+            --light-color: #f7fafc;   /* 浅灰白 */
+            --text-color: #2d3748;    /* 深灰 */
+            --text-light: #718096;    /* 中灰 */
+            --success-color: #2dce89;  /* 清新绿 */
+            --warning-color: #fb6340;  /* 橙色 */
+            --danger-color: #f5365c;   /* 活力粉 */
+            --border-radius: 12px;     /* 更大的圆角 */
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 更柔和的阴影 */
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --gradient: linear-gradient(135deg, #5e72e4 0%, #11cdef 100%); /* 蓝紫到青的渐变 */
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fbc2eb, #a6c1ee, #f6d365, #fda085); /* 渐变色背景 */
-            color: #333;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.7;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* 使页面高度至少为视口高度 */
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* 深色模式样式 */
+        /* 移除深色模式 */
         @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #5e72e4;
+                --secondary-color: #11cdef;
+                --light-color: #f7fafc;
+                --text-color: #2d3748;
+                --text-light: #718096;
+                --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            
             body {
-                background: linear-gradient(135deg, #1a1a1a, #2a2a2a, #3a3a3a, #4a4a4a, #5a5a5a); /* 深色渐变色背景 */
-                color: #fff; /* 文字颜色为白色 */
-            }
-
-            .nav-links a {
-                color: #fff; /* 导航链接颜色为白色 */
-            }
-
-            .nav-links a:visited {
-                color: #a0a0ff; /* 访问过的链接颜色为浅蓝色 */
-            }
-
-            .main-content p {
-                color: #ccc; /* 段落文字颜色为浅灰色 */
-            }
-
-            .content-section {
-                background-color: #333; /* 内容区域背景颜色为深灰色 */
-                color: #fff; /* 文字颜色为白色 */
-            }
-
-            .feature {
-                background-color: #444; /* 功能块背景颜色为深灰色 */
-                color: #fff; /* 文字颜色为白色 */
-            }
-
-            .feature h4 {
-                color: #fff; /* 标题颜色为白色 */
-            }
-
-            .feature .link-content {
-                color: #ccc; /* 地址颜色为浅灰色 */
-            }
-
-            .modal-content {
-                background-color: #333; /* 模态框背景颜色为深灰色 */
-                color: #fff; /* 文字颜色为白色 */
-            }
-
-            .close {
-                color: #fff; /* 关闭按钮颜色为白色 */
-            }
-
-            footer {
-                color: #ccc; /* 底部文字颜色为浅灰色 */
-            }
-
-            a:visited {
-                color: #a0a0ff; /* 访问过的链接颜色为浅蓝色 */
+                background-color: #f7fafc;
             }
         }
 
-        /* 浅色模式样式 */
-        @media (prefers-color-scheme: light) {
-            body {
-                background: linear-gradient(135deg, #ff9a9e, #fbc2eb, #a6c1ee, #f6d365, #fda085); /* 渐变色背景 */
-                color: #333; /* 文字颜色为深灰色 */
-            }
-
-            .nav-links a {
-                color: #333; /* 导航链接颜色为深灰色 */
-            }
-
-            .main-content p {
-                color: #666; /* 段落文字颜色为灰色 */
-            }
-
-            .content-section {
-                background-color: #f8f9fa; /* 内容区域背景颜色为浅灰色 */
-                color: #333; /* 文字颜色为深灰色 */
-            }
-
-            .feature {
-                background-color: #f5f5f5; /* 功能块背景颜色为浅灰色 */
-                color: #333; /* 文字颜色为深灰色 */
-            }
-
-            .feature h4 {
-                color: #333; /* 标题颜色为深灰色 */
-            }
-
-            .feature .link-content {
-                color: #666; /* 地址颜色为灰色 */
-            }
-
-            .modal-content {
-                background-color: #fff; /* 模态框背景颜色为白色 */
-                color: #333; /* 文字颜色为深灰色 */
-            }
-
-            .close {
-                color: #333; /* 关闭按钮颜色为深灰色 */
-            }
-
-            footer {
-                color: #666; /* 底部文字颜色为灰色 */
-            }
-        }
-
-        /* 顶部导航栏 */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px; /* 默认内边距（适用于电脑） */
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 保留阴影 */
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 20px; /* 默认间距（适用于电脑） */
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* 主内容区域 */
-        .main-content {
-            text-align: center;
-            padding: 80px 20px; /* 默认内边距（适用于电脑） */
-            flex: 1; /* 使内容区域占据剩余空间 */
-        }
-
-        .main-content h1 {
-            font-size: 40px; /* 默认字体大小（适用于电脑） */
-            font-weight: bold;
-            margin-bottom: 20px; /* 默认间距（适用于电脑） */
-        }
-
-        .main-content p {
-            font-size: 20px; /* 默认字体大小（适用于电脑） */
-            margin-bottom: 40px; /* 默认间距（适用于电脑） */
-        }
-
-        /* LOGO 旋转效果 */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 40px; /* 默认间距（适用于电脑） */
-            margin-top: 20px; /* 使LOGO区域往下移动 */
-        }
-
-        .logo-link {
-            display: inline-block;
-            position: relative;
-            width: 100px; /* 默认尺寸（适用于电脑） */
-            height: 100px; /* 默认尺寸（适用于电脑） */
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f, #feb47b);
-            background-size: 200% 200%;
-            animation: rotateBorder 4s linear infinite;
-            padding: 8px; /* 默认内边距（适用于电脑） */
-        }
-
-        .logo-link img {
-            width: 84px; /* 默认尺寸（适用于电脑） */
-            height: 84px; /* 默认尺寸（适用于电脑） */
-            border-radius: 50%;
-            display: block;
-        }
-
-        /* 边框旋转动画 */
-        @keyframes rotateBorder {
-            0% {
-                transform: rotate(0deg);
-                background-position: 0% 50%;
-            }
-            100% {
-                transform: rotate(360deg);
-                background-position: 100% 50%;
-            }
-        }
-
-        /* 按钮区域 */
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* 默认间距（适用于电脑） */
-        }
-
-        .buttons a {
-            text-decoration: none;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
-            padding: 10px 30px; /* 默认内边距（适用于电脑） */
-            border-radius: 5px;
-        }
-
-        .buttons a:hover {
-            background-color: #0056b3;
-        }
-
-        /* 内容区域样式 */
-        .content-section {
-            padding: 40px 20px; /* 默认内边距（适用于电脑） */
-            border-radius: 16px; /* 默认圆角（适用于电脑） */
-            margin: 40px auto; /* 默认外边距（适用于电脑） */
-            max-width: 1200px;
-            width: 90%;
-            display: none; /* 默认隐藏 */
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        /* 分类标题 */
-        .category {
-            margin-bottom: 20px; /* 默认间距（适用于电脑） */
-        }
-
-        .category-title {
-            font-size: 24px; /* 默认字体大小（适用于电脑） */
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px; /* 默认间距（适用于电脑） */
-        }
-
-        .category-title::after {
-            content: "🤐";
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
-            transition: transform 0.3s ease;
-        }
-
-        .category-title.expanded::after {
-            content: "🤪"; /* 展开时使用向下的手指图标 */
-            transform: rotate(0deg);
-        }
-
-        /* 功能块区域 */
-        .features {
-            display: none;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px; /* 默认间距（适用于电脑） */
-            margin: 20px 0; /* 默认间距（适用于电脑） */
-        }
-
-        .feature {
-            flex: 1 1 calc(33.333% - 40px); /* 默认布局 */
-            border: 1px solid #ddd;
-            padding: 20px; /* 默认内边距（适用于电脑） */
-            border-radius: 8px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
-            max-width: 200px; /* 默认最大宽度（适用于电脑） */
+        /* 布局样式 */
+        .container {
             width: 100%;
-            overflow: hidden; /* 防止内容溢出 */
-            cursor: pointer; /* 鼠标指针样式为手型 */
-            transition: transform 0.1s ease; /* 添加过渡效果 */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
 
-        .feature h4 {
-            margin: 0;
-            font-size: 16px; /* 默认字体大小（适用于电脑） */
-            word-wrap: break-word; /* 标题换行 */
+        /* 主要内容区 */
+        .hero {
+            text-align: center;
+            padding: 40px 0 20px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(94, 114, 228, 0.05) 0%, rgba(17, 205, 239, 0.03) 100%);
         }
 
-        .feature .link-content {
-            margin-top: 10px; /* 默认间距（适用于电脑） */
-            font-size: 14px; /* 默认字体大小（适用于电脑） */
-            word-wrap: break-word; /* 地址换行 */
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #5e72e4 0%, #11cdef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            line-height: 1.2;
+            padding: 0 10px;
         }
 
-        .feature .link-text {
-            color: inherit; /* 继承父元素颜色 */
-            text-decoration: none; /* 去掉下划线 */
-            cursor: pointer; /* 鼠标指针样式为手型 */
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            padding: 0 15px;
         }
 
-        /* 添加点击时的放大效果 */
-        .feature:active {
-            transform: scale(1.05); /* 微微放大 */
+        /* 选项卡按钮 */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 0 10px;
         }
 
-        /* 模态框背景 */
-        .modal {
-            display: none; /* 默认隐藏 */
-            position: fixed; /* 固定在屏幕上 */
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid rgba(94, 114, 228, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            flex: 1 1 auto;
+            min-width: 100px;
+            max-width: 150px;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; /* 确保在最上层 */
+            background: var(--gradient);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+            border-radius: 50px;
         }
 
-        /* 模态框内容 */
-        .modal-content {
-            padding: 20px;
-            border-radius: 10px;
-            width: 45%; /* 调整宽度以适应两个模态框 */
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            max-height: 80vh; /* 设置最大高度 */
-            overflow-y: auto; /* 支持垂直滚动 */
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(94, 114, 228, 0.15);
         }
 
-        /* 隐藏模态框中的滚动条 */
-        .modal-content::-webkit-scrollbar {
-            display: none; /* 隐藏滚动条 */
+        .tab-btn.active {
+            color: white;
+            background: var(--gradient);
+            border-color: transparent;
         }
 
-        /* 兼容 Firefox */
-        .modal-content {
-            scrollbar-width: none; /* 隐藏滚动条 */
+        .tab-btn.active::before {
+            opacity: 1;
         }
 
-        /* 兼容 IE 和 Edge */
-        .modal-content {
-            -ms-overflow-style: none; /* 隐藏滚动条 */
+        /* 内容区域 */
+        .content-section {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: var(--border-radius);
+            padding: 20px 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            display: none;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            backdrop-filter: blur(5px);
         }
 
-        /* 关闭按钮 */
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 分类样式 */
+        .category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-        }
-
-        .close:hover {
-            color: #000;
-        }
-
-        /* 图片样式 */
-        .modal-content img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
             margin-bottom: 15px;
-            cursor: pointer; /* 鼠标指针样式为手型 */
-            transition: transform 0.3s ease; /* 添加过渡效果 */
+            box-shadow: 0 4px 15px rgba(94, 114, 228, 0.2);
         }
 
-        /* 全屏图片容器 */
-        #fullscreen-image-container,
-        #fullscreen-image-container-2 {
-            display: none; /* 默认隐藏 */
+        .category-title:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(94, 114, 228, 0.3);
+        }
+
+        .category-title::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: var(--transition);
+            font-weight: 300;
+        }
+
+        .category-title.expanded::after {
+            content: '-';
+        }
+
+        /* 功能卡片 - 紧凑样式 */
+        .features {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feature {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(94, 114, 228, 0.15);
+            border-color: rgba(94, 114, 228, 0.2);
+        }
+
+        .feature h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature .link-content {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+
+        .feature .link-text {
+            color: var(--text-color);
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 6px;
+            background-color: rgba(94, 114, 228, 0.1);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* 推荐徽章样式 */
+.recommend-badge {
+    display: inline-block;
+    background-color: var(--success-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 1px 8px 2px;  /* 调整上下内边距 */
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: 600;
+    vertical-align: text-bottom;  /* 改为与文字底部对齐 */
+    box-shadow: 0 2px 5px rgba(45, 206, 137, 0.3);
+    position: relative;
+    top: 1px;  /* 向下移动1像素 */
+    line-height: 1.2;
+}
+
+        /* 复制成功提示 - 居中底部 */
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            background: var(--gradient);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            opacity: 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .copy-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .copy-notification::before {
+            content: '✓';
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* 使用指南样式 */
+        .guide-list {
+            list-style-type: none;
+        }
+
+        .guide-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .guide-list li::before {
+            content: '→';
+            color: var(--primary-color);
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .guide-link {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(94, 114, 228, 0.3);
+            font-size: 0.9rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .guide-link + .guide-link {
+            margin-top: 10px;
+            margin-left: 0;
+        }
+
+        .guide-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(94, 114, 228, 0.4);
+        }
+
+        .guide-link i {
+            font-size: 1rem;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* 黑色半透明背景 */
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* 确保在最上层 */
+            backdrop-filter: blur(5px);
         }
 
-        /* 全屏图片 */
-        #fullscreen-image,
-        #fullscreen-image-2 {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-            cursor: pointer; /* 鼠标指针样式为手型 */
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 95%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px 15px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        /* 媒体查询：手机样式 */
-        @media (max-width: 767px) {
-            body {
-                font-size: 14px; /* 手机字体大小 */
-            }
-
-            header {
-                padding: 10px 20px; /* 手机内边距 */
-            }
-
-            .nav-links a {
-                font-size: 14px; /* 手机字体大小 */
-            }
-
-            .main-content {
-                padding: 60px 10px 20px; /* 调整顶部内边距，避免 Logo 遮挡 */
-            }
-
-            .main-content h1 {
-                font-size: 24px; /* 手机字体大小 */
-            }
-
-            .main-content p {
-                font-size: 16px; /* 手机字体大小 */
-            }
-
-            .logo-container {
-                margin-top: -40px; /* 进一步往上移动，避免遮挡 */
-            }
-
-            .logo-link {
-                width: 60px; /* 手机尺寸 */
-                height: 60px; /* 手机尺寸 */
-                padding: 4px; /* 手机内边距 */
-            }
-
-            .logo-link img {
-                width: 52px; /* 手机尺寸 */
-                height: 52px; /* 手机尺寸 */
-            }
-
-            .buttons a {
-                font-size: 14px; /* 手机字体大小 */
-                padding: 8px 20px; /* 手机内边距 */
-            }
-
-            .content-section {
-                padding: 20px 10px; /* 手机内边距 */
-            }
-
-            .category-title {
-                font-size: 18px; /* 手机字体大小 */
-            }
-
-            .feature {
-                flex: 1 1 calc(50% - 20px); /* 手机布局 */
-                max-width: 150px; /* 手机最大宽度 */
-                padding: 10px; /* 手机内边距 */
-            }
-
-            /* 手机端模态框宽度调整 */
-            .modal-content {
-                width: 90%; /* 手机端模态框宽度 */
-            }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* 底部区域 */
-        footer {
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
             text-align: center;
-            padding: 20px; /* 默认内边距（适用于电脑） */
-            box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1); /* 保留阴影 */
-            font-size: 14px; /* 默认字体大小（适用于电脑） */
-            margin-top: auto; /* 使底部栏始终位于页面最下方 */
+            font-size: 1.4rem;
+            font-weight: 700;
         }
 
-        @media (max-width: 767px) {
-            footer {
-                padding: 10px; /* 手机内边距 */
-                font-size: 12px; /* 手机字体大小 */
+        .modal p {
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .modal img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: var(--danger-color);
+            background-color: rgba(245, 54, 92, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* 软件下载样式 */
+        .download-list {
+            list-style-type: none;
+        }
+
+        .download-list li {
+            padding: 12px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .download-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(94, 114, 228, 0.1);
+        }
+
+        .download-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: white;
+            padding: 20px 0;
+            margin-top: auto;
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        /* 影视点播接口背景特效 */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(94, 114, 228, 0.05) 0%, rgba(17, 205, 239, 0.03) 100%);
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(94, 114, 228, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
             }
         }
 
-        /* 移除教程下方的横线 */
-        .modal-content img {
-            border-bottom: none; /* 移除图片下方的横线 */
+        /* 浮动粒子效果 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
         }
 
-        /* 修复长蓝色背景条问题 */
-        .category-title:focus,
-        .feature:focus {
-            outline: none;
-            background-color: transparent;
-            box-shadow: none;
+        .particle {
+            position: absolute;
+            background: rgba(94, 114, 228, 0.15);
+            border-radius: 50%;
+            animation: float linear infinite;
         }
 
-        .category-title,
-        .feature {
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
         }
 
-        /* 移除使用指南中链接的下划线 */
-        #guide-section a {
-            text-decoration: none; /* 移除下划线 */
+        /* 响应式设计 - 平板及以上 */
+        @media (min-width: 768px) {
+            .hero {
+                padding: 60px 0 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .tab-buttons {
+                gap: 15px;
+            }
+            
+            .tab-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+                min-width: 120px;
+            }
+            
+            .content-section {
+                padding: 30px 20px;
+            }
+            
+            .features {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .guide-link {
+                display: inline-flex;
+                width: auto;
+                padding: 10px 20px;
+            }
+            
+            .guide-link + .guide-link {
+                margin-left: 15px;
+                margin-top: 20px;
+            }
+
+            .modal-content {
+                padding: 30px;
+            }
+
+            .modal h2 {
+                font-size: 1.8rem;
+            }
         }
 
-        #guide-section a:hover {
-            text-decoration: underline; /* 鼠标悬停时显示下划线 */
+        /* 响应式设计 - 桌面 */
+        @media (min-width: 992px) {
+            .hero {
+                padding: 80px 0 40px;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- 顶部导航栏 -->
-    <header>
-        <div class="logo">
-            <span style="font-weight: bold; font-size: 20px;">劉很CooL!</span>
+    <!-- 复制成功提示 -->
+    <div class="copy-notification" id="copyNotification">
+        复制成功
+    </div>
+
+    <!-- 主要内容区 -->
+    <section class="hero">
+        <!-- 粒子背景 -->
+        <div class="particles" id="particles"></div>
+        
+        <div class="container">
+            <h1>影视点播接口</h1>
+            <p>海量高清影视随心点播，热门大片、独家好剧，随时随地畅享的私人影院！</p>
+            
+            <!-- 选项卡按钮 -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="vod">
+                    <i class="fas fa-film"></i> 点播接口
+                </button>
+                <button class="tab-btn" data-tab="guide">
+                    <i class="fas fa-book"></i> 使用指南
+                </button>
+                <button class="tab-btn" data-tab="software">
+                    <i class="fas fa-download"></i> 软件下载
+                </button>
+            </div>
         </div>
-        <nav class="nav-links">
-            <a href="#">Video on demand interface</a>
-        </nav>
-    </header>
+    </section>
 
-    <!-- 主内容区域 -->
-    <div class="main-content">
-        <h1 style="font-size: 40px;">影视点播接口</h1> <!-- 调大字体 -->
-        <p style="font-weight: bold;">精选的才能更好看</p> <!-- 加黑加粗 -->
-    </div>
-
-    <!-- LOGO 区域 -->
-    <div class="logo-container">
-        <div class="logo-link">
-        <img src="https://echoiusion.github.io/images/logo.png" alt="Logo">
-        </div>
-    </div>
-
-    <!-- 按钮区域 -->
-    <div class="buttons">
-        <a href="#" id="vod-button">点播接口</a>
-        <a href="#" id="guide-button">使用指南</a>
-        <a href="#" id="software-button">软件下载</a>
-    </div>
-
-    <!-- 点播接口内容区域 -->
-    <div class="content-section" id="vod-section">
-        <!-- 分类 1 -->
-        <div class="category">
-            <div class="category-title">❤️小米</div>
-            <div class="features">
-                <div class="feature" data-link="https://mpanso.me/DEMO.json">
-                    <h4>主用接口① 推荐使用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://mpanso.me/DEMO.json</span></p>
-                    </div>
+    <!-- 内容区域 -->
+    <main class="container">
+        <!-- 点播接口内容 -->
+        <section id="vod" class="content-section active">
+            <!-- 分类 1 -->
+            <div class="category">
+                <div class="category-title">
+                    <i class="fas fa-heart" style="margin-right: 10px;"></i> 🦄 OK杰克
                 </div>
-                <div class="feature" data-link="https://tv.mpanso.me/DEMO.json">
-                    <h4>备用接口②</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://tv.mpanso.me/DEMO.json</span></p>
+                <div class="features">
+                    <div class="feature" data-link="http://ok321.top/tv">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🔥 主接口 <span class="recommend-badge">推荐</span></h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://ok321.top/tv</span></p>
+                        </div>
                     </div>
-                </div>
-                <div class="feature" data-link="https://mi.mpanso.me/DEMO.json">
-                    <h4>备用接口③</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://mi.mpanso.me/DEMO.json</span></p>
+                    <div class="feature" data-link="https://10936.kstore.space/tv">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🎬 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://10936.kstore.space/tv</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="http://ok321.top/ok">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 📡 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://ok321.top/ok</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="https://10936.kstore.space/ok">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 📺 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://10936.kstore.space/ok</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 分类 2 -->
-        <div class="category">
-            <div class="category-title">❤️OK杰克</div>
-            <div class="features">
-                <div class="feature" data-link="http://ok321.top/tv">
-                    <h4>内部接口① 推荐使用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://ok321.top/tv</span></p>
-                    </div>
+            <!-- 分类 2 -->
+            <div class="category">
+                <div class="category-title">
+                    <i class="fas fa-heart" style="margin-right: 10px;"></i>  🐮 王二小放牛娃
                 </div>
-                <div class="feature" data-link="https://10936.kstore.space/tv">
-                    <h4>内部接口② 备用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://10936.kstore.space/tv</span></p>
+                <div class="features">
+                    <div class="feature" data-link="https://9280.kstore.space/wex.json">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🔥 主接口 <span class="recommend-badge">推荐</span></h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://9280.kstore.space/wex.json</span></p>
+                        </div>
                     </div>
-                </div>
-                <div class="feature" data-link="http://ok321.top/ok">
-                    <h4>外部接口③</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://ok321.top/ok</span></p>
+                    <div class="feature" data-link="http://tvbox.王二小放牛娃.top">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 📽️ 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://tvbox.王二小放牛娃.top</span></p>
+                        </div>
                     </div>
-                </div>
-                <div class="feature" data-link="https://10936.kstore.space/ok">
-                    <h4>外部接口④ 备用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://10936.kstore.space/ok</span></p>
+                    <div class="feature" data-link="http://tv.999888987.xyz">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 📺 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://tv.999888987.xyz</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="http://tvbox.xn--4kq62z5rby2qupq9ub.top">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 💻 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://tvbox.xn--4kq62z5rby2qupq9ub.top</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 分类 3 -->
-        <div class="category">
-            <div class="category-title">❤️饭太硬</div>
-            <div class="features">
-                <div class="feature" data-link="http://www.xn--sss604efuw.com/tv/">
-                    <h4>主用接口 推荐使用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://www.xn--sss604efuw.com/tv/</span></p>
+            <!-- 分类 3 -->
+            <div class="category">
+                <div class="category-title">
+                    <i class="fas fa-heart" style="margin-right: 10px;"></i> 🧸 饭太硬
+                </div>
+                <div class="features">
+                    <div class="feature" data-link="http://www.饭太硬.com/tv/">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🔥 主接口 <span class="recommend-badge">推荐</span></h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://www.饭太硬.com/tv/</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 分类 4 -->
-        <div class="category">
-            <div class="category-title">❤️王二小放牛娃</div>
-            <div class="features">
-                <div class="feature" data-link="https://9280.kstore.space/wex.json">
-                    <h4>防屏蔽接口① 推荐使用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">https://9280.kstore.space/wex.json</span></p>
-                    </div>
+            <!-- 分类 4 -->
+            <div class="category">
+                <div class="category-title">
+                    <i class="fas fa-heart" style="margin-right: 10px;"></i> 🐱 肥猫肥猫
                 </div>
-                <div class="feature" data-link="http://tvbox.王二小放牛娃.top">
-                    <h4>备用接口②</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://tvbox.王二小放牛娃.top</span></p>
-                    </div>
-                </div>
-                <div class="feature" data-link="http://tv.999888987.xyz">
-                    <h4>备用接口③</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://tv.999888987.xyz</span></p>
-                    </div>
-                </div>
-                <div class="feature" data-link="http://tvbox.xn--4kq62z5rby2qupq9ub.top">
-                    <h4>备用接口④</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://tvbox.xn--4kq62z5rby2qupq9ub.top</span></p>
+                <div class="features">
+                    <div class="feature" data-link="http://肥猫.com/">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🔥 主接口 <span class="recommend-badge">推荐</span></h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://肥猫.com/</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 分类 5 -->
-        <div class="category">
-            <div class="category-title">❤️肥猫肥猫</div>
-            <div class="features">
-                <div class="feature" data-link="http://肥猫.com/">
-                    <h4>主用接口 推荐使用</h4>
-                    <div class="link-content">
-                        <p>地址：<span class="link-text">http://肥猫.com/</span></p>
+            <!-- 分类 5 -->
+            <div class="category">
+                <div class="category-title">
+                    <i class="fas fa-heart" style="margin-right: 10px;"></i> 🌟 小米
+                </div>
+                <div class="features">
+                    <div class="feature" data-link="https://mpanso.me/DEMO.json">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🔥 主接口 <span class="recommend-badge">推荐</span></h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://mpanso.me/DEMO.json</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="https://tv.mpanso.me/DEMO.json">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🎪 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://tv.mpanso.me/DEMO.json</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="https://mi.mpanso.me/DEMO.json">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🍡 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">https://mi.mpanso.me/DEMO.json</span></p>
+                        </div>
+                    </div>
+                    <div class="feature" data-link="http://www.mpanso.com/%E5%B0%8F%E7%B1%B3/DEMO.json">
+                        <h4><i class="fas fa-star" style="color: var(--warning-color); margin-right: 8px;"></i> 🍩 备用接口</h4>
+                        <div class="link-content">
+                            <p>地址：<span class="link-text">http://www.mpanso.com/%E5%B0%8F%E7%B1%B3/DEMO.json</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 使用指南内容区域 -->
-    <div class="content-section" id="guide-section">
-        <h2>❤️使用指南</h2><br>
-            <li>复制点播接口界面中下方卡片中要使用的地址。</li><br>
-            <li>打开影视软件页面。</li><br>
-            <li>点击设置 进入界面 点击点播栏空白处 出现二维码以及填写地址的页面。</li><br>
-            <li>手机打开微信扫一扫或者浏览器 只要能扫描二维码的就可以。</li><br>
-            <li>复制接口链接进去 点击确定/使用 电视即会显示手机添加进去的点播地址。</li><br>
-            <li>影视软件返回主页面 即可享用。</li><br>
-         </p><li><a href="#" id="openGuideModal">电视端APP使用教程（图片）</a></p><br>
-                 <li><a href="#" id="openSecondModal">手机端APP使用教程（图片）</a><br>
-        </ul>
-    </div>
+        <!-- 使用指南内容 -->
+        <section id="guide" class="content-section">
+            <h2>🌈 使用指南</h2>
+            <ul class="guide-list">
+                <li>复制点播接口界面中下方卡片中要使用的地址</li>
+                <li>打开影视App页面</li>
+                <li>点击<设置> 点击<点播> 弹出二维码页面</li>
+                <li>打开手机微信扫一扫或者浏览器扫一扫</li>
+                <li>扫描App软件的二维码 粘贴刚才复制的接口链接 之后点击确定 </li>
+                <li>影视软件返回主页面便可观看</li>
+            </ul>
+            
+            <a href="#" id="openGuideModal" class="guide-link">
+                <i class="fas fa-tv"></i> 电视端APP使用教程（图片）
+            </a>
+            <a href="#" id="openSecondModal" class="guide-link">
+                <i class="fas fa-mobile-alt"></i> 手机端APP使用教程（图片）
+            </a>
+        </section>
 
-    <!-- 第一个模态框 -->
+        <!-- 软件下载内容 -->
+        <section id="software" class="content-section">
+            <h2>🤖 OK影视</h2>
+            <p style="color: var(--danger-color); font-weight: 600; margin-bottom: 20px;">
+                <i class="fas fa-exclamation-circle"></i> 不支持IOS系统！
+            </p>
+            <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高、功能更多。例如：搜索弹幕、AI去广告等等...</p>
+            <p style="margin: 20px 0;">下载链接里面的手机版App不支持IOS系统！仅支持Android（安卓系统）。</p>
+            <p>安卓(Android)电视机可直接下载Pro版本放进U盘 利用U盘插入电视机进行安装 或者下载到手机 利用电视端的远程管理App上传</p>
+            
+            <ul class="download-list" style="margin-top: 40px;">
+                <li>
+                    <a href="https://drive.uc.cn/s/01bc89c897034" target="_blank">
+                        <i class="fab fa-google-drive" style="color: var(--primary-color);"></i>  UC 网盘下载
+                    </a>
+                </li>
+                <li>
+                    <a href="https://pan.quark.cn/s/6fead79bddaf" target="_blank">
+                        <i class="fas fa-cloud-download-alt" style="color: var(--primary-color);"></i> 夸克网盘下载
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- 模态框1 - 电视端教程 -->
     <div id="guideModal" class="modal">
         <div class="modal-content">
             <span id="closeGuideModal" class="close">&times;</span>
-            <h2>电视端APP使用教程（图片）</h2><br>
-            第一步：<img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="图片" class="zoomable-image"><br>
-            第二步：<img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="图片" class="zoomable-image"><br>
-            第三步：<img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="图片" class="zoomable-image"><br>
-            第四步：<img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="图片" class="zoomable-image"><br>
-            <p>最后返回软件主页面即可观看想看的影视以及剧集。</p>
+            <h2><i class="fas fa-tv" style="margin-right: 10px;"></i> 电视端APP使用教程</h2>
+            <p>第一步：<img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="教程第一步"></p>
+            <p>第二步：<img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="教程第二步"></p>
+            <p>第三步：<img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="教程第三步"></p>
+            <p>第四步：<img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="教程第四步"></p>
+            <p style="text-align: center; margin-top: 20px; font-weight: 600; color: var(--primary-color);">
+                <i class="fas fa-check-circle"></i> 最后返回软件主页面即可观看想看的影视以及剧集。
+            </p>
         </div>
     </div>
 
-    <!-- 第二个模态框 -->
+    <!-- 模态框2 - 手机端教程 -->
     <div id="secondModal" class="modal">
         <div class="modal-content">
             <span id="closeSecondModal" class="close">&times;</span>
-            <h2>手机端APP使用教程（图片）</h2><br>
-            第一步：<img src="https://echoiusion.github.io/phonejx/phone1.png" alt="图片" class="zoomable-image"><br>
-            第二步：<img src="https://echoiusion.github.io/phonejx/phone2.png" alt="图片" class="zoomable-image"><br>
-            第三步：<img src="https://echoiusion.github.io/phonejx/phone3.png" alt="图片" class="zoomable-image"><br>
-            <p>最后返回软件主页面即可观看想看的影视以及剧集。</p>
+            <h2><i class="fas fa-mobile-alt" style="margin-right: 10px;"></i> 手机端APP使用教程</h2>
+            <p>第一步：<img src="https://echoiusion.github.io/phonejx/phone1.png" alt="手机教程第一步"></p>
+            <p>第二步：<img src="https://echoiusion.github.io/phonejx/phone2.png" alt="手机教程第二步"></p>
+            <p>第三步：<img src="https://echoiusion.github.io/phonejx/phone3.png" alt="手机教程第三步"></p>
+            <p style="text-align: center; margin-top: 20px; font-weight: 600; color: var(--primary-color);">
+                <i class="fas fa-check-circle"></i> 最后返回软件主页面即可观看想看的影视以及剧集。
+            </p>
         </div>
     </div>
 
-    <!-- 全屏图片容器 -->
-    <div id="fullscreen-image-container">
-        <img id="fullscreen-image" src="" alt="全屏图片">
-    </div>
-
-    <!-- 第二个全屏图片容器 -->
-    <div id="fullscreen-image-container-2">
-        <img id="fullscreen-image-2" src="" alt="全屏图片">
-    </div>
-
-    <!-- 软件下载内容区域 -->
-    <div class="content-section" id="software-section">
-        <h2>❤️OK影视安卓(Android)软件下载　不支持IOS系统！</h2><br>
-        <p>推荐使用链接内的Pro版本，比普通版好用，兼容性更高、功能更多。例如： 搜索弹幕、AI去广告等等...</p></li><br>
-        <p>下载链接里面的手机版App不支持IOS系统！仅支持Android（安卓系统）。</p></li><br>
-        <p>安卓(Android)电视机，例如：小米电视、海信电视等可直接下载Pro版本放进U盘，利用U盘插入电视机进行安装，亦或者下载到手机，利用电视端的远程管理进行传输上传。</p></li><br>
-            <li>UC 网盘：<a href="https://drive.uc.cn/s/01bc89c897034" target="_blank" class="link-text">https://drive.uc.cn/s/01bc89c897034</a></li><br>
-            <li>夸克 网盘：<a href="https://pan.quark.cn/s/6fead79bddaf" target="_blank" class="link-text">https://pan.quark.cn/s/6fead79bddaf</a></li><br>
-        </ul>
-    </div>
-
-    <!-- 底部 -->
+    <!-- 页脚 -->
     <footer>
-        本站所有内容来自互联网收集，仅供用于学习和交流，请勿用于商业用途。如有侵权、不妥之处，将第一时间删除！
-        <div class="link-content">
-            Copyright © 2025 劉很Cool
+        <div class="container footer-content">
+            <p>本站所有内容来自互联网收集，仅供用于学习和交流，请勿用于商业用途。如有侵权、不妥之处，将第一时间删除！</p>
+            <p class="copyright">Copyright © 2025 劉很Cool</p>
         </div>
     </footer>
 
     <script>
-        // 获取按钮和内容区域
-        const vodButton = document.getElementById('vod-button');
-        const guideButton = document.getElementById('guide-button');
-        const softwareButton = document.getElementById('software-button');
+        // 选项卡功能
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const contentSections = document.querySelectorAll('.content-section');
 
-        const vodSection = document.getElementById('vod-section');
-        const guideSection = document.getElementById('guide-section');
-        const softwareSection = document.getElementById('software-section');
-
-        // 默认显示点播点播内容
-        vodSection.style.display = 'block';
-
-        // 点播点播按钮点击事件
-        vodButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            vodSection.style.display = 'block';
-            guideSection.style.display = 'none';
-            softwareSection.style.display = 'none';
-        });
-
-        // 使用指南按钮点击事件
-        guideButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            vodSection.style.display = 'none';
-            guideSection.style.display = 'block';
-            softwareSection.style.display = 'none';
-        });
-
-        // 软件下载按钮点击事件
-        softwareButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            vodSection.style.display = 'none';
-            guideSection.style.display = 'none';
-            softwareSection.style.display = 'block';
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有active类
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                contentSections.forEach(section => section.classList.remove('active'));
+                
+                // 添加active类到当前按钮和对应内容区
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
         });
 
         // 分类展开/收起功能
         const categories = document.querySelectorAll('.category');
-        let currentExpandedCategory = null;
-
+        
         categories.forEach(category => {
             const title = category.querySelector('.category-title');
             const features = category.querySelector('.features');
-
-            title.addEventListener('click', (e) => {
-                e.stopPropagation();
-
-                if (title.classList.contains('expanded')) {
+            
+            title.addEventListener('click', () => {
+                const isExpanded = title.classList.contains('expanded');
+                
+                // 关闭所有其他分类
+                categories.forEach(cat => {
+                    if (cat !== category) {
+                        cat.querySelector('.category-title').classList.remove('expanded');
+                        cat.querySelector('.features').style.display = 'none';
+                    }
+                });
+                
+                // 切换当前分类
+                if (isExpanded) {
                     title.classList.remove('expanded');
                     features.style.display = 'none';
-                    currentExpandedCategory = null;
                 } else {
-                    if (currentExpandedCategory) {
-                        currentExpandedCategory.classList.remove('expanded');
-                        currentExpandedCategory.nextElementSibling.style.display = 'none';
-                    }
-
                     title.classList.add('expanded');
-                    features.style.display = 'flex';
-                    currentExpandedCategory = title;
+                    features.style.display = 'grid';
                 }
             });
         });
 
-        // 点击卡片复制链接到剪切板
-        const features = document.querySelectorAll('.feature');
-        features.forEach(feature => {
-            feature.addEventListener('click', (e) => {
-                const link = feature.getAttribute('data-link');
-                const title = feature.querySelector('h4').innerText; // 获取小卡片的标题
-                if (link) {
-                    // 使用备用方法复制链接
-                    copyToClipboard(link, title);
-                }
-            });
-        });
-
-        // 复制到剪切板的备用方法
-        function copyToClipboard(text, title) {
-            // 创建一个临时的 textarea 元素
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed'; // 避免页面滚动
-            document.body.appendChild(textarea);
-            textarea.select();
-
-            try {
-                // 尝试使用 execCommand 复制
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    alert(`${title}：已复制`); // 显示复制成功和小卡片标题
-                } else {
-                    throw new Error('复制失败');
-                }
-            } catch (err) {
-                // 如果 execCommand 失败，提示用户手动复制
-                alert('复制失败，请手动复制链接：' + text);
-            } finally {
-                // 移除临时的 textarea 元素
-                document.body.removeChild(textarea);
-            }
+        // 复制成功提示功能
+        const copyNotification = document.getElementById('copyNotification');
+        
+        function showCopyNotification() {
+            copyNotification.classList.add('show');
+            setTimeout(() => {
+                copyNotification.classList.remove('show');
+            }, 2000);
         }
 
-        // 获取模态框元素
+        // 点击卡片复制链接
+        const features = document.querySelectorAll('.feature');
+        
+        features.forEach(feature => {
+            feature.addEventListener('click', () => {
+                const link = feature.getAttribute('data-link');
+                const title = feature.querySelector('h4').textContent;
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(link)
+                        .then(() => {
+                            showCopyNotification();
+                        })
+                        .catch(() => {
+                            fallbackCopy(link);
+                        });
+                } else {
+                    fallbackCopy(link);
+                }
+            });
+        });
+        
+        function fallbackCopy(link) {
+            const textarea = document.createElement('textarea');
+            textarea.value = link;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopyNotification();
+            } catch (err) {
+                alert(`无法自动复制，请手动复制链接：\n\n${link}`);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        // 模态框功能
         const guideModal = document.getElementById('guideModal');
         const secondModal = document.getElementById('secondModal');
         const openGuideModal = document.getElementById('openGuideModal');
         const openSecondModal = document.getElementById('openSecondModal');
         const closeGuideModal = document.getElementById('closeGuideModal');
         const closeSecondModal = document.getElementById('closeSecondModal');
-
-        // 点击触发文字，显示第一个模态框
+        
+        // 打开模态框
         openGuideModal.addEventListener('click', (e) => {
-            e.preventDefault(); // 阻止默认链接行为
-            guideModal.style.display = 'flex'; // 显示模态框
+            e.preventDefault();
+            guideModal.style.display = 'flex';
         });
-
-        // 点击关闭按钮，隐藏第一个模态框
-        closeGuideModal.addEventListener('click', () => {
-            guideModal.style.display = 'none'; // 隐藏模态框
-        });
-
-        // 点击触发文字，显示第二个模态框
+        
         openSecondModal.addEventListener('click', (e) => {
-            e.preventDefault(); // 阻止默认链接行为
-            secondModal.style.display = 'flex'; // 显示模态框
+            e.preventDefault();
+            secondModal.style.display = 'flex';
         });
-
-        // 点击关闭按钮，隐藏第二个模态框
+        
+        // 关闭模态框
+        closeGuideModal.addEventListener('click', () => {
+            guideModal.style.display = 'none';
+        });
+        
         closeSecondModal.addEventListener('click', () => {
-            secondModal.style.display = 'none'; // 隐藏模态框
+            secondModal.style.display = 'none';
         });
-
-        // 点击模态框外部，隐藏模态框
+        
+        // 点击模态框外部关闭
         window.addEventListener('click', (e) => {
             if (e.target === guideModal) {
-                guideModal.style.display = 'none'; // 隐藏模态框
+                guideModal.style.display = 'none';
             }
             if (e.target === secondModal) {
-                secondModal.style.display = 'none'; // 隐藏模态框
+                secondModal.style.display = 'none';
             }
         });
 
-        // 图片点击放大功能
-        const zoomableImages = document.querySelectorAll('.zoomable-image');
-        const fullscreenImageContainer = document.getElementById('fullscreen-image-container');
-        const fullscreenImage = document.getElementById('fullscreen-image');
+        // 粒子背景效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // 随机透明度
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // 随机动画持续时间
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // 随机延迟
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
 
-        zoomableImages.forEach(img => {
-            img.addEventListener('click', () => {
-                fullscreenImage.src = img.src; // 设置全屏图片的src
-                fullscreenImageContainer.style.display = 'flex'; // 显示全屏容器
-            });
-        });
-
-        // 点击全屏图片或外部区域关闭
-        fullscreenImageContainer.addEventListener('click', () => {
-            fullscreenImageContainer.style.display = 'none'; // 隐藏全屏容器
-        });
-
-        // 禁用点击时的焦点行为
-        document.querySelectorAll('.category-title, .feature').forEach(element => {
-            element.addEventListener('mousedown', (e) => {
-                e.preventDefault(); // 阻止默认的焦点行为
-            });
-        });
+        // 页面加载完成后创建粒子
+        window.addEventListener('load', createParticles);
     </script>
 </body>
 </html>
