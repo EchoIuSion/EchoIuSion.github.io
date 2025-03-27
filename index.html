@@ -104,53 +104,57 @@
             padding: 0 10px;
         }
 
-        .tab-btn {
-            padding: 10px 20px;
-            background-color: white;
-            border: 1px solid rgba(94, 114, 228, 0.2);
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--box-shadow);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            flex: 1 1 auto;
-            min-width: 100px;
-            max-width: 150px;
-        }
+/* 完全重写选项卡按钮样式 */
+.tab-btn {
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid rgba(94, 114, 228, 0.2);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 auto;
+    min-width: 100px;
+    max-width: 150px;
+    /* 确保背景绘制区域包含边框 */
+    background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+}
 
-        .tab-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            z-index: -1;
-            opacity: 0;
-            transition: var(--transition);
-            border-radius: 50px;
-        }
+/* 完全重写激活状态 */
+.tab-btn.active {
+    color: white !important;
+    background: var(--gradient) !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 15px rgba(94, 114, 228, 0.3) !important;
+    /* 强制覆盖所有可能继承的样式 */
+    background-image: var(--gradient) !important;
+    background-origin: border-box !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    /* 确保覆盖整个区域 */
+    padding: 10px 20px !important;
+    margin: 0 !important;
+}
 
-        .tab-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(94, 114, 228, 0.15);
-        }
+/* 完全移除所有伪元素 */
+.tab-btn::before,
+.tab-btn::after {
+    content: none !important;
+    display: none !important;
+}
 
-        .tab-btn.active {
-            color: white;
-            background: var(--gradient);
-            border-color: transparent;
-        }
-
-        .tab-btn.active::before {
-            opacity: 1;
-        }
+/* 修复悬停状态 */
+.tab-btn:hover:not(.active) {
+    background-color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(94, 114, 228, 0.15);
+}
 
         /* 内容区域 */
         .content-section {
@@ -803,11 +807,11 @@
         <section id="guide" class="content-section">
             <h2>🌈 使用指南</h2>
             <ul class="guide-list">
-                <li><span style="color: red;">复制</span>点播接口界面中要使用的地址</li>
+                <li>复制<点播接口>界面中要使用的地址</li>
                 <li>打开影视App页面</li>
-                <li>点击[设置] 最上方[点播]并点击 弹出二维码页面</li>
-                <li>打开[手机微信扫一扫] 或者[浏览器扫一扫]</li>
-                <li>扫描App显示出来的二维码  粘贴刚才复制的接口链接 之后点击确定 </li>
+                <li>点击<设置>  找到最上方<点播>并点击 弹出二维码页面</li>
+                <li>打开<手机微信扫一扫>或者<浏览器扫一扫></li>
+                <li>扫描App显示出来的<二维码>  粘贴刚才复制的接口链接 之后点击确定 </li>
                 <li>影视软件返回主页面便可观看</li>
             </ul>
             
