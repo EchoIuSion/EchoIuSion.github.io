@@ -78,6 +78,36 @@
             }
         }
 
+        /* 小星星背景效果 */
+        .stars-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
         /* 布局样式 */
         .container {
             width: 100%;
@@ -566,28 +596,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, rgba(108, 92, 231, 0.08) 0%, rgba(0, 206, 201, 0.04) 100%);
-            z-index: -1;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
             z-index: -2;
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
         }
 
         /* 浮动粒子效果 */
@@ -688,6 +697,9 @@
 
     <!-- 主要内容区 -->
     <section class="hero">
+        <!-- 星星背景 -->
+        <div class="stars-bg" id="starsBg"></div>
+        
         <!-- 粒子背景 -->
         <div class="particles" id="particles"></div>
         
@@ -836,7 +848,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!-- 分类 5 -->
             <div class="category">
@@ -1161,10 +1172,40 @@
             }
         }
 
-        // 页面加载完成后创建粒子和大雪花
+        // 创建小星星背景
+        function createStars() {
+            const starsContainer = document.getElementById('starsBg');
+            const starCount = 30; // 星星数量
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小 (1-4px)
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机动画延迟
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                
+                // 随机动画持续时间
+                const duration = Math.random() * 2 + 2;
+                star.style.animationDuration = `${duration}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // 页面加载完成后创建所有效果
         window.addEventListener('load', function() {
             createParticles();
             createSnowflakes();
+            createStars();
         });
     </script>
 </body>
