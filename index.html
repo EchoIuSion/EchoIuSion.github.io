@@ -215,6 +215,43 @@
             content: '-';
         }
 
+        /* 分类样式 */
+        .category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            background: var(--gradient);
+            color: white;
+            padding: 16px 20px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.2);
+        }
+
+        /* 爱心图标样式 */
+        .category-title .fa-heart {
+            color: white;
+            transition: var(--transition);
+        }
+
+        .category-title.expanded .fa-heart {
+            color: #ff4757;
+            transform: scale(1.1);
+        }
+
+        .category-title:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(108, 92, 231, 0.3);
+        }
+
         /* 功能卡片 - 紧凑样式 */
         .features {
             display: none;
@@ -1097,5 +1134,6 @@
     </script>
 </body>
 </html>
+
 
 
