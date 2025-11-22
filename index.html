@@ -48,7 +48,7 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* 小星星背景效果 */
+        /* 小星星背景效果 - 优化版本 */
         .stars-bg {
             position: fixed;
             top: 0;
@@ -67,16 +67,18 @@
             animation: twinkle var(--star-duration, 3s) ease-in-out infinite;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             opacity: 0;
+            /* 使用transform3d开启GPU加速 */
+            transform: translate3d(0, 0, 0);
         }
 
         @keyframes twinkle {
             0%, 100% {
                 opacity: 0;
-                transform: scale(0.3);
+                transform: scale(0.3) translate3d(0, 0, 0);
             }
             50% {
                 opacity: var(--star-opacity, 1);
-                transform: scale(1.2);
+                transform: scale(1.2) translate3d(0, 0, 0);
             }
         }
 
@@ -128,7 +130,7 @@
             box-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
         }
 
-        /* 未来科技感背景 */
+        /* 未来科技感背景 - 优化版本 */
         .tech-bg {
             position: fixed;
             top: 0;
@@ -149,12 +151,14 @@
                 linear-gradient(rgba(108, 92, 231, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(108, 92, 231, 0.1) 1px, transparent 1px);
             background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+            /* 减少动画复杂度 */
+            animation: gridMove 40s linear infinite;
+            transform: translate3d(0, 0, 0);
         }
 
         @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            0% { transform: translate(0, 0) translate3d(0, 0, 0); }
+            100% { transform: translate(50px, 50px) translate3d(0, 0, 0); }
         }
 
         .floating-shapes {
@@ -171,7 +175,9 @@
             background: var(--gradient);
             opacity: 0.1;
             filter: blur(40px);
-            animation: float 15s ease-in-out infinite;
+            /* 简化动画，减少性能消耗 */
+            animation: float 25s ease-in-out infinite;
+            transform: translate3d(0, 0, 0);
         }
 
         .shape:nth-child(1) {
@@ -187,7 +193,7 @@
             height: 200px;
             top: 60%;
             left: 80%;
-            animation-delay: 5s;
+            animation-delay: 8s;
         }
 
         .shape:nth-child(3) {
@@ -195,12 +201,16 @@
             height: 250px;
             top: 80%;
             left: 20%;
-            animation-delay: 10s;
+            animation-delay: 15s;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.1); }
+            0%, 100% { 
+                transform: translateY(0) scale(1) translate3d(0, 0, 0);
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.05) translate3d(0, 0, 0);
+            }
         }
 
         /* 布局样式 */
@@ -284,6 +294,7 @@
             justify-content: center;
             gap: 10px;
             z-index: 1;
+            /* 在移动端禁用模糊效果 */
             backdrop-filter: blur(10px);
         }
 
@@ -326,6 +337,7 @@
             box-shadow: var(--box-shadow);
             display: none;
             border: 1px solid var(--glass-border);
+            /* 在移动端禁用模糊效果 */
             backdrop-filter: blur(10px);
         }
 
@@ -358,6 +370,7 @@
             transition: var(--transition);
             margin-bottom: 20px;
             border: 1px solid var(--glass-border);
+            /* 在移动端禁用模糊效果 */
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
@@ -435,6 +448,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            /* 在移动端禁用模糊效果 */
             backdrop-filter: blur(10px);
         }
 
@@ -800,8 +814,33 @@
             }
         }
 
-        /* 响应式设计 - 手机端 */
+        /* 响应式设计 - 手机端 - 性能优化 */
         @media (max-width: 767px) {
+            /* 禁用移动端的复杂背景动画 */
+            .grid-lines {
+                animation: none;
+                opacity: 0.3;
+            }
+            
+            .shape {
+                animation: none;
+                opacity: 0.05;
+            }
+            
+            /* 禁用移动端的模糊效果 */
+            .tab-btn,
+            .content-section,
+            .category-title,
+            .feature,
+            .modal-content,
+            .close,
+            .download-list li,
+            footer,
+            .copy-notification {
+                backdrop-filter: none !important;
+            }
+            
+            /* 移动端布局优化 */
             .hero {
                 padding: 60px 0 30px;
             }
@@ -1308,10 +1347,12 @@
 
     <!-- ========== JavaScript 代码开始 ========== -->
     <script>
-        // 创建小星星背景
+        // 创建小星星背景 - 优化版本
         function createStars() {
             const starsContainer = document.getElementById('starsBg');
-            const starCount = 200; // 星星数量，可以调整
+            // 根据设备性能调整星星数量
+            const isMobile = window.innerWidth <= 767;
+            const starCount = isMobile ? 50 : 100; // 手机端减少星星数量
             
             // 清空现有星星
             starsContainer.innerHTML = '';
