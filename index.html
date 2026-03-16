@@ -147,13 +147,13 @@ body::after {
 }
 .btn-ghost:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
 
+/* 移除了 btn-download 的蓝色背景样式，与其他按钮统一 */
 .btn-download {
-  background: linear-gradient(135deg, rgba(10,132,255,0.15), rgba(191,90,242,0.15));
-  border-color: rgba(10,132,255,0.4);
+  background: var(--bg-card); backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
 }
 .btn-download:hover {
-  border-color: rgba(10,132,255,0.8);
-  background: linear-gradient(135deg, rgba(10,132,255,0.25), rgba(191,90,242,0.25));
+  border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px);
 }
 
 .hero-scroll {
@@ -306,7 +306,20 @@ body::after {
 /* ─── SECTION HEADER ─── */
 .sec-header {
   margin-bottom: 40px;
-  display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  position: relative;
+  min-height: 100px;
+}
+.sec-header > div:first-child {
+  text-align: center;
+  flex: 1;
+}
+.sec-header .sec-count {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .sec-eyebrow {
   font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
@@ -708,7 +721,9 @@ footer {
 
   /* 内容区域 */
   .main { padding: 24px 12px 60px; }
-  .sec-header { margin-bottom: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .sec-header { margin-bottom: 24px; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .sec-header > div:first-child { text-align: center; }
+  .sec-header .sec-count { position: static; transform: none; margin-top: 8px; }
   .sec-title { font-size: 1.4rem; }
   .sec-eyebrow { font-size: .6rem; }
   .sec-desc { font-size: .8rem; }
@@ -869,7 +884,7 @@ footer {
         🐮 王二小 <span class="filter-count">5</span>
       </button>
       <button class="filter-btn" data-category="fan">
-        🧸 饭太硬 <span class="filter-count">6</span>
+        🍙饭太硬 <span class="filter-count">6</span>
       </button>
       <button class="filter-btn" data-category="mi">
         🍚 小米 <span class="filter-count">4</span>
@@ -889,7 +904,7 @@ footer {
         </div>
         <div class="card-body">
           <div class="link-row" onclick="copyUrl(this,'http://ok213.top/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">OK</div>
             <div class="link-url">http://ok213.top/tv</div>
             <span class="tag-recommend">推荐</span>
             <button class="copy-pill">复制</button>
@@ -900,7 +915,7 @@ footer {
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://ok521.top/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">OK</div>
             <div class="link-url">http://ok521.top/tv</div>
             <button class="copy-pill">复制</button>
           </div>
@@ -923,28 +938,28 @@ footer {
         </div>
         <div class="card-body">
           <div class="link-row" onclick="copyUrl(this,'https://9280.kstore.vip/newwex.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">王</div>
             <div class="link-url">https://9280.kstore.vip/newwex.json</div>
             <span class="tag-recommend">推荐</span>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://tvbox.王二小放牛娃.top')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">王</div>
             <div class="link-url">http://tvbox.王二小放牛娃.top</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://tv.999888987.xyz')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">王</div>
             <div class="link-url">http://tv.999888987.xyz</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'https://9280.kstore.vip/wex.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">王</div>
             <div class="link-url">https://9280.kstore.vip/wex.json</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://tv.999888123.xyz/')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">王</div>
             <div class="link-url">http://tv.999888123.xyz/</div>
             <button class="copy-pill">复制</button>
           </div>
@@ -962,33 +977,33 @@ footer {
         </div>
         <div class="card-body">
           <div class="link-row" onclick="copyUrl(this,'https://gitee.com/xxoooo/fan/raw/master/in.bmp')">
-            <div class="link-icon">Git</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
             <span class="tag-recommend">推荐</span>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://fty.333232.xyz/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">http://fty.333232.xyz/tv</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://fty.888484.xyz/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">http://fty.888484.xyz/tv</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://fty.xxooo.cf/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">http://fty.xxooo.cf/tv</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://www.饭太硬.art/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">http://www.饭太硬.art/tv</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'http://www.饭太硬.net/tv')">
-            <div class="link-icon">TV</div>
+            <div class="link-icon">饭</div>
             <div class="link-url">http://www.饭太硬.net/tv</div>
             <button class="copy-pill">复制</button>
           </div>
@@ -1006,23 +1021,23 @@ footer {
         </div>
         <div class="card-body">
           <div class="link-row" onclick="copyUrl(this,'https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">米</div>
             <div class="link-url">https://mitvbox.xyz/小米/DEMO.json</div>
             <span class="tag-recommend">推荐</span>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">米</div>
             <div class="link-url">https://zzzy.shop/小米/DEMO.json</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">米</div>
             <div class="link-url">https://miqk.cc/小米/DEMO.json</div>
             <button class="copy-pill">复制</button>
           </div>
           <div class="link-row" onclick="copyUrl(this,'https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json')">
-            <div class="link-icon">J</div>
+            <div class="link-icon">米</div>
             <div class="link-url">https://cnb.cool/…/mi.json</div>
             <button class="copy-pill">复制</button>
           </div>
@@ -1145,7 +1160,7 @@ footer {
             <div class="dl-icon">迅</div>
             <div class="dl-info">
               <h4>迅雷网盘</h4>
-              <p>提取码: ir74</p>
+              <p>稳定可靠</p>
             </div>
           </a>
         </div>
@@ -1175,7 +1190,7 @@ footer {
               <td><span class="compat-status no">✗ 不支持</span></td>
             </tr>
             <tr>
-              <td>🪟 Windows</td>
+              <td>💻Windows</td>
               <td><span class="compat-status no">✗ 不支持</span></td>
             </tr>
           </tbody>
