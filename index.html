@@ -1,1843 +1,1202 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>StreamVision · 影视接口导航</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --neon-blue:    #00D4FF;
-            --neon-purple:  #8B5CF6;
-            --neon-pink:    #EC4899;
-            --neon-cyan:    #06B6D4;
-            --deep-space:   #0A0E1A;
-            --space-dark:   #111827;
-            --space-mid:    #1F2937;
-            --star-white:   #F8FAFC;
-            --star-dim:     #94A3B8;
-            --glass-bg:     rgba(15, 23, 42, 0.6);
-            --glass-border: rgba(148, 163, 184, 0.1);
-            --glow-blue:    0 0 40px rgba(0, 212, 255, 0.4);
-            --glow-purple:  0 0 40px rgba(139, 92, 246, 0.4);
-            --glow-pink:    0 0 40px rgba(236, 72, 153, 0.4);
-            --radius:       20px;
-            --radius-sm:    12px;
-            --font-head:    'Orbitron', 'Noto Sans SC', sans-serif;
-            --font-body:    'Noto Sans SC', sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-body);
-            background: var(--deep-space);
-            color: var(--star-white);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ── Starfield Canvas ── */
-        #starfield {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ── Nebula Gradient Overlay ── */
-        .nebula-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
-            animation: nebulaShift 20s ease-in-out infinite;
-        }
-
-        @keyframes nebulaShift {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
-
-        /* ── Topbar ── */
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 14, 26, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid var(--glass-border);
-            height: 70px;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-family: var(--font-head);
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-        }
-
-        .logo-orb {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            box-shadow: var(--glow-blue);
-            animation: orbPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes orbPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
-            }
-            50% { 
-                transform: scale(1.2);
-                box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
-            }
-        }
-
-        .logo-sub {
-            font-size: 0.75rem;
-            color: var(--star-dim);
-            font-weight: 400;
-            letter-spacing: 1px;
-            -webkit-text-fill-color: var(--star-dim);
-        }
-
-        /* ── Hero Section ── */
-        .hero {
-            text-align: center;
-            padding: 100px 32px 70px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 10px 24px;
-            margin-bottom: 32px;
-            backdrop-filter: blur(10px);
-            animation: badgeFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes badgeFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .hero-badge-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 12px var(--neon-cyan);
-            animation: dotBlink 1.5s ease-in-out infinite;
-        }
-
-        @keyframes dotBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .hero-badge-text {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--neon-cyan);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .hero-title {
-            font-family: var(--font-head);
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .hero-title-line {
-            display: block;
-        }
-
-        .hero-title .gradient {
-            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-        }
-
-        .hero-title .gradient::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-            border-radius: 2px;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-        }
-
-        .hero-desc {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: var(--star-dim);
-            max-width: 560px;
-            margin: 0 auto 48px;
-            line-height: 1.9;
-            font-weight: 300;
-        }
-
-        /* ── Tabs ── */
-        .tabs-container {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            padding: 0 24px;
-        }
-
-        .tab-button {
-            padding: 14px 32px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            font-family: var(--font-head);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--star-dim);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-button::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tab-button span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .tab-button:hover {
-            border-color: var(--neon-blue);
-            color: var(--star-white);
-            transform: translateY(-3px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .tab-button:hover::before {
-            opacity: 0.15;
-        }
-
-        .tab-button.active {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            border-color: transparent;
-            color: white;
-            box-shadow: var(--glow-blue), 0 8px 30px rgba(0, 212, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        /* ── Main Content ── */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 32px 100px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .section-content {
-            display: none;
-            animation: fadeSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .section-content.active {
-            display: block;
-        }
-
-        @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ── Stats Cards ── */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 40px 0 32px;
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: 24px;
-            backdrop-filter: blur(15px);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .stat-card:hover::before {
-            opacity: 1;
-        }
-
-        .stat-card:hover {
-            border-color: var(--neon-blue);
-            transform: translateY(-4px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .stat-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            flex-shrink: 0;
-        }
-
-        .stat-icon.blue {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
-            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
-        }
-
-        .stat-icon.purple {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
-            box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.1);
-        }
-
-        .stat-icon.pink {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(0, 212, 255, 0.2));
-            box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.1);
-        }
-
-        .stat-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-value {
-            font-family: var(--font-head);
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--star-dim);
-            font-weight: 500;
-            margin-top: 6px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        /* ── Category Accordion ── */
-        .category-block {
-            margin-bottom: 16px;
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 22px 26px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-        }
-
-        .category-left {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .category-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            flex-shrink: 0;
-        }
-
-        .ci-blue { background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 212, 255, 0.1)); }
-        .ci-purple { background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)); }
-        .ci-pink { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(236, 72, 153, 0.1)); }
-        .ci-cyan { background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.1)); }
-
-        .category-name {
-            font-family: var(--font-head);
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .category-count {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--neon-cyan);
-            background: rgba(6, 182, 212, 0.15);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            padding: 4px 14px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
-        }
-
-        .category-arrow {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-
-        .category-header:hover {
-            border-color: var(--neon-blue);
-            transform: translateX(6px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .category-header:hover .category-arrow {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
-        }
-
-        .category-header.open {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
-            border-color: var(--neon-blue);
-            border-radius: var(--radius) var(--radius) 0 0;
-            box-shadow: var(--glow-blue);
-        }
-
-        .category-header.open .category-arrow {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            border-color: transparent;
-            transform: rotate(180deg);
-        }
-
-        .category-header.open .category-name {
-            color: var(--neon-cyan);
-        }
-
-        /* ── Interface Cards ── */
-        .interfaces-grid {
-            display: none;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 14px;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-top: none;
-            border-radius: 0 0 var(--radius) var(--radius);
-            backdrop-filter: blur(10px);
-        }
-
-        .interfaces-grid.open {
-            display: grid;
-        }
-
-        .interface-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .interface-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .interface-card:hover::before {
-            opacity: 1;
-        }
-
-        .interface-card:hover {
-            border-color: var(--neon-purple);
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: var(--glow-purple);
-        }
-
-        .interface-card:active {
-            transform: scale(0.98);
-        }
-
-        .card-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
-        }
-
-        .card-type {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--star-dim);
-        }
-
-        .card-type.main {
-            color: var(--neon-cyan);
-        }
-
-        .card-badge {
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .card-url {
-            background: rgba(0, 212, 255, 0.08);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 0.82rem;
-            color: var(--neon-cyan);
-            word-break: break-all;
-            line-height: 1.6;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            margin-bottom: 14px;
-        }
-
-        .card-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .copy-hint {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--star-dim);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.3s;
-        }
-
-        .interface-card:hover .copy-hint {
-            color: var(--neon-cyan);
-        }
-
-        .status-warn {
-            font-size: 0.72rem;
-            color: #F59E0B;
-            font-weight: 600;
-        }
-
-        /* ── Guide Section ── */
-        .guide-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            padding: 50px 0;
-        }
-
-        .section-tag {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--neon-cyan);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-tag::before {
-            content: '';
-            width: 24px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-            border-radius: 1px;
-        }
-
-        .guide-title {
-            font-family: var(--font-head);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 900;
-            line-height: 1.2;
-            letter-spacing: -1px;
-            margin-bottom: 32px;
-            text-transform: uppercase;
-        }
-
-        .guide-title .highlight {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .steps-list {
-            list-style: none;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 18px;
-            padding: 18px 0;
-            border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
-        }
-
-        .step-item:last-child {
-            border-bottom: none;
-        }
-
-        .step-number {
-            width: 36px;
-            height: 36px;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: white;
-            border-radius: 50%;
-            font-weight: 800;
-            font-size: 0.9rem;
-            font-family: var(--font-head);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--glow-blue);
-        }
-
-        .step-text {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            padding-top: 6px;
-            color: var(--star-dim);
-        }
-
-        .guide-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            padding-top: 8px;
-        }
-
-        .guide-link {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 22px 24px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            color: var(--star-white);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-        }
-
-        .guide-link:hover {
-            border-color: var(--neon-purple);
-            transform: translateX(10px);
-            box-shadow: var(--glow-purple);
-        }
-
-        .guide-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-
-        .gi-tv {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 212, 255, 0.05));
-            color: var(--neon-cyan);
-        }
-
-        .gi-phone {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
-            color: var(--neon-purple);
-        }
-
-        .guide-content strong {
-            display: block;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: 0.3px;
-        }
-
-        .guide-content span {
-            font-size: 0.8rem;
-            color: var(--star-dim);
-        }
-
-        .guide-arrow {
-            margin-left: auto;
-            color: var(--star-dim);
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .guide-link:hover .guide-arrow {
-            color: var(--neon-purple);
-            transform: translateX(6px);
-        }
-
-        .tip-box {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(236, 72, 153, 0.3);
-            border-radius: var(--radius-sm);
-            padding: 18px 20px;
-            font-size: 0.88rem;
-            line-height: 1.8;
-            color: var(--star-dim);
-            margin-top: 18px;
-        }
-
-        .tip-box strong {
-            color: var(--neon-pink);
-        }
-
-        /* ── Software Section ── */
-        .software-layout {
-            display: grid;
-            grid-template-columns: 6fr 4fr;
-            gap: 60px;
-            padding: 50px 0;
-        }
-
-        .software-title {
-            font-family: var(--font-head);
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .software-title .highlight {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .software-sub {
-            font-size: 0.95rem;
-            color: var(--star-dim);
-            line-height: 1.9;
-            margin-bottom: 36px;
-        }
-
-        .download-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .download-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 20px 24px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            color: var(--star-white);
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(15px);
-        }
-
-        .download-item:hover {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            border-color: transparent;
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: var(--glow-blue), 0 12px 40px rgba(0, 212, 255, 0.3);
-        }
-
-        .download-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(0, 212, 255, 0.15);
-            color: var(--neon-cyan);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            font-weight: 700;
-            transition: all 0.3s;
-            flex-shrink: 0;
-        }
-
-        .download-item:hover .download-icon {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-        }
-
-        .download-arrow {
-            margin-left: auto;
-            font-size: 0.9rem;
-            color: var(--star-dim);
-            transition: all 0.3s;
-        }
-
-        .download-item:hover .download-arrow {
-            color: white;
-            transform: translateX(6px);
-        }
-
-        .warning-box {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: var(--radius-sm);
-            padding: 22px;
-            margin-bottom: 20px;
-        }
-
-        .warning-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #F59E0B;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .warning-text {
-            font-size: 0.88rem;
-            line-height: 1.85;
-            color: #FCD34D;
-        }
-
-        .compatibility-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            background: var(--glass-border);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-        }
-
-        .compat-item {
-            background: var(--glass-bg);
-            padding: 20px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .compat-icon {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-        }
-
-        .compat-name {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: var(--star-dim);
-            text-transform: uppercase;
-        }
-
-        .compat-status {
-            font-size: 0.78rem;
-            font-weight: 700;
-            margin-top: 6px;
-        }
-
-        .status-yes { color: #10B981; }
-        .status-no { color: var(--neon-pink); }
-
-        /* ── Toast Notification ── */
-        .toast-notification {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: white;
-            border-radius: 50px;
-            padding: 16px 32px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        .toast-notification.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .toast-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-
-        /* ── Modal ── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 14, 26, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-overlay.open {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--space-dark);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            width: 95%;
-            max-width: 780px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 42px;
-            box-shadow: 0 32px 80px rgba(0, 212, 255, 0.2);
-            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.92) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(0, 212, 255, 0.15);
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
-            color: var(--neon-cyan);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: white;
-            border-color: transparent;
-            box-shadow: var(--glow-blue);
-        }
-
-        .modal-header {
-            font-family: var(--font-head);
-            font-size: 1.6rem;
-            font-weight: 900;
-            margin-bottom: 32px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .modal-step {
-            margin-bottom: 28px;
-        }
-
-        .modal-step-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--neon-cyan);
-            margin-bottom: 12px;
-        }
-
-        .modal-step img {
-            width: 100%;
-            border-radius: 14px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .modal-complete {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--neon-cyan);
-            margin-top: 20px;
-        }
-
-        /* ── Footer ── */
-        footer {
-            background: rgba(10, 14, 26, 0.9);
-            border-top: 1px solid var(--glass-border);
-            padding: 32px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(15px);
-        }
-
-        .footer-text {
-            font-size: 0.82rem;
-            color: var(--star-dim);
-            line-height: 1.8;
-        }
-
-        .footer-brand {
-            font-family: var(--font-head);
-            font-weight: 900;
-            font-size: 1rem;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 768px) {
-            .topbar {
-                padding: 0 20px;
-                height: 60px;
-            }
-
-            .logo-sub {
-                display: none;
-            }
-
-            .hero {
-                padding: 60px 20px 50px;
-            }
-
-            main {
-                padding: 0 20px 80px;
-            }
-
-            .stats-row {
-                grid-template-columns: 1fr;
-                gap: 14px;
-                padding: 30px 0 24px;
-            }
-
-            .interfaces-grid {
-                grid-template-columns: 1fr;
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .guide-layout,
-            .software-layout {
-                grid-template-columns: 1fr;
-                gap: 36px;
-                padding: 36px 0;
-            }
-
-            .guide-title,
-            .software-title {
-                font-size: 1.8rem;
-            }
-
-            footer {
-                padding: 24px 20px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 50px 16px 40px;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-                letter-spacing: -0.5px;
-            }
-
-            .tabs-container {
-                gap: 10px;
-            }
-
-            .tab-button {
-                padding: 12px 20px;
-                font-size: 0.8rem;
-            }
-
-            .category-header {
-                padding: 18px 20px;
-            }
-
-            .category-name {
-                font-size: 1rem;
-            }
-
-            .category-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 1.3rem;
-            }
-
-            .interface-card {
-                padding: 16px;
-            }
-
-            .card-url {
-                font-size: 0.75rem;
-            }
-
-            .modal-content {
-                padding: 24px 18px;
-            }
-
-            .modal-header {
-                font-size: 1.2rem;
-                margin-bottom: 24px;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .hero-title {
-                font-size: 1.7rem;
-            }
-
-            .tab-button {
-                padding: 10px 16px;
-                font-size: 0.75rem;
-            }
-
-            .stat-card {
-                padding: 18px;
-            }
-
-            .stat-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.4rem;
-            }
-        }
-
-        /* Touch devices - remove hover transforms */
-        @media (hover: none) and (pointer: coarse) {
-            .tab-button:hover,
-            .category-header:hover,
-            .interface-card:hover,
-            .guide-link:hover,
-            .download-item:hover,
-            .stat-card:hover {
-                transform: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>劉Ok · 影视接口导航</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════
+       CSS 变量 & Reset
+    ══════════════════════════════════ */
+    :root {
+      --bg:        #0D0E14;
+      --bg2:       #13141C;
+      --bg3:       #1A1B26;
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(99,209,255,0.35);
+      --text:      #E8EAF0;
+      --sub:       #7B8099;
+      --cyan:      #63D1FF;
+      --cyan-dim:  rgba(99,209,255,0.12);
+      --violet:    #A78BFA;
+      --violet-dim:rgba(167,139,250,0.12);
+      --pink:      #F472B6;
+      --pink-dim:  rgba(244,114,182,0.12);
+      --green:     #34D399;
+      --amber:     #FBBF24;
+      --red:       #F87171;
+      --glow-c:    0 0 22px rgba(99,209,255,0.45);
+      --glow-v:    0 0 22px rgba(167,139,250,0.45);
+      --glow-p:    0 0 22px rgba(244,114,182,0.45);
+      --r-sm:      10px;
+      --r-md:      16px;
+      --r-lg:      22px;
+      --font-head: 'Space Grotesk','Noto Sans SC',sans-serif;
+      --font-body: 'Noto Sans SC','Space Grotesk',sans-serif;
+      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body);
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* ══════════════════════════════════
+       背景粒子网格
+    ══════════════════════════════════ */
+    .grid-bg {
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(99,209,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,209,255,0.04) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 40%, transparent 100%);
+    }
+    .orb {
+      position:fixed; border-radius:50%; pointer-events:none;
+      filter:blur(110px); z-index:0;
+    }
+    .orb-1 { width:700px;height:700px; background:rgba(99,209,255,0.07); top:-200px; left:-150px; }
+    .orb-2 { width:500px;height:500px; background:rgba(167,139,250,0.09); bottom:-100px; right:-100px; }
+    .orb-3 { width:400px;height:400px; background:rgba(244,114,182,0.07); top:40%; left:40%; }
+
+    /* ══════════════════════════════════
+       导航栏
+    ══════════════════════════════════ */
+    nav {
+      position:sticky; top:0; z-index:200;
+      height:60px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 28px;
+      background:rgba(13,14,20,0.75);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo {
+      display:flex; align-items:center; gap:10px;
+      font-family:var(--font-head); font-weight:700; font-size:1.1rem;
+      color:var(--text); text-decoration:none; letter-spacing:-0.3px;
+    }
+    .nav-logo-icon {
+      width:32px; height:32px; border-radius:9px;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; box-shadow:var(--glow-c);
+      animation:iconPulse 3s ease-in-out infinite;
+    }
+    @keyframes iconPulse {
+      0%,100% { box-shadow:0 0 12px rgba(99,209,255,0.4); }
+      50%      { box-shadow:0 0 28px rgba(99,209,255,0.8); }
+    }
+    .nav-badge {
+      font-size:0.7rem; color:var(--sub); font-weight:500;
+      background:var(--bg3); border:1px solid var(--border);
+      padding:3px 10px; border-radius:20px;
+    }
+    .nav-status {
+      display:flex; align-items:center; gap:7px;
+      font-size:0.75rem; color:var(--green);
+    }
+    .status-dot {
+      width:7px; height:7px; border-radius:50%; background:var(--green);
+      animation:blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; box-shadow:0 0 6px var(--green); }
+      50%      { opacity:0.4; box-shadow:none; }
+    }
+
+    /* ══════════════════════════════════
+       Hero
+    ══════════════════════════════════ */
+    .hero {
+      position:relative; z-index:1;
+      padding:80px 28px 52px;
+      text-align:center;
+    }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(99,209,255,0.08);
+      border:1px solid rgba(99,209,255,0.2);
+      border-radius:50px; padding:6px 18px;
+      font-size:0.76rem; font-weight:700;
+      color:var(--cyan); letter-spacing:1px;
+      text-transform:uppercase; margin-bottom:28px;
+    }
+    .hero-eyebrow::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background:var(--cyan); flex-shrink:0;
+      box-shadow:0 0 8px var(--cyan);
+    }
+    .hero-h1 {
+      font-family:var(--font-head);
+      font-size:clamp(2.4rem,6.5vw,4.5rem);
+      font-weight:700; line-height:1.08;
+      letter-spacing:-2px; color:var(--text);
+      margin-bottom:20px;
+    }
+    .hero-h1 .gr-c { background:linear-gradient(135deg,var(--cyan),var(--violet)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-h1 .gr-p { background:linear-gradient(135deg,var(--pink),var(--amber)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-desc {
+      font-size:clamp(0.9rem,2vw,1.05rem);
+      color:var(--sub); max-width:480px; margin:0 auto 48px;
+      line-height:1.85;
+    }
+
+    /* ══════════════════════════════════
+       Tabs
+    ══════════════════════════════════ */
+    .tabs-row {
+      display:flex; justify-content:center; gap:6px;
+      padding:0 20px; flex-wrap:nowrap;
+      position:relative; z-index:1;
+    }
+    .tab-btn {
+      display:flex; align-items:center; gap:8px;
+      padding:11px 24px; border-radius:50px;
+      border:1px solid var(--border);
+      background:var(--bg3);
+      color:var(--sub); font-family:var(--font-head);
+      font-size:0.85rem; font-weight:600;
+      cursor:pointer; transition:all var(--transition);
+      white-space:nowrap;
+    }
+    .tab-btn:hover {
+      border-color:var(--cyan); color:var(--cyan);
+      background:var(--cyan-dim);
+    }
+    .tab-btn.active {
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      border-color:transparent; color:#fff;
+      box-shadow:var(--glow-c);
+    }
+    .tab-icon { font-size:0.9rem; }
+
+    /* ══════════════════════════════════
+       Main
+    ══════════════════════════════════ */
+    main {
+      position:relative; z-index:1;
+      max-width:1060px; margin:0 auto;
+      padding:0 24px 80px;
+    }
+    .section { display:none; }
+    .section.active {
+      display:block;
+      animation:sectionIn 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes sectionIn {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       Stats Bar
+    ══════════════════════════════════ */
+    .stats-bar {
+      display:flex; gap:12px; padding:36px 0 32px;
+      flex-wrap:nowrap; overflow-x:auto;
+      scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    }
+    .stats-bar::-webkit-scrollbar { display:none; }
+    .stat-card {
+      flex:1 1 140px; min-width:140px;
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--r-md); padding:18px 20px;
+      display:flex; align-items:center; gap:14px;
+      position:relative; overflow:hidden;
+      transition:border-color var(--transition);
+    }
+    .stat-card::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+      opacity:0; transition:opacity var(--transition);
+    }
+    .stat-card:hover { border-color:var(--border-hi); }
+    .stat-card:hover::after { opacity:1; }
+    .stat-icon2 {
+      width:38px; height:38px; border-radius:var(--r-sm);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; flex-shrink:0;
+    }
+    .si-c { background:var(--cyan-dim); }
+    .si-v { background:var(--violet-dim); }
+    .si-p { background:var(--pink-dim); }
+    .stat-val {
+      font-family:var(--font-head); font-size:1.65rem;
+      font-weight:700; line-height:1; color:var(--text);
+    }
+    .stat-val.c { color:var(--cyan); }
+    .stat-val.v { color:var(--violet); }
+    .stat-val.p { color:var(--pink); }
+    .stat-key { font-size:0.7rem; color:var(--sub); margin-top:4px; font-weight:500; }
+
+    /* ══════════════════════════════════
+       接口分组
+    ══════════════════════════════════ */
+    .group { margin-bottom:12px; }
+    .group-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 20px;
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--r-md);
+      cursor:pointer; user-select:none;
+      transition:all var(--transition);
+    }
+    .group-header:hover {
+      border-color:var(--border-hi);
+      background:rgba(99,209,255,0.04);
+    }
+    .group-header.open {
+      border-color:var(--border-hi);
+      border-radius:var(--r-md) var(--r-md) 0 0;
+      background:rgba(99,209,255,0.06);
+    }
+    .gh-left { display:flex; align-items:center; gap:14px; }
+    .group-avatar {
+      width:38px; height:38px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.15rem; flex-shrink:0;
+    }
+    .ga-1 { background:linear-gradient(135deg,#1E293B,#334155); border:1px solid rgba(99,209,255,0.25); }
+    .ga-2 { background:linear-gradient(135deg,#1E1B30,#2E2555); border:1px solid rgba(167,139,250,0.25); }
+    .ga-3 { background:linear-gradient(135deg,#1E1B2E,#312244); border:1px solid rgba(244,114,182,0.25); }
+    .ga-4 { background:linear-gradient(135deg,#0F2218,#134E2A); border:1px solid rgba(52,211,153,0.25); }
+    .group-name {
+      font-family:var(--font-head); font-size:0.97rem; font-weight:700; color:var(--text);
+    }
+    .group-count {
+      font-size:0.68rem; font-weight:700; letter-spacing:0.5px;
+      color:var(--cyan); background:var(--cyan-dim);
+      border:1px solid rgba(99,209,255,0.2);
+      padding:2px 9px; border-radius:20px;
+    }
+    .group-chevron {
+      width:30px; height:30px; border-radius:50%;
+      background:var(--bg3); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.7rem; color:var(--sub);
+      transition:all 0.25s;
+    }
+    .group-header.open .group-chevron {
+      background:var(--cyan-dim); border-color:var(--border-hi);
+      color:var(--cyan); transform:rotate(180deg);
+    }
+
+    /* ══════════════════════════════════
+       接口列表
+    ══════════════════════════════════ */
+    .link-panel {
+      display:none;
+      flex-direction:column; gap:0;
+      border:1px solid var(--border-hi);
+      border-top:none;
+      border-radius:0 0 var(--r-md) var(--r-md);
+      overflow:hidden;
+    }
+    .link-panel.open { display:flex; }
+    .link-row {
+      display:grid;
+      grid-template-columns: 80px 1fr 90px 90px;
+      align-items:center;
+      padding:13px 20px; gap:16px;
+      background:var(--bg);
+      border-bottom:1px solid var(--border);
+      cursor:pointer; transition:background var(--transition);
+      position:relative; overflow:hidden;
+    }
+    .link-row:last-child { border-bottom:none; }
+    .link-row::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+      background:linear-gradient(180deg,var(--cyan),var(--violet));
+      transform:scaleY(0); transform-origin:center;
+      transition:transform var(--transition);
+    }
+    .link-row:hover { background:rgba(99,209,255,0.04); }
+    .link-row:hover::before { transform:scaleY(1); }
+    .link-row:active { background:rgba(99,209,255,0.08); }
+
+    .lr-type {
+      font-size:0.68rem; font-weight:700; letter-spacing:0.8px;
+      text-transform:uppercase;
+    }
+    .lr-type.main { color:var(--cyan); }
+    .lr-type.bak  { color:var(--sub); }
+    .lr-badge {
+      display:inline-block; font-size:0.62rem; font-weight:700;
+      padding:2px 7px; border-radius:4px; margin-top:3px;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#fff;
+    }
+
+    .lr-url {
+      font-family:'SF Mono','Fira Code','Consolas',monospace;
+      font-size:0.78rem; color:#A0C4D8;
+      word-break:break-all; line-height:1.55;
+    }
+
+    .lr-status { text-align:center; }
+    .status-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      font-size:0.68rem; font-weight:700;
+      padding:4px 10px; border-radius:6px;
+    }
+    .sb-ok  { background:rgba(52,211,153,0.12); color:var(--green); border:1px solid rgba(52,211,153,0.25); }
+    .sb-hot { background:rgba(251,191,36,0.1);  color:var(--amber); border:1px solid rgba(251,191,36,0.25); }
+
+    .lr-copy {
+      display:flex; align-items:center; justify-content:flex-end; gap:6px;
+      font-size:0.75rem; color:var(--sub);
+      transition:color var(--transition);
+    }
+    .link-row:hover .lr-copy { color:var(--cyan); }
+    .copy-icon {
+      width:28px; height:28px; border-radius:7px;
+      background:var(--bg3); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.75rem; transition:all var(--transition);
+      flex-shrink:0;
+    }
+    .link-row:hover .copy-icon {
+      background:var(--cyan-dim); border-color:var(--border-hi); color:var(--cyan);
+    }
+
+    /* ══════════════════════════════════
+       使用指南
+    ══════════════════════════════════ */
+    .guide-wrap { padding:40px 0; }
+    .section-tag {
+      font-size:0.68rem; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:var(--cyan);
+      display:flex; align-items:center; gap:8px;
+      margin-bottom:14px;
+    }
+    .section-tag::before {
+      content:''; width:18px; height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      border-radius:1px;
+    }
+    .guide-h2 {
+      font-family:var(--font-head); font-weight:700;
+      font-size:clamp(1.7rem,3.5vw,2.5rem);
+      letter-spacing:-1px; margin-bottom:32px; line-height:1.2;
+    }
+    .guide-h2 span { background:linear-gradient(135deg,var(--cyan),var(--violet)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+
+    .guide-two { display:grid; grid-template-columns:5fr 4fr; gap:50px; align-items:start; }
+
+    /* Steps timeline */
+    .timeline { position:relative; padding-left:24px; }
+    .timeline::before {
+      content:''; position:absolute; left:12px; top:6px; bottom:0;
+      width:1px; background:linear-gradient(180deg,var(--cyan),transparent);
+    }
+    .tl-item { display:flex; gap:18px; margin-bottom:28px; position:relative; }
+    .tl-dot {
+      width:24px; height:24px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.68rem; font-weight:700; color:#fff;
+      position:absolute; left:-24px;
+      box-shadow:0 0 12px rgba(99,209,255,0.4);
+    }
+    .tl-content { padding-left:12px; }
+    .tl-title { font-size:0.9rem; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .tl-desc  { font-size:0.8rem; color:var(--sub); line-height:1.7; }
+
+    /* Guide cards */
+    .guide-cards { display:flex; flex-direction:column; gap:10px; }
+    .guide-card {
+      display:flex; align-items:center; gap:14px;
+      padding:16px 18px;
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--r-md); cursor:pointer;
+      text-decoration:none; color:var(--text);
+      transition:all var(--transition);
+      position:relative; overflow:hidden;
+    }
+    .guide-card::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(90deg,transparent,rgba(99,209,255,0.04),transparent);
+      transform:translateX(-100%); transition:transform 0.5s ease;
+    }
+    .guide-card:hover::after { transform:translateX(100%); }
+    .guide-card:hover { border-color:var(--border-hi); }
+    .gc-icon {
+      width:42px; height:42px; border-radius:11px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; flex-shrink:0;
+    }
+    .gci-tv    { background:var(--cyan-dim); border:1px solid rgba(99,209,255,0.2); }
+    .gci-phone { background:var(--violet-dim); border:1px solid rgba(167,139,250,0.2); }
+    .gc-title  { font-size:0.88rem; font-weight:700; margin-bottom:2px; }
+    .gc-sub    { font-size:0.74rem; color:var(--sub); }
+    .gc-arr    { margin-left:auto; color:var(--sub); font-size:0.85rem; transition:all var(--transition); }
+    .guide-card:hover .gc-arr { color:var(--cyan); transform:translateX(4px); }
+
+    .info-box {
+      margin-top:12px; padding:14px 16px;
+      background:rgba(251,191,36,0.06);
+      border:1px solid rgba(251,191,36,0.2);
+      border-radius:var(--r-sm);
+      font-size:0.8rem; color:#C9A227; line-height:1.75;
+    }
+
+    /* ══════════════════════════════════
+       软件下载
+    ══════════════════════════════════ */
+    .dl-wrap { padding:40px 0; }
+    .dl-two  { display:grid; grid-template-columns:6fr 4fr; gap:48px; align-items:start; }
+    .dl-desc { font-size:0.88rem; color:var(--sub); line-height:1.8; margin-bottom:28px; }
+
+    .dl-btns { display:flex; flex-direction:column; gap:10px; }
+    .dl-btn {
+      display:flex; align-items:center; gap:14px;
+      padding:16px 20px;
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--r-md); text-decoration:none;
+      color:var(--text); font-weight:700; font-size:0.93rem;
+      transition:all var(--transition);
+      position:relative; overflow:hidden;
+    }
+    .dl-btn::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,var(--cyan-dim),var(--violet-dim));
+      opacity:0; transition:opacity var(--transition);
+    }
+    .dl-btn:hover { border-color:var(--border-hi); }
+    .dl-btn:hover::before { opacity:1; }
+    .dl-icon-wrap {
+      width:38px; height:38px; border-radius:9px;
+      background:var(--bg3); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; flex-shrink:0; position:relative; z-index:1;
+      transition:all var(--transition);
+    }
+    .dl-btn:hover .dl-icon-wrap {
+      background:var(--cyan-dim); border-color:var(--border-hi); color:var(--cyan);
+    }
+    .dl-btn-text { position:relative; z-index:1; }
+    .dl-arr { margin-left:auto; font-size:0.8rem; color:var(--sub); position:relative; z-index:1; transition:all var(--transition); }
+    .dl-btn:hover .dl-arr { color:var(--cyan); transform:translateX(4px); }
+
+    /* Warn & Compat */
+    .warn-box {
+      background:rgba(248,113,113,0.06);
+      border:1px solid rgba(248,113,113,0.2);
+      border-radius:var(--r-md); padding:18px;
+      margin-bottom:14px;
+    }
+    .warn-label {
+      font-size:0.68rem; font-weight:700;
+      letter-spacing:1.5px; text-transform:uppercase;
+      color:var(--red); margin-bottom:10px;
+      display:flex; align-items:center; gap:7px;
+    }
+    .warn-text { font-size:0.82rem; line-height:1.8; color:#C9A0A0; }
+
+    .compat-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+    .compat-item {
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--r-sm); padding:14px; text-align:center;
+    }
+    .compat-emoji { font-size:1.5rem; margin-bottom:5px; }
+    .compat-name  { font-size:0.7rem; color:var(--sub); font-weight:600; letter-spacing:0.5px; }
+    .compat-ok    { font-size:0.72rem; font-weight:700; margin-top:4px; color:var(--green); }
+    .compat-no    { font-size:0.72rem; font-weight:700; margin-top:4px; color:var(--red); }
+
+    /* ══════════════════════════════════
+       Toast
+    ══════════════════════════════════ */
+    .toast {
+      position:fixed; bottom:32px; left:50%;
+      transform:translateX(-50%) translateY(60px);
+      background:var(--bg3);
+      border:1px solid var(--border-hi);
+      border-radius:50px; padding:12px 24px;
+      font-size:0.82rem; font-weight:600;
+      color:var(--cyan); box-shadow:var(--glow-c);
+      display:flex; align-items:center; gap:10px;
+      z-index:9999; opacity:0; white-space:nowrap; pointer-events:none;
+      transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+    .toast-icon {
+      width:20px; height:20px; border-radius:50%;
+      background:var(--cyan-dim); border:1px solid rgba(99,209,255,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.68rem; color:var(--cyan);
+    }
+
+    /* ══════════════════════════════════
+       Modal
+    ══════════════════════════════════ */
+    .modal-overlay {
+      display:none; position:fixed; inset:0; z-index:2000;
+      background:rgba(0,0,0,0.75);
+      backdrop-filter:blur(10px);
+      justify-content:center; align-items:center;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal-panel {
+      background:var(--bg2);
+      border:1px solid var(--border);
+      border-radius:var(--r-lg);
+      width:95%; max-width:720px; max-height:88vh;
+      overflow-y:auto; padding:36px;
+      box-shadow:0 32px 80px rgba(0,0,0,0.5), var(--glow-c);
+      position:relative;
+      animation:modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalPop {
+      from { opacity:0; transform:scale(0.92) translateY(20px); }
+      to   { opacity:1; transform:scale(1) translateY(0); }
+    }
+    .modal-close-btn {
+      position:absolute; top:16px; right:16px;
+      width:36px; height:36px; border-radius:50%;
+      background:var(--bg3); border:1px solid var(--border);
+      color:var(--sub); font-size:0.9rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all var(--transition);
+    }
+    .modal-close-btn:hover { background:rgba(248,113,113,0.12); border-color:rgba(248,113,113,0.3); color:var(--red); }
+    .modal-title {
+      font-family:var(--font-head); font-size:1.3rem; font-weight:700;
+      color:var(--text); display:flex; align-items:center; gap:10px;
+      padding-bottom:18px; margin-bottom:24px;
+      border-bottom:1px solid var(--border);
+    }
+    .modal-step { margin-bottom:22px; }
+    .modal-step-label {
+      font-size:0.68rem; font-weight:700; letter-spacing:1.5px;
+      text-transform:uppercase; color:var(--cyan); margin-bottom:8px;
+    }
+    .modal-step img {
+      width:100%; border-radius:10px;
+      border:1px solid var(--border);
+    }
+    .modal-done {
+      background:rgba(52,211,153,0.08);
+      border:1px solid rgba(52,211,153,0.2);
+      border-radius:var(--r-sm); padding:14px;
+      text-align:center; font-weight:700;
+      font-size:0.85rem; color:var(--green); margin-top:16px;
+    }
+
+    /* ══════════════════════════════════
+       Footer
+    ══════════════════════════════════ */
+    footer {
+      position:relative; z-index:1;
+      background:var(--bg2); border-top:1px solid var(--border);
+      padding:24px 28px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:10px;
+    }
+    .footer-copy { font-size:0.76rem; color:var(--sub); line-height:1.7; }
+    .footer-brand {
+      font-family:var(--font-head); font-weight:700; font-size:0.9rem;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    }
+
+    /* ══════════════════════════════════
+       Responsive
+    ══════════════════════════════════ */
+    @media (max-width:760px) {
+      nav { padding:0 16px; }
+      .nav-badge { display:none; }
+      .hero { padding:52px 16px 36px; }
+      .hero-eyebrow { font-size:0.68rem; padding:5px 14px; }
+      main { padding:0 16px 60px; }
+      .guide-two, .dl-two { grid-template-columns:1fr; gap:28px; }
+      .link-row {
+        grid-template-columns:70px 1fr 70px;
+      }
+      .lr-status { display:none; }
+      footer { padding:18px 16px; flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:480px) {
+      .hero-h1 { font-size:2.1rem; letter-spacing:-1.5px; }
+      .tabs-row {
+        justify-content:flex-start; overflow-x:auto;
+        padding:0 16px; scrollbar-width:none;
+        -webkit-overflow-scrolling:touch;
+      }
+      .tabs-row::-webkit-scrollbar { display:none; }
+      .tab-btn { flex:0 0 auto; padding:10px 18px; font-size:0.8rem; }
+      .link-row { grid-template-columns:60px 1fr 50px; gap:10px; padding:11px 14px; }
+      .lr-url { font-size:0.72rem; }
+      .modal-panel { padding:20px 16px; }
+      .modal-title { font-size:1.1rem; }
+    }
+    @media (hover:none) and (pointer:coarse) {
+      .tab-btn:hover,
+      .link-row:hover,
+      .guide-card:hover,
+      .dl-btn:hover { transform:none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Starfield Canvas -->
-<canvas id="starfield"></canvas>
+<!-- 背景 -->
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-<!-- Nebula Overlay -->
-<div class="nebula-overlay"></div>
-
-<!-- Topbar -->
-<nav class="topbar">
-    <div class="logo">
-        <div class="logo-orb"></div>
-        StreamVision
-    </div>
-    <span class="logo-sub">劉Ok · 免费超清影视</span>
+<!-- 导航 -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">▶</div>
+    StreamVision
+    <span class="nav-badge">劉Ok · 影视接口</span>
+  </a>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    全部接口在线
+  </div>
 </nav>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero">
-    <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        <span class="hero-badge-text">芒果 / 优酷 / 腾讯 / 爱奇艺 · 全平台免费</span>
-    </div>
-    <h1 class="hero-title">
-        <span class="hero-title-line">OK 影视</span>
-        <span class="hero-title-line"><span class="gradient">API 接口</span>导航站</span>
-    </h1>
-    <p class="hero-desc">汇聚精选接口资源，支持超清4K画质，热门电影、剧集随心畅看，无需VIP会员。</p>
-    <div class="tabs-container">
-        <button class="tab-button active" data-tab="vod"><span>▶ 点播接口</span></button>
-        <button class="tab-button" data-tab="guide"><span>🗺 使用指南</span></button>
-        <button class="tab-button" data-tab="software"><span>🚀 软件下载</span></button>
-    </div>
+  <div class="hero-eyebrow">Free · 4K · No VIP</div>
+  <h1 class="hero-h1">
+    <span class="gr-c">OK影视</span><br>
+    <span class="gr-p">接口导航站</span>
+  </h1>
+  <p class="hero-desc">精选稳定接口资源，免费畅看超清4K内容。芒果、优酷、腾讯、爱奇艺随心看。</p>
+  <div class="tabs-row">
+    <button class="tab-btn active" data-tab="vod">
+      <span class="tab-icon">▶</span> 点播接口
+    </button>
+    <button class="tab-btn" data-tab="guide">
+      <span class="tab-icon">◈</span> 使用指南
+    </button>
+    <button class="tab-btn" data-tab="software">
+      <span class="tab-icon">↓</span> 软件下载
+    </button>
+  </div>
 </section>
 
 <main>
 
-    <!-- 点播接口 Section -->
-    <section id="vod" class="section-content active">
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-icon blue">📡</div>
-                <div class="stat-info">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">接口数量</div>
-                </div>
+  <!-- ─── 点播接口 ─── -->
+  <section id="vod" class="section active">
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-icon2 si-c">📡</div>
+        <div>
+          <div class="stat-val c">4</div>
+          <div class="stat-key">接口分组</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon2 si-v">🔗</div>
+        <div>
+          <div class="stat-val v">19</div>
+          <div class="stat-key">可用线路</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon2 si-p">🎬</div>
+        <div>
+          <div class="stat-val p">4K</div>
+          <div class="stat-key">最高画质</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon2 si-c">🆓</div>
+        <div>
+          <div class="stat-val c">Free</div>
+          <div class="stat-key">无需 VIP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OK杰克 -->
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="gh-left">
+          <div class="group-avatar ga-1">🦄</div>
+          <span class="group-name">OK杰克</span>
+          <span class="group-count">4 条线路</span>
+        </div>
+        <div class="group-chevron">▾</div>
+      </div>
+      <div class="link-panel">
+        <div class="link-row" data-url="http://ok213.top/tv">
+          <div><div class="lr-type main">主接口</div><div class="lr-badge">推荐</div></div>
+          <div class="lr-url">http://ok213.top/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://ok213.top/ok">
+          <div><div class="lr-type bak">备用 A</div></div>
+          <div class="lr-url">http://ok213.top/ok</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://ok521.top/tv">
+          <div><div class="lr-type bak">备用 B</div></div>
+          <div class="lr-url">http://ok521.top/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://ok521.top/ok">
+          <div><div class="lr-type bak">备用 C</div></div>
+          <div class="lr-url">http://ok521.top/ok</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 王二小放牛娃 -->
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="gh-left">
+          <div class="group-avatar ga-2">🐮</div>
+          <span class="group-name">王二小放牛娃</span>
+          <span class="group-count">5 条线路</span>
+        </div>
+        <div class="group-chevron">▾</div>
+      </div>
+      <div class="link-panel">
+        <div class="link-row" data-url="https://9280.kstore.vip/newwex.json">
+          <div><div class="lr-type main">主接口</div><div class="lr-badge">推荐</div></div>
+          <div class="lr-url">https://9280.kstore.vip/newwex.json</div>
+          <div class="lr-status"><span class="status-badge sb-hot">◈ 推荐</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://tvbox.王二小放牛娃.top">
+          <div><div class="lr-type bak">备用 A</div></div>
+          <div class="lr-url">http://tvbox.王二小放牛娃.top</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://tv.999888987.xyz">
+          <div><div class="lr-type bak">备用 B</div></div>
+          <div class="lr-url">http://tv.999888987.xyz</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="https://9280.kstore.vip/wex.json">
+          <div><div class="lr-type bak">备用 C</div></div>
+          <div class="lr-url">https://9280.kstore.vip/wex.json</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://tv.999888123.xyz/">
+          <div><div class="lr-type bak">备用 D</div></div>
+          <div class="lr-url">http://tv.999888123.xyz/</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 饭太硬 -->
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="gh-left">
+          <div class="group-avatar ga-3">🧸</div>
+          <span class="group-name">饭太硬</span>
+          <span class="group-count">6 条线路</span>
+        </div>
+        <div class="group-chevron">▾</div>
+      </div>
+      <div class="link-panel">
+        <div class="link-row" data-url="https://gitee.com/xxoooo/fan/raw/master/in.bmp">
+          <div><div class="lr-type main">郑州专用</div><div class="lr-badge">推荐</div></div>
+          <div class="lr-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
+          <div class="lr-status"><span class="status-badge sb-hot">◈ 推荐</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://fty.333232.xyz/tv">
+          <div><div class="lr-type bak">备用 A</div></div>
+          <div class="lr-url">http://fty.333232.xyz/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://fty.888484.xyz/tv">
+          <div><div class="lr-type bak">备用 B</div></div>
+          <div class="lr-url">http://fty.888484.xyz/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://fty.xxooo.cf/tv">
+          <div><div class="lr-type bak">备用 C</div></div>
+          <div class="lr-url">http://fty.xxooo.cf/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://www.饭太硬.art/tv">
+          <div><div class="lr-type bak">备用 D</div></div>
+          <div class="lr-url">http://www.饭太硬.art/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="http://www.饭太硬.net/tv">
+          <div><div class="lr-type bak">备用 E</div></div>
+          <div class="lr-url">http://www.饭太硬.net/tv</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 小米 -->
+    <div class="group">
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="gh-left">
+          <div class="group-avatar ga-4">🍚</div>
+          <span class="group-name">小米</span>
+          <span class="group-count">4 条线路</span>
+        </div>
+        <div class="group-chevron">▾</div>
+      </div>
+      <div class="link-panel">
+        <div class="link-row" data-url="https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">
+          <div><div class="lr-type main">主接口</div><div class="lr-badge">推荐</div></div>
+          <div class="lr-url">https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+          <div class="lr-status"><span class="status-badge sb-hot">◈ 推荐</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json">
+          <div><div class="lr-type bak">备用 A</div></div>
+          <div class="lr-url">https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json">
+          <div><div class="lr-type bak">备用 B</div></div>
+          <div class="lr-url">https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+        <div class="link-row" data-url="https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json">
+          <div><div class="lr-type bak">备用 C</div></div>
+          <div class="lr-url">https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json</div>
+          <div class="lr-status"><span class="status-badge sb-ok">● 可用</span></div>
+          <div class="lr-copy"><div class="copy-icon">⎘</div></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── 使用指南 ─── -->
+  <section id="guide" class="section">
+    <div class="guide-wrap">
+      <div class="guide-two">
+        <div>
+          <div class="section-tag">Guide · Tutorial</div>
+          <h2 class="guide-h2">几步开始<br><span>畅快观影</span></h2>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot">1</div>
+              <div class="tl-content">
+                <div class="tl-title">复制接口链接</div>
+                <div class="tl-desc">在「点播接口」页面点击任意卡片，链接自动复制到剪贴板。</div>
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon purple">🔗</div>
-                <div class="stat-info">
-                    <div class="stat-value">19</div>
-                    <div class="stat-label">可用线路</div>
-                </div>
+            <div class="tl-item">
+              <div class="tl-dot">2</div>
+              <div class="tl-content">
+                <div class="tl-title">打开 OK影视 软件</div>
+                <div class="tl-desc">下载并安装 Pro 版 App，进入主界面。</div>
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon pink">🎬</div>
-                <div class="stat-info">
-                    <div class="stat-value">4K</div>
-                    <div class="stat-label">超清画质</div>
-                </div>
+            <div class="tl-item">
+              <div class="tl-dot">3</div>
+              <div class="tl-content">
+                <div class="tl-title">点击设置 → 点播</div>
+                <div class="tl-desc">页面会弹出二维码，供手机扫描使用。</div>
+              </div>
             </div>
+            <div class="tl-item">
+              <div class="tl-dot">4</div>
+              <div class="tl-content">
+                <div class="tl-title">扫码后粘贴链接</div>
+                <div class="tl-desc">用微信扫一扫或浏览器扫描二维码，在打开的页面粘贴链接并确定。</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot">5</div>
+              <div class="tl-content">
+                <div class="tl-title">返回主页开始观看</div>
+                <div class="tl-desc">接口加载完毕后，即可搜索并播放海量影视内容。</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot">6</div>
+              <div class="tl-content">
+                <div class="tl-title">4K 画质提示</div>
+                <div class="tl-desc">观看 4K 需使用夸克、迅雷、UC、阿里或百度网盘扫码授权。</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- OK杰克 -->
-        <div class="category-block">
-            <div class="category-header" onclick="toggleCategory(this)">
-                <div class="category-left">
-                    <div class="category-icon ci-blue">🦄</div>
-                    <span class="category-name">OK杰克</span>
-                    <span class="category-count">4 条线路</span>
-                </div>
-                <div class="category-arrow">▾</div>
+        <div>
+          <div class="section-tag">图文教程</div>
+          <div class="guide-cards">
+            <a href="#" class="guide-card" id="openTvModal">
+              <div class="gc-icon gci-tv">📺</div>
+              <div>
+                <div class="gc-title">电视端 APP 教程</div>
+                <div class="gc-sub">步骤图解 · 大屏版</div>
+              </div>
+              <span class="gc-arr">→</span>
+            </a>
+            <a href="#" class="guide-card" id="openPhoneModal">
+              <div class="gc-icon gci-phone">📱</div>
+              <div>
+                <div class="gc-title">手机端 APP 教程</div>
+                <div class="gc-sub">步骤图解 · 手机版</div>
+              </div>
+              <span class="gc-arr">→</span>
+            </a>
+            <div class="info-box">
+              💡 <strong>小贴士：</strong>若接口失效请立即切换备用线路，优先使用标注「推荐」的主接口，稳定性最优。
             </div>
-            <div class="interfaces-grid">
-                <div class="interface-card" data-link="http://ok213.top/tv">
-                    <div class="card-top">
-                        <span class="card-type main">主接口</span>
-                        <span class="card-badge">推荐</span>
-                    </div>
-                    <div class="card-url">http://ok213.top/tv</div>
-                    <div class="card-bottom">
-                        <span class="copy-hint">⎘ 点击复制</span>
-                        <span class="status-warn">失效请切备用</span>
-                    </div>
-                </div>
-                <div class="interface-card" data-link="http://ok213.top/ok">
-                    <div class="card-top"><span class="card-type">备用 A</span></div>
-                    <div class="card-url">http://ok213.top/ok</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://ok521.top/tv">
-                    <div class="card-top"><span class="card-type">备用 B</span></div>
-                    <div class="card-url">http://ok521.top/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://ok521.top/ok">
-                    <div class="card-top"><span class="card-type">备用 C</span></div>
-                    <div class="card-url">http://ok521.top/ok</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 软件下载 ─── -->
+  <section id="software" class="section">
+    <div class="dl-wrap">
+      <div class="dl-two">
+        <div>
+          <div class="section-tag">Download · Software</div>
+          <h2 class="guide-h2">OK影视<br><span>Pro 版下载</span></h2>
+          <p class="dl-desc">推荐下载 Pro 版本，比普通版兼容性更高，内置搜索弹幕、AI 去广告等高级功能。三大网盘任选其一。</p>
+          <div class="dl-btns">
+            <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" rel="noopener noreferrer" class="dl-btn">
+              <div class="dl-icon-wrap">↓</div>
+              <span class="dl-btn-text">夸克网盘下载</span>
+              <span class="dl-arr">↗</span>
+            </a>
+            <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="dl-btn">
+              <div class="dl-icon-wrap">↓</div>
+              <span class="dl-btn-text">UC 网盘下载</span>
+              <span class="dl-arr">↗</span>
+            </a>
+            <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="dl-btn">
+              <div class="dl-icon-wrap">↓</div>
+              <span class="dl-btn-text">迅雷网盘下载</span>
+              <span class="dl-arr">↗</span>
+            </a>
+          </div>
         </div>
 
-        <!-- 王二小放牛娃 -->
-        <div class="category-block">
-            <div class="category-header" onclick="toggleCategory(this)">
-                <div class="category-left">
-                    <div class="category-icon ci-purple">🐮</div>
-                    <span class="category-name">王二小放牛娃</span>
-                    <span class="category-count">5 条线路</span>
-                </div>
-                <div class="category-arrow">▾</div>
+        <div>
+          <div class="warn-box">
+            <div class="warn-label">⚠ 注意事项</div>
+            <div class="warn-text">
+              本软件<strong>不支持 iOS 系统</strong>，仅支持 Android。<br><br>
+              安卓电视请将 Pro 版放入 U 盘后插入电视安装，或通过手机远程管理 App 上传安装。<br><br>
+              电视机通常为 32 位系统，请注意版本选择。
             </div>
-            <div class="interfaces-grid">
-                <div class="interface-card" data-link="https://9280.kstore.vip/newwex.json">
-                    <div class="card-top">
-                        <span class="card-type main">主接口</span>
-                        <span class="card-badge">推荐</span>
-                    </div>
-                    <div class="card-url">https://9280.kstore.vip/newwex.json</div>
-                    <div class="card-bottom">
-                        <span class="copy-hint">⎘ 点击复制</span>
-                        <span class="status-warn">失效请切备用</span>
-                    </div>
-                </div>
-                <div class="interface-card" data-link="http://tvbox.王二小放牛娃.top">
-                    <div class="card-top"><span class="card-type">备用 A</span></div>
-                    <div class="card-url">http://tvbox.王二小放牛娃.top</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://tv.999888987.xyz">
-                    <div class="card-top"><span class="card-type">备用 B</span></div>
-                    <div class="card-url">http://tv.999888987.xyz</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="https://9280.kstore.vip/wex.json">
-                    <div class="card-top"><span class="card-type">备用 C</span></div>
-                    <div class="card-url">https://9280.kstore.vip/wex.json</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://tv.999888123.xyz/">
-                    <div class="card-top"><span class="card-type">备用 D</span></div>
-                    <div class="card-url">http://tv.999888123.xyz/</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
+          </div>
+          <div class="compat-grid">
+            <div class="compat-item">
+              <div class="compat-emoji">🤖</div>
+              <div class="compat-name">Android</div>
+              <div class="compat-ok">✓ 支持</div>
             </div>
+            <div class="compat-item">
+              <div class="compat-emoji">📺</div>
+              <div class="compat-name">Android TV</div>
+              <div class="compat-ok">✓ 支持</div>
+            </div>
+            <div class="compat-item">
+              <div class="compat-emoji">🍎</div>
+              <div class="compat-name">iOS</div>
+              <div class="compat-no">✗ 不支持</div>
+            </div>
+            <div class="compat-item">
+              <div class="compat-emoji">🪟</div>
+              <div class="compat-name">Windows</div>
+              <div class="compat-no">✗ 不支持</div>
+            </div>
+          </div>
         </div>
-
-        <!-- 饭太硬 -->
-        <div class="category-block">
-            <div class="category-header" onclick="toggleCategory(this)">
-                <div class="category-left">
-                    <div class="category-icon ci-pink">🧸</div>
-                    <span class="category-name">饭太硬</span>
-                    <span class="category-count">6 条线路</span>
-                </div>
-                <div class="category-arrow">▾</div>
-            </div>
-            <div class="interfaces-grid">
-                <div class="interface-card" data-link="https://gitee.com/xxoooo/fan/raw/master/in.bmp">
-                    <div class="card-top">
-                        <span class="card-type main">郑州专用</span>
-                        <span class="card-badge">推荐</span>
-                    </div>
-                    <div class="card-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
-                    <div class="card-bottom">
-                        <span class="copy-hint">⎘ 点击复制</span>
-                        <span class="status-warn">失效请切备用</span>
-                    </div>
-                </div>
-                <div class="interface-card" data-link="http://fty.333232.xyz/tv">
-                    <div class="card-top"><span class="card-type">备用 A</span></div>
-                    <div class="card-url">http://fty.333232.xyz/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://fty.888484.xyz/tv">
-                    <div class="card-top"><span class="card-type">备用 B</span></div>
-                    <div class="card-url">http://fty.888484.xyz/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://fty.xxooo.cf/tv">
-                    <div class="card-top"><span class="card-type">备用 C</span></div>
-                    <div class="card-url">http://fty.xxooo.cf/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://www.饭太硬.art/tv">
-                    <div class="card-top"><span class="card-type">备用 D</span></div>
-                    <div class="card-url">http://www.饭太硬.art/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="http://www.饭太硬.net/tv">
-                    <div class="card-top"><span class="card-type">备用 E</span></div>
-                    <div class="card-url">http://www.饭太硬.net/tv</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 小米 -->
-        <div class="category-block">
-            <div class="category-header" onclick="toggleCategory(this)">
-                <div class="category-left">
-                    <div class="category-icon ci-cyan">🍚</div>
-                    <span class="category-name">小米</span>
-                    <span class="category-count">4 条线路</span>
-                </div>
-                <div class="category-arrow">▾</div>
-            </div>
-            <div class="interfaces-grid">
-                <div class="interface-card" data-link="https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="card-top">
-                        <span class="card-type main">主接口</span>
-                        <span class="card-badge">推荐</span>
-                    </div>
-                    <div class="card-url">https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="card-bottom">
-                        <span class="copy-hint">⎘ 点击复制</span>
-                        <span class="status-warn">失效请切备用</span>
-                    </div>
-                </div>
-                <div class="interface-card" data-link="https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="card-top"><span class="card-type">备用 A</span></div>
-                    <div class="card-url">https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="card-top"><span class="card-type">备用 B</span></div>
-                    <div class="card-url">https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-                <div class="interface-card" data-link="https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json">
-                    <div class="card-top"><span class="card-type">备用 C</span></div>
-                    <div class="card-url">https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json</div>
-                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 使用指南 Section -->
-    <section id="guide" class="section-content">
-        <div class="guide-layout">
-            <div>
-                <div class="section-tag">Guide · Tutorial</div>
-                <h2 class="guide-title">几步开始<br><span class="highlight">畅快观影</span></h2>
-                <ul class="steps-list">
-                    <li class="step-item">
-                        <span class="step-number">1</span>
-                        <span class="step-text">复制「点播接口」页面中想使用的接口链接</span>
-                    </li>
-                    <li class="step-item">
-                        <span class="step-number">2</span>
-                        <span class="step-text">打开 OK影视 软件</span>
-                    </li>
-                    <li class="step-item">
-                        <span class="step-number">3</span>
-                        <span class="step-text">点击「设置」→「点播」，弹出二维码页面</span>
-                    </li>
-                    <li class="step-item">
-                        <span class="step-number">4</span>
-                        <span class="step-text">用微信扫一扫或浏览器扫码，扫描软件显示的二维码</span>
-                    </li>
-                    <li class="step-item">
-                        <span class="step-number">5</span>
-                        <span class="step-text">粘贴复制的接口链接，点击确定后返回主页即可观看</span>
-                    </li>
-                    <li class="step-item">
-                        <span class="step-number">6</span>
-                        <span class="step-text">观看4K画质需使用夸克、迅雷、UC、阿里或百度网盘扫码</span>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <div class="section-tag">图文教程</div>
-                <div class="guide-buttons">
-                    <a href="#" class="guide-link" id="openTvModal">
-                        <div class="guide-icon gi-tv">📺</div>
-                        <div class="guide-content">
-                            <strong>电视端 APP 教程</strong>
-                            <span>步骤图解 · 大屏版</span>
-                        </div>
-                        <span class="guide-arrow">→</span>
-                    </a>
-                    <a href="#" class="guide-link" id="openPhoneModal">
-                        <div class="guide-icon gi-phone">📱</div>
-                        <div class="guide-content">
-                            <strong>手机端 APP 教程</strong>
-                            <span>步骤图解 · 手机版</span>
-                        </div>
-                        <span class="guide-arrow">→</span>
-                    </a>
-                    <div class="tip-box">
-                        <strong>💡 小贴士：</strong>若接口失效请切换备用线路，优先使用标注「推荐」的主接口，稳定性最佳。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 软件下载 Section -->
-    <section id="software" class="section-content">
-        <div class="software-layout">
-            <div>
-                <div class="section-tag">Download · Software</div>
-                <h2 class="software-title">OK影视<br><span class="highlight">Pro 版下载</span></h2>
-                <p class="software-sub">推荐下载Pro版本，比普通版更好用，兼容性更高，含搜索弹幕、AI去广告等高级功能。三大网盘任选其一下载。</p>
-                <div class="download-list">
-                    <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" rel="noopener noreferrer" class="download-item">
-                        <div class="download-icon">↓</div>
-                        夸克网盘下载
-                        <span class="download-arrow">↗</span>
-                    </a>
-                    <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="download-item">
-                        <div class="download-icon">↓</div>
-                        UC网盘下载
-                        <span class="download-arrow">↗</span>
-                    </a>
-                    <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="download-item">
-                        <div class="download-icon">↓</div>
-                        迅雷网盘下载
-                        <span class="download-arrow">↗</span>
-                    </a>
-                </div>
-            </div>
-            <div>
-                <div class="warning-box">
-                    <div class="warning-label">⚠️ 注意事项</div>
-                    <div class="warning-text">
-                        本软件<strong>不支持 iOS 系统</strong>，仅支持 Android（安卓）。<br><br>
-                        安卓电视请将Pro版放入U盘后插入电视安装，或通过手机远程管理App上传安装。<br><br>
-                        电视机通常为32位系统。
-                    </div>
-                </div>
-                <div class="compatibility-grid">
-                    <div class="compat-item">
-                        <div class="compat-icon">🤖</div>
-                        <div class="compat-name">Android</div>
-                        <div class="compat-status status-yes">✓ 支持</div>
-                    </div>
-                    <div class="compat-item">
-                        <div class="compat-icon">📺</div>
-                        <div class="compat-name">Android TV</div>
-                        <div class="compat-status status-yes">✓ 支持</div>
-                    </div>
-                    <div class="compat-item">
-                        <div class="compat-icon">🍎</div>
-                        <div class="compat-name">iOS</div>
-                        <div class="compat-status status-no">✗ 不支持</div>
-                    </div>
-                    <div class="compat-item">
-                        <div class="compat-icon">🪟</div>
-                        <div class="compat-name">Windows</div>
-                        <div class="compat-status status-no">✗ 不支持</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<!-- Modals -->
+<!-- Modal 电视端 -->
 <div id="tvModal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
-        <div class="modal-header">📺 电视端APP使用教程</div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 01 · 点击设置按键</div>
-            <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一">
-        </div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 02 · 点击点播栏</div>
-            <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二">
-        </div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
-            <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三">
-        </div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
-            <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四">
-        </div>
-        <div class="modal-complete">✓ &nbsp;返回软件主页面即可开始观看！</div>
+  <div class="modal-panel">
+    <button class="modal-close-btn" onclick="closeModal('tvModal')">✕</button>
+    <div class="modal-title">📺 电视端 APP 使用教程</div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 01 · 点击设置按键</div>
+      <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一">
     </div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 02 · 点击点播栏</div>
+      <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二">
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 03 · 手机扫描二维码</div>
+      <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三">
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 04 · 粘贴链接并确定</div>
+      <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四">
+    </div>
+    <div class="modal-done">✓ 返回软件主页面即可开始观看！</div>
+  </div>
 </div>
 
+<!-- Modal 手机端 -->
 <div id="phoneModal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
-        <div class="modal-header">📱 手机端APP使用教程</div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
-            <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一">
-        </div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
-            <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二">
-        </div>
-        <div class="modal-step">
-            <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
-            <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三">
-        </div>
-        <div class="modal-complete">✓ &nbsp;返回软件主页面即可开始观看！</div>
+  <div class="modal-panel">
+    <button class="modal-close-btn" onclick="closeModal('phoneModal')">✕</button>
+    <div class="modal-title">📱 手机端 APP 使用教程</div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 01 · 点击下方齿轮按键</div>
+      <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一">
     </div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 02 · 点击点播栏空白处</div>
+      <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二">
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-label">Step 03 · 粘贴链接并点击确定</div>
+      <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三">
+    </div>
+    <div class="modal-done">✓ 返回软件主页面即可开始观看！</div>
+  </div>
 </div>
 
-<!-- Toast Notification -->
-<div class="toast-notification" id="toast">
-    <div class="toast-icon">✓</div>
-    链接已复制到剪贴板
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div class="toast-icon">✓</div>
+  链接已复制到剪贴板
 </div>
 
 <!-- Footer -->
 <footer>
-    <div class="footer-text">本站内容来自互联网收集，仅供学习交流，请勿用于商业用途。如有侵权，将第一时间删除。</div>
-    <div class="footer-brand">StreamVision © 2026 劉Ok</div>
+  <div class="footer-copy">本站内容来自互联网收集，仅供学习交流，请勿用于商业用途。如有侵权，将第一时间删除。</div>
+  <div class="footer-brand">StreamVision © 2026 劉Ok</div>
 </footer>
 
 <script>
-    // ── Starfield Animation ──
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let animationId;
+  /* ── Tabs ── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: document.querySelector('main').offsetTop - 10, behavior: 'smooth' });
+    });
+  });
 
-    function initStarfield() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        stars = [];
-        const numStars = Math.floor((canvas.width * canvas.height) / 8000);
-        for (let i = 0; i < numStars; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5 + 0.5,
-                alpha: Math.random() * 0.8 + 0.2,
-                speed: Math.random() * 0.3 + 0.1,
-                twinkle: Math.random() * 0.02 + 0.01
-            });
-        }
+  /* ── Group toggle ── */
+  function toggleGroup(header) {
+    const panel  = header.nextElementSibling;
+    const isOpen = header.classList.contains('open');
+
+    // close all
+    document.querySelectorAll('.group-header').forEach(h => {
+      h.classList.remove('open');
+      h.nextElementSibling.classList.remove('open');
+    });
+
+    if (!isOpen) {
+      header.classList.add('open');
+      panel.classList.add('open');
     }
+  }
 
-    function animateStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(star => {
-            star.alpha += star.twinkle;
-            if (star.alpha >= 1 || star.alpha <= 0.2) {
-                star.twinkle = -star.twinkle;
-            }
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(248, 250, 252, ${star.alpha})`;
-            ctx.fill();
+  // 默认展开第一组
+  window.addEventListener('DOMContentLoaded', () => {
+    const first = document.querySelector('.group-header');
+    if (first) toggleGroup(first);
+  });
 
-            // Subtle movement
-            star.y += star.speed;
-            if (star.y > canvas.height) {
-                star.y = 0;
-                star.x = Math.random() * canvas.width;
-            }
-        });
-        animationId = requestAnimationFrame(animateStars);
+  /* ── Copy ── */
+  document.querySelectorAll('.link-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const url = row.dataset.url;
+      if (!url) return;
+      copyText(url);
+    });
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(showToast).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
     }
+  }
 
-    window.addEventListener('resize', () => {
-        initStarfield();
-    });
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); showToast(); }
+    catch(e) { alert('请手动复制：' + text); }
+    document.body.removeChild(ta);
+  }
 
-    initStarfield();
-    animateStars();
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
 
-    // ── Tabs ──
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(btn.dataset.tab).classList.add('active');
-            window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
-        });
-    });
+  /* ── Modals ── */
+  document.getElementById('openTvModal').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('tvModal').classList.add('open');
+  });
+  document.getElementById('openPhoneModal').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('phoneModal').classList.add('open');
+  });
 
-    // ── Category Toggle ──
-    function toggleCategory(header) {
-        const grid = header.nextElementSibling;
-        const isOpen = header.classList.contains('open');
-        
-        // Close all
-        document.querySelectorAll('.category-header').forEach(h => {
-            h.classList.remove('open');
-            h.nextElementSibling.classList.remove('open');
-        });
-        
-        // Toggle current
-        if (!isOpen) {
-            header.classList.add('open');
-            grid.classList.add('open');
-        }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
     }
-
-    // Open first category on load
-    window.addEventListener('DOMContentLoaded', () => {
-        toggleCategory(document.querySelector('.category-header'));
-    });
-
-    // ── Copy to Clipboard ──
-    document.querySelectorAll('.interface-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const link = card.dataset.link;
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(link).then(showToast).catch(() => fallbackCopy(link));
-            } else {
-                fallbackCopy(link);
-            }
-        });
-    });
-
-    function fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            document.execCommand('copy');
-            showToast();
-        } catch(e) {
-            alert('请手动复制：' + text);
-        }
-        document.body.removeChild(textarea);
-    }
-
-    function showToast() {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
-    // ── Modals ──
-    document.getElementById('openTvModal').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('tvModal').classList.add('open');
-    });
-
-    document.getElementById('openPhoneModal').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('phoneModal').classList.add('open');
-    });
-
-    function closeModal(id) {
-        document.getElementById(id).classList.remove('open');
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', e => {
-            if (e.target === modal) {
-                modal.classList.remove('open');
-            }
-        });
-    });
+  });
 </script>
-
 </body>
 </html>
