@@ -147,7 +147,6 @@ body::after {
 }
 .btn-ghost:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
 
-/* 移除了 btn-download 的蓝色背景样式，与其他按钮统一 */
 .btn-download {
   background: var(--bg-card); backdrop-filter: var(--blur);
   border: 1px solid var(--border);
@@ -204,17 +203,11 @@ body::after {
   backdrop-filter: blur(30px);
   background: rgba(5,5,7,.8);
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 改为居中 */
 }
-.nav-brand {
-  font-size: 1rem; font-weight: 800; letter-spacing: -.01em;
-  display: flex; align-items: center; gap: 10px;
-  white-space: nowrap;
-}
-.nav-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-red); }
 
-.nav-center { display: flex; gap: 4px; }
 .nav-tabs {
   display: flex; gap: 4px;
   background: rgba(255,255,255,.05);
@@ -234,36 +227,6 @@ body::after {
   box-shadow: 0 4px 14px rgba(255,45,85,.4);
 }
 .nav-tab:not(.active):hover { color: var(--text); background: rgba(255,255,255,.07); }
-
-.nav-right { display: flex; align-items: center; gap: 12px; }
-.search-box {
-  position: relative;
-  display: none;
-}
-.search-box.show { display: block; }
-.search-input {
-  background: rgba(255,255,255,.05);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 8px 16px 8px 36px;
-  color: var(--text);
-  font-size: .8rem;
-  width: 180px;
-  transition: all .2s;
-}
-.search-input:focus {
-  outline: none;
-  border-color: var(--c-red);
-  background: rgba(255,255,255,.08);
-  width: 220px;
-}
-.search-input::placeholder { color: var(--text-dim); }
-.search-icon {
-  position: absolute; left: 12px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-dim);
-  font-size: .8rem;
-}
 
 /* ─── CATEGORY FILTER ─── */
 .category-filter {
@@ -368,7 +331,6 @@ body::after {
 .card-wang::before  { background: radial-gradient(circle at 50% 0%, rgba(10,132,255,.12), transparent 60%); }
 .card-fan::before   { background: radial-gradient(circle at 50% 0%, rgba(255,214,0,.1), transparent 60%); }
 .card-mi::before    { background: radial-gradient(circle at 50% 0%, rgba(255,106,0,.12), transparent 60%); }
-/* 添加肥猫的样式 */
 .card-fei::before   { background: radial-gradient(circle at 50% 0%, rgba(191,90,242,.12), transparent 60%); }
 
 .card-head {
@@ -396,7 +358,6 @@ body::after {
 .av-wang { background: linear-gradient(135deg, #0a84ff, #5856d6); box-shadow: 0 6px 20px rgba(10,132,255,.4); }
 .av-fan  { background: linear-gradient(135deg, #ffd60a, #ff9f0a); box-shadow: 0 6px 20px rgba(255,214,10,.35); }
 .av-mi   { background: linear-gradient(135deg, #ff6a00, #ff9500); box-shadow: 0 6px 20px rgba(255,106,0,.4); }
-/* 添加肥猫的头像样式 */
 .av-fei  { background: linear-gradient(135deg, #bf5af2, #5856d6); box-shadow: 0 6px 20px rgba(191,90,242,.4); }
 
 .card-info { flex: 1; }
@@ -699,7 +660,6 @@ footer {
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 768px) {
-  /* Hero 区域 */
   .hero { padding: 60px 16px 40px; }
   .hero-badge { padding: 4px 12px; font-size: .65rem; margin-bottom: 20px; }
   .hero-title { margin-bottom: 6px; }
@@ -709,21 +669,15 @@ footer {
   .btn-primary, .btn-ghost { width: 100%; padding: 14px 20px; font-size: .9rem; justify-content: center; display: flex; align-items: center; gap: 8px; }
   .hero-scroll { bottom: 20px; }
 
-  /* Stats */
   .stats-bar { gap: 0; }
   .stat-item { min-width: 50%; padding: 16px 12px; }
   .stat-num { font-size: 1.5rem; }
   .stat-label { font-size: .65rem; }
 
-  /* 导航 */
-  .sticky-nav { padding: 10px 12px; gap: 8px; }
-  .nav-brand { display: none; }
+  .sticky-nav { padding: 10px 12px; }
   .nav-tabs { padding: 3px; gap: 2px; }
   .nav-tab { padding: 6px 10px; font-size: .7rem; border-radius: 6px; }
-  .nav-center { flex: 1; justify-content: center; }
-  .nav-right { display: none; }
 
-  /* 内容区域 */
   .main { padding: 24px 12px 60px; }
   .sec-header { margin-bottom: 24px; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
   .sec-header > div:first-child { text-align: center; }
@@ -733,7 +687,6 @@ footer {
   .sec-desc { font-size: .8rem; }
   .sec-count { font-size: .7rem; }
 
-  /* 接口卡片 */
   .provider-grid { grid-template-columns: 1fr; gap: 12px; }
   .card-head { padding: 16px 16px 12px; }
   .avatar { width: 40px; height: 40px; font-size: .9rem; border-radius: 10px; }
@@ -745,12 +698,10 @@ footer {
   .copy-pill { font-size: .6rem; padding: 3px 8px; opacity: 1; pointer-events: auto; }
   .tag-recommend { font-size: .5rem; padding: 1px 4px; }
 
-  /* 分类筛选 */
   .category-filter { padding: 12px; gap: 8px; flex-direction: row; flex-wrap: wrap; }
   .filter-btn { padding: 6px 10px; font-size: .65rem; flex: 1; min-width: calc(50% - 4px); justify-content: center; }
   .filter-count { font-size: .55rem; }
 
-  /* 指南 */
   .guide-grid { grid-template-columns: 1fr; gap: 12px; }
   .step-card { padding: 18px; gap: 14px; }
   .step-icon { width: 38px; height: 38px; font-size: 1.1rem; }
@@ -760,7 +711,6 @@ footer {
   .modal-btn { padding: 14px; gap: 12px; }
   .modal-btn-icon { width: 36px; height: 36px; font-size: 1rem; }
 
-  /* 下载 */
   .download-section { grid-template-columns: 1fr; gap: 16px; }
   .download-card { padding: 16px; }
   .download-card h3 { font-size: .9rem; margin-bottom: 12px; }
@@ -771,7 +721,6 @@ footer {
   .compat-table th, .compat-table td { padding: 8px; font-size: .72rem; }
   .download-note { font-size: .7rem; padding: 10px; }
 
-  /* 弹窗 */
   .modal { max-width: 95%; margin: 12px; }
   .modal-header { padding: 14px 16px; }
   .modal-title { font-size: .95rem; }
@@ -779,7 +728,6 @@ footer {
   .modal-step { margin-bottom: 16px; }
   .modal-step-title { font-size: .75rem; }
 
-  /* Toast */
   #toast { bottom: 20px; padding: 10px 18px; font-size: .8rem; }
 }
 
@@ -843,16 +791,10 @@ footer {
 
 <!-- ══ STICKY NAV ══ -->
 <nav class="sticky-nav" id="sticky-nav">
-  <div class="nav-brand">
-    <div class="dot"></div>
-    导航站
-  </div>
-  <div class="nav-center">
-    <div class="nav-tabs">
-      <button class="nav-tab active" data-tab="interfaces" onclick="switchTab('interfaces',this)">📡 点播接口</button>
-      <button class="nav-tab" data-tab="guide" onclick="switchTab('guide',this)">📖 使用指南</button>
-      <button class="nav-tab" data-tab="download" onclick="switchTab('download',this)">📦 软件下载</button>
-    </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-tab="interfaces" onclick="switchTab('interfaces',this)">📡 点播接口</button>
+    <button class="nav-tab" data-tab="guide" onclick="switchTab('guide',this)">📖 使用指南</button>
+    <button class="nav-tab" data-tab="download" onclick="switchTab('download',this)">📦 软件下载</button>
   </div>
 </nav>
 
@@ -1011,7 +953,7 @@ footer {
         </div>
       </div>
 
-            <!-- 肥猫 -->
+      <!-- 肥猫 -->
       <div class="provider-card card-fei" data-category="fei">
         <div class="card-head">
           <div class="avatar av-fei">猫</div>
@@ -1346,14 +1288,6 @@ function switchTab(id, btn){
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
   
-  // 显示/隐藏搜索框
-  const searchBox = document.getElementById('searchBox');
-  if(id === 'interfaces') {
-    searchBox.classList.add('show');
-  } else {
-    searchBox.classList.remove('show');
-  }
-  
   document.getElementById('sticky-nav').scrollIntoView({behavior:'smooth'});
 }
 
@@ -1362,14 +1296,6 @@ function goToSection(id){
   document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelector(`[data-tab="${id}"]`).classList.add('active');
-  
-  // 显示/隐藏搜索框
-  const searchBox = document.getElementById('searchBox');
-  if(id === 'interfaces') {
-    searchBox.classList.add('show');
-  } else {
-    searchBox.classList.remove('show');
-  }
   
   setTimeout(()=>document.getElementById('sticky-nav').scrollIntoView({behavior:'smooth'}),50);
 }
@@ -1480,11 +1406,6 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
       overlay.classList.remove('open');
     }
   });
-});
-
-// 初始化搜索框显示
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('searchBox').classList.add('show');
 });
 </script>
 </body>
