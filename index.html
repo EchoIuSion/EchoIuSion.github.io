@@ -3,817 +3,1634 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>劉Ok.影视在线接口</title>
+    <title>StreamVision · 影视接口导航</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --rose:       #F43F7A;
-            --rose-lt:    #FFF0F5;
-            --rose-md:    #FECDD3;
-            --rose-soft:  #FFE4EC;
-            --peach:      #FF8FAB;
-            --gold:       #FB923C;
-            --gold-lt:    #FFF7ED;
-            --lavender:   #A78BFA;
-            --lav-lt:     #F5F3FF;
-            --green:      #10B981;
-            --bg-top:     #FFF5F8;
-            --bg-mid:     #FDF0F5;
-            --bg-bot:     #FBE8F3;
-            --white:      #FFFFFF;
-            --text:       #1E1226;
-            --sub:        #7C5C6E;
-            --border:     #F2D4E0;
-            --shadow-sm:  0 2px 12px rgba(244,63,122,0.08);
-            --shadow:     0 8px 28px rgba(244,63,122,0.13);
-            --shadow-lg:  0 18px 50px rgba(244,63,122,0.2);
-            --radius:     18px;
-            --font-head:  'Sora', 'Noto Sans SC', sans-serif;
-            --font-body:  'Noto Sans SC', 'Sora', sans-serif;
+            --neon-blue:    #00D4FF;
+            --neon-purple:  #8B5CF6;
+            --neon-pink:    #EC4899;
+            --neon-cyan:    #06B6D4;
+            --deep-space:   #0A0E1A;
+            --space-dark:   #111827;
+            --space-mid:    #1F2937;
+            --star-white:   #F8FAFC;
+            --star-dim:     #94A3B8;
+            --glass-bg:     rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(148, 163, 184, 0.1);
+            --glow-blue:    0 0 40px rgba(0, 212, 255, 0.4);
+            --glow-purple:  0 0 40px rgba(139, 92, 246, 0.4);
+            --glow-pink:    0 0 40px rgba(236, 72, 153, 0.4);
+            --radius:       20px;
+            --radius-sm:    12px;
+            --font-head:    'Orbitron', 'Noto Sans SC', sans-serif;
+            --font-body:    'Noto Sans SC', sans-serif;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         html { scroll-behavior: smooth; }
 
         body {
             font-family: var(--font-body);
-            background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-bot) 100%);
-            color: var(--text);
+            background: var(--deep-space);
+            color: var(--star-white);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* ── Ambient blobs ── */
-        .ambient { position: fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-        .amb { position:absolute; border-radius:50%; filter:blur(90px); opacity:0.22; }
-        .amb-1 { width:580px; height:580px; background:#FFADC7; top:-140px; left:-120px; animation: af 22s ease-in-out infinite; }
-        .amb-2 { width:420px; height:420px; background:#FCD5CE; bottom:-80px; right:-80px;  animation: af 28s ease-in-out infinite reverse; }
-        .amb-3 { width:350px; height:350px; background:#E9D5FF; top:38%; left:52%;          animation: af 24s ease-in-out infinite 5s; }
-        .amb-4 { width:280px; height:280px; background:#FBBF24; top:15%; right:18%;         animation: af 18s ease-in-out infinite 9s; opacity:0.14; }
-        @keyframes af {
-            0%,100% { transform: translate(0,0) scale(1); }
-            40%     { transform: translate(22px,-18px) scale(1.07); }
-            70%     { transform: translate(-14px,20px) scale(0.95); }
+        /* ── Starfield Canvas ── */
+        #starfield {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Nebula Gradient Overlay ── */
+        .nebula-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+            animation: nebulaShift 20s ease-in-out infinite;
+        }
+
+        @keyframes nebulaShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         /* ── Topbar ── */
         .topbar {
-            position: sticky; top:0; z-index:100;
-            background: rgba(255,245,248,0.82);
-            backdrop-filter: blur(20px);
-            border-bottom: 1.5px solid var(--border);
-            height: 62px; padding: 0 32px;
-            display: flex; align-items: center; justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            height: 70px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
         .logo {
             font-family: var(--font-head);
-            font-size: 1.22rem; font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, var(--rose), var(--peach));
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            display: flex; align-items: center; gap: 8px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
         }
-        .logo-ring {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--rose), var(--gold));
-            flex-shrink: 0;
-            animation: pulse 2.6s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%,100% { transform:scale(1); box-shadow: 0 0 0 0 rgba(244,63,122,0.4); }
-            50%      { transform:scale(1.3); box-shadow: 0 0 0 6px rgba(244,63,122,0); }
-        }
-        .logo-sub { font-size: 0.72rem; color: var(--sub); font-weight:500; -webkit-text-fill-color: var(--sub); }
 
-        /* ── Hero ── */
-        .hero { text-align:center; padding: 76px 24px 58px; }
-        .hero-kicker {
-            display: inline-flex; align-items: center; gap: 7px;
-            background: var(--white);
-            border: 1.5px solid var(--rose-md);
-            border-radius: 50px; padding: 5px 18px;
-            font-size: 0.78rem; font-weight: 700;
-            color: var(--rose); margin-bottom: 28px;
-            box-shadow: var(--shadow-sm);
-            letter-spacing: 0.4px;
+        .logo-orb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            box-shadow: var(--glow-blue);
+            animation: orbPulse 2s ease-in-out infinite;
         }
+
+        @keyframes orbPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
+            }
+        }
+
+        .logo-sub {
+            font-size: 0.75rem;
+            color: var(--star-dim);
+            font-weight: 400;
+            letter-spacing: 1px;
+            -webkit-text-fill-color: var(--star-dim);
+        }
+
+        /* ── Hero Section ── */
+        .hero {
+            text-align: center;
+            padding: 100px 32px 70px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 10px 24px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+            animation: badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 12px var(--neon-cyan);
+            animation: dotBlink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes dotBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-badge-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         .hero-title {
             font-family: var(--font-head);
-            font-size: clamp(2.4rem, 6vw, 4.2rem);
-            font-weight: 800; line-height: 1.1;
-            letter-spacing: -2px; color: var(--text);
-            margin-bottom: 18px;
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
         }
-        .hero-title .accent {
-            background: linear-gradient(135deg, var(--rose) 0%, var(--peach) 50%, var(--gold) 100%);
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            position: relative; display: inline-block;
+
+        .hero-title-line {
+            display: block;
         }
-        .hero-title .accent::after {
-            content:'';
-            position:absolute; left:0; bottom:-5px;
-            width:100%; height:7px;
-            background: linear-gradient(90deg, var(--rose), var(--peach), var(--gold));
-            border-radius:4px; opacity:0.35;
+
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
         }
+
+        .hero-title .gradient::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
         .hero-desc {
-            font-size: clamp(0.95rem,2vw,1.1rem);
-            color: var(--sub); max-width:540px;
-            margin: 0 auto 48px; line-height:1.85; font-weight:400;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--star-dim);
+            max-width: 560px;
+            margin: 0 auto 48px;
+            line-height: 1.9;
+            font-weight: 300;
         }
 
         /* ── Tabs ── */
-        .tabs-wrap {
-            display:flex; justify-content:center;
-            gap:10px; flex-wrap:nowrap; padding:0 20px;
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 0 24px;
         }
-        .tab-btn {
-            padding: 12px 26px;
-            background: var(--white);
-            border: 1.5px solid var(--border);
-            border-radius: 50px;
+
+        .tab-button {
+            padding: 14px 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
             font-family: var(--font-head);
-            font-size: 0.88rem; font-weight: 700;
-            color: var(--sub); cursor: pointer;
-            transition: all 0.22s ease;
-            display: flex; align-items: center; gap: 8px;
-            white-space: nowrap;
-            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--star-dim);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
-        .tab-btn:hover {
-            border-color: var(--rose); color: var(--rose);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(244,63,122,0.18);
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--rose), var(--peach));
-            border-color: transparent; color: white;
-            box-shadow: 0 8px 26px rgba(244,63,122,0.38);
+
+        .tab-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-button:hover {
+            border-color: var(--neon-blue);
+            color: var(--star-white);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-blue);
+        }
+
+        .tab-button:hover::before {
+            opacity: 0.15;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-color: transparent;
+            color: white;
+            box-shadow: var(--glow-blue), 0 8px 30px rgba(0, 212, 255, 0.3);
             transform: translateY(-3px);
         }
 
-        /* ── Content ── */
-        main { max-width:1100px; margin:0 auto; padding:0 24px 80px; }
-        .content-section { display:none; }
-        .content-section.active {
-            display:block;
-            animation: fadeUp 0.38s cubic-bezier(0.22,1,0.36,1);
-        }
-        @keyframes fadeUp {
-            from { opacity:0; transform:translateY(22px); }
-            to   { opacity:1; transform:translateY(0); }
+        /* ── Main Content ── */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px 100px;
+            position: relative;
+            z-index: 10;
         }
 
-        /* ── Stats strip ── */
-        .stats-strip { display:flex; gap:14px; flex-wrap:wrap; padding:36px 0 28px; }
-        .stat-chip {
-            background: var(--white); border: 1.5px solid var(--border);
-            border-radius: 14px; padding: 16px 22px;
-            display: flex; align-items: center; gap: 14px;
-            box-shadow: var(--shadow-sm); flex: 1 1 160px;
+        .section-content {
+            display: none;
+            animation: fadeSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .stat-icon {
-            width:40px; height:40px; border-radius:12px;
-            display:flex; align-items:center; justify-content:center;
-            font-size:1.1rem; flex-shrink:0;
-        }
-        .si-rose   { background: var(--rose-lt);  color: var(--rose); }
-        .si-gold   { background: var(--gold-lt);   color: var(--gold); }
-        .si-lav    { background: var(--lav-lt);    color: var(--lavender); }
-        .stat-num { font-family:var(--font-head); font-size:1.6rem; font-weight:800; color:var(--text); line-height:1; }
-        .stat-lbl { font-size:0.72rem; color:var(--sub); font-weight:500; margin-top:3px; }
 
-        /* ── Category ── */
-        .category { margin-bottom:14px; }
-        .cat-title {
-            display:flex; align-items:center; justify-content:space-between;
-            padding: 17px 22px;
-            background: var(--white);
-            border: 1.5px solid var(--border);
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Stats Cards ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 0 32px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            cursor:pointer; transition: all 0.22s ease;
-            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .cat-left { display:flex; align-items:center; gap:12px; }
-        .cat-badge {
-            width:40px; height:40px; border-radius:12px;
-            display:flex; align-items:center; justify-content:center;
-            font-size:1.2rem; flex-shrink:0;
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .cb-1 { background: linear-gradient(135deg,#FFD6E7,#FFACC7); }
-        .cb-2 { background: linear-gradient(135deg,#FDE8D8,#FDBA74); }
-        .cb-3 { background: linear-gradient(135deg,#EDE9FE,#C4B5FD); }
-        .cb-4 { background: linear-gradient(135deg,#D1FAE5,#6EE7B7); }
-        .cat-name { font-family:var(--font-head); font-size:1rem; font-weight:700; color:var(--text); }
-        .cat-tag {
-            font-size:0.7rem; font-weight:600; color:var(--sub);
-            background:var(--rose-lt); border:1px solid var(--rose-md);
-            padding:2px 10px; border-radius:20px;
+
+        .stat-card:hover::before {
+            opacity: 1;
         }
-        .cat-arrow {
-            width:34px; height:34px; border-radius:50%;
-            background:var(--rose-lt); border:1.5px solid var(--border);
-            display:flex; align-items:center; justify-content:center;
-            font-size:1rem; line-height:1;
-            transition: all 0.25s; flex-shrink:0;
+
+        .stat-card:hover {
+            border-color: var(--neon-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-blue);
         }
-        .cat-title:hover {
-            border-color: var(--rose);
-            box-shadow: var(--shadow);
-            transform: translateY(-2px);
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
         }
-        .cat-title:hover .cat-arrow { border-color:var(--rose); box-shadow: 0 0 8px rgba(244,63,122,0.25); }
-        .cat-title.open {
-            background: linear-gradient(135deg, #FFF5F8, #FFF0F5);
-            border-color: var(--rose);
-            box-shadow: var(--shadow);
+
+        .stat-icon.blue {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .stat-icon.purple {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+            box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .stat-icon.pink {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(0, 212, 255, 0.2));
+            box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.1);
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--star-dim);
+            font-weight: 500;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ── Category Accordion ── */
+        .category-block {
+            margin-bottom: 16px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 26px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .category-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .category-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .ci-blue { background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 212, 255, 0.1)); }
+        .ci-purple { background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)); }
+        .ci-pink { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(236, 72, 153, 0.1)); }
+        .ci-cyan { background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.1)); }
+
+        .category-name {
+            font-family: var(--font-head);
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .category-count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--neon-cyan);
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .category-header:hover {
+            border-color: var(--neon-blue);
+            transform: translateX(6px);
+            box-shadow: var(--glow-blue);
+        }
+
+        .category-header:hover .category-arrow {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .category-header.open {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
+            border-color: var(--neon-blue);
             border-radius: var(--radius) var(--radius) 0 0;
+            box-shadow: var(--glow-blue);
         }
-        .cat-title.open .cat-arrow {
-            background: linear-gradient(135deg,var(--rose),var(--peach));
-            border-color:transparent;
-        }
-        .cat-title.open .cat-name { color:var(--rose); }
 
-        /* ── Cards ── */
-        .cards-wrap {
-            display:none;
-            grid-template-columns: repeat(auto-fill, minmax(290px,1fr));
-            gap:12px; padding:14px;
-            background: linear-gradient(135deg, var(--rose-soft), var(--rose-lt));
-            border: 1.5px solid var(--rose-md);
-            border-top:none;
+        .category-header.open .category-arrow {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-color: transparent;
+            transform: rotate(180deg);
+        }
+
+        .category-header.open .category-name {
+            color: var(--neon-cyan);
+        }
+
+        /* ── Interface Cards ── */
+        .interfaces-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-top: none;
             border-radius: 0 0 var(--radius) var(--radius);
-        }
-        .cards-wrap.open { display:grid; }
-
-        .v-card {
-            background: var(--white);
-            border: 1.5px solid var(--border);
-            border-radius:14px; padding:18px 18px 14px;
-            cursor:pointer; transition: all 0.22s ease;
-            box-shadow: var(--shadow-sm);
-            position:relative; overflow:hidden;
-        }
-        .v-card::before {
-            content:''; position:absolute;
-            top:0; left:0; right:0; height:3px;
-            background: linear-gradient(90deg, var(--rose), var(--peach), var(--gold));
-            opacity:0; transition:opacity 0.22s;
-        }
-        .v-card:hover { border-color:var(--rose-md); transform:translateY(-3px); box-shadow:var(--shadow-lg); }
-        .v-card:hover::before { opacity:1; }
-        .v-card:active { transform:scale(0.98); }
-
-        .vc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-        .vc-type { font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--sub); }
-        .vc-type.is-main { color:var(--rose); }
-        .vc-rec {
-            font-size:0.68rem; font-weight:700;
-            background: linear-gradient(135deg,var(--rose),var(--peach));
-            color:white; padding:2px 10px; border-radius:20px;
-        }
-        .vc-url {
-            background: linear-gradient(135deg,#FFF8FA,var(--rose-lt));
-            border:1px solid var(--border);
-            border-radius:8px; padding:9px 12px;
-            font-size:0.78rem; color:#4A2030;
-            word-break:break-all; line-height:1.55;
-            font-family:'SF Mono','Fira Code',monospace;
-            margin-bottom:10px;
-        }
-        .vc-bottom { display:flex; align-items:center; justify-content:space-between; }
-        .vc-copy { font-size:0.75rem; font-weight:600; color:#E0B0C0; display:flex; align-items:center; gap:5px; transition:color 0.2s; }
-        .v-card:hover .vc-copy { color:var(--rose); }
-        .vc-warn { font-size:0.68rem; color:#F59E0B; font-weight:500; }
-
-        /* ── Guide ── */
-        .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; padding:44px 0; }
-        .section-label {
-            font-size:0.72rem; font-weight:700;
-            letter-spacing:2px; text-transform:uppercase;
-            color:var(--rose); margin-bottom:12px;
-            display:flex; align-items:center; gap:8px;
-        }
-        .section-label::before { content:''; width:20px; height:2px; background:linear-gradient(90deg,var(--rose),var(--peach)); border-radius:1px; }
-        .guide-h2 {
-            font-family:var(--font-head);
-            font-size:clamp(1.8rem,3.5vw,2.6rem);
-            font-weight:800; line-height:1.15;
-            letter-spacing:-1px; margin-bottom:28px; color:var(--text);
-        }
-        .guide-h2 span { background:linear-gradient(135deg,var(--rose),var(--peach)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-
-        .steps { list-style:none; }
-        .step { display:flex; gap:14px; padding:16px 0; border-bottom:1px dashed var(--border); }
-        .step:last-child { border:none; }
-        .step-n {
-            width:30px; height:30px; flex-shrink:0;
-            background: linear-gradient(135deg,var(--rose),var(--peach));
-            color:white; border-radius:50%; font-weight:800;
-            font-size:0.78rem; font-family:var(--font-head);
-            display:flex; align-items:center; justify-content:center;
-        }
-        .step-txt { font-size:0.9rem; line-height:1.75; padding-top:4px; }
-
-        .guide-btns-col { display:flex; flex-direction:column; gap:14px; padding-top:4px; }
-        .guide-btn {
-            display:flex; align-items:center; gap:14px;
-            padding:18px 20px; background:var(--white);
-            border:1.5px solid var(--border); border-radius:14px;
-            text-decoration:none; color:var(--text);
-            cursor:pointer; transition:all 0.22s;
-            box-shadow: var(--shadow-sm);
-        }
-        .guide-btn:hover { border-color:var(--rose); transform:translateX(6px); box-shadow:var(--shadow); }
-        .gb-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
-        .gbi-tv    { background:linear-gradient(135deg,var(--rose-lt),var(--rose-soft)); color:var(--rose); }
-        .gbi-phone { background:linear-gradient(135deg,var(--lav-lt),#DDD6FE); color:var(--lavender); }
-        .gb-text strong { display:block; font-size:0.9rem; font-weight:700; margin-bottom:2px; }
-        .gb-text span   { font-size:0.76rem; color:var(--sub); }
-        .gb-arrow { margin-left:auto; color:var(--sub); font-size:0.85rem; transition:all 0.2s; }
-        .guide-btn:hover .gb-arrow { color:var(--rose); transform:translateX(3px); }
-
-        .guide-tip {
-            background: linear-gradient(135deg,#FFF7ED,#FFF3E8);
-            border:1.5px solid #FDE68A; border-radius:12px;
-            padding:14px 16px; font-size:0.82rem;
-            line-height:1.7; color:#78350F; margin-top:14px;
+            backdrop-filter: blur(10px);
         }
 
-        /* ── Software ── */
-        .sw-grid { display:grid; grid-template-columns:6fr 4fr; gap:48px; padding:44px 0; }
-        .sw-h2 { font-family:var(--font-head); font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:800; letter-spacing:-1px; margin-bottom:8px; color:var(--text); }
-        .sw-h2 span { background:linear-gradient(135deg,var(--rose),var(--peach)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-        .sw-sub { font-size:0.88rem; color:var(--sub); line-height:1.75; margin-bottom:30px; }
+        .interfaces-grid.open {
+            display: grid;
+        }
 
-        .dl-list { display:flex; flex-direction:column; gap:12px; }
-        .dl-row {
-            display:flex; align-items:center; gap:14px;
-            padding:16px 20px; background:var(--white);
-            border:1.5px solid var(--border); border-radius:14px;
-            text-decoration:none; color:var(--text);
-            font-weight:700; font-size:0.95rem;
-            transition:all 0.22s; box-shadow:var(--shadow-sm);
+        .interface-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
         }
-        .dl-row:hover {
-            background:linear-gradient(135deg,var(--rose),var(--peach));
-            border-color:transparent; color:white;
-            transform:translateY(-3px); box-shadow:var(--shadow-lg);
-        }
-        .dl-icon {
-            width:38px; height:38px; border-radius:10px;
-            background:var(--rose-lt); color:var(--rose);
-            display:flex; align-items:center; justify-content:center;
-            font-size:1.4rem; font-weight:700; transition:all 0.22s; flex-shrink:0;
-        }
-        .dl-row:hover .dl-icon { background:rgba(255,255,255,0.22); color:white; }
-        .dl-arrow { margin-left:auto; font-size:0.8rem; color:var(--sub); transition:all 0.22s; }
-        .dl-row:hover .dl-arrow { color:white; transform:translateX(4px); }
 
-        .warn-card {
-            background:linear-gradient(135deg,#FFF8F0,#FFF3E8);
-            border:1.5px solid #FDE68A; border-radius:14px; padding:18px; margin-bottom:16px;
+        .interface-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .warn-title { font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#D97706; margin-bottom:9px; display:flex; align-items:center; gap:7px; }
-        .warn-body { font-size:0.82rem; line-height:1.75; color:#78350F; }
 
-        .compat { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1.5px solid var(--border); border-radius:14px; overflow:hidden; }
-        .compat-cell { background:var(--white); padding:16px; text-align:center; }
-        .compat-ico { font-size:1.5rem; margin-bottom:5px; }
-        .compat-nm  { font-size:0.7rem; font-weight:700; letter-spacing:0.5px; color:var(--sub); }
-        .compat-st  { font-size:0.72rem; font-weight:700; margin-top:3px; }
-        .yes  { color:var(--green); }
-        .nope { color:var(--rose); }
-
-        /* ── Toast ── */
-        .toast {
-            position:fixed; bottom:36px; left:50%;
-            transform:translateX(-50%) translateY(70px);
-            background: linear-gradient(135deg,var(--rose),var(--peach));
-            color:white; border-radius:50px; padding:13px 26px;
-            font-size:0.85rem; font-weight:600;
-            box-shadow:0 12px 36px rgba(244,63,122,0.35);
-            display:flex; align-items:center; gap:10px;
-            z-index:9999; opacity:0;
-            transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
-            white-space:nowrap; pointer-events:none;
+        .interface-card:hover::before {
+            opacity: 1;
         }
-        .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
-        .toast-check { width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,0.3); display:flex; align-items:center; justify-content:center; font-size:0.75rem; }
+
+        .interface-card:hover {
+            border-color: var(--neon-purple);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--glow-purple);
+        }
+
+        .interface-card:active {
+            transform: scale(0.98);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .card-type {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--star-dim);
+        }
+
+        .card-type.main {
+            color: var(--neon-cyan);
+        }
+
+        .card-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .card-url {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.82rem;
+            color: var(--neon-cyan);
+            word-break: break-all;
+            line-height: 1.6;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            margin-bottom: 14px;
+        }
+
+        .card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .copy-hint {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--star-dim);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .interface-card:hover .copy-hint {
+            color: var(--neon-cyan);
+        }
+
+        .status-warn {
+            font-size: 0.72rem;
+            color: #F59E0B;
+            font-weight: 600;
+        }
+
+        /* ── Guide Section ── */
+        .guide-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 50px 0;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-tag::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 1px;
+        }
+
+        .guide-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+        }
+
+        .guide-title .highlight {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .steps-list {
+            list-style: none;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+            font-family: var(--font-head);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow-blue);
+        }
+
+        .step-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            padding-top: 6px;
+            color: var(--star-dim);
+        }
+
+        .guide-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding-top: 8px;
+        }
+
+        .guide-link {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--star-white);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .guide-link:hover {
+            border-color: var(--neon-purple);
+            transform: translateX(10px);
+            box-shadow: var(--glow-purple);
+        }
+
+        .guide-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .gi-tv {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 212, 255, 0.05));
+            color: var(--neon-cyan);
+        }
+
+        .gi-phone {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
+            color: var(--neon-purple);
+        }
+
+        .guide-content strong {
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .guide-content span {
+            font-size: 0.8rem;
+            color: var(--star-dim);
+        }
+
+        .guide-arrow {
+            margin-left: auto;
+            color: var(--star-dim);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .guide-link:hover .guide-arrow {
+            color: var(--neon-purple);
+            transform: translateX(6px);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--star-dim);
+            margin-top: 18px;
+        }
+
+        .tip-box strong {
+            color: var(--neon-pink);
+        }
+
+        /* ── Software Section ── */
+        .software-layout {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            gap: 60px;
+            padding: 50px 0;
+        }
+
+        .software-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .software-title .highlight {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .software-sub {
+            font-size: 0.95rem;
+            color: var(--star-dim);
+            line-height: 1.9;
+            margin-bottom: 36px;
+        }
+
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--star-white);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .download-item:hover {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-color: transparent;
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--glow-blue), 0 12px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .download-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .download-item:hover .download-icon {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .download-arrow {
+            margin-left: auto;
+            font-size: 0.9rem;
+            color: var(--star-dim);
+            transition: all 0.3s;
+        }
+
+        .download-item:hover .download-arrow {
+            color: white;
+            transform: translateX(6px);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        .warning-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #F59E0B;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-text {
+            font-size: 0.88rem;
+            line-height: 1.85;
+            color: #FCD34D;
+        }
+
+        .compatibility-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--glass-border);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .compat-item {
+            background: var(--glass-bg);
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .compat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .compat-name {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--star-dim);
+            text-transform: uppercase;
+        }
+
+        .compat-status {
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .status-yes { color: #10B981; }
+        .status-no { color: var(--neon-pink); }
+
+        /* ── Toast Notification ── */
+        .toast-notification {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border-radius: 50px;
+            padding: 16px 32px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
 
         /* ── Modal ── */
-        .modal { display:none; position:fixed; inset:0; background:rgba(30,18,38,0.5); z-index:2000; justify-content:center; align-items:center; backdrop-filter:blur(8px); }
-        .modal.open { display:flex; }
-        .modal-box {
-            background:var(--white); border-radius:22px;
-            width:95%; max-width:740px; max-height:88vh;
-            overflow-y:auto; padding:38px;
-            box-shadow:0 32px 80px rgba(244,63,122,0.18);
-            animation:popUp 0.32s cubic-bezier(0.34,1.56,0.64,1);
-            position:relative;
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 14, 26, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
         }
-        @keyframes popUp {
-            from { opacity:0; transform:scale(0.93) translateY(16px); }
-            to   { opacity:1; transform:scale(1) translateY(0); }
+
+        .modal-overlay.open {
+            display: flex;
         }
+
+        .modal-content {
+            background: var(--space-dark);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            width: 95%;
+            max-width: 780px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 42px;
+            box-shadow: 0 32px 80px rgba(0, 212, 255, 0.2);
+            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .modal-close {
-            position:absolute; top:16px; right:16px;
-            width:38px; height:38px; border-radius:50%;
-            background:var(--rose-lt); border:1.5px solid var(--border);
-            cursor:pointer; color:var(--rose); font-size:1rem;
-            display:flex; align-items:center; justify-content:center;
-            transition:all 0.2s;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
-        .modal-close:hover { background:var(--rose); color:white; border-color:var(--rose); }
-        .modal-h {
-            font-family:var(--font-head); font-size:1.45rem; font-weight:800;
-            color:var(--text); margin-bottom:26px;
-            padding-bottom:16px; border-bottom:1.5px solid var(--border);
-            display:flex; align-items:center; gap:10px;
+
+        .modal-close:hover {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            border-color: transparent;
+            box-shadow: var(--glow-blue);
         }
-        .modal-step { margin-bottom:22px; }
-        .modal-step p { font-size:0.78rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--rose); margin-bottom:8px; }
-        .modal-step img { width:100%; border-radius:10px; border:1.5px solid var(--border); }
-        .modal-done { text-align:center; background:var(--rose-lt); border:1.5px solid var(--rose-md); border-radius:12px; padding:16px; font-weight:700; font-size:0.88rem; color:var(--rose); margin-top:16px; }
+
+        .modal-header {
+            font-family: var(--font-head);
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-step {
+            margin-bottom: 28px;
+        }
+
+        .modal-step-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 12px;
+        }
+
+        .modal-step img {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .modal-complete {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--neon-cyan);
+            margin-top: 20px;
+        }
 
         /* ── Footer ── */
         footer {
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(12px);
-            border-top:1.5px solid var(--border);
-            padding:26px 32px;
-            display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
-        }
-        .footer-txt { font-size:0.78rem; color:var(--sub); line-height:1.7; }
-        .footer-brand { font-family:var(--font-head); font-weight:800; font-size:0.95rem; background:linear-gradient(135deg,var(--rose),var(--peach)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-
-        /* ── Responsive · 平板 ── */
-        @media (max-width:720px) {
-            .topbar { padding:0 18px; }
-            .logo-sub { display:none; }
-
-            .hero { padding:48px 18px 36px; }
-            .hero-kicker { font-size:0.72rem; padding:4px 14px; }
-
-            main { padding:0 16px 60px; }
-
-            /* stats: 横向滚动不换行 */
-            .stats-strip {
-                gap:10px; padding:24px 0 20px;
-                flex-wrap:nowrap; overflow-x:auto;
-                -webkit-overflow-scrolling:touch;
-                scrollbar-width:none;
-                padding-bottom:4px;
-            }
-            .stats-strip::-webkit-scrollbar { display:none; }
-            .stat-chip { flex:0 0 150px; min-width:150px; padding:14px 16px; }
-
-            /* cards: 单列 */
-            .cards-wrap { grid-template-columns:1fr; padding:10px; gap:10px; }
-
-            /* guide & software: 单列 */
-            .guide-grid { grid-template-columns:1fr; gap:24px; padding:30px 0; }
-            .sw-grid    { grid-template-columns:1fr; gap:24px; padding:30px 0; }
-
-            /* guide steps 字号 */
-            .step-txt { font-size:0.85rem; }
-            .guide-h2, .sw-h2 { font-size:1.7rem; }
-
-            footer { padding:20px 16px; flex-direction:column; align-items:flex-start; gap:8px; }
+            background: rgba(10, 14, 26, 0.9);
+            border-top: 1px solid var(--glass-border);
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(15px);
         }
 
-        /* ── Responsive · 手机 ── */
-        @media (max-width:480px) {
-            .hero { padding:40px 16px 30px; }
-            .hero-title { font-size:2rem; letter-spacing:-1px; }
-            .hero-desc  { font-size:0.9rem; margin-bottom:36px; }
+        .footer-text {
+            font-size: 0.82rem;
+            color: var(--star-dim);
+            line-height: 1.8;
+        }
 
-            /* tabs: 三个紧凑横排，不换行 */
-            .tabs-wrap {
-                gap:8px; flex-wrap:nowrap;
-                overflow-x:auto; padding:0 16px;
-                justify-content:flex-start;
-                -webkit-overflow-scrolling:touch;
-                scrollbar-width:none;
-            }
-            .tabs-wrap::-webkit-scrollbar { display:none; }
-            .tab-btn {
-                padding:10px 16px; font-size:0.8rem;
-                flex:0 0 auto; white-space:nowrap;
+        .footer-brand {
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 1rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 0 20px;
+                height: 60px;
             }
 
-            /* category title */
-            .cat-title { padding:14px 16px; }
-            .cat-name  { font-size:0.92rem; }
-            .cat-tag   { font-size:0.65rem; padding:2px 8px; }
-            .cat-badge { width:34px; height:34px; font-size:1.05rem; }
+            .logo-sub {
+                display: none;
+            }
 
-            /* cards */
-            .v-card    { padding:14px 14px 12px; }
-            .vc-url    { font-size:0.72rem; padding:8px 10px; }
-            .vc-type   { font-size:0.65rem; }
+            .hero {
+                padding: 60px 20px 50px;
+            }
 
-            /* download list */
-            .dl-row    { padding:14px 16px; font-size:0.9rem; }
+            main {
+                padding: 0 20px 80px;
+            }
 
-            /* modal */
-            .modal-box { padding:20px 16px; border-radius:16px; }
-            .modal-h   { font-size:1.1rem; margin-bottom:18px; }
+            .stats-row {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 30px 0 24px;
+            }
 
-            /* topbar */
-            .logo { font-size:1.05rem; }
+            .interfaces-grid {
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .guide-layout,
+            .software-layout {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding: 36px 0;
+            }
+
+            .guide-title,
+            .software-title {
+                font-size: 1.8rem;
+            }
+
+            footer {
+                padding: 24px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
         }
 
-        /* ── 超小屏 (折叠屏/SE) ── */
-        @media (max-width:360px) {
-            .hero-title { font-size:1.75rem; }
-            .tab-btn    { padding:9px 13px; font-size:0.75rem; }
-            .stat-chip  { flex:0 0 130px; min-width:130px; }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 50px 16px 40px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                letter-spacing: -0.5px;
+            }
+
+            .tabs-container {
+                gap: 10px;
+            }
+
+            .tab-button {
+                padding: 12px 20px;
+                font-size: 0.8rem;
+            }
+
+            .category-header {
+                padding: 18px 20px;
+            }
+
+            .category-name {
+                font-size: 1rem;
+            }
+
+            .category-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+            }
+
+            .interface-card {
+                padding: 16px;
+            }
+
+            .card-url {
+                font-size: 0.75rem;
+            }
+
+            .modal-content {
+                padding: 24px 18px;
+            }
+
+            .modal-header {
+                font-size: 1.2rem;
+                margin-bottom: 24px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
         }
 
-        /* 触摸设备去掉 hover 位移，避免点击闪烁 */
-        @media (hover:none) and (pointer:coarse) {
-            .tab-btn:hover     { transform:none; }
-            .cat-title:hover   { transform:none; }
-            .v-card:hover      { transform:none; }
-            .guide-btn:hover   { transform:none; }
-            .dl-row:hover      { transform:none; }
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 1.7rem;
+            }
+
+            .tab-button {
+                padding: 10px 16px;
+                font-size: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+
+            .stat-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Touch devices - remove hover transforms */
+        @media (hover: none) and (pointer: coarse) {
+            .tab-button:hover,
+            .category-header:hover,
+            .interface-card:hover,
+            .guide-link:hover,
+            .download-item:hover,
+            .stat-card:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="ambient">
-    <div class="amb amb-1"></div>
-    <div class="amb amb-2"></div>
-    <div class="amb amb-3"></div>
-    <div class="amb amb-4"></div>
-</div>
+<!-- Starfield Canvas -->
+<canvas id="starfield"></canvas>
+
+<!-- Nebula Overlay -->
+<div class="nebula-overlay"></div>
 
 <!-- Topbar -->
-<div class="topbar">
+<nav class="topbar">
     <div class="logo">
-        <div class="logo-ring"></div>
+        <div class="logo-orb"></div>
         StreamVision
     </div>
     <span class="logo-sub">劉Ok · 免费超清影视</span>
-</div>
+</nav>
 
-<!-- Hero -->
+<!-- Hero Section -->
 <section class="hero">
-    <div class="hero-kicker">🔥 芒果优酷腾讯爱奇艺四大平台 · 免费 · 无需VIP</div>
-    <h1 class="hero-title">OK影视<br><span class="accent">API 接口</span>导航站</h1>
-    <p class="hero-desc">汇聚精选接口资源，支持超清4K画质，热门电影、剧集随心畅看。</p>
-    <div class="tabs-wrap">
-        <button class="tab-btn active" data-tab="vod">▶ 点播接口</button>
-        <button class="tab-btn" data-tab="guide">🗺 使用指南</button>
-        <button class="tab-btn" data-tab="software">🚀 软件下载</button>
+    <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="hero-badge-text">芒果 / 优酷 / 腾讯 / 爱奇艺 · 全平台免费</span>
+    </div>
+    <h1 class="hero-title">
+        <span class="hero-title-line">OK 影视</span>
+        <span class="hero-title-line"><span class="gradient">API 接口</span>导航站</span>
+    </h1>
+    <p class="hero-desc">汇聚精选接口资源，支持超清4K画质，热门电影、剧集随心畅看，无需VIP会员。</p>
+    <div class="tabs-container">
+        <button class="tab-button active" data-tab="vod"><span>▶ 点播接口</span></button>
+        <button class="tab-button" data-tab="guide"><span>🗺 使用指南</span></button>
+        <button class="tab-button" data-tab="software"><span>🚀 软件下载</span></button>
     </div>
 </section>
 
 <main>
 
-    <!-- 点播接口 -->
-    <section id="vod" class="content-section active">
-        <div class="stats-strip">
-            <div class="stat-chip">
-                <div class="stat-icon si-rose">📡</div>
-                <div><div class="stat-num">4</div><div class="stat-lbl">接口数量</div></div>
+    <!-- 点播接口 Section -->
+    <section id="vod" class="section-content active">
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon blue">📡</div>
+                <div class="stat-info">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">接口数量</div>
+                </div>
             </div>
-            <div class="stat-chip">
-                <div class="stat-icon si-gold">🔗</div>
-                <div><div class="stat-num">19</div><div class="stat-lbl">可用线路</div></div>
+            <div class="stat-card">
+                <div class="stat-icon purple">🔗</div>
+                <div class="stat-info">
+                    <div class="stat-value">19</div>
+                    <div class="stat-label">可用线路</div>
+                </div>
             </div>
-            <div class="stat-chip">
-                <div class="stat-icon si-lav">🎬</div>
-                <div><div class="stat-num">4K</div><div class="stat-lbl">超清画质</div></div>
+            <div class="stat-card">
+                <div class="stat-icon pink">🎬</div>
+                <div class="stat-info">
+                    <div class="stat-value">4K</div>
+                    <div class="stat-label">超清画质</div>
+                </div>
             </div>
         </div>
 
         <!-- OK杰克 -->
-        <div class="category">
-            <div class="cat-title" onclick="toggleCat(this)">
-                <div class="cat-left">
-                    <div class="cat-badge cb-1">🦄</div>
-                    <span class="cat-name">OK杰克</span>
-                    <span class="cat-tag">4 条线路</span>
+        <div class="category-block">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <div class="category-left">
+                    <div class="category-icon ci-blue">🦄</div>
+                    <span class="category-name">OK杰克</span>
+                    <span class="category-count">4 条线路</span>
                 </div>
-                <div class="cat-arrow">✨</div>
+                <div class="category-arrow">▾</div>
             </div>
-            <div class="cards-wrap">
-                <div class="v-card" data-link="http://ok213.top/tv">
-                    <div class="vc-top"><span class="vc-type is-main">主接口</span><span class="vc-rec">推荐</span></div>
-                    <div class="vc-url">http://ok213.top/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span><span class="vc-warn">失效请切备用</span></div>
+            <div class="interfaces-grid">
+                <div class="interface-card" data-link="http://ok213.top/tv">
+                    <div class="card-top">
+                        <span class="card-type main">主接口</span>
+                        <span class="card-badge">推荐</span>
+                    </div>
+                    <div class="card-url">http://ok213.top/tv</div>
+                    <div class="card-bottom">
+                        <span class="copy-hint">⎘ 点击复制</span>
+                        <span class="status-warn">失效请切备用</span>
+                    </div>
                 </div>
-                <div class="v-card" data-link="http://ok213.top/ok">
-                    <div class="vc-top"><span class="vc-type">备用 A</span></div>
-                    <div class="vc-url">http://ok213.top/ok</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://ok213.top/ok">
+                    <div class="card-top"><span class="card-type">备用 A</span></div>
+                    <div class="card-url">http://ok213.top/ok</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://ok521.top/tv">
-                    <div class="vc-top"><span class="vc-type">备用 B</span></div>
-                    <div class="vc-url">http://ok521.top/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://ok521.top/tv">
+                    <div class="card-top"><span class="card-type">备用 B</span></div>
+                    <div class="card-url">http://ok521.top/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://ok521.top/ok">
-                    <div class="vc-top"><span class="vc-type">备用 C</span></div>
-                    <div class="vc-url">http://ok521.top/ok</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://ok521.top/ok">
+                    <div class="card-top"><span class="card-type">备用 C</span></div>
+                    <div class="card-url">http://ok521.top/ok</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
             </div>
         </div>
 
         <!-- 王二小放牛娃 -->
-        <div class="category">
-            <div class="cat-title" onclick="toggleCat(this)">
-                <div class="cat-left">
-                    <div class="cat-badge cb-2">🐮</div>
-                    <span class="cat-name">王二小放牛娃</span>
-                    <span class="cat-tag">5 条线路</span>
+        <div class="category-block">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <div class="category-left">
+                    <div class="category-icon ci-purple">🐮</div>
+                    <span class="category-name">王二小放牛娃</span>
+                    <span class="category-count">5 条线路</span>
                 </div>
-                <div class="cat-arrow">✨</div>
+                <div class="category-arrow">▾</div>
             </div>
-            <div class="cards-wrap">
-                <div class="v-card" data-link="https://9280.kstore.vip/newwex.json">
-                    <div class="vc-top"><span class="vc-type is-main">主接口</span><span class="vc-rec">推荐</span></div>
-                    <div class="vc-url">https://9280.kstore.vip/newwex.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span><span class="vc-warn">失效请切备用</span></div>
+            <div class="interfaces-grid">
+                <div class="interface-card" data-link="https://9280.kstore.vip/newwex.json">
+                    <div class="card-top">
+                        <span class="card-type main">主接口</span>
+                        <span class="card-badge">推荐</span>
+                    </div>
+                    <div class="card-url">https://9280.kstore.vip/newwex.json</div>
+                    <div class="card-bottom">
+                        <span class="copy-hint">⎘ 点击复制</span>
+                        <span class="status-warn">失效请切备用</span>
+                    </div>
                 </div>
-                <div class="v-card" data-link="http://tvbox.王二小放牛娃.top">
-                    <div class="vc-top"><span class="vc-type">备用 A</span></div>
-                    <div class="vc-url">http://tvbox.王二小放牛娃.top</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://tvbox.王二小放牛娃.top">
+                    <div class="card-top"><span class="card-type">备用 A</span></div>
+                    <div class="card-url">http://tvbox.王二小放牛娃.top</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://tv.999888987.xyz">
-                    <div class="vc-top"><span class="vc-type">备用 B</span></div>
-                    <div class="vc-url">http://tv.999888987.xyz</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://tv.999888987.xyz">
+                    <div class="card-top"><span class="card-type">备用 B</span></div>
+                    <div class="card-url">http://tv.999888987.xyz</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="https://9280.kstore.vip/wex.json">
-                    <div class="vc-top"><span class="vc-type">备用 C</span></div>
-                    <div class="vc-url">https://9280.kstore.vip/wex.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="https://9280.kstore.vip/wex.json">
+                    <div class="card-top"><span class="card-type">备用 C</span></div>
+                    <div class="card-url">https://9280.kstore.vip/wex.json</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://tv.999888123.xyz/">
-                    <div class="vc-top"><span class="vc-type">备用 D</span></div>
-                    <div class="vc-url">http://tv.999888123.xyz/</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://tv.999888123.xyz/">
+                    <div class="card-top"><span class="card-type">备用 D</span></div>
+                    <div class="card-url">http://tv.999888123.xyz/</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
             </div>
         </div>
 
         <!-- 饭太硬 -->
-        <div class="category">
-            <div class="cat-title" onclick="toggleCat(this)">
-                <div class="cat-left">
-                    <div class="cat-badge cb-3">🧸</div>
-                    <span class="cat-name">饭太硬</span>
-                    <span class="cat-tag">6 条线路</span>
+        <div class="category-block">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <div class="category-left">
+                    <div class="category-icon ci-pink">🧸</div>
+                    <span class="category-name">饭太硬</span>
+                    <span class="category-count">6 条线路</span>
                 </div>
-                <div class="cat-arrow">✨</div>
+                <div class="category-arrow">▾</div>
             </div>
-            <div class="cards-wrap">
-                <div class="v-card" data-link="https://gitee.com/xxoooo/fan/raw/master/in.bmp">
-                    <div class="vc-top"><span class="vc-type is-main">郑州专用</span><span class="vc-rec">推荐</span></div>
-                    <div class="vc-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span><span class="vc-warn">失效请切备用</span></div>
+            <div class="interfaces-grid">
+                <div class="interface-card" data-link="https://gitee.com/xxoooo/fan/raw/master/in.bmp">
+                    <div class="card-top">
+                        <span class="card-type main">郑州专用</span>
+                        <span class="card-badge">推荐</span>
+                    </div>
+                    <div class="card-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
+                    <div class="card-bottom">
+                        <span class="copy-hint">⎘ 点击复制</span>
+                        <span class="status-warn">失效请切备用</span>
+                    </div>
                 </div>
-                <div class="v-card" data-link="http://fty.333232.xyz/tv">
-                    <div class="vc-top"><span class="vc-type">备用 A</span></div>
-                    <div class="vc-url">http://fty.333232.xyz/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://fty.333232.xyz/tv">
+                    <div class="card-top"><span class="card-type">备用 A</span></div>
+                    <div class="card-url">http://fty.333232.xyz/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://fty.888484.xyz/tv">
-                    <div class="vc-top"><span class="vc-type">备用 B</span></div>
-                    <div class="vc-url">http://fty.888484.xyz/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://fty.888484.xyz/tv">
+                    <div class="card-top"><span class="card-type">备用 B</span></div>
+                    <div class="card-url">http://fty.888484.xyz/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://fty.xxooo.cf/tv">
-                    <div class="vc-top"><span class="vc-type">备用 C</span></div>
-                    <div class="vc-url">http://fty.xxooo.cf/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://fty.xxooo.cf/tv">
+                    <div class="card-top"><span class="card-type">备用 C</span></div>
+                    <div class="card-url">http://fty.xxooo.cf/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://www.饭太硬.art/tv">
-                    <div class="vc-top"><span class="vc-type">备用 D</span></div>
-                    <div class="vc-url">http://www.饭太硬.art/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://www.饭太硬.art/tv">
+                    <div class="card-top"><span class="card-type">备用 D</span></div>
+                    <div class="card-url">http://www.饭太硬.art/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="http://www.饭太硬.net/tv">
-                    <div class="vc-top"><span class="vc-type">备用 E</span></div>
-                    <div class="vc-url">http://www.饭太硬.net/tv</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="http://www.饭太硬.net/tv">
+                    <div class="card-top"><span class="card-type">备用 E</span></div>
+                    <div class="card-url">http://www.饭太硬.net/tv</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
             </div>
         </div>
 
         <!-- 小米 -->
-        <div class="category">
-            <div class="cat-title" onclick="toggleCat(this)">
-                <div class="cat-left">
-                    <div class="cat-badge cb-4">🍚</div>
-                    <span class="cat-name">小米</span>
-                    <span class="cat-tag">4 条线路</span>
+        <div class="category-block">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <div class="category-left">
+                    <div class="category-icon ci-cyan">🍚</div>
+                    <span class="category-name">小米</span>
+                    <span class="category-count">4 条线路</span>
                 </div>
-                <div class="cat-arrow">✨</div>
+                <div class="category-arrow">▾</div>
             </div>
-            <div class="cards-wrap">
-                <div class="v-card" data-link="https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="vc-top"><span class="vc-type is-main">主接口</span><span class="vc-rec">推荐</span></div>
-                    <div class="vc-url">https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span><span class="vc-warn">失效请切备用</span></div>
+            <div class="interfaces-grid">
+                <div class="interface-card" data-link="https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">
+                    <div class="card-top">
+                        <span class="card-type main">主接口</span>
+                        <span class="card-badge">推荐</span>
+                    </div>
+                    <div class="card-url">https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+                    <div class="card-bottom">
+                        <span class="copy-hint">⎘ 点击复制</span>
+                        <span class="status-warn">失效请切备用</span>
+                    </div>
                 </div>
-                <div class="v-card" data-link="https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="vc-top"><span class="vc-type">备用 A</span></div>
-                    <div class="vc-url">https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json">
+                    <div class="card-top"><span class="card-type">备用 A</span></div>
+                    <div class="card-url">https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json">
-                    <div class="vc-top"><span class="vc-type">备用 B</span></div>
-                    <div class="vc-url">https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json">
+                    <div class="card-top"><span class="card-type">备用 B</span></div>
+                    <div class="card-url">https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
-                <div class="v-card" data-link="https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json">
-                    <div class="vc-top"><span class="vc-type">备用 C</span></div>
-                    <div class="vc-url">https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json</div>
-                    <div class="vc-bottom"><span class="vc-copy">⎘ 点击复制</span></div>
+                <div class="interface-card" data-link="https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json">
+                    <div class="card-top"><span class="card-type">备用 C</span></div>
+                    <div class="card-url">https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json</div>
+                    <div class="card-bottom"><span class="copy-hint">⎘ 点击复制</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 使用指南 -->
-    <section id="guide" class="content-section">
-        <div class="guide-grid">
+    <!-- 使用指南 Section -->
+    <section id="guide" class="section-content">
+        <div class="guide-layout">
             <div>
-                <div class="section-label">Guide · Tutorial</div>
-                <h2 class="guide-h2">几步开始<br><span>畅快观影</span></h2>
-                <ul class="steps">
-                    <li class="step"><span class="step-n">1</span><span class="step-txt">复制「点播接口」页面中想使用的接口链接</span></li>
-                    <li class="step"><span class="step-n">2</span><span class="step-txt">打开 OK影视 软件</span></li>
-                    <li class="step"><span class="step-n">3</span><span class="step-txt">点击「设置」→「点播」，弹出二维码页面</span></li>
-                    <li class="step"><span class="step-n">4</span><span class="step-txt">用微信扫一扫或浏览器扫码，扫描软件显示的二维码</span></li>
-                    <li class="step"><span class="step-n">5</span><span class="step-txt">粘贴复制的接口链接，点击确定后返回主页即可观看</span></li>
-                    <li class="step"><span class="step-n">6</span><span class="step-txt">观看4K画质需使用夸克、迅雷、UC、阿里或百度网盘扫码</span></li>
+                <div class="section-tag">Guide · Tutorial</div>
+                <h2 class="guide-title">几步开始<br><span class="highlight">畅快观影</span></h2>
+                <ul class="steps-list">
+                    <li class="step-item">
+                        <span class="step-number">1</span>
+                        <span class="step-text">复制「点播接口」页面中想使用的接口链接</span>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-number">2</span>
+                        <span class="step-text">打开 OK影视 软件</span>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-number">3</span>
+                        <span class="step-text">点击「设置」→「点播」，弹出二维码页面</span>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-number">4</span>
+                        <span class="step-text">用微信扫一扫或浏览器扫码，扫描软件显示的二维码</span>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-number">5</span>
+                        <span class="step-text">粘贴复制的接口链接，点击确定后返回主页即可观看</span>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-number">6</span>
+                        <span class="step-text">观看4K画质需使用夸克、迅雷、UC、阿里或百度网盘扫码</span>
+                    </li>
                 </ul>
             </div>
             <div>
-                <div class="section-label">图文教程</div>
-                <div class="guide-btns-col">
-                    <a href="#" class="guide-btn" id="openTvModal">
-                        <div class="gb-icon gbi-tv">📺</div>
-                        <div class="gb-text"><strong>电视端 APP 教程</strong><span>步骤图解 · 大屏版</span></div>
-                        <span class="gb-arrow">→</span>
+                <div class="section-tag">图文教程</div>
+                <div class="guide-buttons">
+                    <a href="#" class="guide-link" id="openTvModal">
+                        <div class="guide-icon gi-tv">📺</div>
+                        <div class="guide-content">
+                            <strong>电视端 APP 教程</strong>
+                            <span>步骤图解 · 大屏版</span>
+                        </div>
+                        <span class="guide-arrow">→</span>
                     </a>
-                    <a href="#" class="guide-btn" id="openPhoneModal">
-                        <div class="gb-icon gbi-phone">📱</div>
-                        <div class="gb-text"><strong>手机端 APP 教程</strong><span>步骤图解 · 手机版</span></div>
-                        <span class="gb-arrow">→</span>
+                    <a href="#" class="guide-link" id="openPhoneModal">
+                        <div class="guide-icon gi-phone">📱</div>
+                        <div class="guide-content">
+                            <strong>手机端 APP 教程</strong>
+                            <span>步骤图解 · 手机版</span>
+                        </div>
+                        <span class="guide-arrow">→</span>
                     </a>
-                    <div class="guide-tip">💡 <strong>小贴士：</strong>若接口失效请切换备用线路，优先使用标注「推荐」的主接口，稳定性最佳。</div>
+                    <div class="tip-box">
+                        <strong>💡 小贴士：</strong>若接口失效请切换备用线路，优先使用标注「推荐」的主接口，稳定性最佳。
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 软件下载 -->
-    <section id="software" class="content-section">
-        <div class="sw-grid">
+    <!-- 软件下载 Section -->
+    <section id="software" class="section-content">
+        <div class="software-layout">
             <div>
-                <div class="section-label">Download · Software</div>
-                <h2 class="sw-h2">OK影视<br><span>Pro 版下载</span></h2>
-                <p class="sw-sub">推荐下载Pro版本，比普通版更好用，兼容性更高，含搜索弹幕、AI去广告等高级功能。三大网盘任选其一下载。</p>
-                <div class="dl-list">
-                    <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" rel="noopener noreferrer" class="dl-row">
-                        <div class="dl-icon">↓</div>
+                <div class="section-tag">Download · Software</div>
+                <h2 class="software-title">OK影视<br><span class="highlight">Pro 版下载</span></h2>
+                <p class="software-sub">推荐下载Pro版本，比普通版更好用，兼容性更高，含搜索弹幕、AI去广告等高级功能。三大网盘任选其一下载。</p>
+                <div class="download-list">
+                    <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" rel="noopener noreferrer" class="download-item">
+                        <div class="download-icon">↓</div>
                         夸克网盘下载
-                        <span class="dl-arrow">↗</span>
+                        <span class="download-arrow">↗</span>
                     </a>
-                    <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="dl-row">
-                        <div class="dl-icon">↓</div>
+                    <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="download-item">
+                        <div class="download-icon">↓</div>
                         UC网盘下载
-                        <span class="dl-arrow">↗</span>
+                        <span class="download-arrow">↗</span>
                     </a>
-                    <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="dl-row">
-                        <div class="dl-icon">↓</div>
+                    <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="download-item">
+                        <div class="download-icon">↓</div>
                         迅雷网盘下载
-                        <span class="dl-arrow">↗</span>
+                        <span class="download-arrow">↗</span>
                     </a>
                 </div>
             </div>
             <div>
-                <div class="warn-card">
-                    <div class="warn-title">⚠️ 注意事项</div>
-                    <div class="warn-body">本软件<strong>不支持 iOS 系统</strong>，仅支持 Android（安卓）。<br><br>安卓电视请将Pro版放入U盘后插入电视安装，或通过手机远程管理App上传安装。<br><br>电视机通常为32位系统。</div>
+                <div class="warning-box">
+                    <div class="warning-label">⚠️ 注意事项</div>
+                    <div class="warning-text">
+                        本软件<strong>不支持 iOS 系统</strong>，仅支持 Android（安卓）。<br><br>
+                        安卓电视请将Pro版放入U盘后插入电视安装，或通过手机远程管理App上传安装。<br><br>
+                        电视机通常为32位系统。
+                    </div>
                 </div>
-                <div class="compat">
-                    <div class="compat-cell"><div class="compat-ico">🤖</div><div class="compat-nm">Android</div><div class="compat-st yes">✓ 支持</div></div>
-                    <div class="compat-cell"><div class="compat-ico">📺</div><div class="compat-nm">Android TV</div><div class="compat-st yes">✓ 支持</div></div>
-                    <div class="compat-cell"><div class="compat-ico">🍎</div><div class="compat-nm">iOS</div><div class="compat-st nope">✗ 不支持</div></div>
-                    <div class="compat-cell"><div class="compat-ico">🪟</div><div class="compat-nm">Windows</div><div class="compat-st nope">✗ 不支持</div></div>
+                <div class="compatibility-grid">
+                    <div class="compat-item">
+                        <div class="compat-icon">🤖</div>
+                        <div class="compat-name">Android</div>
+                        <div class="compat-status status-yes">✓ 支持</div>
+                    </div>
+                    <div class="compat-item">
+                        <div class="compat-icon">📺</div>
+                        <div class="compat-name">Android TV</div>
+                        <div class="compat-status status-yes">✓ 支持</div>
+                    </div>
+                    <div class="compat-item">
+                        <div class="compat-icon">🍎</div>
+                        <div class="compat-name">iOS</div>
+                        <div class="compat-status status-no">✗ 不支持</div>
+                    </div>
+                    <div class="compat-item">
+                        <div class="compat-icon">🪟</div>
+                        <div class="compat-name">Windows</div>
+                        <div class="compat-status status-no">✗ 不支持</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -822,100 +1639,205 @@
 </main>
 
 <!-- Modals -->
-<div id="tvModal" class="modal">
-    <div class="modal-box">
+<div id="tvModal" class="modal-overlay">
+    <div class="modal-content">
         <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
-        <div class="modal-h">📺 电视端APP使用教程</div>
-        <div class="modal-step"><p>Step 01 · 点击设置按键</p><img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一"></div>
-        <div class="modal-step"><p>Step 02 · 点击点播栏</p><img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二"></div>
-        <div class="modal-step"><p>Step 03 · 手机扫描二维码</p><img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三"></div>
-        <div class="modal-step"><p>Step 04 · 粘贴链接并确定</p><img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四"></div>
-        <div class="modal-done">✓ &nbsp;返回软件主页面即可开始观看！</div>
-    </div>
-</div>
-<div id="phoneModal" class="modal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
-        <div class="modal-h">📱 手机端APP使用教程</div>
-        <div class="modal-step"><p>Step 01 · 点击下方齿轮按键</p><img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一"></div>
-        <div class="modal-step"><p>Step 02 · 点击点播栏空白处</p><img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二"></div>
-        <div class="modal-step"><p>Step 03 · 粘贴链接并点击确定</p><img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三"></div>
-        <div class="modal-done">✓ &nbsp;返回软件主页面即可开始观看！</div>
+        <div class="modal-header">📺 电视端APP使用教程</div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 01 · 点击设置按键</div>
+            <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一">
+        </div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 02 · 点击点播栏</div>
+            <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二">
+        </div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
+            <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三">
+        </div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
+            <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四">
+        </div>
+        <div class="modal-complete">✓ &nbsp;返回软件主页面即可开始观看！</div>
     </div>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-    <div class="toast-check">✓</div>
+<div id="phoneModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
+        <div class="modal-header">📱 手机端APP使用教程</div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
+            <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一">
+        </div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
+            <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二">
+        </div>
+        <div class="modal-step">
+            <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
+            <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三">
+        </div>
+        <div class="modal-complete">✓ &nbsp;返回软件主页面即可开始观看！</div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-notification" id="toast">
+    <div class="toast-icon">✓</div>
     链接已复制到剪贴板
 </div>
 
 <!-- Footer -->
 <footer>
-    <div class="footer-txt">本站内容来自互联网收集，仅供学习交流，请勿用于商业用途。如有侵权，将第一时间删除。</div>
+    <div class="footer-text">本站内容来自互联网收集，仅供学习交流，请勿用于商业用途。如有侵权，将第一时间删除。</div>
     <div class="footer-brand">StreamVision © 2026 劉Ok</div>
 </footer>
 
 <script>
-    // Tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(btn.dataset.tab).classList.add('active');
-            window.scrollTo({ top: document.querySelector('main').offsetTop - 10, behavior: 'smooth' });
-        });
-    });
+    // ── Starfield Animation ──
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let animationId;
 
-    // Category toggle
-    function toggleCat(title) {
-        const cards = title.nextElementSibling;
-        const isOpen = title.classList.contains('open');
-        document.querySelectorAll('.cat-title').forEach(t => {
-            t.classList.remove('open');
-            t.nextElementSibling.classList.remove('open');
-            t.querySelector('.cat-arrow').textContent = '✨';
-        });
-        if (!isOpen) {
-            title.classList.add('open');
-            cards.classList.add('open');
-            title.querySelector('.cat-arrow').textContent = '💫';
+    function initStarfield() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = [];
+        const numStars = Math.floor((canvas.width * canvas.height) / 8000);
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.5,
+                alpha: Math.random() * 0.8 + 0.2,
+                speed: Math.random() * 0.3 + 0.1,
+                twinkle: Math.random() * 0.02 + 0.01
+            });
         }
     }
-    window.addEventListener('DOMContentLoaded', () => {
-        toggleCat(document.querySelector('.cat-title'));
+
+    function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.alpha += star.twinkle;
+            if (star.alpha >= 1 || star.alpha <= 0.2) {
+                star.twinkle = -star.twinkle;
+            }
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(248, 250, 252, ${star.alpha})`;
+            ctx.fill();
+
+            // Subtle movement
+            star.y += star.speed;
+            if (star.y > canvas.height) {
+                star.y = 0;
+                star.x = Math.random() * canvas.width;
+            }
+        });
+        animationId = requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', () => {
+        initStarfield();
     });
 
-    // Copy
-    document.querySelectorAll('.v-card').forEach(card => {
+    initStarfield();
+    animateStars();
+
+    // ── Tabs ──
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+            window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+        });
+    });
+
+    // ── Category Toggle ──
+    function toggleCategory(header) {
+        const grid = header.nextElementSibling;
+        const isOpen = header.classList.contains('open');
+        
+        // Close all
+        document.querySelectorAll('.category-header').forEach(h => {
+            h.classList.remove('open');
+            h.nextElementSibling.classList.remove('open');
+        });
+        
+        // Toggle current
+        if (!isOpen) {
+            header.classList.add('open');
+            grid.classList.add('open');
+        }
+    }
+
+    // Open first category on load
+    window.addEventListener('DOMContentLoaded', () => {
+        toggleCategory(document.querySelector('.category-header'));
+    });
+
+    // ── Copy to Clipboard ──
+    document.querySelectorAll('.interface-card').forEach(card => {
         card.addEventListener('click', () => {
             const link = card.dataset.link;
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(link).then(showToast).catch(() => fallback(link));
-            } else fallback(link);
+                navigator.clipboard.writeText(link).then(showToast).catch(() => fallbackCopy(link));
+            } else {
+                fallbackCopy(link);
+            }
         });
     });
-    function fallback(text) {
-        const ta = document.createElement('textarea');
-        ta.value = text; ta.style.position = 'fixed';
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); showToast(); } catch(e) { alert('请手动复制：' + text); }
-        document.body.removeChild(ta);
-    }
-    function showToast() {
-        const t = document.getElementById('toast');
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 2200);
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            showToast();
+        } catch(e) {
+            alert('请手动复制：' + text);
+        }
+        document.body.removeChild(textarea);
     }
 
-    // Modals
-    document.getElementById('openTvModal').addEventListener('click', e => { e.preventDefault(); document.getElementById('tvModal').classList.add('open'); });
-    document.getElementById('openPhoneModal').addEventListener('click', e => { e.preventDefault(); document.getElementById('phoneModal').classList.add('open'); });
-    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-    document.querySelectorAll('.modal').forEach(m => {
-        m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // ── Modals ──
+    document.getElementById('openTvModal').addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('tvModal').classList.add('open');
+    });
+
+    document.getElementById('openPhoneModal').addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('phoneModal').classList.add('open');
+    });
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.classList.remove('open');
+            }
+        });
     });
 </script>
+
 </body>
 </html>
