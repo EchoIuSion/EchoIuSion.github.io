@@ -1,1581 +1,1446 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamVision API · 影视接口导航</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary:      #3B82F6;
-            --primary-dark: #2563EB;
-            --primary-light:#DBEAFE;
-            --success:      #10B981;
-            --warning:      #F59E0B;
-            --danger:       #EF4444;
-            --bg-main:      #F8FAFC;
-            --bg-card:      #FFFFFF;
-            --bg-sidebar:   #1E293B;
-            --bg-code:      #F1F5F9;
-            --text-main:    #0F172A;
-            --text-secondary:#64748B;
-            --text-sidebar: #CBD5E1;
-            --border:       #E2E8F0;
-            --border-dark:  #334155;
-            --shadow:       0 1px 3px rgba(0,0,0,0.1);
-            --shadow-lg:    0 4px 12px rgba(0,0,0,0.1);
-            --radius:       8px;
-            --radius-lg:    12px;
-            --font-mono:    'JetBrains Mono', monospace;
-            --font-sans:    'Noto Sans SC', sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-sans);
-            background: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* ── Sidebar ── */
-        .sidebar {
-            width: 260px;
-            background: var(--bg-sidebar);
-            color: var(--text-sidebar);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            z-index: 100;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--primary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .logo-text {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .logo-version {
-            font-size: 0.65rem;
-            background: var(--primary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px 12px;
-        }
-
-        .nav-section {
-            margin-bottom: 24px;
-        }
-
-        .nav-section-title {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #64748B;
-            padding: 0 12px;
-            margin-bottom: 8px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 6px;
-            color: var(--text-sidebar);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.15s;
-            cursor: pointer;
-            margin-bottom: 2px;
-        }
-
-        .nav-item:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        .nav-item.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .nav-item-icon {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-
-        .nav-item-count {
-            margin-left: auto;
-            background: rgba(255,255,255,0.1);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .nav-item.active .nav-item-count {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .sidebar-footer {
-            padding: 16px;
-            border-top: 1px solid var(--border-dark);
-            font-size: 0.75rem;
-            color: #64748B;
-        }
-
-        /* ── Main Content ── */
-        .main {
-            flex: 1;
-            margin-left: 260px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── Top Bar ── */
-        .topbar {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .search-box {
-            flex: 1;
-            max-width: 480px;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 16px 10px 44px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 0.9rem;
-            font-family: var(--font-sans);
-            background: var(--bg-main);
-            transition: all 0.2s;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .topbar-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .action-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-main);
-            text-decoration: none;
-        }
-
-        .action-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .action-btn.primary {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        .action-btn.primary:hover {
-            background: var(--primary-dark);
-        }
-
-        /* ── Content Area ── */
-        .content {
-            padding: 32px;
-            flex: 1;
-        }
-
-        .content-header {
-            margin-bottom: 24px;
-        }
-
-        .page-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .page-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* ── Stats Bar ── */
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-        }
-
-        .stat-icon.blue { background: #DBEAFE; }
-        .stat-icon.green { background: #D1FAE5; }
-        .stat-icon.amber { background: #FEF3C7; }
-
-        .stat-info h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            font-family: var(--font-mono);
-        }
-
-        .stat-info p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        /* ── API Section ── */
-        .api-section {
-            margin-bottom: 32px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-badge {
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* ── API Cards Grid ── */
-        .api-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 16px;
-        }
-
-        .api-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            transition: all 0.2s;
-            overflow: hidden;
-        }
-
-        .api-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .api-card-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .api-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .api-tag {
-            font-size: 0.65rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .api-tag.main {
-            background: #DCFCE7;
-            color: #166534;
-        }
-
-        .api-tag.backup {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .api-tag.recommend {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .api-card-body {
-            padding: 16px;
-        }
-
-        .api-url {
-            background: var(--bg-code);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: #475569;
-            word-break: break-all;
-            line-height: 1.6;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .api-url-code {
-            flex: 1;
-        }
-
-        .api-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .copy-btn {
-            padding: 8px 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .copy-btn.copied {
-            background: var(--success);
-        }
-
-        .api-note {
-            font-size: 0.75rem;
-            color: var(--warning);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* ── Guide Section ── */
-        .guide-section {
-            display: none;
-        }
-
-        .guide-section.active {
-            display: block;
-        }
-
-        .guide-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 20px;
-        }
-
-        .guide-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .guide-steps {
-            list-style: none;
-        }
-
-        .guide-step {
-            display: flex;
-            gap: 16px;
-            padding: 14px 0;
-            border-bottom: 1px dashed var(--border);
-        }
-
-        .guide-step:last-child {
-            border-bottom: none;
-        }
-
-        .step-num {
-            width: 28px;
-            height: 28px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding-top: 3px;
-        }
-
-        .guide-buttons {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .guide-btn {
-            flex: 1;
-            padding: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            text-decoration: none;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.2s;
-        }
-
-        .guide-btn:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-
-        .guide-btn-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-        }
-
-        .guide-btn-text h4 {
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .guide-btn-text p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        /* ── Download Section ── */
-        .download-section {
-            display: none;
-        }
-
-        .download-section.active {
-            display: block;
-        }
-
-        .download-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .download-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-        }
-
-        .download-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-        }
-
-        .download-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .download-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px;
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            color: var(--text-main);
-            transition: all 0.2s;
-        }
-
-        .download-item:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .download-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .download-info {
-            flex: 1;
-        }
-
-        .download-info h4 {
-            font-size: 0.95rem;
-            margin-bottom: 2px;
-        }
-
-        .download-info p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .compat-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .compat-table th,
-        .compat-table td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .compat-table th {
-            font-weight: 600;
-            background: var(--bg-main);
-        }
-
-        .compat-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 500;
-        }
-
-        .compat-status.yes { color: var(--success); }
-        .compat-status.no { color: var(--danger); }
-
-        /* ── Toast ── */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #1E293B;
-            color: white;
-            padding: 14px 24px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 9999;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast-icon {
-            color: var(--success);
-        }
-
-        /* ── Modal ── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-        }
-
-        .modal-overlay.open {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 700px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: var(--bg-main);
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.15s;
-        }
-
-        .modal-close:hover {
-            background: var(--border);
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-step {
-            margin-bottom: 20px;
-        }
-
-        .modal-step-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .modal-step img {
-            width: 100%;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 220px;
-            }
-            .main {
-                margin-left: 220px;
-            }
-            .api-grid {
-                grid-template-columns: 1fr;
-            }
-            .download-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .main {
-                margin-left: 0;
-            }
-            .topbar {
-                padding: 12px 16px;
-            }
-            .content {
-                padding: 20px 16px;
-            }
-            .stats-bar {
-                grid-template-columns: 1fr;
-            }
-            .guide-buttons {
-                flex-direction: column;
-            }
-        }
-
-        /* Page visibility */
-        .page-section {
-            display: none;
-        }
-        .page-section.active {
-            display: block;
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OK影视 · 接口导航站</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --c-red: #ff2d55;
+  --c-orange: #ff6a00;
+  --c-gold: #ffd700;
+  --c-blue: #0a84ff;
+  --c-purple: #bf5af2;
+  --c-green: #30d158;
+  --bg-void: #050507;
+  --bg-deep: #0a0a0f;
+  --bg-card: rgba(255,255,255,0.04);
+  --bg-card-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.18);
+  --text: #f5f5f7;
+  --text-sub: rgba(255,255,255,0.55);
+  --text-dim: rgba(255,255,255,0.35);
+  --blur: blur(20px);
+  --r: 18px;
+  --r-sm: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-void);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── CANVAS BG ─── */
+#bg-canvas {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+  opacity: .6;
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ─── LAYOUT ─── */
+.wrap { position: relative; z-index: 2; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 100px 24px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,45,85,0.12);
+  border: 1px solid rgba(255,45,85,0.3);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--c-red);
+  margin-bottom: 28px;
+  backdrop-filter: var(--blur);
+}
+.hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--c-red);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.4; transform:scale(1.5); }
+}
+
+.hero-title {
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: .95;
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero-title .ok {
+  background: linear-gradient(135deg, #ff2d55 0%, #ff6a00 50%, #ffd700 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 40px rgba(255,45,85,0.5));
+}
+.hero-title .tv {
+  color: rgba(255,255,255,0.9);
+}
+
+.hero-sub-title {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 300;
+  color: var(--text-sub);
+  letter-spacing: .08em;
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  max-width: 520px;
+  font-size: clamp(.88rem, 1.5vw, 1rem);
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 48px;
+}
+.hero-desc b { color: rgba(255,255,255,.75); font-weight: 600; }
+
+.hero-cta {
+  display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #ff2d55, #ff6a00);
+  color: #fff; font-weight: 700; font-size: .95rem;
+  padding: 14px 34px; border-radius: 50px; border: none; cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 8px 30px rgba(255,45,85,0.4);
+  letter-spacing: .02em;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,45,85,0.55); }
+
+.btn-ghost {
+  background: var(--bg-card); backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  color: var(--text); font-weight: 600; font-size: .95rem;
+  padding: 14px 34px; border-radius: 50px; cursor: pointer;
+  transition: all .25s;
+}
+.btn-ghost:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
+
+.btn-download {
+  background: linear-gradient(135deg, rgba(10,132,255,0.15), rgba(191,90,242,0.15));
+  border-color: rgba(10,132,255,0.4);
+}
+.btn-download:hover {
+  border-color: rgba(10,132,255,0.8);
+  background: linear-gradient(135deg, rgba(10,132,255,0.25), rgba(191,90,242,0.25));
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-dim); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  animation: float 2.5s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.3), transparent);
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+  backdrop-filter: var(--blur);
+  position: relative; z-index: 2;
+  margin-bottom: 0;
+}
+.stat-item {
+  flex: 1; min-width: 120px; max-width: 220px;
+  text-align: center;
+  padding: 28px 20px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-size: 2rem; font-weight: 800;
+  background: linear-gradient(135deg, #fff, rgba(255,255,255,.6));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label { font-size: .72rem; color: var(--text-dim); letter-spacing: .1em; text-transform: uppercase; }
+
+/* ─── MAIN CONTENT ─── */
+.main { padding: 80px 24px 100px; max-width: 1200px; margin: 0 auto; }
+
+/* ─── NAV ─── */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 16px 24px;
+  backdrop-filter: blur(30px);
+  background: rgba(5,5,7,.8);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.nav-brand {
+  font-size: 1rem; font-weight: 800; letter-spacing: -.01em;
+  display: flex; align-items: center; gap: 10px;
+  white-space: nowrap;
+}
+.nav-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-red); }
+
+.nav-center { display: flex; gap: 4px; }
+.nav-tabs {
+  display: flex; gap: 4px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  border-radius: 50px; padding: 4px;
+}
+.nav-tab {
+  padding: 8px 20px; border-radius: 50px;
+  border: none; background: none;
+  color: var(--text-sub); font-size: .85rem; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+  white-space: nowrap;
+}
+.nav-tab.active {
+  background: linear-gradient(135deg, #ff2d55, #ff6a00);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255,45,85,.4);
+}
+.nav-tab:not(.active):hover { color: var(--text); background: rgba(255,255,255,.07); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.search-box {
+  position: relative;
+  display: none;
+}
+.search-box.show { display: block; }
+.search-input {
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 8px 16px 8px 36px;
+  color: var(--text);
+  font-size: .8rem;
+  width: 180px;
+  transition: all .2s;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--c-red);
+  background: rgba(255,255,255,.08);
+  width: 220px;
+}
+.search-input::placeholder { color: var(--text-dim); }
+.search-icon {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: .8rem;
+}
+
+/* ─── CATEGORY FILTER ─── */
+.category-filter {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-sub);
+  font-size: .75rem; font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
+.filter-btn.active {
+  background: linear-gradient(135deg, #ff2d55, #ff6a00);
+  border-color: transparent;
+  color: #fff;
+}
+.filter-count {
+  background: rgba(255,255,255,.15);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: .65rem;
+}
+
+/* ─── SECTIONS ─── */
+.section { display: none; }
+.section.active { display: block; animation: fadeUp .4s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+/* ─── SECTION HEADER ─── */
+.sec-header {
+  margin-bottom: 40px;
+  display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.sec-eyebrow {
+  font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--c-red); margin-bottom: 8px;
+}
+.sec-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+}
+.sec-desc { font-size: .88rem; color: var(--text-sub); margin-top: 8px; }
+.sec-count {
+  font-size: .78rem; color: var(--text-dim);
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 6px 14px; border-radius: 50px;
+  white-space: nowrap;
+}
+
+/* ─── PROVIDER GRID ─── */
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.provider-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  backdrop-filter: var(--blur);
+  transition: all .3s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+}
+.provider-card::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: var(--r);
+  opacity: 0; transition: opacity .3s;
+  pointer-events: none;
+}
+.provider-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.provider-card:hover::before { opacity: 1; }
+.provider-card.hidden { display: none; }
+
+/* card color variants */
+.card-ok::before    { background: radial-gradient(circle at 50% 0%, rgba(255,45,85,.12), transparent 60%); }
+.card-wang::before  { background: radial-gradient(circle at 50% 0%, rgba(10,132,255,.12), transparent 60%); }
+.card-fan::before   { background: radial-gradient(circle at 50% 0%, rgba(255,214,0,.1), transparent 60%); }
+.card-mi::before    { background: radial-gradient(circle at 50% 0%, rgba(255,106,0,.12), transparent 60%); }
+
+.card-head {
+  padding: 22px 22px 16px;
+  display: flex; align-items: center; gap: 14px;
+  position: relative;
+}
+.card-head::after {
+  content: '';
+  position: absolute; bottom: 0; left: 22px; right: 22px;
+  height: 1px; background: var(--border);
+}
+.avatar {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 900; color: #fff;
+  flex-shrink: 0; position: relative; overflow: hidden;
+}
+.avatar::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
+}
+.av-ok   { background: linear-gradient(135deg, #ff2d55, #ff6a00); box-shadow: 0 6px 20px rgba(255,45,85,.4); }
+.av-wang { background: linear-gradient(135deg, #0a84ff, #5856d6); box-shadow: 0 6px 20px rgba(10,132,255,.4); }
+.av-fan  { background: linear-gradient(135deg, #ffd60a, #ff9f0a); box-shadow: 0 6px 20px rgba(255,214,10,.35); }
+.av-mi   { background: linear-gradient(135deg, #ff6a00, #ff9500); box-shadow: 0 6px 20px rgba(255,106,0,.4); }
+
+.card-info { flex: 1; }
+.card-name { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
+.card-meta { font-size: .72rem; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+.meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--c-green); }
+
+.card-body { padding: 8px 10px 14px; }
+
+.link-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background .15s;
+  group: true;
+}
+.link-row:hover { background: rgba(255,255,255,.05); }
+
+.link-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(255,255,255,.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 700; color: var(--text-dim);
+  flex-shrink: 0; transition: all .2s;
+}
+.link-row:hover .link-icon { background: rgba(255,45,85,.15); color: var(--c-red); }
+
+.link-url {
+  flex: 1; font-size: .76rem; color: var(--text-sub);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.link-row:hover .link-url { color: var(--text); }
+
+.tag-recommend {
+  font-size: .55rem; font-weight: 700;
+  padding: 2px 6px; border-radius: 4px;
+  background: rgba(48,209,88,.15);
+  color: var(--c-green);
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+.copy-pill {
+  flex-shrink: 0;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text-dim); font-size: .68rem; font-weight: 600;
+  padding: 4px 11px; border-radius: 50px; cursor: pointer;
+  transition: all .2s; opacity: 0;
+  pointer-events: none;
+}
+.link-row:hover .copy-pill { opacity: 1; pointer-events: auto; }
+.copy-pill:hover { background: var(--c-red); border-color: var(--c-red); color: #fff; }
+.copy-pill.done { background: var(--c-green); border-color: var(--c-green); color: #fff; opacity: 1; pointer-events: none; }
+
+/* ─── GUIDE ─── */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+}
+
+.step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 26px;
+  backdrop-filter: var(--blur);
+  display: flex; gap: 18px;
+  transition: all .25s;
+  position: relative; overflow: hidden;
+}
+.step-card::before {
+  content: attr(data-num);
+  position: absolute; right: -10px; bottom: -20px;
+  font-size: 7rem; font-weight: 900;
+  color: rgba(255,255,255,.025);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.step-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 16px 50px rgba(0,0,0,.4); }
+
+.step-icon {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.si-1 { background: rgba(255,45,85,.15);   box-shadow: 0 0 20px rgba(255,45,85,.15); }
+.si-2 { background: rgba(10,132,255,.15);  box-shadow: 0 0 20px rgba(10,132,255,.15); }
+.si-3 { background: rgba(191,90,242,.15);  box-shadow: 0 0 20px rgba(191,90,242,.15); }
+.si-4 { background: rgba(255,214,10,.15);  box-shadow: 0 0 20px rgba(255,214,10,.15); }
+.si-5 { background: rgba(48,209,88,.15);   box-shadow: 0 0 20px rgba(48,209,88,.15); }
+.si-6 { background: rgba(255,159,10,.15);  box-shadow: 0 0 20px rgba(255,159,10,.15); }
+
+.step-body h3 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+.step-body p { font-size: .82rem; color: var(--text-sub); line-height: 1.75; }
+
+/* special 4K card */
+.step-card.card-4k {
+  border-color: rgba(255,214,0,.25);
+  background: rgba(255,214,10,.04);
+}
+.step-card.card-4k:hover { border-color: rgba(255,214,0,.5); }
+
+/* ─── GUIDE MODALS ─── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.8);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg, 24px);
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: modalIn .3s ease;
+}
+@keyframes modalIn { from { opacity:0; transform:scale(.95) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0;
+  background: var(--bg-deep);
+}
+.modal-title { font-size: 1.1rem; font-weight: 700; }
+
+.modal-close {
+  width: 32px; height: 32px; border: none;
+  background: var(--bg-card); border-radius: 8px;
+  color: var(--text-sub); font-size: 1rem;
+  cursor: pointer; transition: all .15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { background: var(--border); color: var(--text); }
+
+.modal-body { padding: 24px; }
+
+.modal-step { margin-bottom: 24px; }
+.modal-step:last-child { margin-bottom: 0; }
+.modal-step-title {
+  font-size: .8rem; font-weight: 600;
+  color: var(--c-red);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.modal-step-title::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--c-red); border-radius: 50%;
+}
+.modal-step img {
+  width: 100%;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: #000;
+}
+
+.modal-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+.modal-btn {
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  text-decoration: none;
+  color: var(--text);
+  display: flex; align-items: center; gap: 14px;
+  transition: all .2s;
+}
+.modal-btn:hover { border-color: var(--c-red); background: rgba(255,45,85,.08); }
+.modal-btn-icon {
+  width: 44px; height: 44px;
+  background: rgba(255,45,85,.15);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.modal-btn-text h4 { font-size: .9rem; font-weight: 700; margin-bottom: 2px; }
+.modal-btn-text p { font-size: .75rem; color: var(--text-dim); }
+
+/* ─── DOWNLOAD ─── */
+.download-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.download-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  backdrop-filter: var(--blur);
+}
+.download-card h3 {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.dl-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.dl-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  color: var(--text);
+  transition: all .2s;
+}
+.dl-item:hover { border-color: var(--c-red); background: rgba(255,45,85,.05); }
+.dl-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #ff2d55, #ff6a00);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700;
+}
+.dl-info { flex: 1; }
+.dl-info h4 { font-size: .85rem; font-weight: 600; margin-bottom: 2px; }
+.dl-info p { font-size: .7rem; color: var(--text-dim); }
+
+.compat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.compat-table th,
+.compat-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+}
+.compat-table th {
+  font-weight: 600;
+  color: var(--text-sub);
+}
+.compat-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 500;
+}
+.compat-status.yes { color: var(--c-green); }
+.compat-status.no { color: var(--c-red); }
+
+.download-note {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255,214,10,.08);
+  border: 1px solid rgba(255,214,10,.2);
+  border-radius: var(--r-sm);
+  font-size: .75rem;
+  color: var(--c-gold);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  position: relative; z-index: 2;
+  border-top: 1px solid var(--border);
+  padding: 32px 24px;
+  text-align: center;
+}
+.footer-inner { max-width: 600px; margin: 0 auto; }
+.footer-logo { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
+.footer-logo span { background: linear-gradient(135deg, #ff2d55, #ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.footer-text { font-size: .78rem; color: var(--text-dim); line-height: 1.8; }
+
+/* ─── TOAST ─── */
+#toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(30,215,96,.15); backdrop-filter: blur(30px);
+  border: 1px solid rgba(30,215,96,.3);
+  color: var(--c-green); font-size: .88rem; font-weight: 600;
+  padding: 12px 24px; border-radius: 50px;
+  opacity: 0; pointer-events: none;
+  transition: all .3s cubic-bezier(.2,.8,.2,1);
+  z-index: 9999;
+  box-shadow: 0 8px 30px rgba(0,0,0,.5);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-green); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 768px) {
+  /* Hero 区域 */
+  .hero { padding: 60px 16px 40px; }
+  .hero-badge { padding: 4px 12px; font-size: .65rem; margin-bottom: 20px; }
+  .hero-title { margin-bottom: 6px; }
+  .hero-sub-title { font-size: .9rem; margin-bottom: 16px; }
+  .hero-desc { font-size: .8rem; margin-bottom: 32px; line-height: 1.6; }
+  .hero-cta { gap: 8px; flex-direction: column; width: 100%; max-width: 240px; }
+  .btn-primary, .btn-ghost { width: 100%; padding: 14px 20px; font-size: .9rem; justify-content: center; display: flex; align-items: center; gap: 8px; }
+  .hero-scroll { bottom: 20px; }
+
+  /* Stats */
+  .stats-bar { gap: 0; }
+  .stat-item { min-width: 50%; padding: 16px 12px; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-label { font-size: .65rem; }
+
+  /* 导航 */
+  .sticky-nav { padding: 10px 12px; gap: 8px; }
+  .nav-brand { display: none; }
+  .nav-tabs { padding: 3px; gap: 2px; }
+  .nav-tab { padding: 6px 10px; font-size: .7rem; border-radius: 6px; }
+  .nav-center { flex: 1; justify-content: center; }
+  .nav-right { display: none; }
+
+  /* 内容区域 */
+  .main { padding: 24px 12px 60px; }
+  .sec-header { margin-bottom: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .sec-title { font-size: 1.4rem; }
+  .sec-eyebrow { font-size: .6rem; }
+  .sec-desc { font-size: .8rem; }
+  .sec-count { font-size: .7rem; }
+
+  /* 接口卡片 */
+  .provider-grid { grid-template-columns: 1fr; gap: 12px; }
+  .card-head { padding: 16px 16px 12px; }
+  .avatar { width: 40px; height: 40px; font-size: .9rem; border-radius: 10px; }
+  .card-name { font-size: .9rem; }
+  .card-meta { font-size: .65rem; }
+  .link-row { padding: 8px 10px; gap: 8px; }
+  .link-icon { width: 24px; height: 24px; font-size: .55rem; }
+  .link-url { font-size: .68rem; }
+  .copy-pill { font-size: .6rem; padding: 3px 8px; opacity: 1; pointer-events: auto; }
+  .tag-recommend { font-size: .5rem; padding: 1px 4px; }
+
+  /* 分类筛选 */
+  .category-filter { padding: 12px; gap: 8px; flex-direction: row; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 10px; font-size: .65rem; flex: 1; min-width: calc(50% - 4px); justify-content: center; }
+  .filter-count { font-size: .55rem; }
+
+  /* 指南 */
+  .guide-grid { grid-template-columns: 1fr; gap: 12px; }
+  .step-card { padding: 18px; gap: 14px; }
+  .step-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+  .step-body h3 { font-size: .85rem; }
+  .step-body p { font-size: .75rem; line-height: 1.6; }
+  .modal-buttons { grid-template-columns: 1fr; margin-top: 20px; gap: 12px; }
+  .modal-btn { padding: 14px; gap: 12px; }
+  .modal-btn-icon { width: 36px; height: 36px; font-size: 1rem; }
+
+  /* 下载 */
+  .download-section { grid-template-columns: 1fr; gap: 16px; }
+  .download-card { padding: 16px; }
+  .download-card h3 { font-size: .9rem; margin-bottom: 12px; }
+  .dl-item { padding: 10px; gap: 10px; }
+  .dl-icon { width: 34px; height: 34px; font-size: .85rem; }
+  .dl-info h4 { font-size: .8rem; }
+  .dl-info p { font-size: .65rem; }
+  .compat-table th, .compat-table td { padding: 8px; font-size: .72rem; }
+  .download-note { font-size: .7rem; padding: 10px; }
+
+  /* 弹窗 */
+  .modal { max-width: 95%; margin: 12px; }
+  .modal-header { padding: 14px 16px; }
+  .modal-title { font-size: .95rem; }
+  .modal-body { padding: 16px; }
+  .modal-step { margin-bottom: 16px; }
+  .modal-step-title { font-size: .75rem; }
+
+  /* Toast */
+  #toast { bottom: 20px; padding: 10px 18px; font-size: .8rem; }
+}
+
+@media (max-width: 380px) {
+  .filter-btn { min-width: calc(50% - 4px); font-size: .6rem; }
+  .nav-tab { padding: 5px 8px; font-size: .65rem; }
+}
+</style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<aside class="sidebar">
-    <div class="sidebar-header">
-        <a href="#" class="logo">
-            <div class="logo-icon">🎬</div>
-            <span class="logo-text">StreamVision</span>
-            <span class="logo-version">API</span>
-        </a>
-    </div>
-    <nav class="sidebar-nav">
-        <div class="nav-section">
-            <div class="nav-section-title">导航</div>
-            <a class="nav-item active" data-page="apis">
-                <span class="nav-item-icon">📡</span>
-                接口列表
-            </a>
-            <a class="nav-item" data-page="guide">
-                <span class="nav-item-icon">📖</span>
-                使用指南
-            </a>
-            <a class="nav-item" data-page="download">
-                <span class="nav-item-icon">⬇️</span>
-                软件下载
-            </a>
-        </div>
-        <div class="nav-section">
-            <div class="nav-section-title">接口分类</div>
-            <a class="nav-item" data-filter="okjack">
-                <span class="nav-item-icon">🦄</span>
-                OK杰克
-                <span class="nav-item-count">4</span>
-            </a>
-            <a class="nav-item" data-filter="wangerxiao">
-                <span class="nav-item-icon">🐮</span>
-                王二小放牛娃
-                <span class="nav-item-count">5</span>
-            </a>
-            <a class="nav-item" data-filter="fantaiying">
-                <span class="nav-item-icon">🧸</span>
-                饭太硬
-                <span class="nav-item-count">6</span>
-            </a>
-            <a class="nav-item" data-filter="xiaomi">
-                <span class="nav-item-icon">🍚</span>
-                小米
-                <span class="nav-item-count">4</span>
-            </a>
-        </div>
-    </nav>
-    <div class="sidebar-footer">
-        © 2026 StreamVision · 劉Ok
-    </div>
-</aside>
+<!-- Animated BG Canvas -->
+<canvas id="bg-canvas"></canvas>
 
-<!-- Main Content -->
-<main class="main">
-    <!-- Top Bar -->
-    <div class="topbar">
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" placeholder="搜索接口..." id="searchInput">
-        </div>
-        <div class="topbar-actions">
-            <a href="#" class="action-btn" id="openGuideBtn">📖 使用指南</a>
-            <a href="#" class="action-btn primary" id="openDownloadBtn">⬇️ 下载软件</a>
-        </div>
-    </div>
+<div class="wrap">
 
-    <!-- Content -->
-    <div class="content">
-        <!-- APIs Page -->
-        <section id="apisPage" class="page-section active">
-            <div class="content-header">
-                <h1 class="page-title">接口列表</h1>
-                <p class="page-desc">共收录 4 个接口源，19 条可用线路，支持 4K 超清画质</p>
-            </div>
+<!-- ══ HERO ══ -->
+<section class="hero" id="top">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    实时更新 · 稳定可用
+  </div>
+  <div class="hero-title">
+    <span class="ok">OK</span><span class="tv">影视</span>
+  </div>
+  <div class="hero-sub-title">接口导航站</div>
+  <p class="hero-desc">
+    精选稳定接口资源，免费畅看超清 <b>4K</b> 内容。<br>
+    <b>芒果、优酷、腾讯、爱奇艺</b>随心看。
+  </p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="goToSection('interfaces')">📡 浏览接口</button>
+    <button class="btn-ghost" onclick="goToSection('guide')">📖 使用指南</button>
+    <button class="btn-ghost btn-download" onclick="goToSection('download')">📦 软件下载</button>
+  </div>
+  <div class="hero-scroll">
+    <span>向下滚动</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-            <div class="stats-bar">
-                <div class="stat-card">
-                    <div class="stat-icon blue">📡</div>
-                    <div class="stat-info">
-                        <h3>4</h3>
-                        <p>接口数量</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">🔗</div>
-                    <div class="stat-info">
-                        <h3>19</h3>
-                        <p>可用线路</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon amber">🎬</div>
-                    <div class="stat-info">
-                        <h3>4K</h3>
-                        <p>超清画质</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OK杰克 -->
-            <div class="api-section" data-category="okjack">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🦄 OK杰克
-                        <span class="section-badge">4 条线路</span>
-                    </h2>
-                </div>
-                <div class="api-grid">
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">主接口</span>
-                            <span class="api-tag recommend">推荐</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://ok213.top/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://ok213.top/tv">📋 复制链接</button>
-                                <span class="api-note">⚠️ 失效请切备用</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 A</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://ok213.top/ok</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://ok213.top/ok">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 B</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://ok521.top/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://ok521.top/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 C</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://ok521.top/ok</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://ok521.top/ok">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 王二小放牛娃 -->
-            <div class="api-section" data-category="wangerxiao">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🐮 王二小放牛娃
-                        <span class="section-badge">5 条线路</span>
-                    </h2>
-                </div>
-                <div class="api-grid">
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">主接口</span>
-                            <span class="api-tag recommend">推荐</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://9280.kstore.vip/newwex.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://9280.kstore.vip/newwex.json">📋 复制链接</button>
-                                <span class="api-note">⚠️ 失效请切备用</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 A</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://tvbox.王二小放牛娃.top</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://tvbox.王二小放牛娃.top">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 B</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://tv.999888987.xyz</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://tv.999888987.xyz">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 C</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://9280.kstore.vip/wex.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://9280.kstore.vip/wex.json">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 D</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://tv.999888123.xyz/</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://tv.999888123.xyz/">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 饭太硬 -->
-            <div class="api-section" data-category="fantaiying">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🧸 饭太硬
-                        <span class="section-badge">6 条线路</span>
-                    </h2>
-                </div>
-                <div class="api-grid">
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">郑州专用</span>
-                            <span class="api-tag recommend">推荐</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://gitee.com/xxoooo/fan/raw/master/in.bmp</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://gitee.com/xxoooo/fan/raw/master/in.bmp">📋 复制链接</button>
-                                <span class="api-note">⚠️ 失效请切备用</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 A</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://fty.333232.xyz/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://fty.333232.xyz/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 B</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://fty.888484.xyz/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://fty.888484.xyz/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 C</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://fty.xxooo.cf/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://fty.xxooo.cf/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 D</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://www.饭太硬.art/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://www.饭太硬.art/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 E</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">http://www.饭太硬.net/tv</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="http://www.饭太硬.net/tv">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 小米 -->
-            <div class="api-section" data-category="xiaomi">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        🍚 小米
-                        <span class="section-badge">4 条线路</span>
-                    </h2>
-                </div>
-                <div class="api-grid">
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">主接口</span>
-                            <span class="api-tag recommend">推荐</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">📋 复制链接</button>
-                                <span class="api-note">⚠️ 失效请切备用</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 A</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 B</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="api-card">
-                        <div class="api-card-header">
-                            <span class="api-name">备用 C</span>
-                            <span class="api-tag backup">备用</span>
-                        </div>
-                        <div class="api-card-body">
-                            <div class="api-url">
-                                <span class="api-url-code">https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json</span>
-                            </div>
-                            <div class="api-card-footer">
-                                <button class="copy-btn" data-link="https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json">📋 复制链接</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Guide Page -->
-        <section id="guidePage" class="page-section">
-            <div class="content-header">
-                <h1 class="page-title">使用指南</h1>
-                <p class="page-desc">快速上手，畅享超清影视</p>
-            </div>
-
-            <div class="guide-card">
-                <h3>📝 操作步骤</h3>
-                <ul class="guide-steps">
-                    <li class="guide-step">
-                        <span class="step-num">1</span>
-                        <span class="step-content">复制「接口列表」页面中想使用的接口链接</span>
-                    </li>
-                    <li class="guide-step">
-                        <span class="step-num">2</span>
-                        <span class="step-content">打开 OK影视 软件</span>
-                    </li>
-                    <li class="guide-step">
-                        <span class="step-num">3</span>
-                        <span class="step-content">点击「设置」→「点播」，弹出二维码页面</span>
-                    </li>
-                    <li class="guide-step">
-                        <span class="step-num">4</span>
-                        <span class="step-content">用微信扫一扫或浏览器扫码，扫描软件显示的二维码</span>
-                    </li>
-                    <li class="guide-step">
-                        <span class="step-num">5</span>
-                        <span class="step-content">粘贴复制的接口链接，点击确定后返回主页即可观看</span>
-                    </li>
-                    <li class="guide-step">
-                        <span class="step-num">6</span>
-                        <span class="step-content">观看4K画质需使用夸克、迅雷、UC、阿里或百度网盘扫码</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="guide-buttons">
-                <a href="#" class="guide-btn" id="openTvModal">
-                    <div class="guide-btn-icon">📺</div>
-                    <div class="guide-btn-text">
-                        <h4>电视端 APP 教程</h4>
-                        <p>步骤图解 · 大屏版</p>
-                    </div>
-                </a>
-                <a href="#" class="guide-btn" id="openPhoneModal">
-                    <div class="guide-btn-icon">📱</div>
-                    <div class="guide-btn-text">
-                        <h4>手机端 APP 教程</h4>
-                        <p>步骤图解 · 手机版</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Download Page -->
-        <section id="downloadPage" class="page-section">
-            <div class="content-header">
-                <h1 class="page-title">软件下载</h1>
-                <p class="page-desc">OK影视 Pro 版，支持搜索弹幕、AI去广告等高级功能</p>
-            </div>
-
-            <div class="download-grid">
-                <div class="download-card">
-                    <h3>⬇️ 下载渠道</h3>
-                    <div class="download-list">
-                        <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" class="download-item">
-                            <div class="download-icon">↓</div>
-                            <div class="download-info">
-                                <h4>夸克网盘</h4>
-                                <p>高速下载 · 推荐使用</p>
-                            </div>
-                        </a>
-                        <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" class="download-item">
-                            <div class="download-icon">↓</div>
-                            <div class="download-info">
-                                <h4>UC网盘</h4>
-                                <p>稳定可靠</p>
-                            </div>
-                        </a>
-                        <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" class="download-item">
-                            <div class="download-icon">↓</div>
-                            <div class="download-info">
-                                <h4>迅雷网盘</h4>
-                                <p>提取码: ir74</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="download-card">
-                    <h3>📋 系统兼容性</h3>
-                    <table class="compat-table">
-                        <thead>
-                            <tr>
-                                <th>平台</th>
-                                <th>状态</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>🤖 Android</td>
-                                <td><span class="compat-status yes">✓ 支持</span></td>
-                            </tr>
-                            <tr>
-                                <td>📺 Android TV</td>
-                                <td><span class="compat-status yes">✓ 支持</span></td>
-                            </tr>
-                            <tr>
-                                <td>🍎 iOS</td>
-                                <td><span class="compat-status no">✗ 不支持</span></td>
-                            </tr>
-                            <tr>
-                                <td>🪟 Windows</td>
-                                <td><span class="compat-status no">✗ 不支持</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-secondary);">
-                        ⚠️ 电视机通常为 32 位系统，请选择对应版本安装
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
-</main>
-
-<!-- Toast -->
-<div class="toast" id="toast">
-    <span class="toast-icon">✓</span>
-    <span>链接已复制到剪贴板</span>
+<!-- ══ STATS ══ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">19</div>
+    <div class="stat-label">接口总数</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">内容提供方</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4K</div>
+    <div class="stat-label">最高画质</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Free</div>
+    <div class="stat-label">完全免费</div>
+  </div>
 </div>
 
-<!-- Modals -->
-<div class="modal-overlay" id="tvModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">📺 电视端 APP 使用教程</h2>
-            <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-step">
-                <div class="modal-step-title">Step 01 · 点击设置按键</div>
-                <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一">
-            </div>
-            <div class="modal-step">
-                <div class="modal-step-title">Step 02 · 点击点播栏</div>
-                <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二">
-            </div>
-            <div class="modal-step">
-                <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
-                <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三">
-            </div>
-            <div class="modal-step">
-                <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
-                <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四">
-            </div>
-        </div>
+<!-- ══ STICKY NAV ══ -->
+<nav class="sticky-nav" id="sticky-nav">
+  <div class="nav-brand">
+    <div class="dot"></div>
+    导航站
+  </div>
+  <div class="nav-center">
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="interfaces" onclick="switchTab('interfaces',this)">📡 点播接口</button>
+      <button class="nav-tab" data-tab="guide" onclick="switchTab('guide',this)">📖 使用指南</button>
+      <button class="nav-tab" data-tab="download" onclick="switchTab('download',this)">📦 软件下载</button>
     </div>
+  </div>
+  <div class="nav-right">
+    <div class="search-box" id="searchBox">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="搜索接口..." id="searchInput">
+    </div>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+
+  <!-- ── 点播接口 ── -->
+  <div id="interfaces" class="section active">
+    <div class="sec-header">
+      <div>
+        <div class="sec-eyebrow">Streaming Sources</div>
+        <div class="sec-title">点播接口</div>
+        <div class="sec-desc">点击行末「复制」按钮，链接自动写入剪贴板</div>
+      </div>
+      <div class="sec-count">共 19 个接口 · 4 个来源</div>
+    </div>
+
+    <!-- 分类筛选 -->
+    <div class="category-filter">
+      <button class="filter-btn active" data-category="all">
+        全部 <span class="filter-count">19</span>
+      </button>
+      <button class="filter-btn" data-category="ok">
+        🦄 OK杰克 <span class="filter-count">4</span>
+      </button>
+      <button class="filter-btn" data-category="wang">
+        🐮 王二小 <span class="filter-count">5</span>
+      </button>
+      <button class="filter-btn" data-category="fan">
+        🧸 饭太硬 <span class="filter-count">6</span>
+      </button>
+      <button class="filter-btn" data-category="mi">
+        🍚 小米 <span class="filter-count">4</span>
+      </button>
+    </div>
+
+    <div class="provider-grid">
+
+      <!-- OK杰克 -->
+      <div class="provider-card card-ok" data-category="ok">
+        <div class="card-head">
+          <div class="avatar av-ok">OK</div>
+          <div class="card-info">
+            <div class="card-name">OK杰克</div>
+            <div class="card-meta"><span class="meta-dot"></span>4 个接口可用</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="link-row" onclick="copyUrl(this,'http://ok213.top/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://ok213.top/tv</div>
+            <span class="tag-recommend">推荐</span>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://ok213.top/ok')">
+            <div class="link-icon">OK</div>
+            <div class="link-url">http://ok213.top/ok</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://ok521.top/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://ok521.top/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://ok521.top/ok')">
+            <div class="link-icon">OK</div>
+            <div class="link-url">http://ok521.top/ok</div>
+            <button class="copy-pill">复制</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 王二小放牛娃 -->
+      <div class="provider-card card-wang" data-category="wang">
+        <div class="card-head">
+          <div class="avatar av-wang">王</div>
+          <div class="card-info">
+            <div class="card-name">王二小放牛娃</div>
+            <div class="card-meta"><span class="meta-dot"></span>5 个接口可用</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="link-row" onclick="copyUrl(this,'https://9280.kstore.vip/newwex.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://9280.kstore.vip/newwex.json</div>
+            <span class="tag-recommend">推荐</span>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://tvbox.王二小放牛娃.top')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://tvbox.王二小放牛娃.top</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://tv.999888987.xyz')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://tv.999888987.xyz</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'https://9280.kstore.vip/wex.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://9280.kstore.vip/wex.json</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://tv.999888123.xyz/')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://tv.999888123.xyz/</div>
+            <button class="copy-pill">复制</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 饭太硬 -->
+      <div class="provider-card card-fan" data-category="fan">
+        <div class="card-head">
+          <div class="avatar av-fan">饭</div>
+          <div class="card-info">
+            <div class="card-name">饭太硬</div>
+            <div class="card-meta"><span class="meta-dot"></span>6 个接口可用</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="link-row" onclick="copyUrl(this,'https://gitee.com/xxoooo/fan/raw/master/in.bmp')">
+            <div class="link-icon">Git</div>
+            <div class="link-url">https://gitee.com/xxoooo/fan/raw/master/in.bmp</div>
+            <span class="tag-recommend">推荐</span>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://fty.333232.xyz/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://fty.333232.xyz/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://fty.888484.xyz/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://fty.888484.xyz/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://fty.xxooo.cf/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://fty.xxooo.cf/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://www.饭太硬.art/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://www.饭太硬.art/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'http://www.饭太硬.net/tv')">
+            <div class="link-icon">TV</div>
+            <div class="link-url">http://www.饭太硬.net/tv</div>
+            <button class="copy-pill">复制</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 小米 -->
+      <div class="provider-card card-mi" data-category="mi">
+        <div class="card-head">
+          <div class="avatar av-mi">米</div>
+          <div class="card-info">
+            <div class="card-name">小米</div>
+            <div class="card-meta"><span class="meta-dot"></span>4 个接口可用</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="link-row" onclick="copyUrl(this,'https://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://mitvbox.xyz/小米/DEMO.json</div>
+            <span class="tag-recommend">推荐</span>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'https://zzzy.shop/%E5%B0%8F%E7%B1%B3/DEMO.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://zzzy.shop/小米/DEMO.json</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'https://miqk.cc/%E5%B0%8F%E7%B1%B3/DEMO.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://miqk.cc/小米/DEMO.json</div>
+            <button class="copy-pill">复制</button>
+          </div>
+          <div class="link-row" onclick="copyUrl(this,'https://cnb.cool/xiaomideyun/xiaomideyun/-/git/raw/main/mi.json')">
+            <div class="link-icon">J</div>
+            <div class="link-url">https://cnb.cool/…/mi.json</div>
+            <button class="copy-pill">复制</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /interfaces -->
+
+  <!-- ── 使用指南 ── -->
+  <div id="guide" class="section">
+    <div class="sec-header">
+      <div>
+        <div class="sec-eyebrow">How To Use</div>
+        <div class="sec-title">使用指南</div>
+        <div class="sec-desc">按步骤操作，几分钟即可开始畅享海量影视内容</div>
+      </div>
+    </div>
+    <div class="guide-grid">
+
+      <div class="step-card" data-num="1">
+        <div class="step-icon si-1">📋</div>
+        <div class="step-body">
+          <h3>复制接口链接</h3>
+          <p>在「点播接口」页面点击任意卡片，链接自动复制到剪贴板。</p>
+        </div>
+      </div>
+
+      <div class="step-card" data-num="2">
+        <div class="step-icon si-2">📱</div>
+        <div class="step-body">
+          <h3>打开 OK影视 软件</h3>
+          <p>下载并安装 OK影视 Pro 版 App，进入主界面。</p>
+        </div>
+      </div>
+
+      <div class="step-card" data-num="3">
+        <div class="step-icon si-3">⚙️</div>
+        <div class="step-body">
+          <h3>点击设置 → 点播</h3>
+          <p>页面会弹出二维码，供手机扫描使用。</p>
+        </div>
+      </div>
+
+      <div class="step-card" data-num="4">
+        <div class="step-icon si-4">📷</div>
+        <div class="step-body">
+          <h3>扫码后粘贴链接</h3>
+          <p>用微信扫一扫或浏览器扫描二维码，在打开的页面粘贴链接并确定。</p>
+        </div>
+      </div>
+
+      <div class="step-card" data-num="5">
+        <div class="step-icon si-5">🎉</div>
+        <div class="step-body">
+          <h3>返回主页开始观看</h3>
+          <p>接口加载完毕后，即可搜索并播放海量影视内容。</p>
+        </div>
+      </div>
+
+      <div class="step-card card-4k" data-num="✦">
+        <div class="step-icon si-6">⚡</div>
+        <div class="step-body">
+          <h3>4K 画质提示</h3>
+          <p>观看 4K 需使用<b>夸克、迅雷、UC、阿里或百度网盘</b>扫码授权。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 详细教程入口 -->
+    <div class="modal-buttons" style="margin-top: 32px;">
+      <a href="#" class="modal-btn" id="openTvModal">
+        <div class="modal-btn-icon">📺</div>
+        <div class="modal-btn-text">
+          <h4>电视端 APP 教程</h4>
+          <p>步骤图解 · 大屏版</p>
+        </div>
+      </a>
+      <a href="#" class="modal-btn" id="openPhoneModal">
+        <div class="modal-btn-icon">📱</div>
+        <div class="modal-btn-text">
+          <h4>手机端 APP 教程</h4>
+          <p>步骤图解 · 手机版</p>
+        </div>
+      </a>
+    </div>
+  </div><!-- /guide -->
+
+  <!-- ── 软件下载 ── -->
+  <div id="download" class="section">
+    <div class="sec-header">
+      <div>
+        <div class="sec-eyebrow">App Download</div>
+        <div class="sec-title">软件下载</div>
+        <div class="sec-desc">下载 OK影视 客户端，支持多平台使用</div>
+      </div>
+    </div>
+
+    <div class="download-section">
+      <!-- 下载渠道 -->
+      <div class="download-card">
+        <h3>⬇️ 下载渠道</h3>
+        <div class="dl-list">
+          <a href="https://pan.quark.cn/s/cb0ee2b9ac64" target="_blank" class="dl-item">
+            <div class="dl-icon">夸</div>
+            <div class="dl-info">
+              <h4>夸克网盘</h4>
+              <p>高速下载 · 推荐使用</p>
+            </div>
+          </a>
+          <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" class="dl-item">
+            <div class="dl-icon">UC</div>
+            <div class="dl-info">
+              <h4>UC网盘</h4>
+              <p>稳定可靠</p>
+            </div>
+          </a>
+          <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" class="dl-item">
+            <div class="dl-icon">迅</div>
+            <div class="dl-info">
+              <h4>迅雷网盘</h4>
+              <p>提取码: ir74</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 兼容性 -->
+      <div class="download-card">
+        <h3>📋 系统兼容性</h3>
+        <table class="compat-table">
+          <thead>
+            <tr>
+              <th>平台</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🤖 Android</td>
+              <td><span class="compat-status yes">✓ 支持</span></td>
+            </tr>
+            <tr>
+              <td>📺 Android TV</td>
+              <td><span class="compat-status yes">✓ 支持</span></td>
+            </tr>
+            <tr>
+              <td>🍎 iOS</td>
+              <td><span class="compat-status no">✗ 不支持</span></td>
+            </tr>
+            <tr>
+              <td>🪟 Windows</td>
+              <td><span class="compat-status no">✗ 不支持</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="download-note">
+          ⚠️ 电视机通常为 32 位系统，请选择对应版本安装
+        </div>
+      </div>
+    </div>
+  </div><!-- /download -->
+
+</div><!-- /main -->
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>劉Ok</span> 导航站</div>
+    <div class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站无关</div>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+
+<!-- TOAST -->
+<div id="toast"><span class="toast-dot"></span>链接已复制到剪贴板</div>
+
+<!-- 教程弹窗 -->
+<div class="modal-overlay" id="tvModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📺 电视端 APP 使用教程</div>
+      <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-step">
+        <div class="modal-step-title">Step 01 · 点击设置按键</div>
+        <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一" onerror="this.style.display='none'">
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-title">Step 02 · 点击点播栏</div>
+        <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二" onerror="this.style.display='none'">
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
+        <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三" onerror="this.style.display='none'">
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
+        <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="phoneModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">📱 手机端 APP 使用教程</h2>
-            <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-step">
-                <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
-                <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一">
-            </div>
-            <div class="modal-step">
-                <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
-                <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二">
-            </div>
-            <div class="modal-step">
-                <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
-                <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三">
-            </div>
-        </div>
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📱 手机端 APP 使用教程</div>
+      <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
     </div>
+    <div class="modal-body">
+      <div class="modal-step">
+        <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
+        <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一" onerror="this.style.display='none'">
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
+        <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二" onerror="this.style.display='none'">
+      </div>
+      <div class="modal-step">
+        <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
+        <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-    // Page Navigation
-    document.querySelectorAll('.nav-item[data-page]').forEach(item => {
-        item.addEventListener('click', () => {
-            const page = item.dataset.page;
-            
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById(page + 'Page').classList.add('active');
-        });
-    });
+/* ─── Canvas BG ─── */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, orbs;
 
-    // Category Filter
-    document.querySelectorAll('.nav-item[data-filter]').forEach(item => {
-        item.addEventListener('click', () => {
-            const filter = item.dataset.filter;
-            
-            // BUG FIX 1: 先切换到「接口列表」页面
-            document.querySelectorAll('.nav-item[data-page]').forEach(i => i.classList.remove('active'));
-            document.querySelector('.nav-item[data-page="apis"]').classList.add('active');
-            
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById('apisPage').classList.add('active');
-            
-            // 然后过滤分类
-            document.querySelectorAll('.nav-item[data-filter]').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            document.querySelectorAll('.api-section').forEach(section => {
-                if (section.dataset.category === filter) {
-                    section.style.display = 'block';
-                } else {
-                    section.style.display = 'none';
-                }
-            });
-        });
-    });
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    initOrbs();
+  }
 
-    // Top Bar Buttons
-    document.getElementById('openGuideBtn').addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector('.nav-item[data-page="guide"]').click();
-    });
+  function initOrbs(){
+    orbs = [
+      { x: W*.15, y: H*.2,  r: W*.35, vx:.18, vy:.12, color:'rgba(255,45,85,' },
+      { x: W*.8,  y: H*.5,  r: W*.28, vx:-.12,vy:.15, color:'rgba(10,132,255,' },
+      { x: W*.5, y: H*.85, r: W*.3,  vx:.1,  vy:-.18,color:'rgba(191,90,242,' },
+    ];
+  }
 
-    document.getElementById('openDownloadBtn').addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector('.nav-item[data-page="download"]').click();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    orbs.forEach(o=>{
+      const g = ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+      g.addColorStop(0, o.color+'0.12)');
+      g.addColorStop(1, o.color+'0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(o.x,o.y,o.r,0,Math.PI*2);
+      ctx.fill();
+      o.x += o.vx; o.y += o.vy;
+      if(o.x<-o.r||o.x>W+o.r) o.vx*=-1;
+      if(o.y<-o.r||o.y>H+o.r) o.vy*=-1;
     });
+    requestAnimationFrame(draw);
+  }
 
-    // Search
-    document.getElementById('searchInput').addEventListener('input', e => {
-        const query = e.target.value.toLowerCase();
-        
-        // BUG FIX 2: 搜索时自动切换到「接口列表」页面
-        if (query) {
-            document.querySelectorAll('.nav-item[data-page]').forEach(i => i.classList.remove('active'));
-            document.querySelector('.nav-item[data-page="apis"]').classList.add('active');
-            
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById('apisPage').classList.add('active');
-            
-            // 显示所有分类
-            document.querySelectorAll('.api-section').forEach(section => {
-                section.style.display = 'block';
-            });
-            document.querySelectorAll('.nav-item[data-filter]').forEach(i => i.classList.remove('active'));
-        }
-        
-        // BUG FIX 3: 搜索支持分类名称和接口名称
-        document.querySelectorAll('.api-card').forEach(card => {
-            const url = card.querySelector('.api-url-code').textContent.toLowerCase();
-            const name = card.querySelector('.api-name').textContent.toLowerCase();
-            
-            // 获取分类名称
-            const section = card.closest('.api-section');
-            const sectionTitle = section.querySelector('.section-title').textContent.toLowerCase();
-            
-            // 匹配：URL、接口名称、分类名称
-            const isMatch = url.includes(query) || name.includes(query) || sectionTitle.includes(query);
-            
-            if (isMatch) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ─── Tab switching ─── */
+function switchTab(id, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  
+  // 显示/隐藏搜索框
+  const searchBox = document.getElementById('searchBox');
+  if(id === 'interfaces') {
+    searchBox.classList.add('show');
+  } else {
+    searchBox.classList.remove('show');
+  }
+  
+  document.getElementById('sticky-nav').scrollIntoView({behavior:'smooth'});
+}
+
+function goToSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`[data-tab="${id}"]`).classList.add('active');
+  
+  // 显示/隐藏搜索框
+  const searchBox = document.getElementById('searchBox');
+  if(id === 'interfaces') {
+    searchBox.classList.add('show');
+  } else {
+    searchBox.classList.remove('show');
+  }
+  
+  setTimeout(()=>document.getElementById('sticky-nav').scrollIntoView({behavior:'smooth'}),50);
+}
+
+/* ─── Copy ─── */
+function copyUrl(row, url){
+  const btn = row.querySelector('.copy-pill');
+  navigator.clipboard.writeText(url).then(ok).catch(()=>{
+    const t=document.createElement('textarea');
+    t.value=url; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t); ok();
+  });
+  function ok(){
+    btn.textContent='✓ 已复制'; btn.classList.add('done');
+    showToast();
+    setTimeout(()=>{ btn.textContent='复制'; btn.classList.remove('done'); },2200);
+  }
+}
+
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ─── Category Filter ─── */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const category = btn.dataset.category;
+    
+    // 更新按钮状态
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // 过滤卡片
+    document.querySelectorAll('.provider-card').forEach(card => {
+      if (category === 'all' || card.dataset.category === category) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
     });
+  });
+});
 
-    // Copy
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const link = btn.dataset.link;
-            try {
-                await navigator.clipboard.writeText(link);
-                btn.textContent = '✓ 已复制';
-                btn.classList.add('copied');
-                showToast();
-                setTimeout(() => {
-                    btn.textContent = '📋 复制链接';
-                    btn.classList.remove('copied');
-                }, 2000);
-            } catch(e) {
-                fallbackCopy(link);
-            }
-        });
+/* ─── Search ─── */
+document.getElementById('searchInput').addEventListener('input', e => {
+  const query = e.target.value.toLowerCase();
+  
+  if (!query) {
+    // 显示所有卡片
+    document.querySelectorAll('.provider-card').forEach(card => {
+      card.classList.remove('hidden');
     });
-
-    function fallbackCopy(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast();
+    // 重置分类筛选
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+    return;
+  }
+  
+  // 隐藏分类按钮激活状态
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  
+  // 搜索过滤
+  document.querySelectorAll('.provider-card').forEach(card => {
+    const name = card.querySelector('.card-name').textContent.toLowerCase();
+    const urls = Array.from(card.querySelectorAll('.link-url')).map(el => el.textContent.toLowerCase());
+    const categoryNames = {
+      'ok': 'ok杰克',
+      'wang': '王二小',
+      'fan': '饭太硬',
+      'mi': '小米'
+    };
+    const categoryName = categoryNames[card.dataset.category] || '';
+    
+    const isMatch = name.includes(query) || 
+                    urls.some(url => url.includes(query)) ||
+                    categoryName.includes(query);
+    
+    if (isMatch) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
     }
+  });
+});
 
-    function showToast() {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
+/* ─── Guide Modals ─── */
+document.getElementById('openTvModal').addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById('tvModal').classList.add('open');
+});
+
+document.getElementById('openPhoneModal').addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById('phoneModal').classList.add('open');
+});
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      overlay.classList.remove('open');
     }
+  });
+});
 
-    // Modals
-    document.getElementById('openTvModal').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('tvModal').classList.add('open');
-    });
-
-    document.getElementById('openPhoneModal').addEventListener('click', e => {
-        e.preventDefault();
-        document.getElementById('phoneModal').classList.add('open');
-    });
-
-    function closeModal(id) {
-        document.getElementById(id).classList.remove('open');
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', e => {
-            if (e.target === overlay) {
-                overlay.classList.remove('open');
-            }
-        });
-    });
+// 初始化搜索框显示
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('searchBox').classList.add('show');
+});
 </script>
-
 </body>
 </html>
