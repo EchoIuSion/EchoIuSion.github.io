@@ -368,6 +368,8 @@ body::after {
 .card-wang::before  { background: radial-gradient(circle at 50% 0%, rgba(10,132,255,.12), transparent 60%); }
 .card-fan::before   { background: radial-gradient(circle at 50% 0%, rgba(255,214,0,.1), transparent 60%); }
 .card-mi::before    { background: radial-gradient(circle at 50% 0%, rgba(255,106,0,.12), transparent 60%); }
+/* 添加肥猫的样式 */
+.card-fei::before   { background: radial-gradient(circle at 50% 0%, rgba(191,90,242,.12), transparent 60%); }
 
 .card-head {
   padding: 22px 22px 16px;
@@ -394,6 +396,8 @@ body::after {
 .av-wang { background: linear-gradient(135deg, #0a84ff, #5856d6); box-shadow: 0 6px 20px rgba(10,132,255,.4); }
 .av-fan  { background: linear-gradient(135deg, #ffd60a, #ff9f0a); box-shadow: 0 6px 20px rgba(255,214,10,.35); }
 .av-mi   { background: linear-gradient(135deg, #ff6a00, #ff9500); box-shadow: 0 6px 20px rgba(255,106,0,.4); }
+/* 添加肥猫的头像样式 */
+.av-fei  { background: linear-gradient(135deg, #bf5af2, #5856d6); box-shadow: 0 6px 20px rgba(191,90,242,.4); }
 
 .card-info { flex: 1; }
 .card-name { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
@@ -887,7 +891,7 @@ footer {
         🍙 饭太硬 <span class="filter-count">6</span>
       </button>
       <button class="filter-btn" data-category="mi">
-        🍚 小米 <span class="filter-count">4</span>
+        🍚 小米 <span class="filter-count">3</span>
       </button>
       <button class="filter-btn" data-category="fei">
         🐱 肥猫 <span class="filter-count">4</span>
@@ -1014,7 +1018,7 @@ footer {
       </div>
 
             <!-- 肥猫 -->
-      <div class="provider-card card-fan" data-category="fei">
+      <div class="provider-card card-fei" data-category="fei">
         <div class="card-head">
           <div class="avatar av-fei">猫</div>
           <div class="card-info">
@@ -1444,7 +1448,7 @@ document.getElementById('searchInput').addEventListener('input', e => {
       'ok': 'ok杰克',
       'wang': '王二小',
       'fan': '饭太硬',
-      'mi': '小米'
+      'mi': '小米',
       'fei': '肥猫'
     };
     const categoryName = categoryNames[card.dataset.category] || '';
