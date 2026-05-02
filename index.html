@@ -274,7 +274,14 @@ body::after {
 }
 
 .hero-cta {
-  display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 50px;   /* 往下移 */
+  width: 100%;
 }
 .btn-primary {
   background: linear-gradient(135deg, #ff2d55, #ff6a00);
@@ -292,6 +299,37 @@ body::after {
   color: var(--text); font-weight: 600; font-size: .95rem;
   padding: 14px 34px; border-radius: 50px; cursor: pointer;
   transition: all .25s;
+}
+/* ─── HERO BUTTONS ─── */
+.hero-btn{
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 600;
+  font-size: .95rem;
+  padding: 14px 34px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.hero-btn:hover{
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.hero-btn.active{
+  background: linear-gradient(135deg,#ff2d55,#ff6a00);
+  color:#fff;
+  border-color: transparent;
+  box-shadow: 0 8px 30px rgba(255,45,85,.4);
+}
+
+.hero-btn.active:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255,45,85,.55);
 }
 .btn-ghost:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
 
@@ -354,7 +392,6 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
 .nav-tabs {
@@ -375,40 +412,89 @@ body::after {
   color: #fff;
   box-shadow: 0 4px 14px rgba(255,45,85,.4);
 }
-.nav-tab:not(.active):hover { color: var(--text); background: var(--bg-card-hover); }
-
-/* 主题切换按钮 */
-.theme-switch {
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+.nav-tab {
+  padding: 8px 20px;
   border-radius: 50px;
-  color: var(--text);
+  border: none;
+  background: transparent;
+  color: var(--text-sub);
   font-size: .85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all .25s;
-  backdrop-filter: var(--blur);
+  transition: all .25s ease;
+  white-space: nowrap;
 }
 
-.theme-toggle:hover {
+.nav-tab:hover {
+  color: var(--text);
   background: var(--bg-card-hover);
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
 }
 
-.theme-icon {
-  font-size: 1rem;
+.nav-tab.active {
+  background: linear-gradient(135deg, #ff2d55, #ff6a00);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255,45,85,.4);
+}
+
+/* ─── 悬浮主题切换按钮 ─── */
+.floating-theme-toggle {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: var(--text);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-theme-toggle:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+  border-color: var(--border-hover);
+}
+
+.floating-theme-toggle:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* 亮色主题下的悬浮按钮阴影调整 */
+body.light-theme .floating-theme-toggle {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+body.light-theme .floating-theme-toggle:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* 悬浮按钮上的光环动画 */
+.floating-theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--c-red), var(--c-orange), var(--c-gold));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.floating-theme-toggle:hover::before {
+  opacity: 0.3;
+  filter: blur(8px);
 }
 
 /* ─── CATEGORY FILTER ─── */
@@ -866,21 +952,16 @@ footer {
 
   .sticky-nav { 
     padding: 10px 12px;
-    padding-right: 60px;
   }
   .nav-tabs { padding: 3px; gap: 2px; }
   .nav-tab { padding: 6px 10px; font-size: .7rem; border-radius: 6px; }
-  
-  .theme-switch {
-    right: 12px;
-  }
-  .theme-toggle {
-    padding: 6px 10px;
-  }
-  .theme-text {
-    display: none;
-  }
-  .theme-icon {
+
+  /* 移动端悬浮按钮位置调整 */
+  .floating-theme-toggle {
+    bottom: 24px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
     font-size: 1.2rem;
   }
 
@@ -934,12 +1015,19 @@ footer {
   .modal-step { margin-bottom: 16px; }
   .modal-step-title { font-size: .75rem; }
 
-  #toast { bottom: 20px; padding: 10px 18px; font-size: .8rem; }
+  #toast { bottom: 90px; padding: 10px 18px; font-size: .8rem; }
 }
 
 @media (max-width: 380px) {
   .filter-btn { min-width: calc(50% - 4px); font-size: .6rem; }
   .nav-tab { padding: 5px 8px; font-size: .65rem; }
+  .floating-theme-toggle {
+    bottom: 16px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
 }
 </style>
 </head>
@@ -947,6 +1035,11 @@ footer {
 
 <!-- Animated BG Canvas -->
 <canvas id="bg-canvas"></canvas>
+
+<!-- 悬浮主题切换按钮 -->
+<button class="floating-theme-toggle" id="floatingThemeToggle" onclick="toggleTheme()" title="切换深色/亮色模式">
+  🌙
+</button>
 
 <div class="wrap">
 
@@ -964,55 +1057,31 @@ footer {
     精选稳定接口资源，免费畅看超清 <b>4K</b> 内容。<br>
     <b class="gradient-text">芒果、优酷、腾讯、爱奇艺</b>随心看。
   </p>
-  <div class="hero-cta">
-    <button class="btn-primary" onclick="goToSection('interfaces')">📡 浏览接口</button>
-    <button class="btn-ghost" onclick="goToSection('guide')">📖 使用指南</button>
-    <button class="btn-ghost btn-download" onclick="goToSection('download')">📦 软件下载</button>
-  </div>
+<div class="hero-cta">
+  <button class="hero-btn active"
+          onclick="setHeroActive(this); goToSection('interfaces')">
+    📡 浏览接口
+  </button>
+
+  <button class="hero-btn"
+          onclick="setHeroActive(this); goToSection('guide')">
+    📖 使用指南
+  </button>
+
+  <button class="hero-btn"
+          onclick="setHeroActive(this); goToSection('download')">
+    📦 软件下载
+  </button>
+</div>
   <div class="hero-scroll">
     <span>向下滚动</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
-<!-- ══ STATS ══ -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">19</div>
-    <div class="stat-label">接口总数</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">5</div>
-    <div class="stat-label">内容提供方</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">4K</div>
-    <div class="stat-label">最高画质</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">Free</div>
-    <div class="stat-label">完全免费</div>
-  </div>
-</div>
-
-<!-- ══ STICKY NAV ══ -->
-<nav class="sticky-nav" id="sticky-nav">
-  <div class="nav-tabs">
-    <button class="nav-tab active" data-tab="interfaces" onclick="switchTab('interfaces',this)">📡 点播接口</button>
-    <button class="nav-tab" data-tab="guide" onclick="switchTab('guide',this)">📖 使用指南</button>
-    <button class="nav-tab" data-tab="download" onclick="switchTab('download',this)">📦 软件下载</button>
-  </div>
-  <div class="theme-switch">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
-      <span class="theme-icon">🌙</span>
-      <span class="theme-text">深色</span>
-    </button>
-  </div>
-</nav>
 
 <!-- ══ MAIN ══ -->
 <div class="main">
-
   <!-- ── 点播接口 ── -->
   <div id="interfaces" class="section active">
     <div class="sec-header">
@@ -1577,24 +1646,31 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
+
+/* ─── Hero Button Active ─── */
+function setHeroActive(btn){
+  document.querySelectorAll('.hero-btn')
+    .forEach(b => b.classList.remove('active'));
+
+  btn.classList.add('active');
+}
+
 /* ─── Theme Toggle ─── */
 function toggleTheme() {
   const body = document.body;
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = themeToggle.querySelector('.theme-icon');
-  const themeText = themeToggle.querySelector('.theme-text');
+  const floatingBtn = document.getElementById('floatingThemeToggle');
   
   if (body.classList.contains('light-theme')) {
     // 切换到深色
     body.classList.remove('light-theme');
-    themeIcon.textContent = '🌙';
-    themeText.textContent = '深色';
+    floatingBtn.innerHTML = '🌙';
+    floatingBtn.title = '切换亮色模式';
     localStorage.setItem('theme', 'dark');
   } else {
     // 切换到亮色
     body.classList.add('light-theme');
-    themeIcon.textContent = '☀️';
-    themeText.textContent = '亮色';
+    floatingBtn.innerHTML = '☀️';
+    floatingBtn.title = '切换深色模式';
     localStorage.setItem('theme', 'light');
   }
 }
@@ -1602,17 +1678,15 @@ function toggleTheme() {
 // 页面加载时检查保存的主题
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('theme');
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = themeToggle.querySelector('.theme-icon');
-  const themeText = themeToggle.querySelector('.theme-text');
+  const floatingBtn = document.getElementById('floatingThemeToggle');
   
   if (savedTheme === 'light') {
     document.body.classList.add('light-theme');
-    themeIcon.textContent = '☀️';
-    themeText.textContent = '亮色';
+    floatingBtn.innerHTML = '☀️';
+    floatingBtn.title = '切换深色模式';
   } else {
-    themeIcon.textContent = '🌙';
-    themeText.textContent = '深色';
+    floatingBtn.innerHTML = '🌙';
+    floatingBtn.title = '切换亮色模式';
   }
 });
 </script>
