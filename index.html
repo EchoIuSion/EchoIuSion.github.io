@@ -256,6 +256,15 @@ body::after {
   margin-bottom: 20px;
 }
 
+.hero-sub-title::before,
+.hero-sub-title::after {
+  content: '✦';
+  margin: 0 16px;
+  font-size: 0.6em;
+  color: var(--c-red);
+  opacity: 0.6;
+}
+  
 .hero-desc {
   max-width: 520px;
   font-size: clamp(.88rem, 1.5vw, 1rem);
