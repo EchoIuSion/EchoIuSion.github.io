@@ -36,6 +36,34 @@
   --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 }
 
+/* Dark theme variable overrides — manual toggle */
+html[data-theme="dark"] {
+  --bg-root: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-subtle: #233044;
+  --bg-hover: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --border-default: #334155;
+  --border-subtle: #263548;
+}
+
+/* Auto dark mode: only when user has NOT set a preference */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --bg-root: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-subtle: #233044;
+    --bg-hover: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --border-default: #334155;
+    --border-subtle: #263548;
+  }
+}
+
 /* ══ Reset ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
@@ -45,15 +73,23 @@ body{
   color:var(--text-primary);
   min-height:100vh;
   line-height:1.6;
+  transition:background .3s, color .3s;
 }
 
 /* ══ Navbar ══ */
 .navbar{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border-default);
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid rgba(255,255,255,.25);
   padding:0 24px;
+  transition:background .3s, border-color .3s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 1px 3px rgba(0,0,0,.04);
+}
+html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
 }
 .navbar-inner{
   max-width:1240px;margin:0 auto;
@@ -114,7 +150,7 @@ body{
 }
 .mobile-drawer .mobile-nav-link:hover,
 .mobile-drawer .mobile-nav-link.active{
-  background:var(--text-primary);color:var(--bg-root);
+  background:var(--text-primary);color:var(--bg-surface);
 }
 .mobile-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;
@@ -129,7 +165,6 @@ body{
   display:flex;align-items:center;justify-content:center;
   font-size:1rem;transition:all .2s;
 }
-.theme-toggle:hover{border-color:var(--text-tertiary);}
 
 /* ══ Hero ══ */
 .hero{
@@ -181,12 +216,9 @@ body{
   background:var(--bg-surface);color:var(--text-primary);
   border:1.5px solid var(--border-default);
 }
-.btn-outline:hover{background:var(--bg-subtle);border-color:var(--text-tertiary);}
 
 /* Hero preview card */
-.hero-preview{
-  position:relative;
-}
+.hero-preview{position:relative;}
 .preview-card{
   background:var(--bg-surface);
   border:1px solid var(--border-default);
@@ -194,6 +226,7 @@ body{
   padding:24px;
   box-shadow:var(--shadow-xl);
   position:relative;z-index:1;
+  transition:border-color .3s;
 }
 .preview-card::before{
   content:'';position:absolute;
@@ -214,9 +247,7 @@ body{
 .preview-header .dots span:nth-child(3){background:var(--brand-emerald);}
 
 /* feature list inside preview card */
-.feature-list{
-  display:flex;flex-direction:column;gap:0;
-}
+.feature-list{display:flex;flex-direction:column;gap:0;}
 .feat{
   display:flex;align-items:flex-start;gap:0;
   padding:12px 0;position:relative;
@@ -326,9 +357,7 @@ body{
   box-shadow:var(--shadow-lg);
   border-color:var(--text-tertiary);
 }
-.provider-card.hidden{
-  display:none;
-}
+.provider-card.hidden{display:none;}
 
 .card-top{
   padding:20px 22px 16px;
@@ -344,7 +373,6 @@ body{
 .av-blue{background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 4px 14px rgba(59,130,246,.3);}
 .av-amber{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 14px rgba(245,158,11,.3);}
 .av-violet{background:linear-gradient(135deg,#8b5cf6,#7c3aed);box-shadow:0 4px 14px rgba(139,92,246,.3);}
-.av-rose{background:linear-gradient(135deg,#f43f5e,#e11d48);box-shadow:0 4px 14px rgba(244,63,94,.3);}
 
 .card-provider-name{font-size:.95rem;font-weight:700;}
 .card-provider-meta{
@@ -546,6 +574,7 @@ body{
   display:none;position:fixed;inset:0;
   background:rgba(15,23,42,.6);
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   z-index:200;justify-content:center;align-items:center;
   padding:24px;
 }
@@ -587,17 +616,20 @@ body{
 .modal-step img{
   width:100%;border-radius:var(--radius-sm);
   border:1px solid var(--border-default);
-  background:#f1f5f9;
+  background:var(--bg-subtle);
 }
 
-/* ══ Responsive ══ */
+/* ══ Responsive — 860px ══ */
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;gap:40px;padding:48px 20px 40px;}
-  .hero-preview{max-width:440px;margin:0 auto;}
+  .hero-preview{width:100%;max-width:none;margin:0;}
+  .preview-card{padding:20px 22px;border-radius:var(--radius-lg);}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .guide-cta{grid-template-columns:1fr;}
   .provider-grid{grid-template-columns:1fr;}
 }
+
+/* ══ Responsive — 640px ══ */
 @media(max-width:640px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
@@ -605,10 +637,10 @@ body{
   .hero-text p{font-size:.9rem;}
   .hero-actions{flex-direction:column;}
   .hero-actions .btn{width:100%;justify-content:center;}
+  .preview-header{margin-bottom:12px;}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .stat-card{padding:16px;}
   .stat-value{font-size:1.5rem;}
-  .provider-grid{grid-template-columns:1fr;}
   .card-top{padding:16px 16px 12px;gap:10px;}
   .card-avatar{width:36px;height:36px;}
   .card-avatar svg{width:20px;height:20px;}
@@ -623,18 +655,19 @@ body{
   .filter-chip{padding:7px 14px;font-size:.73rem;}
   .content-wrap{padding:0 16px 60px;}
   .footer{padding:32px 16px;}
-  .footer-text{font-size:.75rem;}
   .feat{padding:10px 0;}
   .feat-bar{height:30px;}
   .feat-body strong{font-size:.76rem;}
   .feat-body span{font-size:.64rem;}
 }
+
+/* ══ Responsive — 480px ══ */
 @media(max-width:480px){
   .hero{padding:36px 16px 28px;}
   .hero-text h1{font-size:1.6rem;}
   .hero-text p{font-size:.82rem;}
-  .hero-preview{padding:16px;}
-  .feat{padding:10px 0;}
+  .hero-preview{padding:0;}
+  .feat{padding:8px 0;}
   .feat-bar{height:28px;margin-right:10px;}
   .feat-body strong{font-size:.72rem;}
   .feat-body span{font-size:.6rem;}
@@ -662,6 +695,8 @@ body{
   .filter-chip{padding:6px 10px;font-size:.7rem;gap:4px;}
   .filter-chip .count{font-size:.6rem;padding:1px 5px;}
 }
+
+/* ══ Responsive — 380px ══ */
 @media(max-width:380px){
   .stats-grid{grid-template-columns:1fr 1fr;gap:6px;}
   .stat-card{padding:10px 8px;}
@@ -670,11 +705,73 @@ body{
   .hero-text h1{font-size:1.4rem;}
   .mobile-drawer{width:75%;max-width:260px;}
   .link-item .url{max-width:100px;}
-  .feat{padding:8px 0;}
   .feat-bar{height:24px;margin-right:8px;}
   .feat-body strong{font-size:.68rem;}
   .feat-body span{font-size:.56rem;}
 }
+
+/* ══ Dark Mode Element Overrides ══ */
+/* Auto dark mode element styles (when no manual preference is set) */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
+  html:not([data-theme]) .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
+  html:not([data-theme]) .provider-card:hover{border-color:#475569;}
+  html:not([data-theme]) .link-item:hover{background:#1e293b;}
+  html:not([data-theme]) .link-item .idx{background:#233044;}
+  html:not([data-theme]) .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme]) .filter-chip{background:#233044;}
+  html:not([data-theme]) .filter-chip.active{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme]) .filter-chip.active .count{background:rgba(0,0,0,.15);}
+  html:not([data-theme]) .nav-link.active{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme]) .copy-btn{background:#233044;}
+  html:not([data-theme]) .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+  html:not([data-theme]) .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
+  html:not([data-theme]) .btn-outline:hover{background:#334155;color:#f1f5f9;}
+  html:not([data-theme]) .btn-primary{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme]) .btn-primary:hover{background:#fff;}
+  html:not([data-theme]) .dl-link{background:#233044;}
+  html:not([data-theme]) .dl-link:hover{background:#0f172a;}
+  html:not([data-theme]) .theme-toggle{background:#1e293b;}
+  html:not([data-theme]) .modal-overlay{background:rgba(0,0,0,.7);}
+  html:not([data-theme]) .modal{background:#1e293b;}
+  html:not([data-theme]) .modal-step img{background:#0f172a;}
+  html:not([data-theme]) .mobile-drawer{background:#1e293b;}
+  html:not([data-theme]) .mobile-nav-link.active,
+  html:not([data-theme]) .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme]) .mobile-overlay{background:rgba(0,0,0,.65);}
+  html:not([data-theme]) .hamburger span{background:#f1f5f9;}
+  html:not([data-theme]) .toast{background:#f1f5f9;color:#0f172a;}
+}
+
+/* Manual dark mode element styles (user explicitly picked dark) */
+html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
+html[data-theme="dark"] .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
+html[data-theme="dark"] .provider-card:hover{border-color:#475569;}
+html[data-theme="dark"] .link-item:hover{background:#1e293b;}
+html[data-theme="dark"] .link-item .idx{background:#233044;}
+html[data-theme="dark"] .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .filter-chip{background:#233044;}
+html[data-theme="dark"] .filter-chip.active{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .filter-chip.active .count{background:rgba(0,0,0,.15);}
+html[data-theme="dark"] .nav-link.active{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .copy-btn{background:#233044;}
+html[data-theme="dark"] .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+html[data-theme="dark"] .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
+html[data-theme="dark"] .btn-outline:hover{background:#334155;color:#f1f5f9;}
+html[data-theme="dark"] .btn-primary{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .btn-primary:hover{background:#fff;}
+html[data-theme="dark"] .dl-link{background:#233044;}
+html[data-theme="dark"] .dl-link:hover{background:#0f172a;}
+html[data-theme="dark"] .theme-toggle{background:#1e293b;color:var(--text-primary);}
+html[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.7);}
+html[data-theme="dark"] .modal{background:#1e293b;}
+html[data-theme="dark"] .modal-step img{background:#0f172a;}
+html[data-theme="dark"] .mobile-drawer{background:#1e293b;}
+html[data-theme="dark"] .mobile-nav-link.active,
+html[data-theme="dark"] .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .mobile-overlay{background:rgba(0,0,0,.65);}
+html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
+html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
 </style>
 </head>
 <body>
@@ -685,9 +782,22 @@ body{
     <div class="nav-logo">
       <div class="nav-logo-dot">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="8.5,5.5 19,12 8.5,18.5" fill="white"/>
-          <circle cx="17" cy="7" r="2" fill="white" fill-opacity="0.5"/>
-          <circle cx="20" cy="15" r="1.3" fill="white" fill-opacity="0.35"/>
+          <!-- Central hub node -->
+          <circle cx="12" cy="12" r="2.6" fill="white"/>
+          <!-- Primary cardinal connections -->
+          <path d="M12 9.4V5.2M12 14.6V18.8M9.4 12H5.2M14.6 12H18.8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Primary outer nodes -->
+          <circle cx="12" cy="5.2" r="1.7" fill="white"/>
+          <circle cx="12" cy="18.8" r="1.7" fill="white"/>
+          <circle cx="5.2" cy="12" r="1.7" fill="white"/>
+          <circle cx="18.8" cy="12" r="1.7" fill="white"/>
+          <!-- Secondary diagonal connections -->
+          <path d="M10.1 10.1L7 7M13.9 10.1L17 7M10.1 13.9L7 17M13.9 13.9L17 17" stroke="white" stroke-width="1.05" stroke-linecap="round" opacity="0.5"/>
+          <!-- Secondary outer nodes -->
+          <circle cx="7" cy="7" r="1.15" fill="white" opacity="0.8"/>
+          <circle cx="17" cy="7" r="1.15" fill="white" opacity="0.8"/>
+          <circle cx="7" cy="17" r="1.15" fill="white" opacity="0.8"/>
+          <circle cx="17" cy="17" r="1.15" fill="white" opacity="0.8"/>
         </svg>
       </div>
       <span>劉Ok 导航站</span>
@@ -700,7 +810,7 @@ body{
     <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="切换深色模式">🌙</button>
   </div>
 </nav>
 
@@ -909,11 +1019,11 @@ body{
     </div>
 
     <div class="guide-cta">
-      <a href="#" class="guide-cta-card" id="openTvModal">
+      <a href="javascript:void(0)" class="guide-cta-card" id="openTvModal">
         <div class="guide-cta-icon">📺</div>
         <div><h4>电视端 APP 教程</h4><p>步骤图解 · 大屏版</p></div>
       </a>
-      <a href="#" class="guide-cta-card" id="openPhoneModal">
+      <a href="javascript:void(0)" class="guide-cta-card" id="openPhoneModal">
         <div class="guide-cta-icon">📱</div>
         <div><h4>手机端 APP 教程</h4><p>步骤图解 · 手机版</p></div>
       </a>
@@ -980,24 +1090,24 @@ body{
       <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
     </div>
     <div class="modal-scroll">
-    <div class="modal-body">
-      <div class="modal-step">
-        <div class="modal-step-title">Step 01 · 点击设置按键</div>
-        <img src="https://echoiusion.github.io/images/tutorial1.png" alt="步骤一" onerror="this.style.display='none'">
+      <div class="modal-body">
+        <div class="modal-step">
+          <div class="modal-step-title">Step 01 · 点击设置按键</div>
+          <img src="https://echoiusion.github.io/images/tutorial1.png" alt="步骤一" onerror="this.style.display='none'">
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-title">Step 02 · 点击点播栏</div>
+          <img src="https://echoiusion.github.io/images/tutorial2.png" alt="步骤二" onerror="this.style.display='none'">
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
+          <img src="https://echoiusion.github.io/images/tutorial3.png" alt="步骤三" onerror="this.style.display='none'">
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
+          <img src="https://echoiusion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
+        </div>
       </div>
-      <div class="modal-step">
-        <div class="modal-step-title">Step 02 · 点击点播栏</div>
-        <img src="https://echoiusion.github.io/images/tutorial2.png" alt="步骤二" onerror="this.style.display='none'">
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
-        <img src="https://echoiusion.github.io/images/tutorial3.png" alt="步骤三" onerror="this.style.display='none'">
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
-        <img src="https://echoiusion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
-      </div>
-    </div>
     </div>
   </div>
 </div>
@@ -1010,20 +1120,20 @@ body{
       <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
     </div>
     <div class="modal-scroll">
-    <div class="modal-body">
-      <div class="modal-step">
-        <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
-        <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一" onerror="this.style.display='none'">
+      <div class="modal-body">
+        <div class="modal-step">
+          <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
+          <img src="https://echoiusion.github.io/phonejx/phone1.png" alt="步骤一" onerror="this.style.display='none'">
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
+          <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二" onerror="this.style.display='none'">
+        </div>
+        <div class="modal-step">
+          <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
+          <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三" onerror="this.style.display='none'">
+        </div>
       </div>
-      <div class="modal-step">
-        <div class="modal-step-title">Step 02 · 点击点播栏空白处</div>
-        <img src="https://echoiusion.github.io/phonejx/phone2.png" alt="步骤二" onerror="this.style.display='none'">
-      </div>
-      <div class="modal-step">
-        <div class="modal-step-title">Step 03 · 粘贴链接并点击确定</div>
-        <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三" onerror="this.style.display='none'">
-      </div>
-    </div>
     </div>
   </div>
 </div>
@@ -1031,19 +1141,20 @@ body{
 <script>
 /* ══ Tab Switching ══ */
 function switchTab(id, delay){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.nav-link').forEach(function(b){ b.classList.remove('active'); });
+  var target = document.getElementById(id);
+  if(target) target.classList.add('active');
   var navBtn = document.querySelector('.nav-link[data-tab="'+id+'"]');
   if(navBtn) navBtn.classList.add('active');
   document.querySelectorAll('.btn-hero').forEach(function(b){
-    b.classList.remove('btn-primary');b.classList.add('btn-outline');
+    b.classList.remove('btn-primary'); b.classList.add('btn-outline');
   });
   var heroBtn = document.querySelector('.btn-hero[data-tab="'+id+'"]');
-  if(heroBtn){heroBtn.classList.remove('btn-outline');heroBtn.classList.add('btn-primary');}
-  var d = delay || 0;
+  if(heroBtn){ heroBtn.classList.remove('btn-outline'); heroBtn.classList.add('btn-primary'); }
+  var d = (typeof delay === 'number') ? delay : 100;
   setTimeout(function(){
-    document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
   }, d);
 }
 
@@ -1055,30 +1166,38 @@ function toggleMobileMenu(){
 }
 function mobileSwitch(id, btn){
   toggleMobileMenu();
-  document.querySelectorAll('.mobile-nav-link').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+  document.querySelectorAll('.mobile-nav-link').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
   switchTab(id, 350);
 }
 
-/* ══ Copy URL — reads from data-url, NOT visible text ══ */
+/* ══ Copy URL ══ */
 function copyUrl(row){
   var url = row.getAttribute('data-url');
   if(!url) return;
   var btn = row.querySelector('.copy-btn');
-  navigator.clipboard.writeText(url).then(ok).catch(function(){
-    var t = document.createElement('textarea');
-    t.value = url; document.body.appendChild(t); t.select();
-    document.execCommand('copy'); document.body.removeChild(t); ok();
-  });
   function ok(){
     btn.textContent = '✓ 已复制'; btn.classList.add('done');
     showToast();
     setTimeout(function(){ btn.textContent = '复制'; btn.classList.remove('done'); }, 2200);
   }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(ok).catch(function(){ fallbackCopy(); });
+  } else {
+    fallbackCopy();
+  }
+  function fallbackCopy(){
+    var t = document.createElement('textarea');
+    t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); ok(); } catch(e) {}
+    document.body.removeChild(t);
+  }
 }
 
 function showToast(){
   var t = document.getElementById('toast');
+  if(!t) return;
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2400);
@@ -1101,14 +1220,20 @@ document.querySelectorAll('.filter-chip').forEach(function(chip){
 });
 
 /* ══ Guide Modals ══ */
+var tvModal = document.getElementById('tvModal');
+var phoneModal = document.getElementById('phoneModal');
+
 document.getElementById('openTvModal').addEventListener('click', function(e){
-  e.preventDefault(); document.getElementById('tvModal').classList.add('open');
+  e.preventDefault(); if(tvModal) tvModal.classList.add('open');
 });
 document.getElementById('openPhoneModal').addEventListener('click', function(e){
-  e.preventDefault(); document.getElementById('phoneModal').classList.add('open');
+  e.preventDefault(); if(phoneModal) phoneModal.classList.add('open');
 });
 
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function closeModal(id){
+  var el = document.getElementById(id);
+  if(el) el.classList.remove('open');
+}
 
 document.querySelectorAll('.modal-overlay').forEach(function(overlay){
   overlay.addEventListener('click', function(e){
@@ -1120,110 +1245,44 @@ document.querySelectorAll('.modal-overlay').forEach(function(overlay){
 function applyTheme(isDark){
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   var btn = document.getElementById('themeToggle');
-  btn.textContent = isDark ? '☀️' : '🌙';
-  btn.title = isDark ? '切换亮色模式' : '切换深色模式';
+  if(btn){
+    btn.textContent = isDark ? '☀️' : '🌙';
+    btn.title = isDark ? '切换亮色模式' : '切换深色模式';
+  }
 }
 function toggleTheme(){
   var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  var next = !isDark;
-  applyTheme(next);
-  localStorage.setItem('theme', next ? 'dark' : 'light');
+  applyTheme(!isDark);
+  try { localStorage.setItem('theme', !isDark ? 'dark' : 'light'); } catch(e){}
 }
-</script>
 
-<style>
-/* ══ Dark Mode ══ */
-/* Auto: follow system when user hasn't manually picked */
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) {
-    --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#233044;--bg-hover:#334155;
-    --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
-    --border-default:#334155;--border-subtle:#263548;
-  }
-  html:not([data-theme="light"]) .navbar{background:rgba(15,23,42,.85);}
-  html:not([data-theme="light"]) .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
-  html:not([data-theme="light"]) .provider-card:hover{border-color:#475569;}
-  html:not([data-theme="light"]) .link-item:hover{background:#1e293b;}
-  html:not([data-theme="light"]) .link-item .idx{background:#233044;}
-  html:not([data-theme="light"]) .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .filter-chip{background:#233044;}
-  html:not([data-theme="light"]) .filter-chip.active{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .filter-chip.active .count{background:rgba(0,0,0,.15);}
-  html:not([data-theme="light"]) .nav-link.active{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .copy-btn{background:#233044;}
-  html:not([data-theme="light"]) .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
-  html:not([data-theme="light"]) .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
-  html:not([data-theme="light"]) .btn-outline:hover{background:#334155;color:#f1f5f9;}
-  html:not([data-theme="light"]) .btn-primary{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .btn-primary:hover{background:#fff;}
-  html:not([data-theme="light"]) .dl-link{background:#233044;}
-  html:not([data-theme="light"]) .dl-link:hover{background:#0f172a;}
-  html:not([data-theme="light"]) .theme-toggle{background:#1e293b;}
-  html:not([data-theme="light"]) .modal-overlay{background:rgba(0,0,0,.7);}
-  html:not([data-theme="light"]) .modal{background:#1e293b;}
-  html:not([data-theme="light"]) .modal-step img{background:#0f172a;}
-  html:not([data-theme="light"]) .mobile-drawer{background:#1e293b;}
-  html:not([data-theme="light"]) .mobile-nav-link.active,
-  html:not([data-theme="light"]) .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .mobile-overlay{background:rgba(0,0,0,.65);}
-  html:not([data-theme="light"]) .hamburger span{background:#f1f5f9;}
-}
-/* Manual: user explicitly picked dark (overrides everything) */
-html[data-theme="dark"] {
-  --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#233044;--bg-hover:#334155;
-  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
-  --border-default:#334155;--border-subtle:#263548;
-}
-html[data-theme="dark"] .navbar{background:rgba(15,23,42,.85);}
-html[data-theme="dark"] .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
-html[data-theme="dark"] .provider-card:hover{border-color:#475569;}
-html[data-theme="dark"] .link-item:hover{background:#1e293b;}
-html[data-theme="dark"] .link-item .idx{background:#233044;}
-html[data-theme="dark"] .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .filter-chip{background:#233044;}
-html[data-theme="dark"] .filter-chip.active{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .filter-chip.active .count{background:rgba(0,0,0,.15);}
-html[data-theme="dark"] .nav-link.active{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .copy-btn{background:#233044;}
-html[data-theme="dark"] .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
-html[data-theme="dark"] .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
-html[data-theme="dark"] .btn-outline:hover{background:#334155;color:#f1f5f9;}
-html[data-theme="dark"] .btn-primary{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .btn-primary:hover{background:#fff;}
-html[data-theme="dark"] .dl-link{background:#233044;}
-html[data-theme="dark"] .dl-link:hover{background:#0f172a;}
-html[data-theme="dark"] .theme-toggle{background:#1e293b;}
-html[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.7);}
-html[data-theme="dark"] .modal{background:#1e293b;}
-html[data-theme="dark"] .modal-step img{background:#0f172a;}
-html[data-theme="dark"] .mobile-drawer{background:#1e293b;}
-html[data-theme="dark"] .mobile-nav-link.active,
-html[data-theme="dark"] .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .mobile-overlay{background:rgba(0,0,0,.65);}
-html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
-</style>
-
-<script>
-/* Load saved theme — preference: user choice > system setting */
+/* ══ Init Theme ══ */
 (function initTheme(){
-  var saved = localStorage.getItem('theme');
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch(e){}
   if(saved === 'dark' || saved === 'light'){
     applyTheme(saved === 'dark');
   } else {
     var btn = document.getElementById('themeToggle');
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      btn.textContent = '☀️'; btn.title = '切换亮色模式';
-    } else {
-      btn.textContent = '🌙'; btn.title = '切换深色模式';
+    if(btn){
+      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        btn.textContent = '☀️'; btn.title = '切换亮色模式';
+      } else {
+        btn.textContent = '🌙'; btn.title = '切换深色模式';
+      }
     }
   }
   if(window.matchMedia){
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
-      if(!localStorage.getItem('theme')){
-        document.getElementById('themeToggle').textContent = e.matches ? '☀️' : '🌙';
-        document.getElementById('themeToggle').title = e.matches ? '切换亮色模式' : '切换深色模式';
-      }
-    });
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
+        try {
+          if(!localStorage.getItem('theme')){
+            var tBtn = document.getElementById('themeToggle');
+            if(tBtn){ tBtn.textContent = e.matches ? '☀️' : '🌙'; tBtn.title = e.matches ? '切换亮色模式' : '切换深色模式'; }
+          }
+        } catch(e2){}
+      });
+    } catch(e){}
   }
 })();
 </script>
