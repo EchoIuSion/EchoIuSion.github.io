@@ -213,14 +213,6 @@ body{
 .preview-header .dots span:nth-child(2){background:var(--brand-amber);}
 .preview-header .dots span:nth-child(3){background:var(--brand-emerald);}
 
-.preview-tip{
-  text-align:center;font-size:.68rem;
-  color:var(--brand-amber);font-weight:600;
-  margin-bottom:16px;
-  padding:6px 0;border-radius:6px;
-  background:rgba(245,158,11,.06);
-}
-
 /* feature list inside preview card */
 .feature-list{
   display:flex;flex-direction:column;gap:0;
@@ -939,11 +931,11 @@ body{
     <div class="dl-grid">
       <div class="dl-card">
         <h3>⬇️ 下载渠道</h3>
-        <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" class="dl-link">
+        <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="dl-link">
           <div class="dl-link-icon">UC</div>
           <div><h4>UC网盘</h4><p>稳定可靠</p></div>
         </a>
-        <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" class="dl-link">
+        <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="dl-link">
           <div class="dl-link-icon">迅</div>
           <div><h4>迅雷网盘</h4><p>稳定可靠</p></div>
         </a>
@@ -973,7 +965,7 @@ body{
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span>劉Ok</span> 导航站</div>
-    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站无关</p>
+    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站作者无关</p>
   </div>
 </footer>
 
@@ -1164,7 +1156,6 @@ function toggleTheme(){
   html:not([data-theme="light"]) .btn-outline:hover{background:#334155;color:#f1f5f9;}
   html:not([data-theme="light"]) .btn-primary{background:#f1f5f9;color:#0f172a;}
   html:not([data-theme="light"]) .btn-primary:hover{background:#fff;}
-  html:not([data-theme="light"]) .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
   html:not([data-theme="light"]) .dl-link{background:#233044;}
   html:not([data-theme="light"]) .dl-link:hover{background:#0f172a;}
   html:not([data-theme="light"]) .theme-toggle{background:#1e293b;}
@@ -1199,7 +1190,6 @@ html[data-theme="dark"] .btn-outline{background:#1e293b;color:#94a3b8;border-col
 html[data-theme="dark"] .btn-outline:hover{background:#334155;color:#f1f5f9;}
 html[data-theme="dark"] .btn-primary{background:#f1f5f9;color:#0f172a;}
 html[data-theme="dark"] .btn-primary:hover{background:#fff;}
-html[data-theme="dark"] .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
 html[data-theme="dark"] .dl-link{background:#233044;}
 html[data-theme="dark"] .dl-link:hover{background:#0f172a;}
 html[data-theme="dark"] .theme-toggle{background:#1e293b;}
