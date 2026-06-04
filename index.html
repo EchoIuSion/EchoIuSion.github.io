@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>影视 · API接口导航站</title>
+<title>劉Ok 导航站</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -358,9 +358,9 @@ body{
 .card-avatar{
   width:46px;height:46px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;font-weight:800;color:#fff;
   flex-shrink:0;
 }
+.card-avatar svg{width:24px;height:24px;}
 .av-blue{background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 4px 14px rgba(59,130,246,.3);}
 .av-amber{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 14px rgba(245,158,11,.3);}
 .av-violet{background:linear-gradient(135deg,#8b5cf6,#7c3aed);box-shadow:0 4px 14px rgba(139,92,246,.3);}
@@ -637,7 +637,8 @@ body{
   .stat-value{font-size:1.5rem;}
   .provider-grid{grid-template-columns:1fr;}
   .card-top{padding:16px 16px 12px;gap:10px;}
-  .card-avatar{width:36px;height:36px;font-size:.75rem;}
+  .card-avatar{width:36px;height:36px;}
+  .card-avatar svg{width:20px;height:20px;}
   .card-provider-name{font-size:.85rem;}
   .link-item{padding:8px 10px;gap:8px;}
   .link-item .url{font-size:.7rem;}
@@ -826,7 +827,7 @@ body{
       <!-- 王二小放牛娃 -->
       <div class="provider-card" data-category="wang">
         <div class="card-top">
-          <div class="card-avatar av-blue">牛</div>
+          <div class="card-avatar av-blue"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><path d="M5 7v6"/><path d="M3 11l2 3M7 11l-2 3"/><path d="M5 8l4 1"/><path d="M9 9q2 2 3 5"/><rect x="13" y="9" width="8" height="5" rx="2.5" fill="#fff" stroke="none"/><circle cx="16" cy="6" r="2.8" fill="#fff" stroke="none"/><path d="M14 4l-1.5-1.5M18 4l1.5-1.5" stroke="#fff" stroke-width="1.8"/><path d="M13 14v3M15 14v3M18 14v3M20 14v3" stroke="#fff" stroke-width="1.5"/><path d="M21 10q1-1 0-2" stroke="#fff" stroke-width="1.5"/></svg></div>
           <div>
             <div class="card-provider-name">王二小放牛娃</div>
             <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-blue);"></span>5 个接口可用</div>
@@ -844,7 +845,7 @@ body{
       <!-- 饭太硬 -->
       <div class="provider-card" data-category="fan">
         <div class="card-top">
-          <div class="card-avatar av-amber">饭</div>
+          <div class="card-avatar av-amber"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2H4v2Z"/><ellipse cx="12" cy="15" rx="10" ry="4" fill="#fff" stroke="none"/><path d="M2 15q0 2 3 3M22 15q0 2-3 3"/><path d="M9 14v-3q0-1 .5-1.5M12 14v-4q0-1 .5-1M15 14v-3q0-1-.5-1.5"/><path d="M8 8q1-3 4-3t4 3"/></svg></div>
           <div>
             <div class="card-provider-name">饭太硬</div>
             <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-amber);"></span>5 个接口可用</div>
@@ -862,7 +863,7 @@ body{
       <!-- 肥猫 -->
       <div class="provider-card" data-category="fei">
         <div class="card-top">
-          <div class="card-avatar av-violet">猫</div>
+          <div class="card-avatar av-violet"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="7" ry="5.5" fill="#fff" stroke="none"/><circle cx="12" cy="7" r="4.5" fill="#fff" stroke="none"/><path d="M8 3l1-1.5M16 3l-1-1.5"/><circle cx="10" cy="7" r="1" fill="none"/><circle cx="14" cy="7" r="1" fill="none"/><ellipse cx="12" cy="9" rx="1" ry=".6"/><path d="M5 13q-2 1-2 2.5M19 13q2 1 2 2.5"/><path d="M12 18v3"/><path d="M9 20q-2-1-1-3M15 20q2-1 1-3"/></svg></div>
           <div>
             <div class="card-provider-name">肥猫</div>
             <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-violet);"></span>3 个接口可用</div>
@@ -878,7 +879,7 @@ body{
       <!-- 小米 -->
       <div class="provider-card" data-category="mi">
         <div class="card-top">
-          <div class="card-avatar av-rose">米</div>
+          <div class="card-avatar av-rose"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v16"/><circle cx="10" cy="7" r="2.2" fill="#fff" stroke="none"/><circle cx="14" cy="12" r="2.2" fill="#fff" stroke="none"/><path d="M10 7l3-3M14 12l-3 3"/><circle cx="12" cy="16" r="3.5" fill="#fff" stroke="none"/><path d="M8.5 16l-2-1M15.5 16l2-1"/><circle cx="8" cy="6" r="1.5" fill="#fff" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="#fff" stroke="none"/></svg></div>
           <div>
             <div class="card-provider-name">小米</div>
             <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-rose);"></span>2 个接口可用</div>
@@ -991,7 +992,7 @@ body{
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span>劉Ok</span> 导航站</div>
-    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站无关</p>
+    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站作者无关</p>
   </div>
 </footer>
 
