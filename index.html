@@ -1114,74 +1114,117 @@ document.querySelectorAll('.modal-overlay').forEach(overlay=>{
 
 /* ══ Theme Toggle ══ */
 function applyTheme(isDark){
-  const body=document.body;
+  document.documentElement.setAttribute('data-theme', isDark?'dark':'light');
   const btn=document.getElementById('themeToggle');
-  if(isDark){
-    body.classList.add('dark');
-    btn.textContent='☀️';btn.title='切换亮色模式';
-  }else{
-    body.classList.remove('dark');
-    btn.textContent='🌙';btn.title='切换深色模式';
-  }
+  btn.textContent=isDark?'☀️':'🌙';
+  btn.title=isDark?'切换亮色模式':'切换深色模式';
 }
 function toggleTheme(){
-  const isDark=document.body.classList.contains('dark');
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
   const next=!isDark;
   applyTheme(next);
   localStorage.setItem('theme',next?'dark':'light');
 }
+</script>
 
-/* Dark theme styles injection */
-const darkCSS=`
-body.dark{--bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#1e293b;--bg-hover:#334155;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;--border-default:#334155;--border-subtle:#1e293b;}
-body.dark .navbar{background:rgba(15,23,42,.85);}
-body.dark .preview-row{background:#1e293b;}
-body.dark .link-item:hover{background:#1e293b;}
-body.dark .link-item .idx{background:#1e293b;}
-body.dark .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
-body.dark .filter-chip{background:#1e293b;}
-body.dark .filter-chip.active{background:#f1f5f9;color:#0f172a;}
-body.dark .filter-chip.active .count{background:rgba(0,0,0,.15);}
-body.dark .nav-link.active{background:#f1f5f9;color:#0f172a;}
-body.dark .copy-btn{background:#1e293b;}
-body.dark .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
-body.dark .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
-body.dark .btn-outline:hover{background:#334155;color:#f1f5f9;}
-body.dark .btn-primary{background:#f1f5f9;color:#0f172a;}
-body.dark .btn-primary:hover{background:#fff;}
-body.dark .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
-body.dark .dl-link{background:#1e293b;}
-body.dark .dl-link:hover{background:#0f172a;}
-body.dark .theme-toggle{background:#1e293b;}
-body.dark .modal-overlay{background:rgba(0,0,0,.7);}
-body.dark .modal{background:#1e293b;}
-body.dark .modal-step img{background:#0f172a;}
-body.dark .mobile-drawer{background:#1e293b;}
-body.dark .mobile-nav-link.active,body.dark .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
-body.dark .mobile-overlay{background:rgba(0,0,0,.65);}
-body.dark .hamburger span{background:#f1f5f9;}
-`;
+<style>
+/* ══ Dark Mode ══ */
+/* Auto: follow system when user hasn't manually picked */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#1e293b;--bg-hover:#334155;
+    --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
+    --border-default:#334155;--border-subtle:#1e293b;
+  }
+  html:not([data-theme="light"]) .navbar{background:rgba(15,23,42,.85);}
+  html:not([data-theme="light"]) .preview-row{background:#1e293b;}
+  html:not([data-theme="light"]) .link-item:hover{background:#1e293b;}
+  html:not([data-theme="light"]) .link-item .idx{background:#1e293b;}
+  html:not([data-theme="light"]) .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme="light"]) .filter-chip{background:#1e293b;}
+  html:not([data-theme="light"]) .filter-chip.active{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme="light"]) .filter-chip.active .count{background:rgba(0,0,0,.15);}
+  html:not([data-theme="light"]) .nav-link.active{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme="light"]) .copy-btn{background:#1e293b;}
+  html:not([data-theme="light"]) .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+  html:not([data-theme="light"]) .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
+  html:not([data-theme="light"]) .btn-outline:hover{background:#334155;color:#f1f5f9;}
+  html:not([data-theme="light"]) .btn-primary{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme="light"]) .btn-primary:hover{background:#fff;}
+  html:not([data-theme="light"]) .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
+  html:not([data-theme="light"]) .dl-link{background:#1e293b;}
+  html:not([data-theme="light"]) .dl-link:hover{background:#0f172a;}
+  html:not([data-theme="light"]) .theme-toggle{background:#1e293b;}
+  html:not([data-theme="light"]) .modal-overlay{background:rgba(0,0,0,.7);}
+  html:not([data-theme="light"]) .modal{background:#1e293b;}
+  html:not([data-theme="light"]) .modal-step img{background:#0f172a;}
+  html:not([data-theme="light"]) .mobile-drawer{background:#1e293b;}
+  html:not([data-theme="light"]) .mobile-nav-link.active,
+  html:not([data-theme="light"]) .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
+  html:not([data-theme="light"]) .mobile-overlay{background:rgba(0,0,0,.65);}
+  html:not([data-theme="light"]) .hamburger span{background:#f1f5f9;}
+}
+/* Manual: user explicitly picked dark (overrides everything) */
+html[data-theme="dark"] {
+  --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#1e293b;--bg-hover:#334155;
+  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
+  --border-default:#334155;--border-subtle:#1e293b;
+}
+html[data-theme="dark"] .navbar{background:rgba(15,23,42,.85);}
+html[data-theme="dark"] .preview-row{background:#1e293b;}
+html[data-theme="dark"] .link-item:hover{background:#1e293b;}
+html[data-theme="dark"] .link-item .idx{background:#1e293b;}
+html[data-theme="dark"] .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .filter-chip{background:#1e293b;}
+html[data-theme="dark"] .filter-chip.active{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .filter-chip.active .count{background:rgba(0,0,0,.15);}
+html[data-theme="dark"] .nav-link.active{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .copy-btn{background:#1e293b;}
+html[data-theme="dark"] .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+html[data-theme="dark"] .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
+html[data-theme="dark"] .btn-outline:hover{background:#334155;color:#f1f5f9;}
+html[data-theme="dark"] .btn-primary{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .btn-primary:hover{background:#fff;}
+html[data-theme="dark"] .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
+html[data-theme="dark"] .dl-link{background:#1e293b;}
+html[data-theme="dark"] .dl-link:hover{background:#0f172a;}
+html[data-theme="dark"] .theme-toggle{background:#1e293b;}
+html[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.7);}
+html[data-theme="dark"] .modal{background:#1e293b;}
+html[data-theme="dark"] .modal-step img{background:#0f172a;}
+html[data-theme="dark"] .mobile-drawer{background:#1e293b;}
+html[data-theme="dark"] .mobile-nav-link.active,
+html[data-theme="dark"] .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
+html[data-theme="dark"] .mobile-overlay{background:rgba(0,0,0,.65);}
+html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
+</style>
 
-const darkStylesheet=document.createElement('style');
-darkStylesheet.textContent=darkCSS;
-document.head.appendChild(darkStylesheet);
+<script>
 
-/* Load saved theme — preference order: user choice → system setting */
-function getPreferredTheme(){
+/* Load saved theme — preference: user choice > system setting */
+(function initTheme(){
   const saved=localStorage.getItem('theme');
-  if(saved==='dark'||saved==='light') return saved;
-  if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-  return 'light';
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  applyTheme(getPreferredTheme()==='dark');
-});
-/* Listen for system theme changes when user hasn't manually picked */
-if(window.matchMedia){
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',(e)=>{
-    if(!localStorage.getItem('theme')) applyTheme(e.matches);
-  });
-}
+  if(saved==='dark'||saved==='light'){
+    applyTheme(saved==='dark');
+  }else{
+    // No saved preference — let CSS @media handle it, but set icon
+    const btn=document.getElementById('themeToggle');
+    if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){
+      btn.textContent='☀️';btn.title='切换亮色模式';
+    }else{
+      btn.textContent='🌙';btn.title='切换深色模式';
+    }
+  }
+  // Listen for system changes when no manual choice
+  if(window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){
+      if(!localStorage.getItem('theme')){
+        document.getElementById('themeToggle').textContent=e.matches?'☀️':'🌙';
+        document.getElementById('themeToggle').title=e.matches?'切换亮色模式':'切换深色模式';
+      }
+    });
+  }
+})();
 </script>
 </body>
 </html>
