@@ -573,15 +573,16 @@ body{
 .modal{
   background:var(--bg-surface);
   border-radius:var(--radius-xl);
-  width:100%;max-width:580px;max-height:85vh;overflow-y:auto;
+  width:100%;max-width:580px;max-height:85vh;overflow:hidden;
   box-shadow:var(--shadow-xl);
   animation:modalIn .3s ease;
+  display:flex;flex-direction:column;
 }
 @keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .modal-header{
   padding:20px 24px;border-bottom:1px solid var(--border-default);
   display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;background:var(--bg-surface);
+  flex-shrink:0;
 }
 .modal-title{font-size:1.05rem;font-weight:700;}
 .modal-close{
@@ -593,6 +594,7 @@ body{
 }
 .modal-close:hover{background:var(--bg-hover);}
 .modal-body{padding:24px;}
+.modal-scroll{flex:1;overflow-y:auto;min-height:0;}
 .modal-step{margin-bottom:24px;}
 .modal-step:last-child{margin-bottom:0;}
 .modal-step-title{
@@ -680,7 +682,9 @@ body{
   .dl-card p{font-size:.73rem;}
   .compat-table{font-size:.68rem;}
   .compat-table td,.compat-table th{padding:8px 6px;}
-  .modal{max-width:96%;margin:12px;padding:24px 18px;}
+  .modal{max-width:96%;}
+  .modal-header{padding:16px 18px;}
+  .modal-body{padding:18px;}
   .filter-chip{padding:6px 10px;font-size:.7rem;gap:4px;}
   .filter-chip .count{font-size:.6rem;padding:1px 5px;}
 }
@@ -1001,6 +1005,7 @@ body{
       <div class="modal-title">📺 电视端 APP 使用教程</div>
       <button class="modal-close" onclick="closeModal('tvModal')">✕</button>
     </div>
+    <div class="modal-scroll">
     <div class="modal-body">
       <div class="modal-step">
         <div class="modal-step-title">Step 01 · 点击设置按键</div>
@@ -1019,6 +1024,7 @@ body{
         <img src="https://echoiusion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
       </div>
     </div>
+    </div>
   </div>
 </div>
 
@@ -1029,6 +1035,7 @@ body{
       <div class="modal-title">📱 手机端 APP 使用教程</div>
       <button class="modal-close" onclick="closeModal('phoneModal')">✕</button>
     </div>
+    <div class="modal-scroll">
     <div class="modal-body">
       <div class="modal-step">
         <div class="modal-step-title">Step 01 · 点击下方齿轮按键</div>
@@ -1043,12 +1050,13 @@ body{
         <img src="https://echoiusion.github.io/phonejx/phone3.png" alt="步骤三" onerror="this.style.display='none'">
       </div>
     </div>
+    </div>
   </div>
 </div>
 
 <script>
 /* ══ Tab Switching ══ */
-function switchTab(id, btn){
+function switchTab(id, btn, delay){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1059,7 +1067,10 @@ function switchTab(id, btn){
   });
   var heroBtn = document.querySelector('.btn-hero[data-tab="'+id+'"]');
   if(heroBtn){heroBtn.classList.remove('btn-outline');heroBtn.classList.add('btn-primary');}
-  document.getElementById('navbar').scrollIntoView({behavior:'smooth'});
+  var d = delay || 0;
+  setTimeout(function(){
+    document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  }, d);
 }
 
 /* ══ Mobile Menu ══ */
@@ -1072,7 +1083,7 @@ function mobileSwitch(id, btn){
   toggleMobileMenu();
   document.querySelectorAll('.mobile-nav-link').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  switchTab(id, document.querySelector('.btn-hero[data-tab="'+id+'"]'));
+  switchTab(id, document.querySelector('.btn-hero[data-tab="'+id+'"]'), 350);
 }
 
 /* ══ Copy URL — reads from data-url, NOT visible text ══ */
