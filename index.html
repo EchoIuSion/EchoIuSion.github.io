@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>劉Ok 导航站</title>
+<title>影视 · API接口导航站</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -344,7 +344,7 @@ body{
 .provider-card:hover{
   transform:translateY(-4px);
   box-shadow:var(--shadow-lg);
-  border-color:#cbd5e1;
+  border-color:var(--text-tertiary);
 }
 .provider-card.hidden{
   display:none;
@@ -992,7 +992,7 @@ body{
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span>劉Ok</span> 导航站</div>
-    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站作者无关</p>
+    <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站无关</p>
   </div>
 </footer>
 
@@ -1163,27 +1163,29 @@ function toggleTheme(){
 /* Auto: follow system when user hasn't manually picked */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) {
-    --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#1e293b;--bg-hover:#334155;
+    --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#233044;--bg-hover:#334155;
     --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
-    --border-default:#334155;--border-subtle:#1e293b;
+    --border-default:#334155;--border-subtle:#263548;
   }
   html:not([data-theme="light"]) .navbar{background:rgba(15,23,42,.85);}
+  html:not([data-theme="light"]) .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
+  html:not([data-theme="light"]) .provider-card:hover{border-color:#475569;}
   html:not([data-theme="light"]) .preview-row{background:#1e293b;}
   html:not([data-theme="light"]) .link-item:hover{background:#1e293b;}
-  html:not([data-theme="light"]) .link-item .idx{background:#1e293b;}
+  html:not([data-theme="light"]) .link-item .idx{background:#233044;}
   html:not([data-theme="light"]) .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .filter-chip{background:#1e293b;}
+  html:not([data-theme="light"]) .filter-chip{background:#233044;}
   html:not([data-theme="light"]) .filter-chip.active{background:#f1f5f9;color:#0f172a;}
   html:not([data-theme="light"]) .filter-chip.active .count{background:rgba(0,0,0,.15);}
   html:not([data-theme="light"]) .nav-link.active{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .copy-btn{background:#1e293b;}
+  html:not([data-theme="light"]) .copy-btn{background:#233044;}
   html:not([data-theme="light"]) .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
   html:not([data-theme="light"]) .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
   html:not([data-theme="light"]) .btn-outline:hover{background:#334155;color:#f1f5f9;}
   html:not([data-theme="light"]) .btn-primary{background:#f1f5f9;color:#0f172a;}
   html:not([data-theme="light"]) .btn-primary:hover{background:#fff;}
   html:not([data-theme="light"]) .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
-  html:not([data-theme="light"]) .dl-link{background:#1e293b;}
+  html:not([data-theme="light"]) .dl-link{background:#233044;}
   html:not([data-theme="light"]) .dl-link:hover{background:#0f172a;}
   html:not([data-theme="light"]) .theme-toggle{background:#1e293b;}
   html:not([data-theme="light"]) .modal-overlay{background:rgba(0,0,0,.7);}
@@ -1192,32 +1194,34 @@ function toggleTheme(){
   html:not([data-theme="light"]) .mobile-drawer{background:#1e293b;}
   html:not([data-theme="light"]) .mobile-nav-link.active,
   html:not([data-theme="light"]) .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light")) .mobile-overlay{background:rgba(0,0,0,.65);}
-  html:not([data-theme="light")) .hamburger span{background:#f1f5f9;}
+  html:not([data-theme="light"]) .mobile-overlay{background:rgba(0,0,0,.65);}
+  html:not([data-theme="light"]) .hamburger span{background:#f1f5f9;}
 }
 /* Manual: user explicitly picked dark (overrides everything) */
 html[data-theme="dark"] {
-  --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#1e293b;--bg-hover:#334155;
+  --bg-root:#0f172a;--bg-surface:#1e293b;--bg-subtle:#233044;--bg-hover:#334155;
   --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
-  --border-default:#334155;--border-subtle:#1e293b;
+  --border-default:#334155;--border-subtle:#263548;
 }
 html[data-theme="dark"] .navbar{background:rgba(15,23,42,.85);}
+html[data-theme="dark"] .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
+html[data-theme="dark"] .provider-card:hover{border-color:#475569;}
 html[data-theme="dark"] .preview-row{background:#1e293b;}
 html[data-theme="dark"] .link-item:hover{background:#1e293b;}
-html[data-theme="dark"] .link-item .idx{background:#1e293b;}
+html[data-theme="dark"] .link-item .idx{background:#233044;}
 html[data-theme="dark"] .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .filter-chip{background:#1e293b;}
+html[data-theme="dark"] .filter-chip{background:#233044;}
 html[data-theme="dark"] .filter-chip.active{background:#f1f5f9;color:#0f172a;}
 html[data-theme="dark"] .filter-chip.active .count{background:rgba(0,0,0,.15);}
 html[data-theme="dark"] .nav-link.active{background:#f1f5f9;color:#0f172a;}
-html[data-theme="dark"] .copy-btn{background:#1e293b;}
+html[data-theme="dark"] .copy-btn{background:#233044;}
 html[data-theme="dark"] .copy-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
 html[data-theme="dark"] .btn-outline{background:#1e293b;color:#94a3b8;border-color:#334155;}
 html[data-theme="dark"] .btn-outline:hover{background:#334155;color:#f1f5f9;}
 html[data-theme="dark"] .btn-primary{background:#f1f5f9;color:#0f172a;}
 html[data-theme="dark"] .btn-primary:hover{background:#fff;}
 html[data-theme="dark"] .preview-tip{background:rgba(245,158,11,.1);color:#fbbf24;}
-html[data-theme="dark"] .dl-link{background:#1e293b;}
+html[data-theme="dark"] .dl-link{background:#233044;}
 html[data-theme="dark"] .dl-link:hover{background:#0f172a;}
 html[data-theme="dark"] .theme-toggle{background:#1e293b;}
 html[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.7);}
