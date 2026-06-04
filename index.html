@@ -243,18 +243,6 @@ body{
   margin-top:1px;
 }
 
-.preview-row{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 14px;border-radius:var(--radius-sm);
-  background:var(--bg-subtle);margin-bottom:8px;
-  font-size:.8rem;font-family:var(--font-mono);color:var(--text-secondary);
-}
-.preview-row .tag{
-  padding:3px 8px;border-radius:4px;font-size:.6rem;
-  font-family:var(--font);font-weight:700;text-transform:uppercase;
-}
-.preview-row .tag.rec{background:rgba(16,185,129,.12);color:var(--brand-emerald);}
-
 /* ══ Stats Bar ══ */
 .stats-section{
   max-width:1240px;margin:0 auto;padding:0 24px 64px;
@@ -610,13 +598,6 @@ body{
   background:#f1f5f9;
 }
 
-/* ══ URL Lock Icon ══ */
-.url-lock{
-  display:inline-flex;align-items:center;flex-shrink:0;
-  font-size:.6rem;color:var(--text-tertiary);opacity:.55;
-  margin-right:2px;
-}
-
 /* ══ Responsive ══ */
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;gap:40px;padding:48px 20px 40px;}
@@ -669,11 +650,11 @@ body{
   .stat-card{padding:14px;}
   .stat-value{font-size:1.3rem;}
   .stat-label{font-size:.68rem;}
-  .link-item{flex-wrap:wrap;padding:8px;}
+  .link-item{flex-wrap:wrap;padding:8px;gap:6px;}
   .link-item .idx{width:22px;height:22px;font-size:.6rem;}
-  .link-item .url{flex:1 1 70%;min-width:0;}
-  .link-item .badge-rec{order:3;margin-left:30px;}
-  .link-item .copy-btn{order:4;}
+  .link-item .url{min-width:0;font-size:.68rem;}
+  .link-item .badge-rec{order:3;margin-left:0;}
+  .link-item .copy-btn{order:4;margin-left:auto;opacity:1;}
   .guide-card{padding:18px;}
   .guide-card .step-num{width:28px;height:28px;font-size:.7rem;}
   .guide-card h3{font-size:.9rem;}
@@ -720,9 +701,9 @@ body{
       <span>劉Ok 导航站</span>
     </div>
     <div class="nav-links" id="navLinks">
-      <button class="nav-link active" data-tab="interfaces" onclick="switchTab('interfaces',this)">接口</button>
-      <button class="nav-link" data-tab="guide" onclick="switchTab('guide',this)">教程</button>
-      <button class="nav-link" data-tab="download" onclick="switchTab('download',this)">下载</button>
+      <button class="nav-link active" data-tab="interfaces" onclick="switchTab('interfaces')">接口</button>
+      <button class="nav-link" data-tab="guide" onclick="switchTab('guide')">教程</button>
+      <button class="nav-link" data-tab="download" onclick="switchTab('download')">下载</button>
     </div>
     <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="菜单">
       <span></span><span></span><span></span>
@@ -748,9 +729,9 @@ body{
     <h1>影视<em>接口</em>导航站</h1>
     <p>整合优质接口资源，免费畅看超清 <strong>4K</strong> 内容。<br>芒果、优酷、腾讯、爱奇艺随心看。</p>
     <div class="hero-actions">
-      <button class="btn btn-primary btn-hero" data-tab="interfaces" onclick="switchTab('interfaces',this)">📡 浏览接口</button>
-      <button class="btn btn-outline btn-hero" data-tab="guide" onclick="switchTab('guide',this)">📖 使用指南</button>
-      <button class="btn btn-outline btn-hero" data-tab="download" onclick="switchTab('download',this)">📦 软件下载</button>
+      <button class="btn btn-primary btn-hero" data-tab="interfaces" onclick="switchTab('interfaces')">📡 浏览接口</button>
+      <button class="btn btn-outline btn-hero" data-tab="guide" onclick="switchTab('guide')">📖 使用指南</button>
+      <button class="btn btn-outline btn-hero" data-tab="download" onclick="switchTab('download')">📦 软件下载</button>
     </div>
   </div>
   <div class="hero-preview">
@@ -1057,7 +1038,7 @@ body{
 
 <script>
 /* ══ Tab Switching ══ */
-function switchTab(id, btn, delay){
+function switchTab(id, delay){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1084,7 +1065,7 @@ function mobileSwitch(id, btn){
   toggleMobileMenu();
   document.querySelectorAll('.mobile-nav-link').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  switchTab(id, document.querySelector('.btn-hero[data-tab="'+id+'"]'), 350);
+  switchTab(id, 350);
 }
 
 /* ══ Copy URL — reads from data-url, NOT visible text ══ */
@@ -1170,7 +1151,6 @@ function toggleTheme(){
   html:not([data-theme="light"]) .navbar{background:rgba(15,23,42,.85);}
   html:not([data-theme="light"]) .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
   html:not([data-theme="light"]) .provider-card:hover{border-color:#475569;}
-  html:not([data-theme="light"]) .preview-row{background:#1e293b;}
   html:not([data-theme="light"]) .link-item:hover{background:#1e293b;}
   html:not([data-theme="light"]) .link-item .idx{background:#233044;}
   html:not([data-theme="light"]) .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
@@ -1206,7 +1186,6 @@ html[data-theme="dark"] {
 html[data-theme="dark"] .navbar{background:rgba(15,23,42,.85);}
 html[data-theme="dark"] .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
 html[data-theme="dark"] .provider-card:hover{border-color:#475569;}
-html[data-theme="dark"] .preview-row{background:#1e293b;}
 html[data-theme="dark"] .link-item:hover{background:#1e293b;}
 html[data-theme="dark"] .link-item .idx{background:#233044;}
 html[data-theme="dark"] .link-item:hover .idx{background:#f1f5f9;color:#0f172a;}
