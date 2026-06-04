@@ -216,9 +216,31 @@ body{
 .preview-tip{
   text-align:center;font-size:.68rem;
   color:var(--brand-amber);font-weight:600;
-  margin-bottom:12px;
+  margin-bottom:16px;
   padding:6px 0;border-radius:6px;
   background:rgba(245,158,11,.06);
+}
+
+/* feature list inside preview card */
+.feature-list{
+  display:flex;flex-direction:column;gap:0;
+}
+.feat{
+  display:flex;align-items:flex-start;gap:0;
+  padding:12px 0;position:relative;
+}
+.feat+.feat{border-top:1px solid var(--border-subtle);}
+.feat-bar{
+  width:3px;height:36px;border-radius:0 3px 3px 0;
+  flex-shrink:0;margin-right:12px;align-self:center;
+}
+.feat-body strong{
+  display:block;font-size:.8rem;font-weight:700;color:var(--text-primary);
+  line-height:1.3;
+}
+.feat-body span{
+  display:block;font-size:.68rem;color:var(--text-tertiary);font-weight:400;
+  margin-top:1px;
 }
 
 .preview-row{
@@ -586,6 +608,13 @@ body{
   background:#f1f5f9;
 }
 
+/* ══ URL Lock Icon ══ */
+.url-lock{
+  display:inline-flex;align-items:center;flex-shrink:0;
+  font-size:.6rem;color:var(--text-tertiary);opacity:.55;
+  margin-right:2px;
+}
+
 /* ══ Responsive ══ */
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;gap:40px;padding:48px 20px 40px;}
@@ -595,19 +624,15 @@ body{
   .provider-grid{grid-template-columns:1fr;}
 }
 @media(max-width:640px){
-  /* Nav */
   .nav-links{display:none;}
   .hamburger{display:flex;}
-  /* Hero */
   .hero-text h1{font-size:2rem;}
   .hero-text p{font-size:.9rem;}
   .hero-actions{flex-direction:column;}
   .hero-actions .btn{width:100%;justify-content:center;}
-  /* Stats */
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .stat-card{padding:16px;}
   .stat-value{font-size:1.5rem;}
-  /* Provider */
   .provider-grid{grid-template-columns:1fr;}
   .card-top{padding:16px 16px 12px;gap:10px;}
   .card-avatar{width:36px;height:36px;font-size:.75rem;}
@@ -615,62 +640,47 @@ body{
   .link-item{padding:8px 10px;gap:8px;}
   .link-item .url{font-size:.7rem;}
   .link-item .copy-btn{opacity:1;padding:4px 10px;font-size:.62rem;}
-  /* Guide */
   .guide-grid{grid-template-columns:1fr;}
   .guide-card{padding:22px;}
-  /* Download */
   .dl-grid{grid-template-columns:1fr;}
-  .dl-card-image{height:140px;}
-  /* Filter */
   .filter-bar{flex-wrap:wrap;gap:8px;justify-content:flex-start;}
   .filter-chip{padding:7px 14px;font-size:.73rem;}
-  /* Content */
   .content-wrap{padding:0 16px 60px;}
-  .section-title{font-size:1.3rem;}
-  /* Footer */
   .footer{padding:32px 16px;}
   .footer-text{font-size:.75rem;}
-  /* Preview */
-  .preview-row span{font-size:.65rem;}
-  .preview-row .tag{padding:2px 6px;font-size:.55rem;}
+  .feat{padding:10px 0;}
+  .feat-bar{height:30px;}
+  .feat-body strong{font-size:.76rem;}
+  .feat-body span{font-size:.64rem;}
 }
 @media(max-width:480px){
-  /* Hero */
   .hero{padding:36px 16px 28px;}
   .hero-text h1{font-size:1.6rem;}
   .hero-text p{font-size:.82rem;}
   .hero-preview{padding:16px;}
-  .preview-row{gap:6px;}
-  .preview-row .url{font-size:.6rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px;}
-  /* Stats */
+  .feat{padding:10px 0;}
+  .feat-bar{height:28px;margin-right:10px;}
+  .feat-body strong{font-size:.72rem;}
+  .feat-body span{font-size:.6rem;}
   .stats-grid{grid-template-columns:1fr 1fr;gap:8px;}
   .stat-card{padding:14px;}
   .stat-value{font-size:1.3rem;}
   .stat-label{font-size:.68rem;}
-  /* Link items — stack vertically */
   .link-item{flex-wrap:wrap;padding:8px;}
   .link-item .idx{width:22px;height:22px;font-size:.6rem;}
   .link-item .url{flex:1 1 70%;min-width:0;}
   .link-item .badge-rec{order:3;margin-left:30px;}
   .link-item .copy-btn{order:4;}
-  /* Guide */
   .guide-card{padding:18px;}
   .guide-card .step-num{width:28px;height:28px;font-size:.7rem;}
   .guide-card h3{font-size:.9rem;}
   .guide-card p{font-size:.78rem;}
-  /* Download */
   .dl-card{padding:16px;}
   .dl-card h3{font-size:.85rem;}
   .dl-card p{font-size:.73rem;}
-  .dl-card .btn{width:100%;text-align:center;}
-  /* Compatibility table */
   .compat-table{font-size:.68rem;}
   .compat-table td,.compat-table th{padding:8px 6px;}
-  /* Modal */
   .modal{max-width:96%;margin:12px;padding:24px 18px;}
-  .modal h3{font-size:1rem;}
-  .modal code{font-size:.68rem;padding:8px;word-break:break-all;}
-  /* Filter */
   .filter-chip{padding:6px 10px;font-size:.7rem;gap:4px;}
   .filter-chip .count{font-size:.6rem;padding:1px 5px;}
 }
@@ -682,7 +692,10 @@ body{
   .hero-text h1{font-size:1.4rem;}
   .mobile-drawer{width:75%;max-width:260px;}
   .link-item .url{max-width:100px;}
-  .preview-row{gap:4px;}
+  .feat{padding:8px 0;}
+  .feat-bar{height:24px;margin-right:8px;}
+  .feat-body strong{font-size:.68rem;}
+  .feat-body span{font-size:.56rem;}
 }
 </style>
 </head>
@@ -699,11 +712,11 @@ body{
           <circle cx="20" cy="15" r="1.3" fill="white" fill-opacity="0.35"/>
         </svg>
       </div>
-      <span>影视接口导航</span>
+      <span>劉Ok 导航站</span>
     </div>
     <div class="nav-links" id="navLinks">
       <button class="nav-link active" data-tab="interfaces" onclick="switchTab('interfaces',this)">接口</button>
-      <button class="nav-link" data-tab="guide" onclick="switchTab('guide',this)">指南</button>
+      <button class="nav-link" data-tab="guide" onclick="switchTab('guide',this)">教程</button>
       <button class="nav-link" data-tab="download" onclick="switchTab('download',this)">下载</button>
     </div>
     <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="菜单">
@@ -739,28 +752,37 @@ body{
     <div class="preview-card">
       <div class="preview-header">
         <div class="dots"><span></span><span></span><span></span></div>
-        <span style="font-size:.65rem;color:var(--text-tertiary);font-weight:600;">接口列表</span>
+        <span style="font-size:.65rem;color:var(--text-tertiary);font-weight:600;">功能亮点</span>
       </div>
-      <p class="preview-tip">建议使用带有推荐标签的接口</p>
-      <div class="preview-row">
-        <span style="color:var(--brand-blue);font-weight:700;white-space:nowrap;">王二小</span>
-        <span>https://9280.kstore.vip/newwex.json</span>
-        <span class="tag rec">推荐</span>
-      </div>
-      <div class="preview-row">
-        <span style="color:var(--brand-amber);font-weight:700;white-space:nowrap;">饭太硬</span>
-        <span>http://fty.333232.xyz/tv</span>
-        <span class="tag rec">推荐</span>
-      </div>
-      <div class="preview-row">
-        <span style="color:var(--brand-violet);font-weight:700;white-space:nowrap;">肥猫</span>
-        <span>http://feimao.pro/</span>
-        <span class="tag rec">推荐</span>
-      </div>
-      <div class="preview-row">
-        <span style="color:var(--brand-rose);font-weight:700;white-space:nowrap;">小米</span>
-        <span>https://cnb.cool/xiaomi66...</span>
-        <span class="tag rec">推荐</span>
+      <div class="feature-list">
+        <div class="feat">
+          <div class="feat-bar" style="background:var(--brand-blue);"></div>
+          <div class="feat-body">
+            <strong>全平台支持</strong>
+            <span>手机 · 电视 · 平板 · 电脑</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-bar" style="background:var(--brand-emerald);"></div>
+          <div class="feat-body">
+            <strong>四大平台</strong>
+            <span>芒果 · 优酷 · 腾讯 · 爱奇艺</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-bar" style="background:var(--brand-amber);"></div>
+          <div class="feat-body">
+            <strong>自动维护</strong>
+            <span>接口实时更新，断线自动重连</span>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-bar" style="background:var(--brand-violet);"></div>
+          <div class="feat-body">
+            <strong>详细教程</strong>
+            <span>图文指引</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -807,11 +829,11 @@ body{
           </div>
         </div>
         <div class="card-links">
-          <div class="link-item" onclick="copyUrl(this,'https://9280.kstore.vip/newwex.json')"><span class="idx">01</span><span class="url">https://9280.kstore.vip/newwex.json</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://tvbox.王二小放牛娃.top')"><span class="idx">02</span><span class="url">http://tvbox.王二小放牛娃.top</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://tv.999888987.xyz')"><span class="idx">03</span><span class="url">http://tv.999888987.xyz</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'https://9280.kstore.vip/wex.json')"><span class="idx">04</span><span class="url">https://9280.kstore.vip/wex.json</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://tv.999888123.xyz/')"><span class="idx">05</span><span class="url">http://tv.999888123.xyz/</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://9280.kstore.vip/newwex.json" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">9280.kstore.vip/…newwex.json</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://tvbox.王二小放牛娃.top" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">tvbox.王二小放牛娃.top</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://tv.999888987.xyz" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">tv.999888987.xyz</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://9280.kstore.vip/wex.json" onclick="copyUrl(this)"><span class="idx">04</span><span class="url">9280.kstore.vip/…wex.json</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://tv.999888123.xyz/" onclick="copyUrl(this)"><span class="idx">05</span><span class="url">tv.999888123.xyz</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
@@ -825,11 +847,11 @@ body{
           </div>
         </div>
         <div class="card-links">
-          <div class="link-item" onclick="copyUrl(this,'http://fty.333232.xyz/tv')"><span class="idx">01</span><span class="url">http://fty.333232.xyz/tv</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://fty.888484.xyz/tv')"><span class="idx">02</span><span class="url">http://fty.888484.xyz/tv</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://fty.xxooo.cf/tv')"><span class="idx">03</span><span class="url">http://fty.xxooo.cf/tv</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://www.饭太硬.art/tv')"><span class="idx">04</span><span class="url">http://www.饭太硬.art/tv</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://www.饭太硬.net/tv')"><span class="idx">05</span><span class="url">http://www.饭太硬.net/tv</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://fty.333232.xyz/tv" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">fty.333232.xyz/…tv</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://fty.888484.xyz/tv" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">fty.888484.xyz/…tv</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://fty.xxooo.cf/tv" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">fty.xxooo.cf/…tv</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://www.饭太硬.art/tv" onclick="copyUrl(this)"><span class="idx">04</span><span class="url">www.饭太硬.art/…tv</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://www.饭太硬.net/tv" onclick="copyUrl(this)"><span class="idx">05</span><span class="url">www.饭太硬.net/…tv</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
@@ -843,9 +865,9 @@ body{
           </div>
         </div>
         <div class="card-links">
-          <div class="link-item" onclick="copyUrl(this,'http://feimao.pro/')"><span class="idx">01</span><span class="url">http://feimao.pro/</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://肥猫.net/')"><span class="idx">02</span><span class="url">http://肥猫.net/</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'http://hello.肥猫.net/')"><span class="idx">03</span><span class="url">http://hello.肥猫.net</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://feimao.pro/" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">feimao.pro</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://肥猫.net/" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">肥猫.net</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://hello.肥猫.net/" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">hello.肥猫.net</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
@@ -859,8 +881,8 @@ body{
           </div>
         </div>
         <div class="card-links">
-          <div class="link-item" onclick="copyUrl(this,'https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json')"><span class="idx">01</span><span class="url">https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" onclick="copyUrl(this,'https://sscq-pay.kingnet.com/static/test.json')"><span class="idx">02</span><span class="url">https://sscq-pay.kingnet.com/static/test.json</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">cnb.cool/…gege.json</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://sscq-pay.kingnet.com/static/test.json" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">sscq-pay.kingnet.com/…test.json</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
@@ -982,19 +1004,19 @@ body{
     <div class="modal-body">
       <div class="modal-step">
         <div class="modal-step-title">Step 01 · 点击设置按键</div>
-        <img src="https://EchoIuSion.github.io/images/tutorial1.png" alt="步骤一" onerror="this.style.display='none'">
+        <img src="https://echoiusion.github.io/images/tutorial1.png" alt="步骤一" onerror="this.style.display='none'">
       </div>
       <div class="modal-step">
         <div class="modal-step-title">Step 02 · 点击点播栏</div>
-        <img src="https://EchoIuSion.github.io/images/tutorial2.png" alt="步骤二" onerror="this.style.display='none'">
+        <img src="https://echoiusion.github.io/images/tutorial2.png" alt="步骤二" onerror="this.style.display='none'">
       </div>
       <div class="modal-step">
         <div class="modal-step-title">Step 03 · 手机扫描二维码</div>
-        <img src="https://EchoIuSion.github.io/images/tutorial3.png" alt="步骤三" onerror="this.style.display='none'">
+        <img src="https://echoiusion.github.io/images/tutorial3.png" alt="步骤三" onerror="this.style.display='none'">
       </div>
       <div class="modal-step">
         <div class="modal-step-title">Step 04 · 粘贴链接并确定</div>
-        <img src="https://EchoIuSion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
+        <img src="https://echoiusion.github.io/images/tutorial4.png" alt="步骤四" onerror="this.style.display='none'">
       </div>
     </div>
   </div>
@@ -1030,10 +1052,8 @@ function switchTab(id, btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // 更新导航栏按钮
   var navBtn = document.querySelector('.nav-link[data-tab="'+id+'"]');
   if(navBtn) navBtn.classList.add('active');
-  // 更新 Hero 按钮状态 — 始终按 data-tab 匹配，不依赖传入的 btn 类型
   document.querySelectorAll('.btn-hero').forEach(function(b){
     b.classList.remove('btn-primary');b.classList.add('btn-outline');
   });
@@ -1049,47 +1069,46 @@ function toggleMobileMenu(){
   document.getElementById('mobileOverlay').classList.toggle('open');
 }
 function mobileSwitch(id, btn){
-  // Close drawer
   toggleMobileMenu();
-  // Update drawer active state
   document.querySelectorAll('.mobile-nav-link').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  // Switch tab
   switchTab(id, document.querySelector('.btn-hero[data-tab="'+id+'"]'));
 }
 
-/* ══ Copy URL ══ */
-function copyUrl(row, url){
-  const btn = row.querySelector('.copy-btn');
-  navigator.clipboard.writeText(url).then(ok).catch(()=>{
-    const t=document.createElement('textarea');
-    t.value=url;document.body.appendChild(t);t.select();
-    document.execCommand('copy');document.body.removeChild(t);ok();
+/* ══ Copy URL — reads from data-url, NOT visible text ══ */
+function copyUrl(row){
+  var url = row.getAttribute('data-url');
+  if(!url) return;
+  var btn = row.querySelector('.copy-btn');
+  navigator.clipboard.writeText(url).then(ok).catch(function(){
+    var t = document.createElement('textarea');
+    t.value = url; document.body.appendChild(t); t.select();
+    document.execCommand('copy'); document.body.removeChild(t); ok();
   });
   function ok(){
-    btn.textContent='✓ 已复制';btn.classList.add('done');
+    btn.textContent = '✓ 已复制'; btn.classList.add('done');
     showToast();
-    setTimeout(()=>{btn.textContent='复制';btn.classList.remove('done');},2200);
+    setTimeout(function(){ btn.textContent = '复制'; btn.classList.remove('done'); }, 2200);
   }
 }
 
 function showToast(){
-  const t=document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.classList.add('show');
   clearTimeout(t._timer);
-  t._timer=setTimeout(()=>t.classList.remove('show'),2400);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2400);
 }
 
 /* ══ Category Filter ══ */
-document.querySelectorAll('.filter-chip').forEach(chip=>{
-  chip.addEventListener('click',()=>{
-    const category=chip.dataset.category;
-    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+document.querySelectorAll('.filter-chip').forEach(function(chip){
+  chip.addEventListener('click', function(){
+    var category = chip.dataset.category;
+    document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
     chip.classList.add('active');
-    document.querySelectorAll('.provider-card').forEach(card=>{
-      if(category==='all'||card.dataset.category===category){
+    document.querySelectorAll('.provider-card').forEach(function(card){
+      if(category === 'all' || card.dataset.category === category){
         card.classList.remove('hidden');
-      }else{
+      } else {
         card.classList.add('hidden');
       }
     });
@@ -1097,33 +1116,33 @@ document.querySelectorAll('.filter-chip').forEach(chip=>{
 });
 
 /* ══ Guide Modals ══ */
-document.getElementById('openTvModal').addEventListener('click',e=>{
-  e.preventDefault();document.getElementById('tvModal').classList.add('open');
+document.getElementById('openTvModal').addEventListener('click', function(e){
+  e.preventDefault(); document.getElementById('tvModal').classList.add('open');
 });
-document.getElementById('openPhoneModal').addEventListener('click',e=>{
-  e.preventDefault();document.getElementById('phoneModal').classList.add('open');
+document.getElementById('openPhoneModal').addEventListener('click', function(e){
+  e.preventDefault(); document.getElementById('phoneModal').classList.add('open');
 });
 
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-  overlay.addEventListener('click',e=>{
-    if(e.target===overlay)overlay.classList.remove('open');
+document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) overlay.classList.remove('open');
   });
 });
 
 /* ══ Theme Toggle ══ */
 function applyTheme(isDark){
-  document.documentElement.setAttribute('data-theme', isDark?'dark':'light');
-  const btn=document.getElementById('themeToggle');
-  btn.textContent=isDark?'☀️':'🌙';
-  btn.title=isDark?'切换亮色模式':'切换深色模式';
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  var btn = document.getElementById('themeToggle');
+  btn.textContent = isDark ? '☀️' : '🌙';
+  btn.title = isDark ? '切换亮色模式' : '切换深色模式';
 }
 function toggleTheme(){
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  const next=!isDark;
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  var next = !isDark;
   applyTheme(next);
-  localStorage.setItem('theme',next?'dark':'light');
+  localStorage.setItem('theme', next ? 'dark' : 'light');
 }
 </script>
 
@@ -1161,8 +1180,8 @@ function toggleTheme(){
   html:not([data-theme="light"]) .mobile-drawer{background:#1e293b;}
   html:not([data-theme="light"]) .mobile-nav-link.active,
   html:not([data-theme="light"]) .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;}
-  html:not([data-theme="light"]) .mobile-overlay{background:rgba(0,0,0,.65);}
-  html:not([data-theme="light"]) .hamburger span{background:#f1f5f9;}
+  html:not([data-theme="light")) .mobile-overlay{background:rgba(0,0,0,.65);}
+  html:not([data-theme="light")) .hamburger span{background:#f1f5f9;}
 }
 /* Manual: user explicitly picked dark (overrides everything) */
 html[data-theme="dark"] {
@@ -1200,27 +1219,24 @@ html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
 </style>
 
 <script>
-
 /* Load saved theme — preference: user choice > system setting */
 (function initTheme(){
-  const saved=localStorage.getItem('theme');
-  if(saved==='dark'||saved==='light'){
-    applyTheme(saved==='dark');
-  }else{
-    // No saved preference — let CSS @media handle it, but set icon
-    const btn=document.getElementById('themeToggle');
-    if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){
-      btn.textContent='☀️';btn.title='切换亮色模式';
-    }else{
-      btn.textContent='🌙';btn.title='切换深色模式';
+  var saved = localStorage.getItem('theme');
+  if(saved === 'dark' || saved === 'light'){
+    applyTheme(saved === 'dark');
+  } else {
+    var btn = document.getElementById('themeToggle');
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+      btn.textContent = '☀️'; btn.title = '切换亮色模式';
+    } else {
+      btn.textContent = '🌙'; btn.title = '切换深色模式';
     }
   }
-  // Listen for system changes when no manual choice
   if(window.matchMedia){
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
       if(!localStorage.getItem('theme')){
-        document.getElementById('themeToggle').textContent=e.matches?'☀️':'🌙';
-        document.getElementById('themeToggle').title=e.matches?'切换亮色模式':'切换深色模式';
+        document.getElementById('themeToggle').textContent = e.matches ? '☀️' : '🌙';
+        document.getElementById('themeToggle').title = e.matches ? '切换亮色模式' : '切换深色模式';
       }
     });
   }
