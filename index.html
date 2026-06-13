@@ -312,6 +312,42 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 }
 .sec-desc{font-size:.9rem;color:var(--text-secondary);}
 
+/* ══ Usage Tip Banner ══ */
+.usage-tip{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,rgba(59,130,246,.05),rgba(139,92,246,.04));
+  border:1px solid rgba(59,130,246,.12);
+  margin-bottom:28px;
+  animation:tipIn .4s ease;
+}
+@keyframes tipIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.usage-tip-icon{
+  width:34px;height:34px;min-width:34px;border-radius:10px;
+  background:linear-gradient(135deg,var(--brand-blue),var(--brand-violet));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;color:#fff;flex-shrink:0;
+}
+.usage-tip-text{
+  font-size:.82rem;color:var(--text-secondary);line-height:1.65;
+}
+.usage-tip-text strong{color:var(--text-primary);font-weight:700;}
+html[data-theme="dark"] .usage-tip{
+  background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.06));
+  border-color:rgba(59,130,246,.18);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .usage-tip{
+    background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.06));
+    border-color:rgba(59,130,246,.18);
+  }
+}
+@media(max-width:480px){
+  .usage-tip{padding:12px 16px;gap:10px;}
+  .usage-tip-icon{width:30px;height:30px;min-width:30px;font-size:.85rem;}
+  .usage-tip-text{font-size:.76rem;}
+}
+
 /* ══ Filter Chips ══ */
 .filter-bar{
   display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -904,6 +940,14 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
       <button class="filter-chip" data-category="fan">🍙 饭太硬<span class="count">5</span></button>
       <button class="filter-chip" data-category="fei">🐱 肥猫<span class="count">3</span></button>
       <button class="filter-chip" data-category="mi">🍚 小米<span class="count">2</span></button>
+    </div>
+
+    <!-- 使用提示 -->
+    <div class="usage-tip">
+      <div class="usage-tip-icon">💡</div>
+      <div class="usage-tip-text">
+        <strong>使用提示：</strong>如<strong>主力线路</strong>配置失效，请更换下方<strong>备用接口</strong>，能够生效使用不必添加<strong>备用接口</strong>。推荐王二小放牛娃、饭太硬、肥猫、小米<strong>每条接口都添加一条到影视软件中使用，以防失效</strong>。
+      </div>
     </div>
 
     <div class="provider-grid" id="providerGrid">
