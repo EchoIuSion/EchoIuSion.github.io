@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>劉Ok 导航站</title>
+<title>劉Okの导航站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ══ CSS Variables ══ */
 :root {
@@ -66,7 +68,7 @@ html[data-theme="dark"] {
 
 /* ══ Reset ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body{
   font-family:var(--font);
   background:var(--bg-root);
@@ -74,6 +76,7 @@ body{
   min-height:100vh;
   line-height:1.6;
   transition:background .3s, color .3s;
+  overflow-x:hidden;
 }
 
 /* ══ Navbar ══ */
@@ -361,6 +364,7 @@ html[data-theme="dark"] .usage-tip{
   cursor:pointer;
   transition:background-color .15s ease, color .15s ease, border-color .15s ease;
   display:inline-flex;align-items:center;gap:6px;
+  touch-action:manipulation;
 }
 .filter-chip:hover{border-color:var(--text-tertiary);}
 .filter-chip.active{
@@ -424,6 +428,7 @@ html[data-theme="dark"] .usage-tip{
   display:flex;align-items:center;gap:10px;
   padding:10px 12px;border-radius:var(--radius-sm);
   cursor:pointer;transition:all .15s;
+  touch-action:manipulation;
 }
 .link-item:hover{background:var(--bg-subtle);}
 .link-item .idx{
@@ -529,7 +534,7 @@ html[data-theme="dark"] .usage-tip{
 /* ══ Download Section ══ */
 .dl-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   gap:20px;
 }
 .dl-card{
@@ -664,6 +669,7 @@ html[data-theme="dark"] .usage-tip{
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .guide-cta{grid-template-columns:1fr;}
   .provider-grid{grid-template-columns:1fr;}
+  .link-item .copy-btn{opacity:1;}
 }
 
 /* ══ Responsive — 640px ══ */
@@ -745,6 +751,16 @@ html[data-theme="dark"] .usage-tip{
   .feat-bar{height:24px;margin-right:8px;}
   .feat-body strong{font-size:.68rem;}
   .feat-body span{font-size:.56rem;}
+}
+
+/* ══ Accessibility: Reduced Motion ══ */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  html{scroll-behavior:auto;}
 }
 
 /* ══ Dark Mode Element Overrides ══ */
@@ -837,7 +853,7 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
           <circle cx="17" cy="17" r="1.15" fill="white" opacity="0.8"/>
         </svg>
       </div>
-      <span>劉Ok 导航站</span>
+      <span>劉Okの导航站</span>
     </div>
     <div class="nav-links" id="navLinks">
       <button class="nav-link active" data-tab="interfaces" onclick="switchTab('interfaces')">接口</button>
@@ -946,7 +962,7 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
     <div class="usage-tip">
       <div class="usage-tip-icon">💡</div>
       <div class="usage-tip-text">
-        <strong>使用提示：</strong>如<strong>主力线路</strong>配置失效，请更换下方<strong>备用接口</strong>，能够生效使用不必添加<strong>备用接口</strong>。推荐王二小放牛娃、饭太硬、肥猫、小米<strong>每条接口都添加一条到影视软件中使用，以防失效</strong>。
+        <strong>使用提示：</strong>如<strong>主力线路</strong>接口配置失效，请更换下方<strong>备用接口</strong>，推荐<strong>王二小放牛娃、饭太硬、肥猫、小米每条接口的主力线路都添加到影视软件中使用</strong>，以防资源失效即可切换线路使用。
       </div>
     </div>
 
@@ -1119,7 +1135,7 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
 <!-- ══ Footer ══ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand"><span>劉Ok</span> 导航站</div>
+    <div class="footer-brand"><span>劉Ok</span>の导航站</div>
     <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站作者无关</p>
   </div>
 </footer>
