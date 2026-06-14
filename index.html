@@ -1,4 +1,4 @@
-w<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"/>
@@ -11,7 +11,6 @@ w<!DOCTYPE html>
 
 /* ══ CSS Variables ══ */
 :root {
-  --brand-slate: #1e293b;
   --brand-blue: #3b82f6;
   --brand-amber: #f59e0b;
   --brand-emerald: #10b981;
@@ -35,7 +34,6 @@ w<!DOCTYPE html>
   --radius-lg: 20px;
   --radius-xl: 28px;
   --font: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 /* Dark theme variable overrides — manual toggle */
@@ -388,8 +386,7 @@ html[data-theme="dark"] .usage-tip{
   border-radius:var(--radius-lg);
   overflow:hidden;
   box-shadow:var(--shadow-sm);
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, opacity .25s ease;
-  opacity:1;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .provider-card:hover{
   transform:translateY(-4px);
@@ -505,32 +502,118 @@ html[data-theme="dark"] .usage-tip{
   background:linear-gradient(135deg,rgba(245,158,11,.03),rgba(244,63,94,.03));
 }
 
-/* Guide modals trigger */
+/* ══ Guide CTA Tutorial Cards — Enhanced Prominence ══ */
 .guide-cta{
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;
-  margin-top:32px;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  margin-top:36px;
 }
 .guide-cta-card{
-  background:var(--bg-surface);
-  border:1px solid var(--border-default);
+  border:2px solid transparent;
   border-radius:var(--radius-lg);
-  padding:22px 24px;cursor:pointer;
-  display:flex;align-items:center;gap:16px;
-  transition:all .3s;text-decoration:none;color:inherit;
+  padding:28px 28px;cursor:pointer;
+  display:flex;align-items:center;gap:20px;
+  transition:all .35s cubic-bezier(.25,.46,.45,.94);
+  text-decoration:none;color:inherit;
+  position:relative;overflow:hidden;
+  /* 默认就带阴影，更醒目 */
+  box-shadow:
+    0 4px 16px rgba(59,130,246,.10),
+    0 1px 3px rgba(0,0,0,.06);
 }
+/* 左侧彩色粗边条 */
+.guide-cta-card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:5px;border-radius:4px 0 0 4px;
+  transition:width .3s ease;
+}
+.guide-cta-card[data-tv]::before{
+  background:linear-gradient(180deg, var(--brand-blue), #60a5fa);
+}
+.guide-cta-card[data-phone]::before{
+  background:linear-gradient(180deg, var(--brand-violet), #a78bfa);
+}
+/* 背景微渐变 */
+.guide-cta-card[data-tv]{
+  background:linear-gradient(135deg, rgba(59,130,246,.04), rgba(59,130,246,.01));
+}
+.guide-cta-card[data-phone]{
+  background:linear-gradient(135deg, rgba(139,92,246,.04), rgba(139,92,246,.01));
+}
+/* hover 效果更强 — 仅对支持hover的设备生效，避免触屏粘滞 */
+@media(hover:hover){
 .guide-cta-card:hover{
-  transform:translateY(-3px);
-  box-shadow:var(--shadow-md);
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:
+    0 16px 40px rgba(59,130,246,.15),
+    0 4px 12px rgba(0,0,0,.08);
   border-color:var(--brand-blue);
 }
+.guide-cta-card[data-tv]:hover{
+  background:linear-gradient(135deg, rgba(59,130,246,.08), rgba(96,165,250,.03));
+  border-color:var(--brand-blue);
+}
+.guide-cta-card[data-phone]:hover{
+  background:linear-gradient(135deg, rgba(139,92,246,.08), rgba(167,139,250,.03));
+  border-color:var(--brand-violet);
+}
+.guide-cta-card:hover::before{
+  width:7px;
+}
+.guide-cta-card:hover .guide-cta-icon{
+  transform:scale(1.08) rotate(-3deg);
+}
+.guide-cta-card:hover .guide-cta-arrow{
+  background:var(--brand-blue);
+  color:#fff;
+  opacity:1;
+  transform:translateX(3px);
+}
+.guide-cta-card[data-phone]:hover .guide-cta-arrow{
+  background:var(--brand-violet);
+}
+} /* end @media(hover:hover) */
+/* 触屏设备用 :active 替代反馈 */
+.guide-cta-card:active{
+  transform:scale(.98);
+  transition:transform .1s ease;
+}
+/* 图标更大、带渐变背景 + 阴影 */
 .guide-cta-icon{
-  width:48px;height:48px;border-radius:12px;
+  width:60px;height:60px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;flex-shrink:0;
+  position:relative;
+  transition:transform .3s ease;
+}
+.guide-cta-card[data-tv] .guide-cta-icon{
+  background:linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow:0 6px 20px rgba(59,130,246,.35);
+}
+.guide-cta-card[data-phone] .guide-cta-icon{
+  background:linear-gradient(135deg, #8b5cf6, #7c3aed);
+  box-shadow:0 6px 20px rgba(139,92,246,.35);
+}
+/* 标题更大更粗 */
+.guide-cta-card h4{
+  font-size:1.08rem;font-weight:800;margin-bottom:6px;
+  letter-spacing:-.01em;
+}
+.guide-cta-card p{
+  font-size:.8rem;color:var(--text-secondary);
+  display:flex;align-items:center;gap:6px;
+}
+/* 右侧箭头指示 */
+.guide-cta-arrow{
+  margin-left:auto;flex-shrink:0;
+  width:32px;height:32px;border-radius:50%;
   background:var(--bg-subtle);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;flex-shrink:0;
+  color:var(--text-tertiary);
+  font-size:.85rem;
+  transition:all .3s ease;
+  opacity:.6;
 }
-.guide-cta-card h4{font-size:.9rem;font-weight:700;margin-bottom:3px;}
-.guide-cta-card p{font-size:.75rem;color:var(--text-tertiary);}
 
 /* ══ Download Section ══ */
 .dl-grid{
@@ -681,6 +764,7 @@ html[data-theme="dark"] .usage-tip{
   .guide-cta{grid-template-columns:1fr;}
   .provider-grid{grid-template-columns:1fr;}
   .link-item .copy-btn{opacity:1;}
+  .guide-cta-arrow{display:none;}
 }
 
 /* ══ Responsive — 640px ══ */
@@ -713,6 +797,9 @@ html[data-theme="dark"] .usage-tip{
   .feat-bar{height:30px;}
   .feat-body strong{font-size:.76rem;}
   .feat-body span{font-size:.64rem;}
+  .guide-cta-icon{width:52px;height:52px;font-size:1.4rem;}
+  .guide-cta-card{padding:22px 20px;gap:16px;}
+  .guide-cta-card h4{font-size:1rem;}
 }
 
 /* ══ Responsive — 480px ══ */
@@ -748,6 +835,9 @@ html[data-theme="dark"] .usage-tip{
   .modal-body{padding:18px;}
   .filter-chip{padding:6px 10px;font-size:.7rem;gap:4px;}
   .filter-chip .count{font-size:.6rem;padding:1px 5px;}
+  .guide-cta-icon{width:46px;height:46px;font-size:1.25rem;border-radius:13px;}
+  .guide-cta-card{padding:18px 16px;gap:12px;}
+  .guide-cta-card h4{font-size:.95rem;}
 }
 
 /* ══ Responsive — 380px ══ */
@@ -805,6 +895,16 @@ html[data-theme="dark"] .usage-tip{
   html:not([data-theme]) .mobile-overlay{background:rgba(0,0,0,.65);}
   html:not([data-theme]) .hamburger span{background:#f1f5f9;}
   html:not([data-theme]) .toast{background:#f1f5f9;color:#0f172a;}
+  /* Guide CTA cards - dark mode */
+  html:not([data-theme]) .guide-cta-card{box-shadow:0 4px 16px rgba(59,130,246,.12), 0 1px 3px rgba(0,0,0,.2);}
+  html:not([data-theme]) .guide-cta-card[data-tv]{background:linear-gradient(135deg, rgba(59,130,246,.07), rgba(30,41,59,.8));}
+  html:not([data-theme]) .guide-cta-card[data-phone]{background:linear-gradient(135deg, rgba(139,92,246,.07), rgba(30,41,59,.8));}
+  html:not([data-theme]) .guide-cta-arrow{background:#233044;color:#94a3b8;}
+  @media(hover:hover){
+    html:not([data-theme]) .guide-cta-card:hover{box-shadow:0 16px 40px rgba(59,130,246,.2), 0 4px 12px rgba(0,0,0,.3);}
+    html:not([data-theme]) .guide-cta-card:hover .guide-cta-arrow{background:var(--brand-blue);color:#fff;}
+    html:not([data-theme]) .guide-cta-card[data-phone]:hover .guide-cta-arrow{background:var(--brand-violet);color:#fff;}
+  }
 }
 
 /* Manual dark mode element styles (user explicitly picked dark) */
@@ -836,6 +936,16 @@ html[data-theme="dark"] .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;
 html[data-theme="dark"] .mobile-overlay{background:rgba(0,0,0,.65);}
 html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
 html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
+/* Guide CTA cards - manual dark mode */
+html[data-theme="dark"] .guide-cta-card{box-shadow:0 4px 16px rgba(59,130,246,.12), 0 1px 3px rgba(0,0,0,.2);}
+html[data-theme="dark"] .guide-cta-card[data-tv]{background:linear-gradient(135deg, rgba(59,130,246,.07), rgba(30,41,59,.8));}
+html[data-theme="dark"] .guide-cta-card[data-phone]{background:linear-gradient(135deg, rgba(139,92,246,.07), rgba(30,41,59,.8));}
+html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
+@media(hover:hover){
+  html[data-theme="dark"] .guide-cta-card:hover{box-shadow:0 16px 40px rgba(59,130,246,.2), 0 4px 12px rgba(0,0,0,.3);}
+  html[data-theme="dark"] .guide-cta-card:hover .guide-cta-arrow{background:var(--brand-blue);color:#fff;}
+  html[data-theme="dark"] .guide-cta-card[data-phone]:hover .guide-cta-arrow{background:var(--brand-violet);color:#fff;}
+}
 </style>
 </head>
 <body>
@@ -1108,13 +1218,21 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
     </div>
 
     <div class="guide-cta">
-      <a href="javascript:void(0)" class="guide-cta-card" id="openTvModal">
+      <a href="javascript:void(0)" class="guide-cta-card" id="openTvModal" data-tv>
         <div class="guide-cta-icon">📺</div>
-        <div><h4>电视端 APP 教程</h4><p>步骤图解 · 大屏版</p></div>
+        <div>
+          <h4>电视端 APP 教程</h4>
+          <p>📸 步骤图解 · 大屏版 <span style="color:var(--brand-blue);font-weight:600;">→</span></p>
+        </div>
+        <div class="guide-cta-arrow">›</div>
       </a>
-      <a href="javascript:void(0)" class="guide-cta-card" id="openPhoneModal">
+      <a href="javascript:void(0)" class="guide-cta-card" id="openPhoneModal" data-phone>
         <div class="guide-cta-icon">📱</div>
-        <div><h4>手机端 APP 教程</h4><p>步骤图解 · 手机版</p></div>
+        <div>
+          <h4>手机端 APP 教程</h4>
+          <p>📸 步骤图解 · 手机版 <span style="color:var(--brand-violet);font-weight:600;">→</span></p>
+        </div>
+        <div class="guide-cta-arrow">›</div>
       </a>
     </div>
   </div>
@@ -1257,6 +1375,10 @@ function switchTab(id, delay){
   });
   var heroBtn = document.querySelector('.btn-hero[data-tab="'+id+'"]');
   if(heroBtn){ heroBtn.classList.remove('btn-outline'); heroBtn.classList.add('btn-primary'); }
+  /* 同步移动端导航激活状态 */
+  document.querySelectorAll('.mobile-nav-link').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-tab') === id);
+  });
   var d = (typeof delay === 'number') ? delay : 100;
   setTimeout(function(){
     if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
@@ -1391,8 +1513,6 @@ function toggleTheme(){
     } catch(e){}
   }
 })();
-</script>
-<script>
 /* ══ Keyboard Accessibility ══ */
 // Escape key closes any open modal
 document.addEventListener('keydown', function(e){
