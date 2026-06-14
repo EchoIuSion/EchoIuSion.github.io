@@ -414,6 +414,7 @@ html[data-theme="dark"] .usage-tip{
 .av-amber{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 14px rgba(245,158,11,.3);}
 .av-violet{background:linear-gradient(135deg,#8b5cf6,#7c3aed);box-shadow:0 4px 14px rgba(139,92,246,.3);}
 .av-rose{background:linear-gradient(135deg,#f43f5e,#e11d48);box-shadow:0 4px 14px rgba(244,63,94,.3);}
+.av-teal{background:linear-gradient(135deg,#14b8a6,#0d9488);box-shadow:0 4px 14px rgba(20,184,166,.3);}
 
 .card-provider-name{font-size:.95rem;font-weight:700;}
 .card-provider-meta{
@@ -932,8 +933,8 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
 <!-- ══ Stats ══ -->
 <section class="stats-section">
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-value c1">4</div><div class="stat-label">接口源</div></div>
-    <div class="stat-card"><div class="stat-value c2">15</div><div class="stat-label">接口总数</div></div>
+    <div class="stat-card"><div class="stat-value c1">5</div><div class="stat-label">接口源</div></div>
+    <div class="stat-card"><div class="stat-value c2">18</div><div class="stat-label">接口总数</div></div>
     <div class="stat-card"><div class="stat-value c3">3+</div><div class="stat-label">支持平台</div></div>
     <div class="stat-card"><div class="stat-value c4">实时</div><div class="stat-label">更新频率</div></div>
   </div>
@@ -951,18 +952,19 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
     </div>
 
     <div class="filter-bar" id="filterBar">
-      <button class="filter-chip active" data-category="all">全部<span class="count">15</span></button>
+      <button class="filter-chip active" data-category="all">全部<span class="count">18</span></button>
       <button class="filter-chip" data-category="wang">🐮 王二小<span class="count">5</span></button>
       <button class="filter-chip" data-category="fan">🍙 饭太硬<span class="count">5</span></button>
-      <button class="filter-chip" data-category="fei">🐱 肥猫<span class="count">3</span></button>
+      <button class="filter-chip" data-category="mo">🐟 摸鱼<span class="count">3</span></button>
       <button class="filter-chip" data-category="mi">🍚 小米<span class="count">2</span></button>
+      <button class="filter-chip" data-category="fei">🐱 肥猫<span class="count">3</span></button>
     </div>
 
     <!-- 使用提示 -->
     <div class="usage-tip">
       <div class="usage-tip-icon">💡</div>
       <div class="usage-tip-text">
-        <strong>使用提示：</strong>如<strong>主力线路</strong>接口配置失效，请更换下方<strong>备用接口</strong>，推荐<strong>王二小放牛娃、饭太硬、肥猫、小米每条接口的主力线路都添加到影视软件中使用</strong>，以防资源失效即可切换线路使用。
+        <strong>使用提示：</strong>如<strong>主力线路</strong>接口配置失效，请更换下方<strong>备用接口</strong>，推荐<strong>每条接口的主力线路都添加到影视软件中使用</strong>，以防资源失效即可切换线路使用。
       </div>
     </div>
 
@@ -1004,19 +1006,19 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
         </div>
       </div>
 
-      <!-- 肥猫 -->
-      <div class="provider-card" data-category="fei">
+      <!-- 摸鱼 -->
+      <div class="provider-card" data-category="mo">
         <div class="card-top">
-          <div class="card-avatar av-violet"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="7" ry="5.5" fill="#fff" stroke="none"/><circle cx="12" cy="7" r="4.5" fill="#fff" stroke="none"/><path d="M8 3l1-1.5M16 3l-1-1.5"/><circle cx="10" cy="7" r="1" fill="none"/><circle cx="14" cy="7" r="1" fill="none"/><ellipse cx="12" cy="9" rx="1" ry=".6"/><path d="M5 13q-2 1-2 2.5M19 13q2 1 2 2.5"/><path d="M12 18v3"/><path d="M9 20q-2-1-1-3M15 20q2-1 1-3"/></svg></div>
+          <div class="card-avatar av-teal"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c0 0 3-6 8-6s8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="10" cy="12" r="2.5" fill="#fff" stroke="none"/><path d="M18 10c1.5.5 3 1 4 2-1 1-2.5 1.5-4 2"/><path d="M18 10c0-1 .5-2 1-3M18 14c0 1 .5 2 1 3"/></svg></div>
           <div>
-            <div class="card-provider-name">肥猫</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-violet);"></span>3 个接口可用</div>
+            <div class="card-provider-name">摸鱼</div>
+            <div class="card-provider-meta"><span class="meta-circle" style="background:#14b8a6;"></span>3 个接口可用</div>
           </div>
         </div>
         <div class="card-links">
-          <div class="link-item" data-url="http://肥猫.net/" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://hello.肥猫.net/" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="https://肥猫.net/tv" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://我不是.摸鱼儿.top" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://www.小不点.com" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://6800.kstore.vip/fish.json" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
@@ -1032,6 +1034,22 @@ html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
         <div class="card-links">
           <div class="link-item" data-url="https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
           <div class="link-item" data-url="https://sscq-pay.kingnet.com/static/test.json" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
+        </div>
+      </div>
+
+      <!-- 肥猫 -->
+      <div class="provider-card" data-category="fei">
+        <div class="card-top">
+          <div class="card-avatar av-violet"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="7" ry="5.5" fill="#fff" stroke="none"/><circle cx="12" cy="7" r="4.5" fill="#fff" stroke="none"/><path d="M8 3l1-1.5M16 3l-1-1.5"/><circle cx="10" cy="7" r="1" fill="none"/><circle cx="14" cy="7" r="1" fill="none"/><ellipse cx="12" cy="9" rx="1" ry=".6"/><path d="M5 13q-2 1-2 2.5M19 13q2 1 2 2.5"/><path d="M12 18v3"/><path d="M9 20q-2-1-1-3M15 20q2-1 1-3"/></svg></div>
+          <div>
+            <div class="card-provider-name">肥猫</div>
+            <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-violet);"></span>3 个接口可用</div>
+          </div>
+        </div>
+        <div class="card-links">
+          <div class="link-item" data-url="http://肥猫.net/" onclick="copyUrl(this)"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="http://hello.肥猫.net/" onclick="copyUrl(this)"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
+          <div class="link-item" data-url="https://肥猫.net/tv" onclick="copyUrl(this)"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
         </div>
       </div>
 
