@@ -662,6 +662,48 @@ html[data-theme="dark"] .usage-tip{
   border-radius:var(--radius-sm);
   font-size:.72rem;color:var(--text-secondary);line-height:1.7;
 }
+/* Custom note variants */
+.dl-note-gray{
+  margin-top:0;margin-bottom:12px;
+  background:rgba(107,114,128,.07);
+  border-color:rgba(107,114,128,.18);
+}
+html[data-theme="dark"] .dl-note-gray{
+  background:rgba(148,163,184,.10);
+  border-color:rgba(148,163,184,.22);
+}
+@media(prefers-color-scheme:dark){
+  html:not([data-theme]) .dl-note-gray{
+    background:rgba(148,163,184,.10);
+    border-color:rgba(148,163,184,.22);
+  }
+}
+.dl-note-blue{
+  margin-top:0;margin-bottom:12px;
+  background:rgba(59,130,246,.07);
+  border-color:rgba(59,130,246,.18);
+}
+html[data-theme="dark"] .dl-note-blue{
+  background:rgba(59,130,246,.12);
+  border-color:rgba(59,130,246,.25);
+}
+@media(prefers-color-scheme:dark){
+  html:not([data-theme]) .dl-note-blue{
+    background:rgba(59,130,246,.12);
+    border-color:rgba(59,130,246,.25);
+  }
+}
+/* Recommended badge */
+.badge-hot{
+  display:inline-block;font-size:11px;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;padding:1px 8px;border-radius:10px;
+  vertical-align:middle;margin-left:4px;
+  font-weight:600;letter-spacing:.5px;
+}
+/* dl-link-icon gradient variants */
+.dl-link-icon.av-green{background:linear-gradient(135deg,#10b981,#059669);}
+.dl-link-icon.av-orange{background:linear-gradient(135deg,#f59e0b,#d97706);}
 
 /* ══ Footer ══ */
 .footer{
@@ -838,6 +880,7 @@ html[data-theme="dark"] .usage-tip{
   .guide-cta-icon{width:46px;height:46px;font-size:1.25rem;border-radius:13px;}
   .guide-cta-card{padding:18px 16px;gap:12px;}
   .guide-cta-card h4{font-size:.95rem;}
+  .badge-hot{font-size:10px;padding:1px 6px;border-radius:8px;}
 }
 
 /* ══ Responsive — 380px ══ */
@@ -852,6 +895,7 @@ html[data-theme="dark"] .usage-tip{
   .feat-bar{height:24px;margin-right:8px;}
   .feat-body strong{font-size:.68rem;}
   .feat-body span{font-size:.56rem;}
+  .badge-hot{font-size:9px;padding:0 5px;letter-spacing:0;}
 }
 
 /* ══ Accessibility: Reduced Motion ══ */
@@ -1245,7 +1289,10 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
     <div class="dl-grid">
       <div class="dl-card">
-        <h3>⬇️ 下载渠道</h3>
+        <h3>⬇️ 影视APP下载渠道</h3>
+        <div class="dl-note dl-note-gray">
+          📌 原 影视APP，已暂停维护，不影响正常使用。
+        </div>
         <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="dl-link">
           <div class="dl-link-icon">UC</div>
           <div><h4>UC网盘</h4><p>稳定可靠</p></div>
@@ -1253,6 +1300,21 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
         <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="dl-link">
           <div class="dl-link-icon">迅</div>
           <div><h4>迅雷网盘</h4><p>稳定可靠</p></div>
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <h3>🎬 影视仓APP下载地址 <span class="badge-hot">推荐</span></h3>
+        <div class="dl-note dl-note-blue">
+          💡 好用平替影视软件，操作方法和影视APP一致。
+        </div>
+        <a href="https://wwbqc.lanzouv.com/iZJdq3td57be" target="_blank" rel="noopener noreferrer" class="dl-link">
+          <div class="dl-link-icon av-green">📱</div>
+          <div><h4>移动端下载</h4><p>蓝奏云 · 密码：11</p></div>
+        </a>
+        <a href="https://wwbqc.lanzouv.com/b0018gflcf" target="_blank" rel="noopener noreferrer" class="dl-link">
+          <div class="dl-link-icon av-orange">📺</div>
+          <div><h4>TV端下载</h4><p>蓝奏云 · 密码：11</p></div>
         </a>
       </div>
 
