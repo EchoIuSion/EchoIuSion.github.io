@@ -742,7 +742,12 @@ html[data-theme="dark"] .stepper-tip-inner .tip-divider{color:#fbbf24;opacity:.4
 .compat-table th{font-weight:600;color:var(--text-tertiary);}
 .compat-table td{border-top:1px solid var(--border-subtle);}
 .status-yes{color:var(--brand-emerald);font-weight:600;}
-.status-no{color:var(--text-tertiary);font-weight:500;}
+.status-no{color:#ef4444;font-weight:600;}
+.dl-link-note{font-weight:800;color:#334155;}
+html[data-theme="dark"] .dl-link-note{color:#ffffff;}
+@media(prefers-color-scheme:dark){
+  html:not([data-theme]) .dl-link-note{color:#ffffff;}
+}
 
 .dl-note{
   margin-top:12px;padding:12px 16px;
@@ -1438,11 +1443,11 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
           </div>
           <a href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener noreferrer" class="dl-link">
             <div class="dl-link-icon">UC</div>
-            <div><h4>UC网盘</h4><p style="color:#334155;font-weight:800">下载Pro版本</p></div>
+            <div><h4>UC网盘</h4><p class="dl-link-note">下载Pro版本</p></div>
           </a>
           <a href="https://pan.xunlei.com/s/VOdNIFrnI0RLf8qAs3b5BGUCA1?pwd=ir74" target="_blank" rel="noopener noreferrer" class="dl-link">
             <div class="dl-link-icon">迅</div>
-            <div><h4>迅雷网盘</h4><p style="color:#334155;font-weight:800">下载Pro版本</p></div>
+            <div><h4>迅雷网盘</h4><p class="dl-link-note">下载Pro版本</p></div>
           </a>
         </div>
 
@@ -1453,7 +1458,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
           </div>
           <a href="https://wwbqc.lanzouv.com/b0018gflcf" target="_blank" rel="noopener noreferrer" class="dl-link">
             <div class="dl-link-icon av-orange">📺</div>
-            <div><h4>电视端下载（支持电脑模拟器）</h4><p style="color:#334155;font-weight:800">蓝奏云 · 密码：11</p></div>
+            <div><h4>电视端下载（支持电脑模拟器）</h4><p class="dl-link-note">蓝奏云 · 密码：11</p></div>
           </a>
         </div>
 
