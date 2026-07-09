@@ -281,6 +281,7 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 }
 .stat-card{
   position:relative;
+  --card-accent:var(--brand-blue);
   background:var(--bg-surface);
   border:1px solid var(--border-default);
   border-radius:var(--radius-lg);
@@ -292,7 +293,7 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 .stat-card::before{
   content:"";
   position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg, var(--card-accent, var(--brand-blue)), var(--card-accent, var(--brand-blue)));
+  background:var(--card-accent);
   opacity:.85;
 }
 .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
@@ -303,18 +304,27 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   background:rgba(255,255,255,.06);
   border-radius:10px;
 }
-html[data-theme="light"] .stat-icon,
-html:not([data-theme]) .stat-icon{
+html[data-theme="light"] .stat-icon{
   background:rgba(0,0,0,.04);
+}
+@media(prefers-color-scheme:light){
+  html:not([data-theme]) .stat-icon{
+    background:rgba(0,0,0,.04);
+  }
 }
 .stat-value{
   font-size:2rem;font-weight:800;letter-spacing:-.03em;
   margin-bottom:4px;line-height:1;
 }
-.stat-value.c1{color:var(--brand-blue);--card-accent:var(--brand-blue);}
-.stat-value.c2{color:var(--brand-emerald);--card-accent:var(--brand-emerald);}
-.stat-value.c3{color:var(--brand-violet);--card-accent:var(--brand-violet);}
-.stat-value.c4{color:var(--brand-amber);--card-accent:var(--brand-amber);}
+.stat-value.c1{color:var(--brand-blue);}
+.stat-value.c2{color:var(--brand-emerald);}
+.stat-value.c3{color:var(--brand-violet);}
+.stat-value.c4{color:var(--brand-amber);}
+/* 每张卡片顶部彩条颜色 */
+.stat-card:nth-child(1){--card-accent:var(--brand-blue);}
+.stat-card:nth-child(2){--card-accent:var(--brand-emerald);}
+.stat-card:nth-child(3){--card-accent:var(--brand-violet);}
+.stat-card:nth-child(4){--card-accent:var(--brand-amber);}
 .stat-label{font-size:.78rem;color:var(--text-tertiary);font-weight:600;}
 .live-dot{
   display:inline-block;width:8px;height:8px;border-radius:50%;
@@ -661,13 +671,6 @@ html[data-theme="dark"] .stepper-tip-inner .tip-divider{color:#fbbf24;opacity:.4
   transition:border-color .3s,box-shadow .3s;
 }
 .app-card:hover{border-color:rgba(59,130,246,.3);box-shadow:0 4px 16px rgba(59,130,246,.08);}
-.app-card.highlight{
-  /* 卡片背景与普通卡片一致，仅图标颜色不同 */
-}
-.app-card.highlight:hover{
-  border-color:rgba(59,130,246,.3);
-  box-shadow:0 4px 16px rgba(59,130,246,.08);
-}
 .app-card-header{
   display:flex;align-items:center;gap:10px;
   margin-bottom:16px;padding-bottom:12px;
