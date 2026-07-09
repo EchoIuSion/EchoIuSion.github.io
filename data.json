@@ -60,7 +60,8 @@
       "metaColor": "#f97316",
       "links": [
         { "label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://肥猫.net/tv" }
+        { "label": "☁️ 备用线路2", "url": "http://肥猫.net/tv" },
+        { "label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif" }
       ]
     }
   ]
