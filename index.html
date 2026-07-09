@@ -1636,18 +1636,80 @@ var PROVIDER_ICONS = {
 var _providersData = [];
 var _currentFilter = 'all';
 
-/* 从 data.json 加载并渲染 */
-(function loadData(){
-  fetch('data.json')
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      _providersData = data.providers;
-      renderAll();
-    })
-    .catch(function(err){
-      console.error('加载接口数据失败:', err);
-    });
-})();
+/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
+var SITE_DATA = {
+  "providers": [
+    {
+      "id": "wang",
+      "name": "王二小放牛娃",
+      "emoji": "🐮",
+      "avatarClass": "av-blue",
+      "metaColor": "var(--brand-blue)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://9280.kstore.vip/newwex.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://new.999888987.xyz" },
+        { "label": "☁️ 备用线路3", "url": "http://new.999888123.xyz" },
+        { "label": "☁️ 备用线路4", "url": "http://new.王二小放牛娃.top" },
+        { "label": "☁️ 备用线路5", "url": "http://tvbox.王二小放牛娃.top" }
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "饭太硬",
+      "emoji": "🍙",
+      "avatarClass": "av-amber",
+      "metaColor": "#8b5cf6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://fty.333232.xyz/tv", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://fty.888484.xyz/tv" },
+        { "label": "☁️ 备用线路3", "url": "http://fty.xxooo.cf/tv" },
+        { "label": "☁️ 备用线路4", "url": "http://www.饭太硬.art/tv" },
+        { "label": "☁️ 备用线路5", "url": "http://www.饭太硬.net/tv" }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "摸鱼",
+      "emoji": "🐟",
+      "avatarClass": "av-teal",
+      "metaColor": "#14b8a6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
+        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
+        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "小米",
+      "emoji": "🍚",
+      "avatarClass": "av-rose",
+      "metaColor": "var(--brand-rose)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
+      ]
+    },
+    {
+      "id": "fei",
+      "name": "肥猫",
+      "emoji": "🐱",
+      "avatarClass": "av-violet",
+      "metaColor": "#f97316",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://肥猫.net/tv" },
+        { "label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif" }
+      ]
+    }
+  ]
+};
+/* ====== 接口数据结束 ====== */
+
+/* 直接渲染（同步执行，零延迟零闪烁） */
+_providersData = SITE_DATA.providers;
+renderAll();
 
 /* 渲染全部：统计 + 筛选按钮 + 卡片 */
 function renderAll(){
