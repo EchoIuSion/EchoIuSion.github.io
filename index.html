@@ -1203,8 +1203,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 <!-- ══ Stats ══ -->
 <section class="stats-section">
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-value c1">5</div><div class="stat-label">接口源</div></div>
-    <div class="stat-card"><div class="stat-value c2">18</div><div class="stat-label">接口总数</div></div>
+    <div class="stat-card"><div class="stat-value c1" id="statSources">5</div><div class="stat-label">接口源</div></div>
+    <div class="stat-card"><div class="stat-value c2" id="statTotal">18</div><div class="stat-label">接口总数</div></div>
     <div class="stat-card"><div class="stat-value c3">3+</div><div class="stat-label">支持平台</div></div>
     <div class="stat-card"><div class="stat-value c4">实时</div><div class="stat-label">更新频率</div></div>
   </div>
@@ -1222,12 +1222,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
 
     <div class="filter-bar" id="filterBar">
-      <button class="filter-chip active" data-category="all">全部<span class="count">18</span></button>
-      <button class="filter-chip" data-category="wang">🐮 王二小<span class="count">5</span></button>
-      <button class="filter-chip" data-category="fan">🍙 饭太硬<span class="count">5</span></button>
-      <button class="filter-chip" data-category="mo">🐟 摸鱼<span class="count">4</span></button>
-      <button class="filter-chip" data-category="mi">🍚 小米<span class="count">2</span></button>
-      <button class="filter-chip" data-category="fei">🐱 肥猫<span class="count">2</span></button>
+      <!-- 筛选按钮由 JS 动态生成 -->
     </div>
 
     <!-- 使用提示 -->
@@ -1239,89 +1234,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
 
     <div class="provider-grid" id="providerGrid">
-
-      <!-- 王二小放牛娃 -->
-      <div class="provider-card" data-category="wang">
-        <div class="card-top">
-          <div class="card-avatar av-blue"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><path d="M5 7v6"/><path d="M3 11l2 3M7 11l-2 3"/><path d="M5 8l4 1"/><path d="M9 9q2 2 3 5"/><rect x="13" y="9" width="8" height="5" rx="2.5" fill="#fff" stroke="none"/><circle cx="16" cy="6" r="2.8" fill="#fff" stroke="none"/><path d="M14 4l-1.5-1.5M18 4l1.5-1.5" stroke="#fff" stroke-width="1.8"/><path d="M13 14v3M15 14v3M18 14v3M20 14v3" stroke="#fff" stroke-width="1.5"/><path d="M21 10q1-1 0-2" stroke="#fff" stroke-width="1.5"/></svg></div>
-          <div>
-            <div class="card-provider-name">王二小放牛娃</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-blue);"></span>5 个接口可用</div>
-          </div>
-        </div>
-        <div class="card-links">
-          <div class="link-item" data-url="https://9280.kstore.vip/newwex.json" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://new.999888987.xyz" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://new.999888123.xyz" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://new.王二小放牛娃.top" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">04</span><span class="url">☁️ 备用线路4</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://tvbox.王二小放牛娃.top" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">05</span><span class="url">☁️ 备用线路5</span><button class="copy-btn">复制</button></div>
-        </div>
-      </div>
-
-      <!-- 饭太硬 -->
-      <div class="provider-card" data-category="fan">
-        <div class="card-top">
-          <div class="card-avatar av-amber"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2H4v2Z"/><ellipse cx="12" cy="15" rx="10" ry="4" fill="#fff" stroke="none"/><path d="M2 15q0 2 3 3M22 15q0 2-3 3"/><path d="M9 14v-3q0-1 .5-1.5M12 14v-4q0-1 .5-1M15 14v-3q0-1-.5-1.5"/><path d="M8 8q1-3 4-3t4 3"/></svg></div>
-          <div>
-            <div class="card-provider-name">饭太硬</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:#8b5cf6;"></span>5 个接口可用</div>
-          </div>
-        </div>
-        <div class="card-links">
-          <div class="link-item" data-url="http://fty.333232.xyz/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://fty.888484.xyz/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://fty.xxooo.cf/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://www.饭太硬.art/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">04</span><span class="url">☁️ 备用线路4</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://www.饭太硬.net/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">05</span><span class="url">☁️ 备用线路5</span><button class="copy-btn">复制</button></div>
-        </div>
-      </div>
-
-      <!-- 摸鱼 -->
-      <div class="provider-card" data-category="mo">
-        <div class="card-top">
-          <div class="card-avatar av-teal"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c0 0 3-6 8-6s8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="10" cy="12" r="2.5" fill="#fff" stroke="none"/><path d="M18 10c1.5.5 3 1 4 2-1 1-2.5 1.5-4 2"/><path d="M18 10c0-1 .5-2 1-3M18 14c0 1 .5 2 1 3"/></svg></div>
-          <div>
-            <div class="card-provider-name">摸鱼</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:#14b8a6;"></span>4 个接口可用</div>
-          </div>
-        </div>
-        <div class="card-links">
-          <div class="link-item" data-url="http://摸鱼儿.cc" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://我不是.摸鱼儿.cc" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://我不是.摸鱼儿.top" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">03</span><span class="url">☁️ 备用线路3</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://www.小不点.com" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">04</span><span class="url">☁️ 备用线路4</span><button class="copy-btn">复制</button></div>
-        </div>
-      </div>
-
-      <!-- 小米 -->
-      <div class="provider-card" data-category="mi">
-        <div class="card-top">
-          <div class="card-avatar av-rose"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v16"/><circle cx="10" cy="7" r="2.2" fill="#fff" stroke="none"/><circle cx="14" cy="12" r="2.2" fill="#fff" stroke="none"/><path d="M10 7l3-3M14 12l-3 3"/><circle cx="12" cy="16" r="3.5" fill="#fff" stroke="none"/><path d="M8.5 16l-2-1M15.5 16l2-1"/><circle cx="8" cy="6" r="1.5" fill="#fff" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="#fff" stroke="none"/></svg></div>
-          <div>
-            <div class="card-provider-name">小米</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:var(--brand-rose);"></span>2 个接口可用</div>
-          </div>
-        </div>
-        <div class="card-links">
-          <div class="link-item" data-url="https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="https://sscq-pay.kingnet.com/static/test.json" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-        </div>
-      </div>
-
-      <!-- 肥猫 -->
-      <div class="provider-card" data-category="fei">
-        <div class="card-top">
-          <div class="card-avatar av-violet"><svg viewBox="0 0 24 24" fill="#fff" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l2 7H4l2 5c0 4 2.5 6 6 6s6-2 6-6l2-5h-2l2-7-5 4H9z" fill="#fff" fill-opacity=".9"/><circle cx="9.5" cy="12" r="1.3" fill="#f97316"/><circle cx="14.5" cy="12" r="1.3" fill="#f97316"/><ellipse cx="12" cy="14" rx="1.2" ry=".8" fill="#f97316"/><path d="M7 14l-3 1" stroke-width=".8"/><path d="M7 15l-2.5 1.5" stroke-width=".8"/><path d="M17 14l3 1" stroke-width=".8"/><path d="M17 15l2.5 1.5" stroke-width=".8"/></svg></div>
-          <div>
-            <div class="card-provider-name">肥猫</div>
-            <div class="card-provider-meta"><span class="meta-circle" style="background:#f97316;"></span>2 个接口可用</div>
-          </div>
-        </div>
-        <div class="card-links">
-          <div class="link-item" data-url="http://肥猫.net/" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">01</span><span class="url">🚀 主力线路</span><span class="badge-rec">推荐</span><button class="copy-btn">复制</button></div>
-          <div class="link-item" data-url="http://肥猫.net/tv" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">02</span><span class="url">☁️ 备用线路2</span><button class="copy-btn">复制</button></div>
-        </div>
-      </div>
+      <!-- 接口卡片由 JS 动态渲染 -->
     </div>
   </div>
 
@@ -1710,21 +1623,100 @@ function showToast(){
   _toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2400);
 }
 
-/* ══ Category Filter ══ */
-document.querySelectorAll('.filter-chip').forEach(function(chip){
-  chip.addEventListener('click', function(){
-    var category = chip.dataset.category;
-    document.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
-    chip.classList.add('active');
-    document.querySelectorAll('.provider-card').forEach(function(card){
-      if(category === 'all' || card.dataset.category === category){
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+/* ══ Data-driven Rendering ══ */
+/* SVG 图标定义，按 provider id 映射 */
+var PROVIDER_ICONS = {
+  wang: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><path d="M5 7v6"/><path d="M3 11l2 3M7 11l-2 3"/><path d="M5 8l4 1"/><path d="M9 9q2 2 3 5"/><rect x="13" y="9" width="8" height="5" rx="2.5" fill="#fff" stroke="none"/><circle cx="16" cy="6" r="2.8" fill="#fff" stroke="none"/><path d="M14 4l-1.5-1.5M18 4l1.5-1.5" stroke="#fff" stroke-width="1.8"/><path d="M13 14v3M15 14v3M18 14v3M20 14v3" stroke="#fff" stroke-width="1.5"/><path d="M21 10q1-1 0-2" stroke="#fff" stroke-width="1.5"/></svg>',
+  fan: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2H4v2Z"/><ellipse cx="12" cy="15" rx="10" ry="4" fill="#fff" stroke="none"/><path d="M2 15q0 2 3 3M22 15q0 2-3 3"/><path d="M9 14v-3q0-1 .5-1.5M12 14v-4q0-1 .5-1M15 14v-3q0-1-.5-1.5"/><path d="M8 8q1-3 4-3t4 3"/></svg>',
+  mo: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c0 0 3-6 8-6s8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="10" cy="12" r="2.5" fill="#fff" stroke="none"/><path d="M18 10c1.5.5 3 1 4 2-1 1-2.5 1.5-4 2"/><path d="M18 10c0-1 .5-2 1-3M18 14c0 1 .5 2 1 3"/></svg>',
+  mi: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v16"/><circle cx="10" cy="7" r="2.2" fill="#fff" stroke="none"/><circle cx="14" cy="12" r="2.2" fill="#fff" stroke="none"/><path d="M10 7l3-3M14 12l-3 3"/><circle cx="12" cy="16" r="3.5" fill="#fff" stroke="none"/><path d="M8.5 16l-2-1M15.5 16l2-1"/><circle cx="8" cy="6" r="1.5" fill="#fff" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="#fff" stroke="none"/></svg>',
+  fei: '<svg viewBox="0 0 24 24" fill="#fff" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l2 7H4l2 5c0 4 2.5 6 6 6s6-2 6-6l2-5h-2l2-7-5 4H9z" fill="#fff" fill-opacity=".9"/><circle cx="9.5" cy="12" r="1.3" fill="#f97316"/><circle cx="14.5" cy="12" r="1.3" fill="#f97316"/><ellipse cx="12" cy="14" rx="1.2" ry=".8" fill="#f97316"/><path d="M7 14l-3 1" stroke-width=".8"/><path d="M7 15l-2.5 1.5" stroke-width=".8"/><path d="M17 14l3 1" stroke-width=".8"/><path d="M17 15l2.5 1.5" stroke-width=".8"/></svg>'
+};
+
+var _providersData = [];
+var _currentFilter = 'all';
+
+/* 从 data.json 加载并渲染 */
+(function loadData(){
+  fetch('data.json')
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      _providersData = data.providers;
+      renderAll();
+    })
+    .catch(function(err){
+      console.error('加载接口数据失败:', err);
+    });
+})();
+
+/* 渲染全部：统计 + 筛选按钮 + 卡片 */
+function renderAll(){
+  renderStats();
+  renderFilterBar();
+  renderCards(_currentFilter);
+}
+
+/* 更新统计数字 */
+function renderStats(){
+  var totalLinks = 0;
+  _providersData.forEach(function(p){ totalLinks += p.links.length; });
+  var elSources = document.getElementById('statSources');
+  var elTotal = document.getElementById('statTotal');
+  if(elSources) elSources.textContent = _providersData.length;
+  if(elTotal) elTotal.textContent = totalLinks;
+}
+
+/* 渲染筛选按钮 */
+function renderFilterBar(){
+  var bar = document.getElementById('filterBar');
+  if(!bar) return;
+  var totalLinks = 0;
+  _providersData.forEach(function(p){ totalLinks += p.links.length; });
+  var html = '<button class="filter-chip active" data-category="all">全部<span class="count">' + totalLinks + '</span></button>';
+  _providersData.forEach(function(p){
+    html += '<button class="filter-chip" data-category="' + p.id + '">' + p.emoji + ' ' + p.name + '<span class="count">' + p.links.length + '</span></button>';
+  });
+  bar.innerHTML = html;
+  /* 绑定筛选事件 */
+  bar.querySelectorAll('.filter-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      bar.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      _currentFilter = chip.dataset.category;
+      renderCards(_currentFilter);
     });
   });
-});
+}
+
+/* 渲染接口卡片 */
+function renderCards(filter){
+  var grid = document.getElementById('providerGrid');
+  if(!grid) return;
+  /* 先移除旧卡片 */
+  grid.querySelectorAll('.provider-card').forEach(function(c){ c.remove(); });
+  _providersData.forEach(function(provider){
+    if(filter !== 'all' && provider.id !== filter) return;
+    var card = document.createElement('div');
+    card.className = 'provider-card';
+    card.setAttribute('data-category', provider.id);
+    var iconSvg = PROVIDER_ICONS[provider.id] || '';
+    var linksHtml = '';
+    provider.links.forEach(function(link, idx){
+      var num = String(idx + 1).padStart(2, '0');
+      var recTag = link.recommended ? '<span class="badge-rec">推荐</span>' : '';
+      linksHtml += '<div class="link-item" data-url="' + link.url.replace(/"/g, '&quot;') + '" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">' + num + '</span><span class="url">' + link.label + '</span>' + recTag + '<button class="copy-btn">复制</button></div>';
+    });
+    card.innerHTML = '<div class="card-top">' +
+      '<div class="card-avatar ' + provider.avatarClass + '">' + iconSvg + '</div>' +
+      '<div>' +
+        '<div class="card-provider-name">' + provider.name + '</div>' +
+        '<div class="card-provider-meta"><span class="meta-circle" style="background:' + provider.metaColor + ';"></span>' + provider.links.length + ' 个接口可用</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="card-links">' + linksHtml + '</div>';
+    grid.appendChild(card);
+  });
+}
 
 /* ══ Guide Modals ══ */
 var tvModal = document.getElementById('tvModal');
