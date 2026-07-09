@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>劉Okの导航站</title>
 <link rel="icon" href="favicon.jpg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,8 @@ body{
   line-height:1.6;
   transition:background .3s, color .3s;
   overflow-x:hidden;
+  padding-left:env(safe-area-inset-left,0);
+  padding-right:env(safe-area-inset-right,0);
 }
 
 /* ══ Navbar ══ */
@@ -278,23 +280,54 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
 }
 .stat-card{
+  position:relative;
   background:var(--bg-surface);
   border:1px solid var(--border-default);
   border-radius:var(--radius-lg);
   padding:24px;text-align:center;
   box-shadow:var(--shadow-sm);
   transition:all .3s;
+  overflow:hidden;
+}
+.stat-card::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg, var(--card-accent, var(--brand-blue)), var(--card-accent, var(--brand-blue)));
+  opacity:.85;
 }
 .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.stat-icon{
+  width:32px;height:32px;margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;
+  background:rgba(255,255,255,.06);
+  border-radius:10px;
+}
+html[data-theme="light"] .stat-icon,
+html:not([data-theme]) .stat-icon{
+  background:rgba(0,0,0,.04);
+}
 .stat-value{
   font-size:2rem;font-weight:800;letter-spacing:-.03em;
-  margin-bottom:4px;
+  margin-bottom:4px;line-height:1;
 }
-.stat-value.c1{color:var(--brand-blue);}
-.stat-value.c2{color:var(--brand-emerald);}
-.stat-value.c3{color:var(--brand-violet);}
-.stat-value.c4{color:var(--brand-amber);}
+.stat-value.c1{color:var(--brand-blue);--card-accent:var(--brand-blue);}
+.stat-value.c2{color:var(--brand-emerald);--card-accent:var(--brand-emerald);}
+.stat-value.c3{color:var(--brand-violet);--card-accent:var(--brand-violet);}
+.stat-value.c4{color:var(--brand-amber);--card-accent:var(--brand-amber);}
 .stat-label{font-size:.78rem;color:var(--text-tertiary);font-weight:600;}
+.live-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--brand-emerald);margin-left:6px;
+  box-shadow:0 0 0 0 rgba(16,185,129,.5);
+  animation:pulse-dot 1.8s infinite;
+  vertical-align:middle;
+}
+@keyframes pulse-dot{
+  0%{box-shadow:0 0 0 0 rgba(16,185,129,.5);transform:scale(1);}
+  70%{box-shadow:0 0 0 8px rgba(16,185,129,0);transform:scale(1.15);}
+  100%{box-shadow:0 0 0 0 rgba(16,185,129,0);transform:scale(1);}
+}
 
 /* ══ Content Area ══ */
 .content-wrap{max-width:1240px;margin:0 auto;padding:0 24px 100px;}
@@ -967,6 +1000,7 @@ html[data-theme="dark"] .dl-note-blue{
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .stat-card{padding:16px;}
   .stat-value{font-size:1.5rem;}
+  .stat-icon{width:28px;height:28px;font-size:1.15rem;margin-bottom:8px;}
   .card-top{padding:16px 16px 12px;gap:10px;}
   .card-avatar{width:36px;height:36px;}
   .card-avatar svg{width:20px;height:20px;}
@@ -1001,6 +1035,7 @@ html[data-theme="dark"] .dl-note-blue{
   .stats-grid{grid-template-columns:1fr 1fr;gap:8px;}
   .stat-card{padding:14px;}
   .stat-value{font-size:1.3rem;}
+  .stat-icon{width:24px;height:24px;font-size:1rem;margin-bottom:6px;}
   .stat-label{font-size:.68rem;}
   .link-item{flex-wrap:wrap;padding:8px;gap:6px;}
   .link-item .idx{width:22px;height:22px;font-size:.6rem;}
@@ -1029,6 +1064,7 @@ html[data-theme="dark"] .dl-note-blue{
   .stats-grid{grid-template-columns:1fr 1fr;gap:6px;}
   .stat-card{padding:10px 8px;}
   .stat-value{font-size:1.2rem;}
+  .stat-icon{width:22px;height:22px;font-size:.9rem;margin-bottom:4px;}
   .stat-label{font-size:.62rem;}
   .hero-text h1{font-size:1.4rem;}
   .mobile-drawer{width:75%;max-width:260px;}
@@ -1039,6 +1075,33 @@ html[data-theme="dark"] .dl-note-blue{
   .badge-hot{font-size:9px;padding:0 5px;letter-spacing:0;}
   /* 极小屏强制单列，防止 minmax(340px) 溢出 */
   .provider-grid,.dl-grid{grid-template-columns:1fr;}
+}
+
+/* ══ Responsive — 极小屏 340px（双折叠折叠态） ══ */
+@media(max-width:340px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:4px;}
+  .stat-card{padding:8px 6px;}
+  .stat-value{font-size:1.05rem;}
+  .stat-icon{width:20px;height:20px;font-size:.82rem;margin-bottom:3px;}
+  .stat-label{font-size:.58rem;}
+  .hero-text h1{font-size:1.3rem;}
+}
+
+/* ══ Responsive — 横屏手机 860~1100px（iPhone Pro Max 横屏等） ══ */
+@media(min-width:861px) and (max-width:1100px) and (orientation:landscape) and (max-height:500px){
+  .stats-grid{grid-template-columns:repeat(4,1fr);gap:12px;}
+  .stat-card{padding:14px 12px;}
+  .stat-value{font-size:1.4rem;}
+  .stat-icon{width:26px;height:26px;font-size:1.1rem;margin-bottom:6px;}
+}
+
+/* ══ Responsive — 超宽屏 1600px+（三折叠全展开/4K显示器） ══ */
+@media(min-width:1600px){
+  .stats-grid{gap:24px;}
+  .stat-card{padding:32px;}
+  .stat-value{font-size:2.4rem;}
+  .stat-icon{width:40px;height:40px;font-size:1.6rem;margin-bottom:14px;}
+  .stat-label{font-size:.88rem;}
 }
 
 /* ══ Accessibility: Reduced Motion ══ */
@@ -1220,10 +1283,26 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 <!-- ══ Stats ══ -->
 <section class="stats-section">
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-value c1" id="statSources">—</div><div class="stat-label">接口源</div></div>
-    <div class="stat-card"><div class="stat-value c2" id="statTotal">—</div><div class="stat-label">接口总数</div></div>
-    <div class="stat-card"><div class="stat-value c3">4</div><div class="stat-label">支持平台</div></div>
-    <div class="stat-card"><div class="stat-value c4">实时</div><div class="stat-label">更新频率</div></div>
+    <div class="stat-card">
+      <div class="stat-icon">📡</div>
+      <div class="stat-value c1" id="statSources">—</div>
+      <div class="stat-label">接口源</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔗</div>
+      <div class="stat-value c2" id="statTotal">—</div>
+      <div class="stat-label">接口总数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📺</div>
+      <div class="stat-value c3">3+</div>
+      <div class="stat-label">支持平台</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-value c4">实时<span class="live-dot"></span></div>
+      <div class="stat-label">更新频率</div>
+    </div>
   </div>
 </section>
 
@@ -1402,7 +1481,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
       </div>
 
       <div class="dl-note dl-note-warning" style="margin-top:20px;">
-        电视机通常为 32 位系统，Windows电脑通常为 64 位系统，请对应版本进行安装。Windows（电脑）版本需下载模拟器（雷电模拟器、mumu模拟器）使用。
+        电视机通常为 32 位系统，请选择对应版本安装。Windows（电脑）版本需下载模拟器（雷电模拟器、mumu模拟器），下载链接pro版内的模拟器版本导入电脑模拟器即可。
       </div>
     </div>
   </div>
@@ -1728,8 +1807,20 @@ function renderStats(){
   _providersData.forEach(function(p){ totalLinks += p.links.length; });
   var elSources = document.getElementById('statSources');
   var elTotal = document.getElementById('statTotal');
-  if(elSources) elSources.textContent = _providersData.length;
-  if(elTotal) elTotal.textContent = totalLinks;
+  if(elSources) animateNumber(elSources, _providersData.length);
+  if(elTotal) animateNumber(elTotal, totalLinks);
+}
+function animateNumber(el, target){
+  var duration = 600;
+  var start = performance.now();
+  var from = parseInt(el.textContent, 10) || 0;
+  function step(now){
+    var p = Math.min((now - start) / duration, 1);
+    var val = Math.round(from + (target - from) * p);
+    el.textContent = val;
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 /* 渲染筛选按钮 */
