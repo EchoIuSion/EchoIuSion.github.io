@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>劉Okの导航站</title>
+<link rel="icon" href="favicon.jpg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- 提前建立与 GitHub Pages 图片 CDN 的连接，省掉 DNS + TLS 握手延迟 -->
@@ -109,7 +110,7 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.nav-logo-dot svg{width:20px;height:20px;display:block;}
+.nav-logo-dot img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;}
 .nav-links{display:flex;gap:4px;}
 .nav-link{
   padding:8px 18px;border-radius:50px;
@@ -628,12 +629,11 @@ html[data-theme="dark"] .stepper-tip-inner .tip-divider{color:#fbbf24;opacity:.4
 }
 .app-card:hover{border-color:rgba(59,130,246,.3);box-shadow:0 4px 16px rgba(59,130,246,.08);}
 .app-card.highlight{
-  border-color:rgba(244,63,94,.25);
-  background:linear-gradient(135deg,rgba(244,63,94,.03),rgba(245,158,11,.02));
+  /* 卡片背景与普通卡片一致，仅图标颜色不同 */
 }
 .app-card.highlight:hover{
-  border-color:rgba(244,63,94,.4);
-  box-shadow:0 4px 16px rgba(244,63,94,.12);
+  border-color:rgba(59,130,246,.3);
+  box-shadow:0 4px 16px rgba(59,130,246,.08);
 }
 .app-card-header{
   display:flex;align-items:center;gap:10px;
@@ -1108,24 +1108,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
   <div class="navbar-inner">
     <div class="nav-logo">
       <div class="nav-logo-dot">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Central hub node -->
-          <circle cx="12" cy="12" r="2.6" fill="white"/>
-          <!-- Primary cardinal connections -->
-          <path d="M12 9.4V5.2M12 14.6V18.8M9.4 12H5.2M14.6 12H18.8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- Primary outer nodes -->
-          <circle cx="12" cy="5.2" r="1.7" fill="white"/>
-          <circle cx="12" cy="18.8" r="1.7" fill="white"/>
-          <circle cx="5.2" cy="12" r="1.7" fill="white"/>
-          <circle cx="18.8" cy="12" r="1.7" fill="white"/>
-          <!-- Secondary diagonal connections -->
-          <path d="M10.1 10.1L7 7M13.9 10.1L17 7M10.1 13.9L7 17M13.9 13.9L17 17" stroke="white" stroke-width="1.05" stroke-linecap="round" opacity="0.5"/>
-          <!-- Secondary outer nodes -->
-          <circle cx="7" cy="7" r="1.15" fill="white" opacity="0.8"/>
-          <circle cx="17" cy="7" r="1.15" fill="white" opacity="0.8"/>
-          <circle cx="7" cy="17" r="1.15" fill="white" opacity="0.8"/>
-          <circle cx="17" cy="17" r="1.15" fill="white" opacity="0.8"/>
-        </svg>
+        <img src="favicon.jpg" alt="logo">
       </div>
       <span>劉Okの导航站</span>
     </div>
@@ -1636,18 +1619,80 @@ var PROVIDER_ICONS = {
 var _providersData = [];
 var _currentFilter = 'all';
 
-/* 从 data.json 加载并渲染 */
-(function loadData(){
-  fetch('data.json')
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      _providersData = data.providers;
-      renderAll();
-    })
-    .catch(function(err){
-      console.error('加载接口数据失败:', err);
-    });
-})();
+/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
+var SITE_DATA = {
+  "providers": [
+    {
+      "id": "wang",
+      "name": "王二小放牛娃",
+      "emoji": "🐮",
+      "avatarClass": "av-blue",
+      "metaColor": "var(--brand-blue)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://9280.kstore.vip/newwex.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://new.999888987.xyz" },
+        { "label": "☁️ 备用线路3", "url": "http://new.999888123.xyz" },
+        { "label": "☁️ 备用线路4", "url": "http://new.王二小放牛娃.top" },
+        { "label": "☁️ 备用线路5", "url": "http://tvbox.王二小放牛娃.top" }
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "饭太硬",
+      "emoji": "🍙",
+      "avatarClass": "av-amber",
+      "metaColor": "#8b5cf6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://fty.333232.xyz/tv", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://fty.888484.xyz/tv" },
+        { "label": "☁️ 备用线路3", "url": "http://fty.xxooo.cf/tv" },
+        { "label": "☁️ 备用线路4", "url": "http://www.饭太硬.art/tv" },
+        { "label": "☁️ 备用线路5", "url": "http://www.饭太硬.net/tv" }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "摸鱼",
+      "emoji": "🐟",
+      "avatarClass": "av-teal",
+      "metaColor": "#14b8a6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
+        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
+        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "小米",
+      "emoji": "🍚",
+      "avatarClass": "av-rose",
+      "metaColor": "var(--brand-rose)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
+      ]
+    },
+    {
+      "id": "fei",
+      "name": "肥猫",
+      "emoji": "🐱",
+      "avatarClass": "av-violet",
+      "metaColor": "#f97316",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://肥猫.net/tv" },
+        { "label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif" }
+      ]
+    }
+  ]
+};
+/* ====== 接口数据结束 ====== */
+
+/* 直接渲染（同步执行，零延迟零闪烁） */
+_providersData = SITE_DATA.providers;
+renderAll();
 
 /* 渲染全部：统计 + 筛选按钮 + 卡片 */
 function renderAll(){
