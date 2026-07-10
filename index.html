@@ -807,15 +807,21 @@ html[data-theme="dark"] .dl-note{
 }
 .dl-note-warning{
   display:flex;align-items:flex-start;gap:10px;
-  padding:14px 18px;
-  background:rgba(245,158,11,.12);
-  border:1px solid rgba(245,158,11,.35);
-  border-left:4px solid #f59e0b;
+  padding:14px 20px 14px 22px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border:1px solid rgba(245,158,11,.22);
   font-size:.78rem;
   line-height:1.7;
-  font-weight:500;
+  font-weight:600;
   color:#92400e;
-  box-shadow:0 4px 12px rgba(245,158,11,.10);
+  position:relative;
+  overflow:hidden;
+}
+.dl-note-warning::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--brand-amber),var(--brand-rose));
+  border-radius:2px 0 0 2px;
 }
 .dl-note-warning::before{
   content:"⚠️";
@@ -827,15 +833,15 @@ html[data-theme="dark"] .dl-note{
   height:calc(.78rem * 1.7);
 }
 html[data-theme="dark"] .dl-note-warning{
-  background:rgba(245,158,11,.18);
-  border-color:rgba(245,158,11,.45);
-  color:#fbbf24;
+  background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(234,88,12,.1));
+  border-color:rgba(245,158,11,.28);
+  color:#fcd34d;
 }
 @media(prefers-color-scheme:dark){
   html:not([data-theme]) .dl-note-warning{
-    background:rgba(245,158,11,.18);
-    border-color:rgba(245,158,11,.45);
-    color:#fbbf24;
+    background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(234,88,12,.1));
+    border-color:rgba(245,158,11,.28);
+    color:#fcd34d;
   }
 }
 /* Custom note variants */
@@ -1443,6 +1449,9 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
     <!-- ── 子面板：软件下载 ── -->
     <div class="sub-panel" id="panel-download">
+      <div class="dl-note dl-note-warning" style="margin-bottom:20px;">
+        电视机通常为 32 位系统，Windows（电脑）为 64 位系统，需下载模拟器（雷电模拟器、mumu模拟器）影视仓、OK影视均支持电视以及电脑模拟器。
+      </div>
       <div class="dl-grid">
         <div class="dl-card">
           <h3>⬇️ OK影视APP下载地址</h3>
@@ -1481,10 +1490,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
           </table>
           </div>
         </div>
-      </div>
-
-      <div class="dl-note dl-note-warning" style="margin-top:20px;">
-        电视机通常为 32 位系统，Windows（电脑）为 64 位系统，需下载模拟器（雷电模拟器、mumu模拟器）影视仓、OK影视均支持电视以及电脑模拟器。
       </div>
     </div>
   </div>
