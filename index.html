@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"/>
@@ -734,6 +734,22 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   transition:background .2s;
 }
 .lightbox-close:hover{background:rgba(255,255,255,.3);}
+.lightbox-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:48px;height:48px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.12);
+  color:#fff;font-size:1.4rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:10;
+}
+.lightbox-arrow:hover{background:rgba(255,255,255,.25);}
+.lightbox-arrow.prev{left:20px;}
+.lightbox-arrow.next{right:20px;}
+@media(max-width:640px){
+  .lightbox-arrow{width:40px;height:40px;font-size:1.2rem;}
+  .lightbox-arrow.prev{left:8px;}
+  .lightbox-arrow.next{right:8px;}
+}
 
 /* ══ Guide Cards ══ */
 /* ══ Stepper Flow — 横向流程条 ══ */
@@ -1708,6 +1724,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 <!-- Image Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-arrow prev" onclick="lightboxPrev()" aria-label="上一张">‹</button>
+  <button class="lightbox-arrow next" onclick="lightboxNext()" aria-label="下一张">›</button>
   <img id="lightboxImg" src="" alt="预览大图">
 </div>
 
@@ -2267,6 +2285,12 @@ function goToSlide(idx){
 
 /* 键盘左右键切换（仅当图床壁纸区域可见时） */
 document.addEventListener('keydown', function(e){
+  var lb = document.getElementById('lightbox');
+  if(lb && lb.classList.contains('open')){
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); lightboxPrev(); return; }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); lightboxNext(); return; }
+    return;
+  }
   var othersSection = document.getElementById('others');
   if(!othersSection || !othersSection.classList.contains('active')) return;
   if(e.key === 'ArrowLeft') prevSlide();
@@ -2317,18 +2341,34 @@ function fallbackCopyGallery(url, ok){
 }
 
 /* 图片放大预览 */
+var _lightboxIndex = -1;
 function openLightbox(url){
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lightboxImg');
   if(lb && img){
     img.src = url;
     lb.classList.add('open');
+    var idx = _carouselData.findIndex(function(item){ return item.url === url; });
+    _lightboxIndex = idx >= 0 ? idx : -1;
   }
 }
 function closeLightbox(e){
-  if(e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('lightbox-close')) return;
+  if(e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('lightbox-close') && !e.target.classList.contains('lightbox-arrow')) return;
   var lb = document.getElementById('lightbox');
   if(lb) lb.classList.remove('open');
+  _lightboxIndex = -1;
+}
+function lightboxPrev(){
+  if(_lightboxIndex < 0 || _carouselData.length === 0) return;
+  _lightboxIndex = (_lightboxIndex - 1 + _carouselData.length) % _carouselData.length;
+  var img = document.getElementById('lightboxImg');
+  if(img) img.src = _carouselData[_lightboxIndex].url;
+}
+function lightboxNext(){
+  if(_lightboxIndex < 0 || _carouselData.length === 0) return;
+  _lightboxIndex = (_lightboxIndex + 1) % _carouselData.length;
+  var img = document.getElementById('lightboxImg');
+  if(img) img.src = _carouselData[_lightboxIndex].url;
 }
 
 /* 初始化轮播图 */
