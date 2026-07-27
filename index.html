@@ -535,6 +535,206 @@ html[data-theme="dark"] .usage-tip{
 .copy-btn:hover{background:var(--text-primary);color:#fff;border-color:var(--text-primary);}
 .copy-btn.done{background:var(--brand-emerald);color:#fff;border-color:var(--brand-emerald);}
 
+/* ══ Others: Image Gallery (Carousel) ══ */
+.gallery-carousel{
+  position:relative;
+  max-width:640px;margin:0 auto;
+}
+.carousel-stage{
+  position:relative;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.carousel-viewport{
+  overflow:hidden;
+}
+.carousel-track{
+  display:flex;
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+}
+.carousel-slide{
+  flex:0 0 100%;
+  display:flex;flex-direction:column;
+}
+.carousel-img-wrap{
+  position:relative;
+  aspect-ratio:16/9;
+  background:var(--bg-subtle);
+  overflow:hidden;
+  cursor:pointer;
+}
+.carousel-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+}
+.carousel-img-wrap .img-fallback{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;color:var(--text-tertiary);
+}
+.carousel-img-wrap .img-zoom-hint{
+  position:absolute;top:12px;right:12px;
+  background:rgba(0,0,0,.55);color:#fff;
+  font-size:.65rem;font-weight:600;
+  padding:4px 10px;border-radius:50px;
+  opacity:0;transition:opacity .2s;
+  backdrop-filter:blur(4px);
+}
+.carousel-img-wrap:hover .img-zoom-hint{opacity:1;}
+.carousel-info{
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.carousel-info-left{
+  flex:1;min-width:0;
+}
+.carousel-title{
+  font-size:.85rem;font-weight:700;color:var(--text-primary);
+  line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.carousel-url{
+  font-size:.66rem;color:var(--text-tertiary);
+  font-family:monospace;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-top:2px;
+}
+.carousel-actions{
+  display:flex;gap:6px;flex-shrink:0;
+}
+.gallery-btn{
+  padding:7px 14px;border-radius:50px;
+  border:1px solid var(--border-default);
+  background:var(--bg-surface);font-family:var(--font);
+  font-size:.68rem;font-weight:600;color:var(--text-secondary);
+  cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:4px;
+  white-space:nowrap;
+}
+.gallery-btn:hover{background:var(--text-primary);color:#fff;border-color:var(--text-primary);}
+.gallery-btn.done{background:var(--brand-emerald);color:#fff;border-color:var(--brand-emerald);}
+html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .gallery-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
+}
+/* 左右箭头（内嵌图片内部） */
+.carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;
+  border:none;background:rgba(0,0,0,.22);
+  color:#fff;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:all .25s;z-index:5;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.carousel-stage:hover .carousel-arrow{opacity:1;}
+.carousel-arrow:hover{background:rgba(0,0,0,.45);}
+.carousel-arrow.prev{left:12px;}
+.carousel-arrow.next{right:12px;}
+/* 触摸设备始终显示 */
+@media(hover:none){
+  .carousel-arrow{opacity:.85;}
+}
+/* 指示点 */
+.carousel-dots{
+  display:flex;justify-content:center;gap:7px;
+  margin-top:16px;flex-wrap:wrap;
+}
+.carousel-dot{
+  width:8px;height:8px;border-radius:50%;
+  border:none;background:var(--border-default);
+  cursor:pointer;transition:all .2s;padding:0;
+}
+.carousel-dot:hover{background:var(--text-tertiary);}
+.carousel-dot.active{
+  background:var(--brand-blue);
+  width:22px;border-radius:4px;
+}
+/* 计数器 */
+.carousel-counter{
+  text-align:center;
+  font-size:.72rem;color:var(--text-tertiary);
+  font-weight:600;margin-top:10px;
+}
+/* 缩略图导航条 */
+.carousel-thumbs{
+  display:flex;gap:6px;
+  overflow-x:auto;
+  padding:12px 4px 4px;
+  margin-top:4px;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+.carousel-thumbs::-webkit-scrollbar{height:5px;}
+.carousel-thumbs::-webkit-scrollbar-track{background:var(--bg-subtle);border-radius:3px;}
+.carousel-thumbs::-webkit-scrollbar-thumb{background:var(--border-default);border-radius:3px;}
+.carousel-thumbs::-webkit-scrollbar-thumb:hover{background:var(--text-tertiary);}
+.carousel-thumb-item{
+  width:56px;height:40px;
+  border-radius:6px;overflow:hidden;
+  flex-shrink:0;cursor:pointer;
+  border:2px solid transparent;
+  background:var(--bg-subtle);
+  position:relative;
+  transition:all .2s;
+}
+.carousel-thumb-item img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.carousel-thumb-item .thumb-ph{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:var(--text-tertiary);
+}
+.carousel-thumb-item:hover{
+  border-color:var(--text-tertiary);
+  transform:translateY(-2px);
+}
+.carousel-thumb-item.active{
+  border-color:var(--brand-blue);
+  box-shadow:0 2px 8px rgba(59,130,246,.35);
+}
+@media(max-width:560px){
+  .carousel-thumb-item{width:48px;height:34px;}
+}
+@media(max-width:560px){
+  .carousel-arrow.prev{left:4px;}
+  .carousel-arrow.next{right:4px;}
+  .carousel-arrow{width:34px;height:34px;font-size:1rem;}
+  .carousel-info{padding:10px 14px;flex-direction:column;align-items:flex-start;gap:8px;}
+  .carousel-actions{width:100%;}
+  .gallery-btn{flex:1;justify-content:center;}
+}
+
+/* ══ Image Lightbox ══ */
+.lightbox{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.92);
+  display:flex;align-items:center;justify-content:center;
+  padding:40px;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.lightbox.open{opacity:1;pointer-events:auto;}
+.lightbox img{
+  max-width:90vw;max-height:85vh;
+  border-radius:var(--radius-md);
+  box-shadow:0 24px 80px rgba(0,0,0,.5);
+}
+.lightbox-close{
+  position:absolute;top:20px;right:24px;
+  width:42px;height:42px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.15);
+  color:#fff;font-size:1.3rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.lightbox-close:hover{background:rgba(255,255,255,.3);}
+
 /* ══ Guide Cards ══ */
 /* ══ Stepper Flow — 横向流程条 ══ */
 .stepper-wrap{
@@ -1221,6 +1421,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     <div class="nav-links" id="navLinks">
       <button class="nav-link active" data-tab="interfaces" onclick="switchTab('interfaces')">接口</button>
       <button class="nav-link" data-tab="guide-download" onclick="switchTab('guide-download')">教程与下载</button>
+      <button class="nav-link" data-tab="others" onclick="switchTab('others')">图床壁纸</button>
     </div>
     <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="菜单">
       <span></span><span></span><span></span>
@@ -1234,6 +1435,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 <div class="mobile-drawer" id="mobileDrawer">
   <button class="mobile-nav-link active" data-tab="interfaces" onclick="mobileSwitch('interfaces',this)">📡 浏览接口</button>
   <button class="mobile-nav-link" data-tab="guide-download" onclick="mobileSwitch('guide-download',this)">📖 教程与下载</button>
+  <button class="mobile-nav-link" data-tab="others" onclick="mobileSwitch('others',this)">🖼️ 图床壁纸</button>
 </div>
 
 <!-- ══ Hero ══ -->
@@ -1247,6 +1449,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     <div class="hero-actions">
       <button class="btn btn-primary btn-hero" data-tab="interfaces" onclick="switchTab('interfaces')">📡 浏览接口</button>
       <button class="btn btn-outline btn-hero" data-tab="guide-download" onclick="switchTab('guide-download')">📖 教程与下载</button>
+      <button class="btn btn-outline btn-hero" data-tab="others" onclick="switchTab('others')">🖼️ 图床壁纸</button>
     </div>
   </div>
   <div class="hero-preview">
@@ -1359,34 +1562,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
     <!-- ── 子面板：使用指南 ── -->
     <div class="sub-panel active" id="panel-guide">
-      <!-- 横向步骤流程 -->
+      <!-- 4K 网盘授权提示 -->
       <div class="stepper-wrap">
-        <div class="stepper-track">
-          <div class="stepper-node">
-            <div class="stepper-num s1">1</div>
-            <div class="stepper-label">复制接口链接</div>
-          </div>
-          <div class="stepper-line"><svg viewBox="0 0 28 10"><path d="M0 5 L24 5 L24 2 M24 5 L24 8"/></svg></div>
-          <div class="stepper-node">
-            <div class="stepper-num s2">2</div>
-            <div class="stepper-label">打开 影视 软件</div>
-          </div>
-          <div class="stepper-line"><svg viewBox="0 0 28 10"><path d="M0 5 L24 5 L24 2 M24 5 L24 8"/></svg></div>
-          <div class="stepper-node">
-            <div class="stepper-num s3">3</div>
-            <div class="stepper-label">设置 → 点播</div>
-          </div>
-          <div class="stepper-line"><svg viewBox="0 0 28 10"><path d="M0 5 L24 5 L24 2 M24 5 L24 8"/></svg></div>
-          <div class="stepper-node">
-            <div class="stepper-num s4">4</div>
-            <div class="stepper-label">扫码粘贴链接</div>
-          </div>
-          <div class="stepper-line"><svg viewBox="0 0 28 10"><path d="M0 5 L24 5 L24 2 M24 5 L24 8"/></svg></div>
-          <div class="stepper-node">
-            <div class="stepper-num s5">5</div>
-            <div class="stepper-label">开始观看</div>
-          </div>
-        </div>
         <div class="stepper-tip">
           <div class="stepper-tip-inner">
             <span class="tip-icon">4K</span>
@@ -1494,6 +1671,27 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 
+  <!-- ── 图床壁纸 ── -->
+  <div id="others" class="section">
+    <div class="sec-header">
+      <div class="sec-label">Others</div>
+      <h2 class="sec-title">图床壁纸</h2>
+      <p class="sec-desc">图床图片分享 · 点击图片可放大预览 · 支持复制链接</p>
+    </div>
+
+    <!-- 使用提示 -->
+    <div class="usage-tip">
+      <div class="usage-tip-icon">🖼️</div>
+      <div class="usage-tip-text">
+        <strong>使用说明：</strong>点击缩略图可<strong>放大预览</strong>，点击「复制」可获取图片直链，方便在影视软件或其他场景中使用。
+      </div>
+    </div>
+
+    <div class="gallery-carousel" id="galleryCarousel">
+      <!-- 轮播图由 JS 动态渲染 -->
+    </div>
+  </div>
+
 </div>
 
 <!-- ══ Footer ══ -->
@@ -1506,6 +1704,12 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
 <!-- Toast -->
 <div class="toast" id="toast"><span class="toast-dot"></span>链接已复制到剪贴板</div>
+
+<!-- Image Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="预览大图">
+</div>
 
 <!-- ══ 电视端教程弹窗 ══ -->
 <div class="modal-overlay" id="tvModal">
@@ -1884,6 +2088,235 @@ function renderCards(filter){
   });
 }
 
+/* ══ Others: Image Gallery ══ */
+/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
+var GALLERY_URLS = [
+  "https://pic1.imgdb.cn/i/033whFFXI0xI6YXFLqNNiC.webp",
+  "https://pic1.imgdb.cn/i/033whFFVdK5hHCFwUDCk9i.webp",
+  "https://pic1.imgdb.cn/i/033whFFQT1jRQS6G1725eJ.webp",
+  "https://pic1.imgdb.cn/i/033whFFOWKCfpSJ8WNx0cG.webp",
+  "https://pic1.imgdb.cn/i/033whF5B5g7txuPaTcgE3H.webp",
+  "https://pic1.imgdb.cn/i/033whF5AzlQfrZr6YmRA3q.webp",
+  "https://pic1.imgdb.cn/i/033whF5And9emM0oZtKFKg.webp",
+  "https://pic1.imgdb.cn/i/033whF54T0UBu8s1OLaorR.webp",
+  "https://pic1.imgdb.cn/i/033whF50B86ppjMDqpNTom.webp",
+  "https://pic1.imgdb.cn/i/033whERXoTMtTWSvLZTM1t.webp",
+  "https://pic1.imgdb.cn/i/033whERXQNvz27bE04LeTf.webp",
+  "https://pic1.imgdb.cn/i/033whERSG68SfmGUi0Hx8u.webp",
+  "https://pic1.imgdb.cn/i/033whERNNijRZ9bpFR51Cq.webp",
+  "https://pic1.imgdb.cn/i/033whERInquv4BTfYl6pQV.webp",
+  "https://pic1.imgdb.cn/i/033whEIZzB7FxhCsZ60DzY.webp",
+  "https://pic1.imgdb.cn/i/033whDgC0JQGCOdHu7XDzU.webp",
+  "https://pic1.imgdb.cn/i/033whDg952xHR9Qahi4EEP.webp",
+  "https://pic1.imgdb.cn/i/033whDfvdFPrai0Q5yJLPU.webp",
+  "https://pic1.imgdb.cn/i/033whDfsbsqpubtXfIWJyJ.webp",
+  "https://pic1.imgdb.cn/i/033whDfgcV0RD5pRp2oH8W.webp",
+  "https://pic1.imgdb.cn/i/033whDfQ8yQRTQeEaRW9rg.webp",
+  "https://pic1.imgdb.cn/i/033whDfLGiBeCZjlTFsx45.webp",
+  "https://pic1.imgdb.cn/i/033whDf7ogKDqHXgGQOdmD.webp",
+  "https://pic1.imgdb.cn/i/033whDf5TdPbWH4UnEAlGt.webp",
+  "https://pic1.imgdb.cn/i/033whDeyGL7JxQdc3sqCGf.webp",
+  "https://pic1.imgdb.cn/i/5i675oaNva3c5RVOnmJh9k",
+  "https://pic1.imgdb.cn/i/5eJTrHBjvt2qeFTlS1m2ZA",
+  "https://pic1.imgdb.cn/i/0xJyZydu7qeHMUMOfWlRrh",
+  "https://pic1.imgdb.cn/i/0L15IQLz28QzICXNP79twc"
+];
+/* ====== 图床数据结束 ====== */
+
+/* 从 URL 自动提取文件名作为标题 */
+function getGalleryTitle(url){
+  try {
+    var path = url.split('?')[0].split('#')[0];
+    var seg = path.split('/');
+    var name = seg[seg.length - 1] || url;
+    return decodeURIComponent(name);
+  } catch(e){ return url; }
+}
+
+/* 将 URL 列表转换为渲染数据 */
+function getGalleryData(){
+  return GALLERY_URLS.map(function(url){
+    return { title: getGalleryTitle(url), desc: '', url: url };
+  });
+}
+
+/* 渲染轮播图 */
+var _carouselIndex = 0;
+var _carouselData = [];
+
+function renderGallery(){
+  var container = document.getElementById('galleryCarousel');
+  if(!container) return;
+  _carouselData = getGalleryData();
+  if(_carouselData.length === 0){
+    container.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:40px;">暂无图片</p>';
+    return;
+  }
+  _carouselIndex = 0;
+
+  /* 生成幻灯片 */
+  var slidesHtml = '';
+  _carouselData.forEach(function(item, idx){
+    var safeUrl = item.url.replace(/"/g, '&quot;');
+    var safeUrlJs = item.url.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    var safeTitle = (item.title || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    slidesHtml += '<div class="carousel-slide">' +
+      '<div class="carousel-img-wrap" onclick="openLightbox(\'' + safeUrlJs + '\')">' +
+        '<img src="' + safeUrl + '" alt="' + safeTitle + '" loading="' + (idx < 2 ? 'eager' : 'lazy') + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="img-fallback" style="display:none;">🖼️</div>' +
+        '<span class="img-zoom-hint">🔍 点击放大</span>' +
+      '</div>' +
+      '<div class="carousel-info">' +
+        '<div class="carousel-info-left">' +
+          '<div class="carousel-title">壁纸</div>' +
+        '</div>' +
+        '<div class="carousel-actions">' +
+          '<button class="gallery-btn" onclick="copyGalleryUrl(this,\'' + safeUrlJs + '\')">📋 复制</button>' +
+          '<button class="gallery-btn" onclick="openLightbox(\'' + safeUrlJs + '\')">🔍 预览</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  /* 生成缩略图 */
+  var thumbsHtml = '';
+  _carouselData.forEach(function(item, idx){
+    var safeUrl = item.url.replace(/"/g, '&quot;');
+    thumbsHtml += '<div class="carousel-thumb-item' + (idx === 0 ? ' active' : '') + '" onclick="goToSlide(' + idx + ')" data-thumb="' + idx + '">' +
+      '<img src="' + safeUrl + '" alt="缩略图' + (idx+1) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+      '<div class="thumb-ph" style="display:none;">🖼️</div>' +
+    '</div>';
+  });
+
+  container.innerHTML =
+    '<div class="carousel-stage">' +
+      '<button class="carousel-arrow prev" onclick="prevSlide()" aria-label="上一张">‹</button>' +
+      '<button class="carousel-arrow next" onclick="nextSlide()" aria-label="下一张">›</button>' +
+      '<div class="carousel-viewport">' +
+        '<div class="carousel-track" id="carouselTrack">' + slidesHtml + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="carousel-counter" id="carouselCounter">1 / ' + _carouselData.length + '</div>' +
+    '<div class="carousel-thumbs" id="carouselThumbs">' + thumbsHtml + '</div>';
+
+  updateCarousel();
+}
+
+/* 更新轮播状态 */
+function updateCarousel(){
+  var track = document.getElementById('carouselTrack');
+  if(track) track.style.transform = 'translateX(-' + (_carouselIndex * 100) + '%)';
+  /* 更新计数器 */
+  var counter = document.getElementById('carouselCounter');
+  if(counter) counter.textContent = (_carouselIndex + 1) + ' / ' + _carouselData.length;
+  /* 更新缩略图高亮并滚动到当前项 */
+  var thumbs = document.getElementById('carouselThumbs');
+  if(thumbs){
+    thumbs.querySelectorAll('.carousel-thumb-item').forEach(function(t, i){
+      t.classList.toggle('active', i === _carouselIndex);
+    });
+    var activeThumb = thumbs.querySelector('.carousel-thumb-item.active');
+    if(activeThumb){
+      var thumbLeft = activeThumb.offsetLeft;
+      var thumbRight = thumbLeft + activeThumb.offsetWidth;
+      var viewLeft = thumbs.scrollLeft;
+      var viewRight = viewLeft + thumbs.clientWidth;
+      if(thumbLeft < viewLeft){
+        thumbs.scrollLeft = thumbLeft - 10;
+      } else if(thumbRight > viewRight){
+        thumbs.scrollLeft = thumbRight - thumbs.clientWidth + 10;
+      }
+    }
+  }
+}
+
+/* 切换到上一张（循环） */
+function prevSlide(){
+  _carouselIndex = (_carouselIndex - 1 + _carouselData.length) % _carouselData.length;
+  updateCarousel();
+}
+
+/* 切换到下一张（循环） */
+function nextSlide(){
+  _carouselIndex = (_carouselIndex + 1) % _carouselData.length;
+  updateCarousel();
+}
+
+/* 跳转到指定张 */
+function goToSlide(idx){
+  _carouselIndex = idx;
+  updateCarousel();
+}
+
+/* 键盘左右键切换（仅当图床壁纸区域可见时） */
+document.addEventListener('keydown', function(e){
+  var othersSection = document.getElementById('others');
+  if(!othersSection || !othersSection.classList.contains('active')) return;
+  if(e.key === 'ArrowLeft') prevSlide();
+  else if(e.key === 'ArrowRight') nextSlide();
+});
+
+/* 触摸滑动支持 */
+(function initCarouselSwipe(){
+  document.addEventListener('touchstart', function(e){
+    var othersSection = document.getElementById('others');
+    if(!othersSection || !othersSection.classList.contains('active')) return;
+    var stage = document.querySelector('.carousel-stage');
+    if(!stage || !stage.contains(e.target)) return;
+    _swipeStartX = e.touches[0].clientX;
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if(_swipeStartX === null) return;
+    var dx = e.changedTouches[0].clientX - _swipeStartX;
+    if(Math.abs(dx) > 50){
+      if(dx > 0) prevSlide();
+      else nextSlide();
+    }
+    _swipeStartX = null;
+  }, {passive:true});
+})();
+var _swipeStartX = null;
+
+/* 复制图片链接 */
+function copyGalleryUrl(btn, url){
+  var originalText = btn.textContent;
+  function ok(){
+    btn.textContent = '✓ 已复制'; btn.classList.add('done');
+    showToast();
+    setTimeout(function(){ btn.textContent = originalText; btn.classList.remove('done'); }, 2200);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(ok).catch(function(){ fallbackCopyGallery(url, ok); });
+  } else {
+    fallbackCopyGallery(url, ok);
+  }
+}
+function fallbackCopyGallery(url, ok){
+  var t = document.createElement('textarea');
+  t.value = url; t.style.position = 'fixed'; t.style.opacity = '0';
+  document.body.appendChild(t); t.select();
+  try { document.execCommand('copy'); ok(); } catch(e) {}
+  document.body.removeChild(t);
+}
+
+/* 图片放大预览 */
+function openLightbox(url){
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lightboxImg');
+  if(lb && img){
+    img.src = url;
+    lb.classList.add('open');
+  }
+}
+function closeLightbox(e){
+  if(e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('lightbox-close')) return;
+  var lb = document.getElementById('lightbox');
+  if(lb) lb.classList.remove('open');
+}
+
+/* 初始化轮播图 */
+renderGallery();
+
 /* ══ Guide Modals ══ */
 var tvModal = document.getElementById('tvModal');
 var phoneModal = document.getElementById('phoneModal');
@@ -1959,6 +2392,8 @@ function toggleTheme(){
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
     document.querySelectorAll('.modal-overlay.open').forEach(function(m){ m.classList.remove('open'); });
+    var lb = document.getElementById('lightbox');
+    if(lb) lb.classList.remove('open');
   }
 });
 // Enter/Space triggers click on .link-item for keyboard users
