@@ -387,42 +387,6 @@ html[data-theme="light"] .stat-icon{
 }
 .sec-desc{font-size:.9rem;color:var(--text-secondary);}
 
-/* ══ Usage Tip Banner ══ */
-.usage-tip{
-  display:flex;align-items:center;gap:12px;
-  padding:14px 20px;border-radius:var(--radius-md);
-  background:linear-gradient(135deg,rgba(59,130,246,.05),rgba(139,92,246,.04));
-  border:1px solid rgba(59,130,246,.12);
-  margin-bottom:28px;
-  animation:tipIn .4s ease;
-}
-@keyframes tipIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.usage-tip-icon{
-  width:34px;height:34px;min-width:34px;border-radius:10px;
-  background:linear-gradient(135deg,var(--brand-blue),var(--brand-violet));
-  display:flex;align-items:center;justify-content:center;
-  font-size:.95rem;color:#fff;flex-shrink:0;
-}
-.usage-tip-text{
-  font-size:.82rem;color:var(--text-secondary);line-height:1.65;
-}
-.usage-tip-text strong{color:var(--text-primary);font-weight:700;}
-html[data-theme="dark"] .usage-tip{
-  background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.06));
-  border-color:rgba(59,130,246,.18);
-}
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) .usage-tip{
-    background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.06));
-    border-color:rgba(59,130,246,.18);
-  }
-}
-@media(max-width:480px){
-  .usage-tip{padding:12px 16px;gap:10px;}
-  .usage-tip-icon{width:30px;height:30px;min-width:30px;font-size:.85rem;}
-  .usage-tip-text{font-size:.76rem;}
-}
-
 /* ══ Filter Chips ══ */
 .filter-bar{
   display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -734,131 +698,30 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   transition:background .2s;
 }
 .lightbox-close:hover{background:rgba(255,255,255,.3);}
+.lightbox-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:48px;height:48px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.12);
+  color:#fff;font-size:1.4rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:10;
+}
+.lightbox-arrow:hover{background:rgba(255,255,255,.25);}
+.lightbox-arrow.prev{left:20px;}
+.lightbox-arrow.next{right:20px;}
+@media(max-width:640px){
+  .lightbox-arrow{width:40px;height:40px;font-size:1.2rem;}
+  .lightbox-arrow.prev{left:8px;}
+  .lightbox-arrow.next{right:8px;}
+}
 
 /* ══ Guide Cards ══ */
-/* ══ Stepper Flow — 横向流程条 ══ */
 .stepper-wrap{
-  position:relative;padding:24px 0 16px;
-}
-.stepper-track{
-  display:flex;align-items:flex-start;gap:0;
-  justify-content:center;flex-wrap:wrap;
-}
-.stepper-node{
-  display:flex;flex-direction:column;align-items:center;
-  gap:10px;padding:0 6px;position:relative;min-width:120px;
-  text-align:center;
-}
-.stepper-num{
-  display:flex;align-items:center;justify-content:center;
-  width:42px;height:42px;border-radius:14px;
-  font-size:1rem;font-weight:800;color:#fff;
-  transition:transform .2s,box-shadow .2s;
-  position:relative;z-index:2;
-}
-.stepper-node:hover .stepper-num{
-  transform:scale(1.08);
-}
-.stepper-num.s1{background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 4px 12px rgba(59,130,246,.25);}
-.stepper-num.s2{background:linear-gradient(135deg,#8b5cf6,#7c3aed);box-shadow:0 4px 12px rgba(139,92,246,.25);}
-.stepper-num.s3{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 12px rgba(245,158,11,.25);}
-.stepper-num.s4{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 12px rgba(16,185,129,.25);}
-.stepper-num.s5{background:linear-gradient(135deg,#f43f5e,#e11d48);box-shadow:0 4px 12px rgba(244,63,94,.25);}
-.stepper-num.s6{background:linear-gradient(135deg,#f59e0b,#f43f5e);box-shadow:0 4px 12px rgba(245,158,11,.25);}
-
-.stepper-label{
-  font-size:.78rem;font-weight:600;color:var(--text-primary);
-  line-height:1.4;max-width:110px;
-}
-
-/* 连接线 */
-.stepper-line{
-  display:flex;align-items:center;padding:0 2px;
-  height:42px; /* 和 stepper-num 高度一致 */
-  position:relative;z-index:1;
-}
-.stepper-line svg{
-  width:28px;height:10px;
-}
-.stepper-line svg path{
-  stroke:var(--border-default);stroke-width:2;
-  fill:none;stroke-dasharray:4 3;
-}
-
-/* 4K 提示 — 与 Stepper 风格统一的提示卡片 */
-.stepper-tip{
-  margin-top:24px;display:flex;justify-content:center;
-}
-.stepper-tip-inner{
-  display:inline-flex;align-items:center;gap:0;
-  padding:12px 20px 12px 16px;border-radius:16px;
-  background:linear-gradient(135deg,#fffbeb,#fef3c7);
-  border:1px solid rgba(245,158,11,.22);
-  font-size:.8rem;font-weight:600;color:#92400e;
-  line-height:1.5;position:relative;overflow:hidden;
-}
-.stepper-tip-inner::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:linear-gradient(180deg,var(--brand-amber),var(--brand-rose));
-  border-radius:2px 0 0 2px;
-}
-/* 4K 标签徽章 */
-.stepper-tip-inner .tip-icon{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:auto;height:auto;padding:3px 9px;margin-right:10px;
-  border-radius:7px;background:linear-gradient(135deg,var(--brand-amber),#ea580c);
-  font-size:.64rem;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase;
-  box-shadow:0 2px 6px rgba(245,158,11,.35);flex-shrink:0;
-}
-/* 文字与标签分隔 */
-.stepper-tip-inner .tip-divider{
-  margin:0 6px;color:#d97706;opacity:.45;font-weight:300;
-  user-select:none;
-}
-.stepper-tip-inner .tip-tags{
-  display:flex;flex-wrap:wrap;gap:5px;margin-left:4px;
-}
-.stepper-tip-inner .tip-tag{
-  padding:2px 10px;border-radius:8px;
-  background:#fff;border:1px solid rgba(245,158,11,.25);
-  font-size:.7rem;font-weight:600;color:#b45309;
-}
-html[data-theme="dark"] .stepper-tip-inner{
-  border-color:rgba(245,158,11,.28);
-  color:#fcd34d;
-  background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(234,88,12,.1));
-}
-html[data-theme="dark"] .stepper-tip-inner .tip-tag{
-  background:rgba(30,41,59,.7);
-  border-color:rgba(245,158,11,.3);
-  color:#fcd34d;
-}
-html[data-theme="dark"] .stepper-tip-inner .tip-divider{color:#fbbf24;opacity:.4;}
-
-/* ══ 移动端 stepper 折行 ══ */
-@media(max-width:680px){
-  .stepper-track{gap:0;justify-content:center;row-gap:8px;}
-  .stepper-node{min-width:80px;padding:0 4px;margin-top:4px;}
-  .stepper-num{width:34px;height:34px;border-radius:10px;font-size:.82rem;}
-  .stepper-label{font-size:.7rem;max-width:80px;}
-  .stepper-line svg{width:16px;height:8px;}
-  /* 折行后的连接线隐藏，避免悬空 */
-  .stepper-line:nth-last-child(2){display:none;}
-  .stepper-tip-inner{padding:10px 16px;font-size:.74rem;flex-wrap:wrap;justify-content:center;gap:4px;}
-  .stepper-tip-inner .tip-icon{margin-right:8px;padding:2px 7px;font-size:.58rem;}
-  .stepper-tip-inner .tip-divider{display:none;}
-  .stepper-tip-inner .tip-tag{font-size:.64rem;padding:2px 8px;}
-}
-@media(max-width:380px){
-  .stepper-node{min-width:64px;margin-top:6px;}
-  .stepper-num{width:28px;height:28px;border-radius:8px;font-size:.72rem;}
-  .stepper-label{font-size:.65rem;}
-  .stepper-tip-inner{padding:8px 12px;font-size:.68rem;}
-  .stepper-tip-inner .tip-icon{margin-right:6px;padding:2px 6px;font-size:.55rem;}
+  position:relative;padding:0 0 16px;
 }
 
 /* ══ 图文教程区 ══ */
-.tutorial-section{margin-top:36px;}
+.tutorial-section{margin-top:-12px;}
 .tutorial-header{text-align:center;margin-bottom:20px;}
 .tutorial-header h3{font-size:1.05rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
 .tutorial-header p{font-size:.78rem;color:var(--text-tertiary);}
@@ -1032,6 +895,39 @@ html[data-theme="dark"] .dl-note{
   align-items:center;
   height:calc(.78rem * 1.7);
 }
+/* 居中变体：图标+文字水平居中，文字可换行，宽度收缩到内容 */
+.dl-note-warning.dl-note-center{
+  align-items:center;justify-content:center;
+  text-align:center;flex-wrap:wrap;
+  width:fit-content;max-width:100%;
+  margin-left:auto;margin-right:auto;
+}
+.dl-note-warning.dl-note-center::before{
+  height:auto;
+}
+/* 4K 平台标签 */
+.dl-note-platform-tags{
+  display:inline-flex;flex-wrap:wrap;gap:5px;
+  margin-left:8px;vertical-align:middle;
+}
+.dl-note-platform-tags .ptag{
+  display:inline-flex;align-items:center;
+  padding:1px 9px;border-radius:7px;
+  background:#fff;border:1px solid rgba(245,158,11,.3);
+  font-size:.68rem;font-weight:600;color:#b45309;
+}
+html[data-theme="dark"] .dl-note-platform-tags .ptag{
+  background:rgba(30,41,59,.7);
+  border-color:rgba(245,158,11,.3);
+  color:#fcd34d;
+}
+@media(prefers-color-scheme:dark){
+  html:not([data-theme]) .dl-note-platform-tags .ptag{
+    background:rgba(30,41,59,.7);
+    border-color:rgba(245,158,11,.3);
+    color:#fcd34d;
+  }
+}
 html[data-theme="dark"] .dl-note-warning{
   background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(234,88,12,.1));
   border-color:rgba(245,158,11,.28);
@@ -1089,7 +985,7 @@ html[data-theme="dark"] .dl-note-blue{
 /* ══ Footer ══ */
 .footer{
   border-top:1px solid var(--border-default);
-  padding:32px 24px;text-align:center;
+  padding:20px 24px;text-align:center;
   background:var(--bg-surface);
 }
 .footer-inner{max-width:600px;margin:0 auto;}
@@ -1177,13 +1073,6 @@ html[data-theme="dark"] .dl-note-blue{
   color:var(--text-tertiary);font-size:.8rem;
   padding:20px;
 }
-/* ══ Stepper 中等屏幕适配 — 920px 开始收窄 ══ */
-@media(max-width:920px){
-  .stepper-node{min-width:100px;padding:0 4px;}
-  .stepper-num{width:38px;height:38px;border-radius:12px;font-size:.9rem;}
-  .stepper-label{font-size:.74rem;max-width:90px;}
-  .stepper-line svg{width:22px;height:10px;}
-}
 
 /* ══ Responsive — 860px ══ */
 @media(max-width:860px){
@@ -1221,7 +1110,7 @@ html[data-theme="dark"] .dl-note-blue{
   .filter-bar{flex-wrap:wrap;gap:8px;justify-content:flex-start;}
   .filter-chip{padding:7px 14px;font-size:.73rem;}
   .content-wrap{padding:0 16px 60px;}
-  .footer{padding:32px 16px;}
+  .footer{padding:20px 16px;}
   .feat{padding:10px 0;}
   .feat-bar{height:30px;}
   .feat-body strong{font-size:.76rem;}
@@ -1534,11 +1423,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
 
     <!-- 使用提示 -->
-    <div class="usage-tip">
-      <div class="usage-tip-icon">🔥</div>
-      <div class="usage-tip-text">
-        <strong>使用提示：</strong>如<strong>主力线路</strong>接口配置失效，请更换下方<strong>备用接口</strong>，推荐<strong>每条接口的主力线路都添加到影视软件中使用</strong>，以防资源失效。
-      </div>
+    <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:28px;">
+      使用提示：如主力线路接口配置失效，请更换下方备用接口，推荐每条接口的主力线路都添加到影视软件中使用，以防资源失效。
     </div>
 
     <div class="provider-grid" id="providerGrid">
@@ -1551,7 +1437,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     <div class="sec-header">
       <div class="sec-label">Guide &amp; Download</div>
       <h2 class="sec-title">教程与下载</h2>
-      <p class="sec-desc">5步快速配置 · 双端软件下载 · 图文详细教程</p>
+      <p class="sec-desc">双端软件下载 · 图文详细教程</p>
     </div>
 
     <!-- 子标签 -->
@@ -1564,19 +1450,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     <div class="sub-panel active" id="panel-guide">
       <!-- 4K 网盘授权提示 -->
       <div class="stepper-wrap">
-        <div class="stepper-tip">
-          <div class="stepper-tip-inner">
-            <span class="tip-icon">4K</span>
-            <span>画质需用网盘扫码授权</span>
-            <span class="tip-divider">·</span>
-            <span class="tip-tags">
-              <span class="tip-tag">夸克</span>
-              <span class="tip-tag">迅雷</span>
-              <span class="tip-tag">UC</span>
-              <span class="tip-tag">阿里</span>
-              <span class="tip-tag">百度</span>
-            </span>
-          </div>
+        <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
+          4K 画质需用网盘扫码授权<span class="dl-note-platform-tags"><span class="ptag">夸克</span><span class="ptag">迅雷</span><span class="ptag">UC</span><span class="ptag">阿里</span><span class="ptag">百度</span></span>
         </div>
       </div>
 
@@ -1626,7 +1501,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
     <!-- ── 子面板：软件下载 ── -->
     <div class="sub-panel" id="panel-download">
-      <div class="dl-note dl-note-warning" style="margin-bottom:20px;">
+      <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
         电视机通常为 32 位系统，Windows（电脑）为 64 位系统，需下载模拟器（雷电模拟器、mumu模拟器）影视仓、OK影视均支持电视以及电脑模拟器。
       </div>
       <div class="dl-grid">
@@ -1680,11 +1555,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
 
     <!-- 使用提示 -->
-    <div class="usage-tip">
-      <div class="usage-tip-icon">🖼️</div>
-      <div class="usage-tip-text">
-        <strong>使用说明：</strong>点击缩略图可<strong>放大预览</strong>，点击「复制」可获取图片直链，方便在影视软件壁纸处或其他场景中使用。(非必要可直接无视)。
-      </div>
+    <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:28px;">
+      使用说明：点击缩略图可放大预览，点击「复制」可获取图片直链，方便在影视软件壁纸处或其他场景中使用。(非必要可直接无视)。
     </div>
 
     <div class="gallery-carousel" id="galleryCarousel">
@@ -1708,6 +1580,8 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 <!-- Image Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-arrow prev" onclick="event.stopPropagation();lightboxPrev(event)" aria-label="上一张">‹</button>
+  <button class="lightbox-arrow next" onclick="event.stopPropagation();lightboxNext(event)" aria-label="下一张">›</button>
   <img id="lightboxImg" src="" alt="预览大图">
 </div>
 
@@ -2265,8 +2139,14 @@ function goToSlide(idx){
   updateCarousel();
 }
 
-/* 键盘左右键切换（仅当图床壁纸区域可见时） */
+/* 键盘左右键切换（lightbox 打开时切换预览图，否则切换轮播图） */
 document.addEventListener('keydown', function(e){
+  var lb = document.getElementById('lightbox');
+  if(lb && lb.classList.contains('open')){
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); lightboxPrev(); }
+    else if(e.key === 'ArrowRight'){ e.preventDefault(); lightboxNext(); }
+    return;
+  }
   var othersSection = document.getElementById('others');
   if(!othersSection || !othersSection.classList.contains('active')) return;
   if(e.key === 'ArrowLeft') prevSlide();
@@ -2317,18 +2197,43 @@ function fallbackCopyGallery(url, ok){
 }
 
 /* 图片放大预览 */
+var _lightboxIndex = -1;
 function openLightbox(url){
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lightboxImg');
   if(lb && img){
     img.src = url;
     lb.classList.add('open');
+    var idx = -1;
+    for(var i = 0; i < _carouselData.length; i++){
+      if(_carouselData[i].url === url){ idx = i; break; }
+    }
+    _lightboxIndex = idx;
   }
 }
 function closeLightbox(e){
   if(e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('lightbox-close')) return;
   var lb = document.getElementById('lightbox');
   if(lb) lb.classList.remove('open');
+  /* 关闭时同步轮播图到当前预览的图片 */
+  if(_lightboxIndex >= 0 && _lightboxIndex < _carouselData.length){
+    _carouselIndex = _lightboxIndex;
+    updateCarousel();
+  }
+}
+function lightboxPrev(e){
+  if(e){ e.stopPropagation(); }
+  if(_lightboxIndex < 0 || _carouselData.length === 0) return;
+  _lightboxIndex = (_lightboxIndex - 1 + _carouselData.length) % _carouselData.length;
+  var img = document.getElementById('lightboxImg');
+  if(img) img.src = _carouselData[_lightboxIndex].url;
+}
+function lightboxNext(e){
+  if(e){ e.stopPropagation(); }
+  if(_lightboxIndex < 0 || _carouselData.length === 0) return;
+  _lightboxIndex = (_lightboxIndex + 1) % _carouselData.length;
+  var img = document.getElementById('lightboxImg');
+  if(img) img.src = _carouselData[_lightboxIndex].url;
 }
 
 /* 初始化轮播图 */
