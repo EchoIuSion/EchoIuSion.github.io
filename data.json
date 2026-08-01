@@ -3,6 +3,7 @@
     {
       "id": "wang",
       "name": "王二小放牛娃",
+      "note": "4K画质网盘首选",
       "emoji": "🐮",
       "avatarClass": "av-blue",
       "metaColor": "var(--brand-blue)",
@@ -16,8 +17,35 @@
       ]
     },
     {
+      "id": "mi",
+      "name": "小米",
+      "note": "全高清首选",
+      "emoji": "🍚",
+      "avatarClass": "av-rose",
+      "metaColor": "var(--brand-rose)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "摸鱼",
+      "note": "全高清+4K",
+      "emoji": "🐟",
+      "avatarClass": "av-teal",
+      "metaColor": "#14b8a6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
+        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
+        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
+      ]
+    },
+    {
       "id": "fan",
       "name": "饭太硬",
+      "note": "全高清+4K",
       "emoji": "🍙",
       "avatarClass": "av-amber",
       "metaColor": "#8b5cf6",
@@ -30,32 +58,9 @@
       ]
     },
     {
-      "id": "mo",
-      "name": "摸鱼",
-      "emoji": "🐟",
-      "avatarClass": "av-teal",
-      "metaColor": "#14b8a6",
-      "links": [
-        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
-        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
-        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
-      ]
-    },
-    {
-      "id": "mi",
-      "name": "小米",
-      "emoji": "🍚",
-      "avatarClass": "av-rose",
-      "metaColor": "var(--brand-rose)",
-      "links": [
-        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
-      ]
-    },
-    {
       "id": "fei",
       "name": "肥猫",
+      "note": "全高清+4K",
       "emoji": "🐱",
       "avatarClass": "av-violet",
       "metaColor": "#f97316",
@@ -68,9 +73,10 @@
     {
       "id": "xs",
       "name": "潇洒",
+      "note": "全高清+4K",
       "emoji": "🍃",
-      "avatarClass": "av-blue",
-      "metaColor": "#2563eb",
+      "avatarClass": "av-green",
+      "metaColor": "#10b981",
       "links": [
         { "label": "🚀 主力线路", "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json", "recommended": true }
       ]
@@ -78,9 +84,10 @@
     {
       "id": "og",
       "name": "讴歌多仓",
+      "note": "全高清+4K",
       "emoji": "📻",
-      "avatarClass": "av-teal",
-      "metaColor": "#0ea5e9",
+      "avatarClass": "av-indigo",
+      "metaColor": "#6366f1",
       "links": [
         { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=1", "recommended": true },
         { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=1" }
@@ -89,9 +96,10 @@
     {
       "id": "ogx",
       "name": "欧歌多线路",
+      "note": "全高清+4K",
       "emoji": "📡",
-      "avatarClass": "av-rose",
-      "metaColor": "#e11d48",
+      "avatarClass": "av-pink",
+      "metaColor": "#ec4899",
       "links": [
         { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=2", "recommended": true },
         { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=2" }
