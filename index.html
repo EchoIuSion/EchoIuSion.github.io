@@ -1442,12 +1442,12 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 
     <!-- 子标签 -->
     <div class="sub-tabs">
-      <button class="sub-tab active" data-sub="guide" onclick="switchSub('guide')">📖 使用指南</button>
-      <button class="sub-tab" data-sub="download" onclick="switchSub('download')">📦 软件下载</button>
+      <button class="sub-tab active" data-sub="download" onclick="switchSub('download')">📦 软件下载</button>
+      <button class="sub-tab" data-sub="guide" onclick="switchSub('guide')">📖 使用指南</button>
     </div>
 
     <!-- ── 子面板：使用指南 ── -->
-    <div class="sub-panel active" id="panel-guide">
+    <div class="sub-panel" id="panel-guide">
       <!-- 4K 网盘授权提示 -->
       <div class="stepper-wrap">
         <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
@@ -1500,7 +1500,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
 
     <!-- ── 子面板：软件下载 ── -->
-    <div class="sub-panel" id="panel-download">
+    <div class="sub-panel active" id="panel-download">
       <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
         电视机通常为 32 位系统，Windows（电脑）为 64 位系统，需下载模拟器（雷电模拟器、mumu模拟器）影视仓、OK影视均支持电视以及电脑模拟器。
       </div>
