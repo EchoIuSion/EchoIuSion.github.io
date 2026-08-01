@@ -449,8 +449,12 @@ html[data-theme="light"] .stat-icon{
 .av-violet{background:linear-gradient(135deg,#f97316,#ea580c);box-shadow:0 4px 14px rgba(249,115,22,.3);}
 .av-rose{background:linear-gradient(135deg,#f43f5e,#e11d48);box-shadow:0 4px 14px rgba(244,63,94,.3);}
 .av-teal{background:linear-gradient(135deg,#0ea5e9,#0284c7);box-shadow:0 4px 14px rgba(14,165,233,.3);}
+.av-green{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 14px rgba(16,185,129,.3);}
+.av-indigo{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 4px 14px rgba(99,102,241,.3);}
+.av-pink{background:linear-gradient(135deg,#ec4899,#db2777);box-shadow:0 4px 14px rgba(236,72,153,.3);}
 
-.card-provider-name{font-size:.95rem;font-weight:700;}
+.card-provider-name{font-size:.95rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+.card-provider-note{font-size:.6rem;font-weight:600;padding:2px 7px;border-radius:4px;background:rgba(59,130,246,.1);color:#3b82f6;white-space:nowrap;}
 .card-provider-meta{
   font-size:.7rem;color:var(--text-tertiary);
   display:flex;align-items:center;gap:6px;
@@ -476,8 +480,12 @@ html[data-theme="light"] .stat-icon{
 }
 .link-item:hover .idx{background:var(--text-primary);color:#fff;}
 
+.link-item .url-wrap{
+  flex:1;display:flex;align-items:center;gap:6px;
+  min-width:0;overflow:hidden;
+}
 .link-item .url{
-  flex:1;font-family:var(--font);
+  flex:0 1 auto;font-family:var(--font);
   font-size:.73rem;color:var(--text-secondary);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
@@ -486,6 +494,7 @@ html[data-theme="light"] .stat-icon{
 .link-item .badge-rec{
   font-size:.55rem;font-weight:700;text-transform:uppercase;
   padding:2px 7px;border-radius:4px;
+  flex-shrink:0;
   background:rgba(16,185,129,.1);color:var(--brand-emerald);
 }
 .link-item .copy-btn{
@@ -1138,8 +1147,7 @@ html[data-theme="dark"] .dl-note-blue{
   .link-item{flex-wrap:wrap;padding:8px;gap:6px;}
   .link-item .idx{width:22px;height:22px;font-size:.6rem;}
   .link-item .url{min-width:0;font-size:.68rem;}
-  .link-item .badge-rec{order:3;margin-left:0;}
-  .link-item .copy-btn{order:4;margin-left:auto;opacity:1;}
+  .link-item .copy-btn{margin-left:auto;opacity:1;}
   .dl-card{padding:16px;}
   .dl-card h3{font-size:.85rem;}
   .dl-card p{font-size:.73rem;}
@@ -1814,6 +1822,7 @@ var SITE_DATA = {
     {
       "id": "wang",
       "name": "王二小放牛娃",
+      "note": "4K画质网盘首选",
       "emoji": "🐮",
       "avatarClass": "av-blue",
       "metaColor": "var(--brand-blue)",
@@ -1827,8 +1836,35 @@ var SITE_DATA = {
       ]
     },
     {
+      "id": "mi",
+      "name": "小米",
+      "note": "全高清首选",
+      "emoji": "🍚",
+      "avatarClass": "av-rose",
+      "metaColor": "var(--brand-rose)",
+      "links": [
+        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "摸鱼",
+      "note": "全高清+4K",
+      "emoji": "🐟",
+      "avatarClass": "av-teal",
+      "metaColor": "#14b8a6",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
+        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
+        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
+      ]
+    },
+    {
       "id": "fan",
       "name": "饭太硬",
+      "note": "全高清+4K",
       "emoji": "🍙",
       "avatarClass": "av-amber",
       "metaColor": "#8b5cf6",
@@ -1841,32 +1877,9 @@ var SITE_DATA = {
       ]
     },
     {
-      "id": "mo",
-      "name": "摸鱼",
-      "emoji": "🐟",
-      "avatarClass": "av-teal",
-      "metaColor": "#14b8a6",
-      "links": [
-        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
-        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
-        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
-      ]
-    },
-    {
-      "id": "mi",
-      "name": "小米",
-      "emoji": "🍚",
-      "avatarClass": "av-rose",
-      "metaColor": "var(--brand-rose)",
-      "links": [
-        { "label": "🚀 主力线路", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" }
-      ]
-    },
-    {
       "id": "fei",
       "name": "肥猫",
+      "note": "全高清+4K",
       "emoji": "🐱",
       "avatarClass": "av-violet",
       "metaColor": "#f97316",
@@ -1879,9 +1892,10 @@ var SITE_DATA = {
     {
       "id": "xs",
       "name": "潇洒",
+      "note": "全高清+4K",
       "emoji": "🍃",
-      "avatarClass": "av-blue",
-      "metaColor": "#2563eb",
+      "avatarClass": "av-green",
+      "metaColor": "#10b981",
       "links": [
         { "label": "🚀 主力线路", "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json", "recommended": true }
       ]
@@ -1889,9 +1903,10 @@ var SITE_DATA = {
     {
       "id": "og",
       "name": "讴歌多仓",
+      "note": "全高清+4K",
       "emoji": "📻",
-      "avatarClass": "av-teal",
-      "metaColor": "#0ea5e9",
+      "avatarClass": "av-indigo",
+      "metaColor": "#6366f1",
       "links": [
         { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=1", "recommended": true },
         { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=1" }
@@ -1900,9 +1915,10 @@ var SITE_DATA = {
     {
       "id": "ogx",
       "name": "欧歌多线路",
+      "note": "全高清+4K",
       "emoji": "📡",
-      "avatarClass": "av-rose",
-      "metaColor": "#e11d48",
+      "avatarClass": "av-pink",
+      "metaColor": "#ec4899",
       "links": [
         { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=2", "recommended": true },
         { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=2" }
@@ -1983,12 +1999,12 @@ function renderCards(filter){
     provider.links.forEach(function(link, idx){
       var num = String(idx + 1).padStart(2, '0');
       var recTag = link.recommended ? '<span class="badge-rec">推荐</span>' : '';
-      linksHtml += '<div class="link-item" data-url="' + link.url.replace(/"/g, '&quot;') + '" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">' + num + '</span><span class="url">' + link.label + '</span>' + recTag + '<button class="copy-btn">复制</button></div>';
+      linksHtml += '<div class="link-item" data-url="' + link.url.replace(/"/g, '&quot;') + '" onclick="copyUrl(this)" tabindex="0" role="button"><span class="idx">' + num + '</span><div class="url-wrap"><span class="url">' + link.label + '</span>' + recTag + '</div><button class="copy-btn">复制</button></div>';
     });
     card.innerHTML = '<div class="card-top">' +
       '<div class="card-avatar ' + provider.avatarClass + '">' + iconSvg + '</div>' +
       '<div>' +
-        '<div class="card-provider-name">' + provider.name + '</div>' +
+        '<div class="card-provider-name">' + provider.name + (provider.note ? '<span class="card-provider-note">' + provider.note + '</span>' : '') + '</div>' +
         '<div class="card-provider-meta"><span class="meta-circle" style="background:' + provider.metaColor + ';"></span>' + provider.links.length + ' 个接口可用</div>' +
       '</div>' +
     '</div>' +
