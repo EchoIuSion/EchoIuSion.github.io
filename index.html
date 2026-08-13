@@ -526,7 +526,7 @@ html[data-theme="light"] .stat-icon{
 .av-indigo{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 4px 14px rgba(99,102,241,.3);}
 .av-pink{background:linear-gradient(135deg,#ec4899,#db2777);box-shadow:0 4px 14px rgba(236,72,153,.3);}
 
-.card-info{flex:1;min-width:0;padding-right:100px;}
+.card-info{flex:1;min-width:0;padding-right:108px;}
 .card-provider-name{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .card-provider-note{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,.1);color:#3b82f6;white-space:nowrap;}
 .card-provider-meta{
@@ -540,11 +540,11 @@ html[data-theme="light"] .stat-icon{
   position:absolute;top:50%;right:56px;transform:translateY(-50%);
   background:rgba(59,130,246,.08);
   color:#3b82f6;
-  padding:4px 12px;border-radius:10px;
+  min-width:68px;padding:5px 10px;border-radius:10px;
   font-size:.7rem;font-weight:700;
-  display:flex;align-items:center;gap:6px;
+  display:flex;align-items:center;justify-content:center;gap:5px;
 }
-.card-count-badge .num{font-size:.95rem;font-weight:800;}
+.card-count-badge .num{font-size:.95rem;font-weight:800;min-width:14px;text-align:center;}
 .card-count-badge .lbl{font-size:.6rem;font-weight:600;opacity:.6;}
 
 /* 折叠展开按钮 */
@@ -1208,11 +1208,11 @@ html[data-theme="dark"] .dl-note-blue{
   .card-top{padding:16px 16px 12px;gap:10px;}
   .card-avatar{width:36px;height:36px;}
   .card-avatar svg{width:20px;height:20px;}
-  .card-info{padding-right:74px;}
+  .card-info{padding-right:82px;}
   .card-provider-name{font-size:.85rem;}
-  .card-count-badge{right:46px;padding:3px 8px;gap:4px;}
-  .card-count-badge .num{font-size:.8rem;}
-  .card-count-badge .lbl{font-size:.55rem;}
+  .card-count-badge{right:44px;min-width:54px;padding:4px 6px;gap:3px;justify-content:center;}
+  .card-count-badge .num{font-size:.78rem;min-width:12px;text-align:center;}
+  .card-count-badge .lbl{font-size:.52rem;}
   .card-provider-note{font-size:.6rem;padding:2px 6px;}
   .link-item{padding:8px 10px;gap:8px;}
   .link-item .url{font-size:.7rem;}
@@ -1265,6 +1265,17 @@ html[data-theme="dark"] .dl-note-blue{
   .guide-cta-card h4{font-size:.95rem;}
   .sub-tab{padding:8px 16px;font-size:.78rem;}
   .badge-hot{font-size:10px;padding:1px 6px;border-radius:8px;}
+  .card-top{padding:14px 12px 10px;gap:8px;}
+  .card-avatar{width:32px;height:32px;}
+  .card-avatar svg{width:18px;height:18px;}
+  .card-info{padding-right:72px;}
+  .card-provider-name{font-size:.8rem;}
+  .card-provider-note{font-size:.56rem;padding:2px 5px;}
+  .card-count-badge{right:38px;min-width:48px;padding:3px 4px;gap:2px;}
+  .card-count-badge .num{font-size:.72rem;min-width:10px;}
+  .card-count-badge .lbl{font-size:.48rem;}
+  .card-toggle{right:12px;width:26px;height:26px;border-radius:7px;}
+  .card-toggle svg{width:13px;height:13px;}
 }
 
 /* ══ Responsive — 380px ══ */
@@ -1281,6 +1292,18 @@ html[data-theme="dark"] .dl-note-blue{
   .feat-body strong{font-size:.68rem;}
   .feat-body span{font-size:.56rem;}
   .badge-hot{font-size:9px;padding:0 5px;letter-spacing:0;}
+  .card-top{padding:12px 10px 10px;gap:7px;}
+  .card-avatar{width:30px;height:30px;}
+  .card-avatar svg{width:16px;height:16px;}
+  .card-info{padding-right:66px;}
+  .card-provider-name{font-size:.76rem;}
+  .card-provider-note{font-size:.52rem;padding:1px 4px;}
+  .card-count-badge{right:36px;min-width:44px;padding:2px 3px;gap:2px;border-radius:7px;}
+  .card-count-badge .num{font-size:.68rem;}
+  .card-count-badge .lbl{font-size:.44rem;}
+  .card-toggle{right:10px;width:24px;height:24px;border-radius:6px;}
+  .card-toggle svg{width:12px;height:12px;}
+  .card-links{padding:0 14px 14px;gap:6px;}
   /* 极小屏强制单列，防止 minmax(340px) 溢出 */
   .provider-grid,.dl-grid{grid-template-columns:1fr;}
 }
