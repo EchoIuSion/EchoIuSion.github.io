@@ -526,7 +526,8 @@ html[data-theme="light"] .stat-icon{
 .av-indigo{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 4px 14px rgba(99,102,241,.3);}
 .av-pink{background:linear-gradient(135deg,#ec4899,#db2777);box-shadow:0 4px 14px rgba(236,72,153,.3);}
 
-.card-provider-name{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+.card-info{flex:1;min-width:0;padding-right:100px;}
+.card-provider-name{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .card-provider-note{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,.1);color:#3b82f6;white-space:nowrap;}
 .card-provider-meta{
   font-size:.7rem;color:var(--text-tertiary);
@@ -1207,7 +1208,12 @@ html[data-theme="dark"] .dl-note-blue{
   .card-top{padding:16px 16px 12px;gap:10px;}
   .card-avatar{width:36px;height:36px;}
   .card-avatar svg{width:20px;height:20px;}
+  .card-info{padding-right:74px;}
   .card-provider-name{font-size:.85rem;}
+  .card-count-badge{right:46px;padding:3px 8px;gap:4px;}
+  .card-count-badge .num{font-size:.8rem;}
+  .card-count-badge .lbl{font-size:.55rem;}
+  .card-provider-note{font-size:.6rem;padding:2px 6px;}
   .link-item{padding:8px 10px;gap:8px;}
   .link-item .url{font-size:.7rem;}
   .link-item .copy-btn{opacity:1;padding:4px 10px;font-size:.62rem;}
@@ -2115,7 +2121,7 @@ function renderCards(filter){
     });
     card.innerHTML = '<div class="card-top" onclick="toggleCard(this)">' +
       '<div class="card-avatar ' + provider.avatarClass + '">' + iconSvg + '</div>' +
-      '<div>' +
+      '<div class="card-info">' +
         '<div class="card-provider-name">' + provider.name + (provider.note ? '<span class="card-provider-note">' + provider.note + '</span>' : '') + '</div>' +
         '<div class="card-provider-meta"><span class="meta-circle" style="background:' + provider.metaColor + ';"></span>' + provider.links.length + ' 个接口可用</div>' +
       '</div>' +
