@@ -7,11 +7,8 @@
 <link rel="icon" href="favicon.jpg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- 提前建立与 GitHub Pages 图片 CDN 的连接，省掉 DNS + TLS 握手延迟 -->
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-
-/* ══ CSS Variables ══ */
 :root {
   --brand-blue: #3b82f6;
   --brand-amber: #f59e0b;
@@ -37,8 +34,6 @@
   --radius-xl: 28px;
   --font: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
-
-/* Dark theme variable overrides — manual toggle */
 html[data-theme="dark"] {
   --bg-root: #0f172a;
   --bg-surface: #1e293b;
@@ -50,8 +45,6 @@ html[data-theme="dark"] {
   --border-default: #334155;
   --border-subtle: #263548;
 }
-
-/* Auto dark mode: only when user has NOT set a preference */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) {
     --bg-root: #0f172a;
@@ -65,8 +58,6 @@ html[data-theme="dark"] {
     --border-subtle: #263548;
   }
 }
-
-/* ══ Reset ══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body{
@@ -80,8 +71,6 @@ body{
   padding-left:env(safe-area-inset-left,0);
   padding-right:env(safe-area-inset-right,0);
 }
-
-/* ══ Navbar ══ */
 .navbar{
   position:sticky;top:0;z-index:100;
   background:rgba(255,255,255,.45);
@@ -121,8 +110,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 }
 .nav-link:hover{color:var(--text-primary);background:var(--bg-subtle);}
 .nav-link.active{background:var(--text-primary);color:#fff;}
-
-/* Hamburger */
 .hamburger{
   display:none;flex-direction:column;gap:5px;
   background:none;border:none;padding:8px;cursor:pointer;
@@ -136,8 +123,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-
-/* Mobile Nav Drawer */
 .mobile-drawer{
   position:fixed;top:0;right:-100%;width:72%;max-width:280px;height:100vh;
   background:var(--bg-surface);z-index:1000;
@@ -162,7 +147,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   opacity:0;pointer-events:none;transition:opacity .3s ease;
 }
 .mobile-overlay.open{opacity:1;pointer-events:auto;}
-
 .theme-toggle{
   width:38px;height:38px;border-radius:50%;
   border:1px solid var(--border-default);
@@ -170,8 +154,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   display:flex;align-items:center;justify-content:center;
   font-size:1rem;transition:all .2s;
 }
-
-/* ══ Hero ══ */
 .hero{
   max-width:1240px;margin:0 auto;
   padding:80px 24px 64px;
@@ -207,7 +189,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   animation:pulse 1.8s ease infinite;
 }
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.8)}}
-
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
 .btn{
   padding:13px 28px;border-radius:50px;
@@ -221,8 +202,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   background:var(--bg-surface);color:var(--text-primary);
   border:1.5px solid var(--border-default);
 }
-
-/* Hero preview card */
 .hero-preview{position:relative;}
 .preview-card{
   background:var(--bg-surface);
@@ -250,8 +229,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
 .preview-header .dots span:nth-child(1){background:var(--brand-rose);}
 .preview-header .dots span:nth-child(2){background:var(--brand-amber);}
 .preview-header .dots span:nth-child(3){background:var(--brand-emerald);}
-
-/* feature list inside preview card */
 .feature-list{display:flex;flex-direction:column;gap:0;}
 .feat{
   display:flex;align-items:flex-start;gap:0;
@@ -270,8 +247,6 @@ html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-colo
   display:block;font-size:.68rem;color:var(--text-tertiary);font-weight:400;
   margin-top:1px;
 }
-
-/* ══ Stats Bar ══ */
 .stats-section{
   max-width:1240px;margin:0 auto;padding:0 24px 64px;
 }
@@ -319,7 +294,6 @@ html[data-theme="light"] .stat-icon{
 .stat-value.c2{color:var(--brand-emerald);}
 .stat-value.c3{color:var(--brand-violet);}
 .stat-value.c4{color:var(--brand-amber);}
-/* 每张卡片顶部彩条颜色 */
 .stat-card:nth-child(1){--card-accent:var(--brand-blue);}
 .stat-card:nth-child(2){--card-accent:var(--brand-emerald);}
 .stat-card:nth-child(3){--card-accent:var(--brand-violet);}
@@ -337,14 +311,10 @@ html[data-theme="light"] .stat-icon{
   70%{box-shadow:0 0 0 8px rgba(16,185,129,0);transform:scale(1.15);}
   100%{box-shadow:0 0 0 0 rgba(16,185,129,0);transform:scale(1);}
 }
-
-/* ══ Content Area ══ */
 .content-wrap{max-width:1240px;margin:0 auto;padding:0 24px 100px;}
 .section{display:none;}
 .section.active{display:block;animation:fadeUp .35s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══ Sub Tabs (inside merged section) ══ */
 .sub-tabs{
   display:flex;justify-content:center;gap:8px;
   margin-bottom:36px;flex-wrap:wrap;
@@ -371,8 +341,6 @@ html[data-theme="light"] .stat-icon{
 }
 .sub-panel{display:none;}
 .sub-panel.active{display:block;animation:fadeUp .3s ease;}
-
-/* Section Header */
 .sec-header{margin-bottom:40px;text-align:center;}
 .sec-label{
   font-size:.7rem;font-weight:700;letter-spacing:.15em;
@@ -385,8 +353,6 @@ html[data-theme="light"] .stat-icon{
   margin-bottom:8px;
 }
 .sec-desc{font-size:.9rem;color:var(--text-secondary);}
-
-/* ══ Filter + Cards 整合容器 ══ */
 .interface-panel{
   width:100%;
   background:var(--bg-surface);
@@ -396,28 +362,28 @@ html[data-theme="light"] .stat-icon{
   overflow:hidden;
 }
 .panel-header{
-  padding:18px 24px 0;
+  padding:24px 28px 20px;
   border-bottom:1px solid var(--border-subtle);
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-direction:column;gap:16px;
 }
 .panel-title{
   display:flex;align-items:center;gap:12px;
 }
 .panel-title-icon{
-  width:36px;height:36px;border-radius:11px;
+  width:42px;height:42px;border-radius:13px;
   background:linear-gradient(135deg,#3b82f6,#6366f1);
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:18px;
+  color:#fff;font-size:20px;
   box-shadow:0 4px 14px rgba(59,130,246,.35);
 }
 .panel-title-text{
   display:flex;flex-direction:column;
 }
 .panel-title-text strong{
-  font-size:1.05rem;font-weight:800;color:var(--text-primary);line-height:1.2;
+  font-size:1.15rem;font-weight:800;color:var(--text-primary);line-height:1.3;
 }
 .panel-title-text small{
-  font-size:.7rem;color:var(--text-tertiary);font-weight:500;margin-top:3px;
+  font-size:.78rem;color:var(--text-tertiary);font-weight:500;margin-top:5px;
 }
 .filter-chips-wrap{
   display:flex;gap:6px;flex-wrap:wrap;
@@ -456,40 +422,36 @@ html[data-theme="light"] .stat-icon{
   background:rgba(255,255,255,.25);color:#fff;font-weight:700;
 }
 .panel-body{
-  padding:0 0 24px;
+  padding:0 0 28px;
 }
-
-/* 面板内提示条 */
 .panel-tip{
-  display:flex;align-items:center;gap:12px;
-  margin:0 24px 20px;
-  padding:12px 16px;
+  display:flex;align-items:center;gap:14px;
+  margin:20px 28px 24px;
+  padding:16px 20px;
   background:linear-gradient(90deg,rgba(59,130,246,.06),rgba(99,102,241,.04));
   border:1px solid rgba(59,130,246,.12);
-  border-radius:12px;
+  border-radius:14px;
 }
 .panel-tip-icon{
-  width:28px;height:28px;border-radius:9px;
+  width:32px;height:32px;border-radius:10px;
   background:rgba(59,130,246,.12);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-  color:#3b82f6;font-size:14px;
+  color:#3b82f6;font-size:16px;
 }
 .panel-tip-text{
   flex:1;
-  font-size:.78rem;line-height:1.5;color:var(--text-secondary);
+  font-size:.82rem;line-height:1.5;color:var(--text-secondary);
 }
 .panel-tip-text strong{
   color:var(--text-primary);font-weight:700;
 }
-
-/* ══ Provider Cards ══ */
 .provider-grid{
   display:grid;
   grid-template-columns:1fr;
   gap:14px;
   max-width:none;
-  margin:0 24px;
+  margin:0 28px;
 }
 .provider-card{
   background:var(--bg-surface);
@@ -505,7 +467,6 @@ html[data-theme="light"] .stat-icon{
   border-color:var(--border-default);
 }
 .provider-card.hidden{display:none;}
-
 .card-top{
   padding:22px 26px 18px;
   display:flex;align-items:center;gap:14px;
@@ -525,7 +486,7 @@ html[data-theme="light"] .stat-icon{
 .av-green{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 14px rgba(16,185,129,.3);}
 .av-indigo{background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 4px 14px rgba(99,102,241,.3);}
 .av-pink{background:linear-gradient(135deg,#ec4899,#db2777);box-shadow:0 4px 14px rgba(236,72,153,.3);}
-
+.av-slate{background:linear-gradient(135deg,#64748b,#475569);box-shadow:0 4px 14px rgba(100,116,139,.3);}
 .card-info{flex:1;min-width:0;padding-right:48px;}
 .card-provider-name{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .card-provider-note{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:6px;background:rgba(59,130,246,.1);color:#3b82f6;white-space:nowrap;}
@@ -534,10 +495,6 @@ html[data-theme="light"] .stat-icon{
   display:flex;align-items:center;gap:6px;
 }
 .meta-circle{width:5px;height:5px;border-radius:50%;}
-
-
-
-/* 折叠展开按钮 */
 .card-toggle{
   position:absolute;top:50%;right:18px;transform:translateY(-50%);
   width:30px;height:30px;border-radius:9px;
@@ -550,9 +507,7 @@ html[data-theme="light"] .stat-icon{
 .card-toggle svg{width:15px;height:15px;transition:transform .3s ease;}
 .provider-card:not(.collapsed) .card-toggle svg{transform:rotate(180deg);}
 .provider-card.collapsed .card-links{display:none;}
-
 .card-links{padding:0 22px 22px;display:flex;flex-direction:column;gap:8px;}
-
 .link-item{
   display:flex;align-items:center;gap:10px;
   padding:10px 14px;border-radius:12px;
@@ -563,7 +518,6 @@ html[data-theme="light"] .stat-icon{
 }
 .link-item:hover{background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.15);}
 .link-item:focus-visible{outline:2px solid #3b82f6;outline-offset:-2px;border-radius:12px;}
-
 .link-item .badge-tag{
   font-size:.65rem;font-weight:700;
   padding:4px 10px;border-radius:7px;
@@ -575,7 +529,6 @@ html[data-theme="light"] .stat-icon{
 .link-item .badge-tag.backup{
   background:rgba(100,116,139,.1);color:#64748b;
 }
-
 .link-item .url{
   flex:1;
   font-size:.8rem;font-weight:500;
@@ -583,7 +536,6 @@ html[data-theme="light"] .stat-icon{
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .link-item:hover .url{color:var(--text-primary);}
-
 .link-item .copy-btn{
   padding:7px 18px;border-radius:8px;
   border:1px solid rgba(59,130,246,.2);
@@ -594,8 +546,6 @@ html[data-theme="light"] .stat-icon{
 }
 .link-item .copy-btn:hover{background:#3b82f6;color:#fff;border-color:#3b82f6;}
 .copy-btn.done{background:#10b981;color:#fff;border-color:#10b981;}
-
-/* ══ Others: Image Gallery (Carousel) ══ */
 .gallery-carousel{
   position:relative;
   max-width:640px;margin:0 auto;
@@ -680,7 +630,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) .gallery-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#f1f5f9;}
 }
-/* 左右箭头（内嵌图片内部） */
 .carousel-arrow{
   position:absolute;top:50%;transform:translateY(-50%);
   width:36px;height:36px;border-radius:50%;
@@ -695,11 +644,9 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
 .carousel-arrow:hover{background:rgba(0,0,0,.45);}
 .carousel-arrow.prev{left:12px;}
 .carousel-arrow.next{right:12px;}
-/* 触摸设备始终显示 */
 @media(hover:none){
   .carousel-arrow{opacity:.85;}
 }
-/* 指示点 */
 .carousel-dots{
   display:flex;justify-content:center;gap:7px;
   margin-top:16px;flex-wrap:wrap;
@@ -714,13 +661,11 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   background:var(--brand-blue);
   width:22px;border-radius:4px;
 }
-/* 计数器 */
 .carousel-counter{
   text-align:center;
   font-size:.72rem;color:var(--text-tertiary);
   font-weight:600;margin-top:10px;
 }
-/* 缩略图导航条 */
 .carousel-thumbs{
   display:flex;gap:6px;
   overflow-x:auto;
@@ -769,8 +714,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   .carousel-actions{width:100%;}
   .gallery-btn{flex:1;justify-content:center;}
 }
-
-/* ══ Image Lightbox ══ */
 .lightbox{
   position:fixed;inset:0;z-index:2000;
   background:rgba(0,0,0,.92);
@@ -793,7 +736,7 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   display:flex;align-items:center;justify-content:center;
   transition:background .2s;
 }
-.lightbox-close:hover{background:rgba(255,255,255,.3);}
+.lightbox-close:hover{background:rgba(255,255,255,.25);}
 .lightbox-arrow{
   position:absolute;top:50%;transform:translateY(-50%);
   width:48px;height:48px;border-radius:50%;
@@ -810,19 +753,13 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   .lightbox-arrow.prev{left:8px;}
   .lightbox-arrow.next{right:8px;}
 }
-
-/* ══ Guide Cards ══ */
 .stepper-wrap{
   position:relative;padding:0 0 16px;
 }
-
-/* ══ 图文教程区 ══ */
 .tutorial-section{margin-top:-12px;}
 .tutorial-header{text-align:center;margin-bottom:20px;}
 .tutorial-header h3{font-size:1.05rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
 .tutorial-header p{font-size:.78rem;color:var(--text-tertiary);}
-
-/* ══ APP 分组卡片 ══ */
 .app-group{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .app-card{
   background:var(--bg-surface);border:1px solid var(--border-default);
@@ -844,8 +781,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
 .app-card.highlight .app-icon{background:linear-gradient(135deg,var(--brand-rose),var(--brand-amber));box-shadow:0 4px 12px rgba(244,63,94,.25);}
 .app-card-header h4{font-size:.95rem;font-weight:700;color:var(--text-primary);}
 .app-card-links{display:flex;flex-direction:column;gap:10px;}
-
-/* ══ Guide CTA 链接按钮（嵌套在 APP 卡片内） ══ */
 .guide-cta-card{
   border:1px solid var(--border-default);
   border-radius:var(--radius-md);
@@ -897,8 +832,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   }
   .guide-cta-card[data-phone]:hover .guide-cta-arrow{background:var(--brand-violet);}
 }
-
-/* ══ Download Section ══ */
 .dl-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
@@ -912,7 +845,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
   height:fit-content;align-self:start;
 }
 .dl-card h3{font-size:.95rem;font-weight:700;margin-bottom:16px;}
-
 .dl-link{
   display:flex;align-items:center;gap:14px;
   padding:14px 16px;background:var(--bg-subtle);
@@ -929,7 +861,6 @@ html[data-theme="dark"] .gallery-btn:hover{background:#f1f5f9;color:#0f172a;bord
 }
 .dl-link h4{font-size:.85rem;font-weight:600;margin-bottom:2px;}
 .dl-link p{font-size:.7rem;color:var(--text-tertiary);}
-
 .compat-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;}
 .compat-table{width:100%;border-collapse:collapse;}
 .compat-table th,.compat-table td{
@@ -944,7 +875,6 @@ html[data-theme="dark"] .dl-link-note{color:#ffffff;}
 @media(prefers-color-scheme:dark){
   html:not([data-theme]) .dl-link-note{color:#ffffff;}
 }
-
 .dl-note{
   margin-top:12px;padding:12px 16px;
   background:rgba(245,158,11,.06);
@@ -991,7 +921,6 @@ html[data-theme="dark"] .dl-note{
   align-items:center;
   height:calc(.78rem * 1.7);
 }
-/* 居中变体：图标+文字水平居中，文字可换行，宽度收缩到内容 */
 .dl-note-warning.dl-note-center{
   align-items:center;justify-content:center;
   text-align:center;flex-wrap:wrap;
@@ -1001,7 +930,6 @@ html[data-theme="dark"] .dl-note{
 .dl-note-warning.dl-note-center::before{
   height:auto;
 }
-/* 4K 平台标签 */
 .dl-note-platform-tags{
   display:inline-flex;flex-wrap:wrap;gap:5px;
   margin-left:8px;vertical-align:middle;
@@ -1036,7 +964,6 @@ html[data-theme="dark"] .dl-note-warning{
     color:#fcd34d;
   }
 }
-/* Custom note variants */
 .dl-note-gray{
   margin-top:0;margin-bottom:12px;
   background:rgba(107,114,128,.07);
@@ -1067,7 +994,6 @@ html[data-theme="dark"] .dl-note-blue{
     border-color:rgba(59,130,246,.25);
   }
 }
-/* Recommended badge */
 .badge-hot{
   display:inline-block;font-size:11px;
   background:linear-gradient(135deg,#ef4444,#dc2626);
@@ -1075,10 +1001,7 @@ html[data-theme="dark"] .dl-note-blue{
   vertical-align:middle;margin-left:4px;
   font-weight:600;letter-spacing:.5px;
 }
-/* dl-link-icon gradient variants */
 .dl-link-icon.av-orange{background:linear-gradient(135deg,#f59e0b,#d97706);}
-
-/* ══ Footer ══ */
 .footer{
   border-top:1px solid var(--border-default);
   padding:20px 24px;text-align:center;
@@ -1094,8 +1017,6 @@ html[data-theme="dark"] .dl-note-blue{
   background-clip:text;
 }
 .footer-text{font-size:.75rem;color:var(--text-tertiary);line-height:1.8;}
-
-/* ══ Toast ══ */
 .toast{
   position:fixed;bottom:32px;left:50%;
   transform:translateX(-50%) translateY(20px);
@@ -1109,8 +1030,6 @@ html[data-theme="dark"] .dl-note-blue{
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast-dot{width:7px;height:7px;border-radius:50%;background:var(--brand-emerald);}
-
-/* ══ Modals ══ */
 .modal-overlay{
   display:none;position:fixed;inset:0;
   background:rgba(15,23,42,.6);
@@ -1160,7 +1079,6 @@ html[data-theme="dark"] .dl-note-blue{
   background:var(--bg-subtle);
   display:block;
 }
-/* 图片加载失败占位 */
 .img-fallback{
   width:100%;min-height:80px;border-radius:var(--radius-sm);
   border:1px dashed var(--border-default);
@@ -1169,8 +1087,6 @@ html[data-theme="dark"] .dl-note-blue{
   color:var(--text-tertiary);font-size:.8rem;
   padding:20px;
 }
-
-/* ══ Responsive — 860px ══ */
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;gap:40px;padding:48px 20px 40px;}
   .hero-preview{width:100%;max-width:none;margin:0;}
@@ -1181,8 +1097,6 @@ html[data-theme="dark"] .dl-note-blue{
   .link-item .copy-btn{opacity:1;}
   .guide-cta-arrow{display:none;}
 }
-
-/* ══ Responsive — 640px ══ */
 @media(max-width:640px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
@@ -1200,9 +1114,6 @@ html[data-theme="dark"] .dl-note-blue{
   .card-avatar svg{width:20px;height:20px;}
   .card-info{padding-right:42px;}
   .card-provider-name{font-size:.85rem;}
-
-
-
   .card-provider-note{font-size:.6rem;padding:2px 6px;}
   .link-item{padding:8px 10px;gap:8px;}
   .link-item .badge-tag{font-size:.6rem;padding:3px 7px;border-radius:6px;}
@@ -1221,8 +1132,6 @@ html[data-theme="dark"] .dl-note-blue{
   .guide-cta-card{padding:22px 20px;gap:16px;}
   .guide-cta-card h4{font-size:1rem;}
 }
-
-/* ══ Responsive — 480px ══ */
 @media(max-width:480px){
   .hero{padding:36px 16px 28px;}
   .hero-text h1{font-size:1.6rem;}
@@ -1263,14 +1172,9 @@ html[data-theme="dark"] .dl-note-blue{
   .card-info{padding-right:38px;}
   .card-provider-name{font-size:.8rem;}
   .card-provider-note{font-size:.56rem;padding:2px 5px;}
-
-
-
   .card-toggle{right:12px;width:26px;height:26px;border-radius:7px;}
   .card-toggle svg{width:13px;height:13px;}
 }
-
-/* ══ Responsive — 380px ══ */
 @media(max-width:380px){
   .stats-grid{grid-template-columns:1fr 1fr;gap:6px;}
   .stat-card{padding:10px 8px;}
@@ -1292,17 +1196,11 @@ html[data-theme="dark"] .dl-note-blue{
   .card-info{padding-right:34px;}
   .card-provider-name{font-size:.76rem;}
   .card-provider-note{font-size:.52rem;padding:1px 4px;}
-
-
-
   .card-toggle{right:10px;width:24px;height:24px;border-radius:6px;}
   .card-toggle svg{width:12px;height:12px;}
   .card-links{padding:0 14px 14px;gap:6px;}
-  /* 极小屏强制单列，防止 minmax(340px) 溢出 */
   .provider-grid,.dl-grid{grid-template-columns:1fr;}
 }
-
-/* ══ Responsive — 极小屏 340px（双折叠折叠态） ══ */
 @media(max-width:340px){
   .stats-grid{grid-template-columns:1fr 1fr;gap:4px;}
   .stat-card{padding:8px 6px;}
@@ -1311,16 +1209,12 @@ html[data-theme="dark"] .dl-note-blue{
   .stat-label{font-size:.58rem;}
   .hero-text h1{font-size:1.3rem;}
 }
-
-/* ══ Responsive — 横屏手机 860~1100px（iPhone Pro Max 横屏等） ══ */
 @media(min-width:861px) and (max-width:1100px) and (orientation:landscape) and (max-height:500px){
   .stats-grid{grid-template-columns:repeat(4,1fr);gap:12px;}
   .stat-card{padding:14px 12px;}
   .stat-value{font-size:1.4rem;}
   .stat-icon{width:26px;height:26px;font-size:1.1rem;margin-bottom:6px;}
 }
-
-/* ══ Responsive — 超宽屏 1600px+（三折叠全展开/4K显示器） ══ */
 @media(min-width:1600px){
   .stats-grid{gap:24px;}
   .stat-card{padding:32px;}
@@ -1328,8 +1222,6 @@ html[data-theme="dark"] .dl-note-blue{
   .stat-icon{width:40px;height:40px;font-size:1.6rem;margin-bottom:14px;}
   .stat-label{font-size:.88rem;}
 }
-
-/* ══ Accessibility: Reduced Motion ══ */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.01ms !important;
@@ -1338,9 +1230,6 @@ html[data-theme="dark"] .dl-note-blue{
   }
   html{scroll-behavior:auto;}
 }
-
-/* ══ Dark Mode Element Overrides ══ */
-/* Auto dark mode element styles (when no manual preference is set) */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
   html:not([data-theme]) .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
@@ -1370,7 +1259,6 @@ html[data-theme="dark"] .dl-note-blue{
   html:not([data-theme]) .mobile-overlay{background:rgba(0,0,0,.65);}
   html:not([data-theme]) .hamburger span{background:#f1f5f9;}
   html:not([data-theme]) .toast{background:#f1f5f9;color:#0f172a;}
-  /* Guide CTA cards - dark mode */
   html:not([data-theme]) .guide-cta-card{box-shadow:0 4px 16px rgba(59,130,246,.12), 0 1px 3px rgba(0,0,0,.2);}
   html:not([data-theme]) .guide-cta-card[data-tv]{background:linear-gradient(135deg, rgba(59,130,246,.07), rgba(30,41,59,.8));}
   html:not([data-theme]) .guide-cta-card[data-phone]{background:linear-gradient(135deg, rgba(139,92,246,.07), rgba(30,41,59,.8));}
@@ -1381,8 +1269,6 @@ html[data-theme="dark"] .dl-note-blue{
     html:not([data-theme]) .guide-cta-card[data-phone]:hover .guide-cta-arrow{background:var(--brand-violet);color:#fff;}
   }
 }
-
-/* Manual dark mode element styles (user explicitly picked dark) */
 html[data-theme="dark"] .navbar{background:rgba(15,23,42,.50);border-bottom-color:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 1px 3px rgba(0,0,0,.2);}
 html[data-theme="dark"] .hero-badge{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.25);color:#93c5fd;}
 html[data-theme="dark"] .provider-card:hover{border-color:#475569;}
@@ -1412,7 +1298,6 @@ html[data-theme="dark"] .mobile-nav-link:hover{background:#f1f5f9;color:#0f172a;
 html[data-theme="dark"] .mobile-overlay{background:rgba(0,0,0,.65);}
 html[data-theme="dark"] .hamburger span{background:#f1f5f9;}
 html[data-theme="dark"] .toast{background:#f1f5f9;color:#0f172a;}
-/* Guide CTA cards - manual dark mode */
 html[data-theme="dark"] .guide-cta-card{box-shadow:0 4px 16px rgba(59,130,246,.12), 0 1px 3px rgba(0,0,0,.2);}
 html[data-theme="dark"] .guide-cta-card[data-tv]{background:linear-gradient(135deg, rgba(59,130,246,.07), rgba(30,41,59,.8));}
 html[data-theme="dark"] .guide-cta-card[data-phone]{background:linear-gradient(135deg, rgba(139,92,246,.07), rgba(30,41,59,.8));}
@@ -1425,8 +1310,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
 </style>
 </head>
 <body>
-
-<!-- ══ Navbar ══ -->
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
     <div class="nav-logo">
@@ -1446,16 +1329,12 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="切换深色模式">🌙</button>
   </div>
 </nav>
-
-<!-- Mobile Drawer -->
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 <div class="mobile-drawer" id="mobileDrawer">
   <button class="mobile-nav-link active" data-tab="interfaces" onclick="mobileSwitch('interfaces',this)">📡 浏览接口</button>
   <button class="mobile-nav-link" data-tab="guide-download" onclick="mobileSwitch('guide-download',this)">📖 软件下载与教程</button>
   <button class="mobile-nav-link" data-tab="others" onclick="mobileSwitch('others',this)">🖼️ 图床壁纸</button>
 </div>
-
-<!-- ══ Hero ══ -->
 <section class="hero">
   <div class="hero-text">
     <div class="hero-badge">
@@ -1508,8 +1387,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 </section>
-
-<!-- ══ Stats ══ -->
 <section class="stats-section">
   <div class="stats-grid">
     <div class="stat-card">
@@ -1534,29 +1411,21 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 </section>
-
-<!-- ══ Content ══ -->
 <div class="content-wrap">
-
-  <!-- ── 点播接口 ── -->
   <div id="interfaces" class="section active">
     <div class="sec-header">
       <div class="sec-label">Streaming Sources</div>
       <h2 class="sec-title">点播接口</h2>
       <p class="sec-desc">点击行末「复制」按钮，链接自动写入剪贴板</p>
     </div>
-
     <div class="interface-panel">
       <div class="panel-header">
         <div class="panel-title">
           <div class="panel-title-icon">📡</div>
           <div class="panel-title-text">
             <strong>接口源</strong>
-            <small>共 8 个提供商 · 25 条线路</small>
+            <small>共 9 个提供商 · 28 条线路</small>
           </div>
-        </div>
-        <div class="filter-chips-wrap" id="filterChipsWrap">
-          <!-- 筛选按钮由 JS 动态生成 -->
         </div>
       </div>
       <div class="panel-body">
@@ -1564,45 +1433,33 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
           <div class="panel-tip-icon">💡</div>
           <div class="panel-tip-text"><strong>使用提示：</strong>如主力线路接口配置失效，请更换下方备用接口，推荐每条接口的主力线路都添加到影视软件中使用，以防资源失效。</div>
         </div>
-
         <div class="provider-grid" id="providerGrid">
-      <!-- 接口卡片由 JS 动态渲染 -->
         </div>
       </div>
     </div>
   </div>
-
-  <!-- ── 下载与教程（合并） ── -->
   <div id="guide-download" class="section">
     <div class="sec-header">
       <div class="sec-label">Guide &amp; Download</div>
       <h2 class="sec-title">下载与教程</h2>
       <p class="sec-desc">双端软件下载 · 图文详细教程</p>
     </div>
-
-    <!-- 子标签 -->
     <div class="sub-tabs">
       <button class="sub-tab active" data-sub="download" onclick="switchSub('download')">📦 软件下载</button>
       <button class="sub-tab" data-sub="guide" onclick="switchSub('guide')">📖 使用指南</button>
     </div>
-
-    <!-- ── 子面板：使用指南 ── -->
     <div class="sub-panel" id="panel-guide">
-      <!-- 4K 网盘授权提示 -->
       <div class="stepper-wrap">
         <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
           4K 画质需用网盘扫码授权<span class="dl-note-platform-tags"><span class="ptag">夸克</span><span class="ptag">迅雷</span><span class="ptag">UC</span><span class="ptag">阿里</span><span class="ptag">百度</span></span>
         </div>
       </div>
-
-      <!-- 图文教程区 -->
       <div class="tutorial-section">
         <div class="tutorial-header">
           <h3>📸 图文教程</h3>
           <p>步骤截图，一看就会</p>
         </div>
         <div class="app-group">
-          <!-- OK影视APP -->
           <div class="app-card">
             <div class="app-card-header">
               <div class="app-icon">🎬</div>
@@ -1621,7 +1478,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
               </a>
             </div>
           </div>
-          <!-- 影视仓APP -->
           <div class="app-card highlight">
             <div class="app-card-header">
               <div class="app-icon">🎬</div>
@@ -1638,8 +1494,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
         </div>
       </div>
     </div>
-
-    <!-- ── 子面板：软件下载 ── -->
     <div class="sub-panel active" id="panel-download">
       <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:20px;">
         电视机通常为 32 位系统，Windows（电脑）为 64 位系统，需下载模拟器（雷电模拟器、mumu模拟器）影视仓、OK影视均支持电视以及电脑模拟器。
@@ -1655,7 +1509,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
             <div><h4>UC网盘</h4><p class="dl-link-note">下载Pro版本</p></div>
           </a>
         </div>
-
         <div class="dl-card">
           <h3>🎬 影视仓APP下载地址 <span class="badge-hot">推荐</span></h3>
           <div class="dl-note dl-note-blue">
@@ -1666,7 +1519,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
             <div><h4>蓝奏云</h4><p class="dl-link-note">密码：11</p></div>
           </a>
         </div>
-
         <div class="dl-card">
           <h3>📋 系统兼容性</h3>
           <div class="compat-table-wrap">
@@ -1685,47 +1537,32 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
       </div>
     </div>
   </div>
-
-  <!-- ── 图床壁纸 ── -->
   <div id="others" class="section">
     <div class="sec-header">
       <div class="sec-label">Others</div>
       <h2 class="sec-title">图床壁纸</h2>
       <p class="sec-desc">图床图片分享 · 点击图片可放大预览 · 支持复制链接</p>
     </div>
-
-    <!-- 使用提示 -->
     <div class="dl-note dl-note-warning dl-note-center" style="margin-bottom:28px;">
       使用说明：点击缩略图可放大预览，点击「复制」可获取图片直链，方便在影视软件壁纸处或其他场景中使用。(非必要可直接无视)。
     </div>
-
     <div class="gallery-carousel" id="galleryCarousel">
-      <!-- 轮播图由 JS 动态渲染 -->
     </div>
   </div>
-
 </div>
-
-<!-- ══ Footer ══ -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span>劉Ok</span>の导航站</div>
     <p class="footer-text">© 2026 影视API导航站 · 仅供学习交流，请勿用于商业用途<br>所有接口均来自网络，与本站作者无关</p>
   </div>
 </footer>
-
-<!-- Toast -->
 <div class="toast" id="toast"><span class="toast-dot"></span>链接已复制到剪贴板</div>
-
-<!-- Image Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-arrow prev" onclick="event.stopPropagation();lightboxPrev(event)" aria-label="上一张">‹</button>
   <button class="lightbox-arrow next" onclick="event.stopPropagation();lightboxNext(event)" aria-label="下一张">›</button>
   <img id="lightboxImg" src="" alt="预览大图">
 </div>
-
-<!-- ══ 电视端教程弹窗 ══ -->
 <div class="modal-overlay" id="tvModal">
   <div class="modal">
     <div class="modal-header">
@@ -1762,8 +1599,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 </div>
-
-<!-- ══ 手机端教程弹窗 ══ -->
 <div class="modal-overlay" id="phoneModal">
   <div class="modal">
     <div class="modal-header">
@@ -1796,8 +1631,6 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 </div>
-
-<!-- ══ 影视仓 电视端教程弹窗（待补充图片） ══ -->
 <div class="modal-overlay" id="yscTvModal">
   <div class="modal">
     <div class="modal-header">
@@ -1810,37 +1643,30 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
           <div class="modal-step-title">Step 01 · 点击配置按钮</div>
           <img src="images/cc1.png?v=2" alt="步骤一" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 02 · 进入配置界面</div>
           <img src="images/cc2.png?v=2" alt="步骤二" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 03 · 手机端复制接口</div>
           <img src="images/cc3.png?v=2" alt="步骤三" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 04 · 主界面</div>
           <img src="images/cc4.png?v=2" alt="步骤四" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 05 · 点击设置</div>
           <img src="images/cc5.png?v=2" alt="步骤五" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 06 · 点击影视仓实验室</div>
           <img src="images/cc6.png?v=2" alt="步骤六" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 07 · 开启软件去广告功能</div>
           <img src="images/cc7.png?v=2" alt="步骤七" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
         </div>
-
         <div class="modal-step">
           <div class="modal-step-title">Step 08 · 成功界面</div>
           <img src="images/cc8.png?v=2" alt="步骤八" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败，请刷新重试</div>'">
@@ -1849,9 +1675,7 @@ html[data-theme="dark"] .guide-cta-arrow{background:#233044;color:#94a3b8;}
     </div>
   </div>
 </div>
-
 <script>
-/* ══ Tab Switching ══ */
 function switchTab(id, delay){
   document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('.nav-link').forEach(function(b){ b.classList.remove('active'); });
@@ -1864,7 +1688,6 @@ function switchTab(id, delay){
   });
   var heroBtn = document.querySelector('.btn-hero[data-tab="'+id+'"]');
   if(heroBtn){ heroBtn.classList.remove('btn-outline'); heroBtn.classList.add('btn-primary'); }
-  /* 同步移动端导航激活状态 */
   document.querySelectorAll('.mobile-nav-link').forEach(function(b){
     b.classList.toggle('active', b.getAttribute('data-tab') === id);
   });
@@ -1873,8 +1696,6 @@ function switchTab(id, delay){
     if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
   }, d);
 }
-
-/* ══ Sub Tab Switch (inside merged section) ══ */
 function switchSub(id){
   document.querySelectorAll('.sub-tab').forEach(function(b){
     b.classList.toggle('active', b.getAttribute('data-sub') === id);
@@ -1885,8 +1706,6 @@ function switchSub(id){
   var panel = document.getElementById('panel-' + id);
   if(panel) panel.classList.add('active');
 }
-
-/* ══ Mobile Menu ══ */
 function toggleMobileMenu(){
   document.getElementById('hamburgerBtn').classList.toggle('open');
   document.getElementById('mobileDrawer').classList.toggle('open');
@@ -1898,8 +1717,6 @@ function mobileSwitch(id, btn){
   if(btn) btn.classList.add('active');
   switchTab(id, 350);
 }
-
-/* ══ Copy URL ══ */
 function copyUrl(row){
   var url = row.getAttribute('data-url');
   if(!url) return;
@@ -1922,7 +1739,6 @@ function copyUrl(row){
     document.body.removeChild(t);
   }
 }
-
 var _toastTimer = null;
 function showToast(){
   var t = document.getElementById('toast');
@@ -1931,9 +1747,6 @@ function showToast(){
   clearTimeout(_toastTimer);
   _toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2400);
 }
-
-/* ══ Data-driven Rendering ══ */
-/* SVG 图标定义，按 provider id 映射 */
 var PROVIDER_ICONS = {
   wang: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5" r="2"/><path d="M5 7v6"/><path d="M3 11l2 3M7 11l-2 3"/><path d="M5 8l4 1"/><path d="M9 9q2 2 3 5"/><rect x="13" y="9" width="8" height="5" rx="2.5" fill="#fff" stroke="none"/><circle cx="16" cy="6" r="2.8" fill="#fff" stroke="none"/><path d="M14 4l-1.5-1.5M18 4l1.5-1.5" stroke="#fff" stroke-width="1.8"/><path d="M13 14v3M15 14v3M18 14v3M20 14v3" stroke="#fff" stroke-width="1.5"/><path d="M21 10q1-1 0-2" stroke="#fff" stroke-width="1.5"/></svg>',
   fan: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2H4v2Z"/><ellipse cx="12" cy="15" rx="10" ry="4" fill="#fff" stroke="none"/><path d="M2 15q0 2 3 3M22 15q0 2-3 3"/><path d="M9 14v-3q0-1 .5-1.5M12 14v-4q0-1 .5-1M15 14v-3q0-1-.5-1.5"/><path d="M8 8q1-3 4-3t4 3"/></svg>',
@@ -1942,13 +1755,11 @@ var PROVIDER_ICONS = {
   fei: '<svg viewBox="0 0 24 24" fill="#fff" stroke="#fff" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l2 7H4l2 5c0 4 2.5 6 6 6s6-2 6-6l2-5h-2l2-7-5 4H9z" fill="#fff" fill-opacity=".9"/><circle cx="9.5" cy="12" r="1.3" fill="#f97316"/><circle cx="14.5" cy="12" r="1.3" fill="#f97316"/><ellipse cx="12" cy="14" rx="1.2" ry=".8" fill="#f97316"/><path d="M7 14l-3 1" stroke-width=".8"/><path d="M7 15l-2.5 1.5" stroke-width=".8"/><path d="M17 14l3 1" stroke-width=".8"/><path d="M17 15l2.5 1.5" stroke-width=".8"/></svg>',
   xs: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
   og: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2" fill="#fff" stroke="none"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg>',
-  ogx: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a6 6 0 0 1 6 6"/><path d="M2 10a8 8 0 0 1 8 8"/><circle cx="12" cy="12" r="1.5" fill="#fff" stroke="none"/><path d="m4.5 19.5 7-7"/><path d="M13 3l4 4M15 1l6 6"/></svg>'
+  ogx: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a6 6 0 0 1 6 6"/><path d="M2 10a8 8 0 0 1 8 8"/><circle cx="12" cy="12" r="1.5" fill="#fff" stroke="none"/><path d="m4.5 19.5 7-7"/><path d="M13 3l4 4M15 1l6 6"/></svg>',
+  aowu: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5 7 3 5 5"/><path d="M14 5l3-2 2 2"/><path d="M5 9c-1.5 1-2 2.5-2 4 0 3 2.5 5 5.5 5h7c3 0 5.5-2 5.5-5 0-1.5-.5-3-2-4"/><circle cx="9" cy="12" r="1" fill="#fff"/><circle cx="15" cy="12" r="1" fill="#fff"/><path d="M10 15c.5.5 1 .8 2 .8s1.5-.3 2-.8"/><ellipse cx="12" cy="16.5" rx="1.2" ry=".8" fill="#fff"/></svg>'
 };
-
 var _providersData = [];
 var _currentFilter = 'all';
-
-/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
 var SITE_DATA = {
   "providers": [
     {
@@ -2033,6 +1844,19 @@ var SITE_DATA = {
       ]
     },
     {
+      "id": "aowu",
+      "name": "嗷呜",
+      "note": "全高清+4K",
+      "emoji": "🌙",
+      "avatarClass": "av-slate",
+      "metaColor": "#64748b",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://www.英格里希嗷呜.top/tv", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://itv666.cc/aowu/config.webp" },
+        { "label": "☁️ 备用线路3", "url": "https://9763.kstore.vip/aowu.json" }
+      ]
+    },
+    {
       "id": "og",
       "name": "讴歌多仓",
       "note": "全高清+4K",
@@ -2058,20 +1882,12 @@ var SITE_DATA = {
     }
   ]
 };
-/* ====== 接口数据结束 ====== */
-
-/* 直接渲染（同步执行，零延迟零闪烁） */
 _providersData = SITE_DATA.providers;
 renderAll();
-
-/* 渲染全部：统计 + 筛选按钮 + 卡片 */
 function renderAll(){
   renderStats();
-  renderFilterBar();
   renderCards(_currentFilter);
 }
-
-/* 更新统计数字 */
 function renderStats(){
   var totalLinks = 0;
   _providersData.forEach(function(p){ totalLinks += p.links.length; });
@@ -2092,8 +1908,6 @@ function animateNumber(el, target){
   }
   requestAnimationFrame(step);
 }
-
-/* 渲染筛选按钮 */
 function renderFilterBar(){
   var wrap = document.getElementById('filterChipsWrap');
   if(!wrap) return;
@@ -2105,7 +1919,6 @@ function renderFilterBar(){
   });
   wrap.innerHTML = html;
   var bar = document.getElementById('filterBar');
-  /* 绑定筛选事件 */
   wrap.querySelectorAll('.filter-chip').forEach(function(chip){
     chip.addEventListener('click', function(){
       wrap.querySelectorAll('.filter-chip').forEach(function(c){ c.classList.remove('active'); });
@@ -2115,12 +1928,9 @@ function renderFilterBar(){
     });
   });
 }
-
-/* 渲染接口卡片 */
 function renderCards(filter){
   var grid = document.getElementById('providerGrid');
   if(!grid) return;
-  /* 先移除旧卡片 */
   grid.querySelectorAll('.provider-card').forEach(function(c){ c.remove(); });
   _providersData.forEach(function(provider){
     if(filter !== 'all' && provider.id !== filter) return;
@@ -2142,7 +1952,6 @@ function renderCards(filter){
         '<div class="card-provider-name">' + provider.name + (provider.note ? '<span class="card-provider-note">' + provider.note + '</span>' : '') + '</div>' +
         '<div class="card-provider-meta"><span class="meta-circle" style="background:' + provider.metaColor + ';"></span>' + provider.links.length + ' 个接口可用</div>' +
       '</div>' +
-      
       '<button class="card-toggle" onclick="event.stopPropagation();toggleCard(this.closest(\'.card-top\'))">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>' +
       '</button>' +
@@ -2151,15 +1960,10 @@ function renderCards(filter){
     grid.appendChild(card);
   });
 }
-
-/* 折叠/展开卡片 */
 function toggleCard(headerEl){
   var card = headerEl.closest('.provider-card');
   if(card) card.classList.toggle('collapsed');
 }
-
-/* ══ Others: Image Gallery ══ */
-/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
 var GALLERY_URLS = [
   "https://pic1.imgdb.cn/i/033wlKD4ZTB5cZrH62XHZM.png",
   "https://pic1.imgdb.cn/i/0xJyZydu7qeHMUMOfWlRrh",
@@ -2196,9 +2000,6 @@ var GALLERY_URLS = [
   "https://pic1.imgdb.cn/i/033whDeyGL7JxQdc3sqCGf.webp",
   "https://pic1.imgdb.cn/i/5i675oaNva3c5RVOnmJh9k"
 ];
-/* ====== 图床数据结束 ====== */
-
-/* 从 URL 自动提取文件名作为标题 */
 function getGalleryTitle(url){
   try {
     var path = url.split('?')[0].split('#')[0];
@@ -2207,18 +2008,13 @@ function getGalleryTitle(url){
     return decodeURIComponent(name);
   } catch(e){ return url; }
 }
-
-/* 将 URL 列表转换为渲染数据 */
 function getGalleryData(){
   return GALLERY_URLS.map(function(url){
     return { title: getGalleryTitle(url), desc: '', url: url };
   });
 }
-
-/* 渲染轮播图 */
 var _carouselIndex = 0;
 var _carouselData = [];
-
 function renderGallery(){
   var container = document.getElementById('galleryCarousel');
   if(!container) return;
@@ -2228,8 +2024,6 @@ function renderGallery(){
     return;
   }
   _carouselIndex = 0;
-
-  /* 生成幻灯片 */
   var slidesHtml = '';
   _carouselData.forEach(function(item, idx){
     var safeUrl = item.url.replace(/"/g, '&quot;');
@@ -2243,8 +2037,6 @@ function renderGallery(){
       '</div>' +
     '</div>';
   });
-
-  /* 生成缩略图 */
   var thumbsHtml = '';
   _carouselData.forEach(function(item, idx){
     var safeUrl = item.url.replace(/"/g, '&quot;');
@@ -2253,7 +2045,6 @@ function renderGallery(){
       '<div class="thumb-ph" style="display:none;">🖼️</div>' +
     '</div>';
   });
-
   container.innerHTML =
     '<div class="carousel-stage">' +
       '<button class="carousel-arrow prev" onclick="prevSlide()" aria-label="上一张">‹</button>' +
@@ -2273,30 +2064,21 @@ function renderGallery(){
     '</div>' +
     '<div class="carousel-counter" id="carouselCounter">1 / ' + _carouselData.length + '</div>' +
     '<div class="carousel-thumbs" id="carouselThumbs">' + thumbsHtml + '</div>';
-
   updateCarousel();
 }
-
-/* 复制当前壁纸链接 */
 function copyCurrentGalleryUrl(btn){
   if(_carouselData[_carouselIndex]) copyGalleryUrl(btn, _carouselData[_carouselIndex].url);
 }
-/* 预览当前壁纸 */
 function previewCurrentGallery(){
   if(_carouselData[_carouselIndex]) openLightbox(_carouselData[_carouselIndex].url);
 }
-
-/* 更新轮播状态 */
 function updateCarousel(){
   var track = document.getElementById('carouselTrack');
   if(track) track.style.transform = 'translateX(-' + (_carouselIndex * 100) + '%)';
-  /* 重置复制按钮文本 */
   var copyBtn = document.getElementById('carouselCopyBtn');
   if(copyBtn) copyBtn.textContent = '📋 复制';
-  /* 更新计数器 */
   var counter = document.getElementById('carouselCounter');
   if(counter) counter.textContent = (_carouselIndex + 1) + ' / ' + _carouselData.length;
-  /* 更新缩略图高亮并滚动到当前项 */
   var thumbs = document.getElementById('carouselThumbs');
   if(thumbs){
     thumbs.querySelectorAll('.carousel-thumb-item').forEach(function(t, i){
@@ -2316,26 +2098,18 @@ function updateCarousel(){
     }
   }
 }
-
-/* 切换到上一张（循环） */
 function prevSlide(){
   _carouselIndex = (_carouselIndex - 1 + _carouselData.length) % _carouselData.length;
   updateCarousel();
 }
-
-/* 切换到下一张（循环） */
 function nextSlide(){
   _carouselIndex = (_carouselIndex + 1) % _carouselData.length;
   updateCarousel();
 }
-
-/* 跳转到指定张 */
 function goToSlide(idx){
   _carouselIndex = idx;
   updateCarousel();
 }
-
-/* 键盘左右键切换（lightbox 打开时切换预览图，否则切换轮播图） */
 document.addEventListener('keydown', function(e){
   var lb = document.getElementById('lightbox');
   if(lb && lb.classList.contains('open')){
@@ -2348,8 +2122,6 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'ArrowLeft') prevSlide();
   else if(e.key === 'ArrowRight') nextSlide();
 });
-
-/* 触摸滑动支持 */
 (function initCarouselSwipe(){
   document.addEventListener('touchstart', function(e){
     var othersSection = document.getElementById('others');
@@ -2369,8 +2141,6 @@ document.addEventListener('keydown', function(e){
   }, {passive:true});
 })();
 var _swipeStartX = null;
-
-/* 复制图片链接 */
 function copyGalleryUrl(btn, url){
   var originalText = btn.textContent;
   function ok(){
@@ -2391,8 +2161,6 @@ function fallbackCopyGallery(url, ok){
   try { document.execCommand('copy'); ok(); } catch(e) {}
   document.body.removeChild(t);
 }
-
-/* 图片放大预览 */
 var _lightboxIndex = -1;
 function openLightbox(url){
   var lb = document.getElementById('lightbox');
@@ -2411,7 +2179,6 @@ function closeLightbox(e){
   if(e && e.target && e.target.id !== 'lightbox' && !e.target.classList.contains('lightbox-close')) return;
   var lb = document.getElementById('lightbox');
   if(lb) lb.classList.remove('open');
-  /* 关闭时同步轮播图到当前预览的图片 */
   if(_lightboxIndex >= 0 && _lightboxIndex < _carouselData.length){
     _carouselIndex = _lightboxIndex;
     updateCarousel();
@@ -2431,15 +2198,10 @@ function lightboxNext(e){
   var img = document.getElementById('lightboxImg');
   if(img) img.src = _carouselData[_lightboxIndex].url;
 }
-
-/* 初始化轮播图 */
 renderGallery();
-
-/* ══ Guide Modals ══ */
 var tvModal = document.getElementById('tvModal');
 var phoneModal = document.getElementById('phoneModal');
 var yscTvModal = document.getElementById('yscTvModal');
-
 document.getElementById('openTvModal').addEventListener('click', function(e){
   e.preventDefault(); if(tvModal) tvModal.classList.add('open');
 });
@@ -2449,19 +2211,15 @@ document.getElementById('openPhoneModal').addEventListener('click', function(e){
 document.getElementById('openYscTvModal').addEventListener('click', function(e){
   e.preventDefault(); if(yscTvModal) yscTvModal.classList.add('open');
 });
-
 function closeModal(id){
   var el = document.getElementById(id);
   if(el) el.classList.remove('open');
 }
-
 document.querySelectorAll('.modal-overlay').forEach(function(overlay){
   overlay.addEventListener('click', function(e){
     if(e.target === overlay) overlay.classList.remove('open');
   });
 });
-
-/* ══ Theme Toggle ══ */
 function applyTheme(isDark){
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   var btn = document.getElementById('themeToggle');
@@ -2475,8 +2233,6 @@ function toggleTheme(){
   applyTheme(!isDark);
   try { localStorage.setItem('theme', !isDark ? 'dark' : 'light'); } catch(e){}
 }
-
-/* ══ Init Theme ══ */
 (function initTheme(){
   var saved = null;
   try { saved = localStorage.getItem('theme'); } catch(e){}
@@ -2505,8 +2261,6 @@ function toggleTheme(){
     } catch(e){}
   }
 })();
-/* ══ Keyboard Accessibility ══ */
-// Escape key closes any open modal
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
     document.querySelectorAll('.modal-overlay.open').forEach(function(m){ m.classList.remove('open'); });
@@ -2514,7 +2268,6 @@ document.addEventListener('keydown', function(e){
     if(lb) lb.classList.remove('open');
   }
 });
-// Enter/Space triggers click on .link-item for keyboard users
 document.addEventListener('keydown', function(e){
   if((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('link-item')){
     e.preventDefault();

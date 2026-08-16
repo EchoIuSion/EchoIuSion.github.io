@@ -82,6 +82,19 @@
       ]
     },
     {
+      "id": "aowu",
+      "name": "嗷呜",
+      "note": "全高清+4K",
+      "emoji": "🌙",
+      "avatarClass": "av-slate",
+      "metaColor": "#64748b",
+      "links": [
+        { "label": "🚀 主力线路", "url": "http://www.英格里希嗷呜.top/tv", "recommended": true },
+        { "label": "☁️ 备用线路2", "url": "http://itv666.cc/aowu/config.webp" },
+        { "label": "☁️ 备用线路3", "url": "https://9763.kstore.vip/aowu.json" }
+      ]
+    },
+    {
       "id": "og",
       "name": "讴歌多仓",
       "note": "全高清+4K",
