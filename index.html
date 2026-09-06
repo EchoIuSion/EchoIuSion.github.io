@@ -1064,8 +1064,267 @@ document.addEventListener('keydown', e => {
 /* ===========================
    数据加载：fetch 优先 → 内嵌兜底
    =========================== */
-let EMBEDDED_PROVIDERS = [];
-let EMBEDDED_GALLERY = [];
+/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
+var SITE_DATA = {
+  "providers": [
+    {
+      "id": "wang",
+      "name": "王二小放牛娃",
+      "note": "4K画质网盘首选",
+      "emoji": "🐮",
+      "avatarClass": "av-blue",
+      "metaColor": "var(--brand-blue)",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "https://9280.kstore.vip/aiwex.json",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://9280.kstore.space/aiwex.json"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://ai.xn--4kq62z5rby2qupq9ub.top/"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://new.王二小放牛娃.top"
+        },
+        {
+          "label": "☁️ 备用线路5",
+          "url": "http://new.999888123.xyz"
+        },
+        {
+          "label": "☁️ 备用线路6",
+          "url": "http://new.999888987.xyz"
+        }
+      ]
+    },
+    {
+      "id": "mi",
+      "name": "小米",
+      "note": "全高清+4K",
+      "emoji": "🍚",
+      "avatarClass": "av-rose",
+      "metaColor": "var(--brand-rose)",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "https://www.tangsan.fun/tv/DANMU.json",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://sscq-pay.kingnet.com/static/test.json"
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json"
+        }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "摸鱼",
+      "note": "全高清+4K",
+      "emoji": "🐟",
+      "avatarClass": "av-teal",
+      "metaColor": "#14b8a6",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://摸鱼儿.cc",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://我不是.摸鱼儿.cc"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://我不是.摸鱼儿.top"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://www.小不点.com"
+        }
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "饭太硬",
+      "note": "全高清+4K",
+      "emoji": "🍙",
+      "avatarClass": "av-amber",
+      "metaColor": "#8b5cf6",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://fty.333232.xyz/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://fty.888484.xyz/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://fty.xxooo.cf/tv"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://www.饭太硬.art/tv"
+        },
+        {
+          "label": "☁️ 备用线路5",
+          "url": "http://www.饭太硬.net/tv"
+        }
+      ]
+    },
+    {
+      "id": "fei",
+      "name": "肥猫",
+      "note": "全高清+4K",
+      "emoji": "🐱",
+      "avatarClass": "av-violet",
+      "metaColor": "#f97316",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://肥猫.net/",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://肥猫.net/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "https://w.junce.dpdns.org/fm.gif"
+        }
+      ]
+    },
+    {
+      "id": "xs",
+      "name": "潇洒",
+      "note": "全高清+4K",
+      "emoji": "🍃",
+      "avatarClass": "av-green",
+      "metaColor": "#10b981",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json",
+          "recommended": true
+        }
+      ]
+    },
+    {
+      "id": "aowu",
+      "name": "嗷呜",
+      "note": "全高清+4K",
+      "emoji": "🌙",
+      "avatarClass": "av-slate",
+      "metaColor": "#64748b",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://www.英格里希嗷呜.top/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://itv666.cc/aowu/config.webp"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "https://9763.kstore.vip/aowu.json"
+        }
+      ]
+    },
+    {
+      "id": "og",
+      "name": "讴歌多仓",
+      "note": "全高清+4K",
+      "emoji": "📻",
+      "avatarClass": "av-indigo",
+      "metaColor": "#6366f1",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "https://双龙.u.欧.我爱你/apia.php?id=1",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://双龙.v.nxog.top/apia.php?id=1"
+        }
+      ]
+    },
+    {
+      "id": "ogx",
+      "name": "欧歌多线路",
+      "note": "全高清+4K",
+      "emoji": "📡",
+      "avatarClass": "av-pink",
+      "metaColor": "#ec4899",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "https://双龙.u.欧.我爱你/apia.php?id=2",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://双龙.v.nxog.top/apia.php?id=2"
+        }
+      ]
+    }
+  ]
+};
+/* ====== 接口数据结束 ====== */
+const EMBEDDED_PROVIDERS = SITE_DATA.providers;
+/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
+var GALLERY_URLS = [
+  "./wallpapers/033wlKD4ZTB5cZrH62XHZM.png",
+  "./wallpapers/0xJyZydu7qeHMUMOfWlRrh.png",
+  "./wallpapers/5eJTrHBjvt2qeFTlS1m2ZA.png",
+  "./wallpapers/0L15IQLz28QzICXNP79twc.png",
+  "./wallpapers/033wlKA14NiH2bvCmTMo7B.jpg",
+  "./wallpapers/033wrV5aNrGVF5ELMoKcjD.jpg",
+  "./wallpapers/033wlKB6Qs0bedRLzNcDZA.jpg",
+  "./wallpapers/033wlKBgz3tuC7pXoKnfaP.png",
+  "./wallpapers/033whFFXI0xI6YXFLqNNiC.webp",
+  "./wallpapers/033whFFVdK5hHCFwUDCk9i.webp",
+  "./wallpapers/033whFFQT1jRQS6G1725eJ.webp",
+  "./wallpapers/033whFFOWKCfpSJ8WNx0cG.webp",
+  "./wallpapers/033whF5B5g7txuPaTcgE3H.webp",
+  "./wallpapers/033whF5AzlQfrZr6YmRA3q.webp",
+  "./wallpapers/033whF5And9emM0oZtKFKg.webp",
+  "./wallpapers/033whF54T0UBu8s1OLaorR.webp",
+  "./wallpapers/033whF50B86ppjMDqpNTom.webp",
+  "./wallpapers/033whERXoTMtTWSvLZTM1t.webp",
+  "./wallpapers/033whERXQNvz27bE04LeTf.webp",
+  "./wallpapers/033whERSG68SfmGUi0Hx8u.webp",
+  "./wallpapers/033whERNNijRZ9bpFR51Cq.webp",
+  "./wallpapers/033whERInquv4BTfYl6pQV.webp",
+  "./wallpapers/033whEIZzB7FxhCsZ60DzY.webp",
+  "./wallpapers/033whDgC0JQGCOdHu7XDzU.webp",
+  "./wallpapers/033whDg952xHR9Qahi4EEP.webp",
+  "./wallpapers/033whDfvdFPrai0Q5yJLPU.webp",
+  "./wallpapers/033whDfsbsqpubtXfIWJyJ.webp",
+  "./wallpapers/033whDfgcV0RD5pRp2oH8W.webp",
+  "./wallpapers/033whDfQ8yQRTQeEaRW9rg.webp",
+  "./wallpapers/033whDfLGiBeCZjlTFsx45.webp",
+  "./wallpapers/033whDf7ogKDqHXgGQOdmD.webp",
+  "./wallpapers/033whDf5TdPbWH4UnEAlGt.webp",
+  "./wallpapers/033whDeyGL7JxQdc3sqCGf.webp",
+  "./wallpapers/5i675oaNva3c5RVOnmJh9k.png"
+];
+/* ====== 图床数据结束 ====== */
+const EMBEDDED_GALLERY = GALLERY_URLS;
 
 function renderAll() {
   renderSources();
