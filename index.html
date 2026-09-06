@@ -611,6 +611,14 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
   .dm-run { width: 100%; }
 }
 
+/* 平台支持清单 */
+.support-list { display: flex; flex-direction: column; gap: 9px; padding: 2px 0 6px; }
+.sp-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sp-name { font-size: 0.86rem; font-weight: 650; color: var(--t1); }
+.sp-en { font-size: 0.7rem; font-weight: 600; color: var(--t3); margin-left: 7px; letter-spacing: 0.03em; }
+.sp-yes { font-size: 0.8rem; font-weight: 750; color: #059669; }
+.sp-no { font-size: 0.8rem; font-weight: 750; color: #dc2626; }
+
 /* 接口使用说明卡 */
 .src-guide { margin-bottom: 20px; }
 </style>
@@ -731,7 +739,12 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
             <div class="sub">电视端 / 手机端 双端支持</div>
           </div>
         </div>
-        <div class="app-card-body">
+        <div class="support-list">
+        <div class="sp-row"><span class="sp-name">安卓手机 / TV / 投影仪<span class="sp-en">Android</span></span><span class="sp-yes">支持 ✅</span></div>
+        <div class="sp-row"><span class="sp-name">电脑模拟器<span class="sp-en">Emulator</span></span><span class="sp-yes">支持 ✅</span></div>
+        <div class="sp-row"><span class="sp-name">苹果 iOS<span class="sp-en">iOS</span></span><span class="sp-no">不支持 ❌</span></div>
+      </div>
+      <div class="app-card-body">
           <a class="app-cta uc" href="https://drive.uc.cn/s/e7b5fd4698704" target="_blank" rel="noopener">☁️ UC 网盘下载 · Pro 版本</a>
           <a href="javascript:void(0)" class="guide-cta-card" data-modal="okTvModal">
             <div class="guide-cta-icon">📺</div>
@@ -753,7 +766,12 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
             <div class="sub">老牌稳定 · 电视端</div>
           </div>
         </div>
-        <div class="app-card-body">
+        <div class="support-list">
+        <div class="sp-row"><span class="sp-name">安卓手机 / TV / 投影仪<span class="sp-en">Android</span></span><span class="sp-yes">支持 ✅</span></div>
+        <div class="sp-row"><span class="sp-name">电脑模拟器<span class="sp-en">Emulator</span></span><span class="sp-yes">支持 ✅</span></div>
+        <div class="sp-row"><span class="sp-name">苹果 iOS<span class="sp-en">iOS</span></span><span class="sp-no">不支持 ❌</span></div>
+      </div>
+      <div class="app-card-body">
           <a class="app-cta lz" href="https://wwbqc.lanzouv.com/b0018gflcf" target="_blank" rel="noopener">⬇️ 蓝奏云下载 · 密码 11</a>
           <a href="javascript:void(0)" class="guide-cta-card" data-modal="yscTvModal">
             <div class="guide-cta-icon">📺</div>
