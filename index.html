@@ -993,7 +993,7 @@ function renderGallery() {
     img.addEventListener('click', () => openLightbox(idx));
     const overlay = create('div', { class: 'gallery-overlay' });
     const view = create('button', { class: 'gallery-action', title: '预览大图', onclick: e => { e.stopPropagation(); openLightbox(idx); } }, '👁 预览');
-    const copy = create('button', { class: 'gallery-action', title: '复制图片链接', onclick: e => { e.stopPropagation(); copyText(url, '图片链接'); } }, '❐ 复制');
+    const copy = create('button', { class: 'gallery-action', title: '复制图片完整网址', onclick: e => { e.stopPropagation(); copyText(new URL(url, location.href).href, '图片链接'); } }, '❐ 复制');
     overlay.append(view, copy);
     item.append(img, overlay);
     grid.append(item);
@@ -1064,7 +1064,7 @@ document.addEventListener('keydown', e => {
 /* ===========================
    数据加载：fetch 优先 → 内嵌兜底
    =========================== */
-/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
+/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */
 var SITE_DATA = {
   "providers": [
     {
@@ -1283,46 +1283,46 @@ var SITE_DATA = {
       ]
     }
   ]
-};
+};
 /* ====== 接口数据结束 ====== */
 const EMBEDDED_PROVIDERS = SITE_DATA.providers;
-/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
-var GALLERY_URLS = [
-  "./wallpapers/033wlKD4ZTB5cZrH62XHZM.png",
-  "./wallpapers/0xJyZydu7qeHMUMOfWlRrh.png",
-  "./wallpapers/5eJTrHBjvt2qeFTlS1m2ZA.png",
-  "./wallpapers/0L15IQLz28QzICXNP79twc.png",
-  "./wallpapers/033wlKA14NiH2bvCmTMo7B.jpg",
-  "./wallpapers/033wrV5aNrGVF5ELMoKcjD.jpg",
-  "./wallpapers/033wlKB6Qs0bedRLzNcDZA.jpg",
-  "./wallpapers/033wlKBgz3tuC7pXoKnfaP.png",
-  "./wallpapers/033whFFXI0xI6YXFLqNNiC.webp",
-  "./wallpapers/033whFFVdK5hHCFwUDCk9i.webp",
-  "./wallpapers/033whFFQT1jRQS6G1725eJ.webp",
-  "./wallpapers/033whFFOWKCfpSJ8WNx0cG.webp",
-  "./wallpapers/033whF5B5g7txuPaTcgE3H.webp",
-  "./wallpapers/033whF5AzlQfrZr6YmRA3q.webp",
-  "./wallpapers/033whF5And9emM0oZtKFKg.webp",
-  "./wallpapers/033whF54T0UBu8s1OLaorR.webp",
-  "./wallpapers/033whF50B86ppjMDqpNTom.webp",
-  "./wallpapers/033whERXoTMtTWSvLZTM1t.webp",
-  "./wallpapers/033whERXQNvz27bE04LeTf.webp",
-  "./wallpapers/033whERSG68SfmGUi0Hx8u.webp",
-  "./wallpapers/033whERNNijRZ9bpFR51Cq.webp",
-  "./wallpapers/033whERInquv4BTfYl6pQV.webp",
-  "./wallpapers/033whEIZzB7FxhCsZ60DzY.webp",
-  "./wallpapers/033whDgC0JQGCOdHu7XDzU.webp",
-  "./wallpapers/033whDg952xHR9Qahi4EEP.webp",
-  "./wallpapers/033whDfvdFPrai0Q5yJLPU.webp",
-  "./wallpapers/033whDfsbsqpubtXfIWJyJ.webp",
-  "./wallpapers/033whDfgcV0RD5pRp2oH8W.webp",
-  "./wallpapers/033whDfQ8yQRTQeEaRW9rg.webp",
-  "./wallpapers/033whDfLGiBeCZjlTFsx45.webp",
-  "./wallpapers/033whDf7ogKDqHXgGQOdmD.webp",
-  "./wallpapers/033whDf5TdPbWH4UnEAlGt.webp",
-  "./wallpapers/033whDeyGL7JxQdc3sqCGf.webp",
-  "./wallpapers/5i675oaNva3c5RVOnmJh9k.png"
-];
+/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
+var GALLERY_URLS = [
+  "./wallpapers/033wlKD4ZTB5cZrH62XHZM.png",
+  "./wallpapers/0xJyZydu7qeHMUMOfWlRrh.png",
+  "./wallpapers/5eJTrHBjvt2qeFTlS1m2ZA.png",
+  "./wallpapers/0L15IQLz28QzICXNP79twc.png",
+  "./wallpapers/033wlKA14NiH2bvCmTMo7B.jpg",
+  "./wallpapers/033wrV5aNrGVF5ELMoKcjD.jpg",
+  "./wallpapers/033wlKB6Qs0bedRLzNcDZA.jpg",
+  "./wallpapers/033wlKBgz3tuC7pXoKnfaP.png",
+  "./wallpapers/033whFFXI0xI6YXFLqNNiC.webp",
+  "./wallpapers/033whFFVdK5hHCFwUDCk9i.webp",
+  "./wallpapers/033whFFQT1jRQS6G1725eJ.webp",
+  "./wallpapers/033whFFOWKCfpSJ8WNx0cG.webp",
+  "./wallpapers/033whF5B5g7txuPaTcgE3H.webp",
+  "./wallpapers/033whF5AzlQfrZr6YmRA3q.webp",
+  "./wallpapers/033whF5And9emM0oZtKFKg.webp",
+  "./wallpapers/033whF54T0UBu8s1OLaorR.webp",
+  "./wallpapers/033whF50B86ppjMDqpNTom.webp",
+  "./wallpapers/033whERXoTMtTWSvLZTM1t.webp",
+  "./wallpapers/033whERXQNvz27bE04LeTf.webp",
+  "./wallpapers/033whERSG68SfmGUi0Hx8u.webp",
+  "./wallpapers/033whERNNijRZ9bpFR51Cq.webp",
+  "./wallpapers/033whERInquv4BTfYl6pQV.webp",
+  "./wallpapers/033whEIZzB7FxhCsZ60DzY.webp",
+  "./wallpapers/033whDgC0JQGCOdHu7XDzU.webp",
+  "./wallpapers/033whDg952xHR9Qahi4EEP.webp",
+  "./wallpapers/033whDfvdFPrai0Q5yJLPU.webp",
+  "./wallpapers/033whDfsbsqpubtXfIWJyJ.webp",
+  "./wallpapers/033whDfgcV0RD5pRp2oH8W.webp",
+  "./wallpapers/033whDfQ8yQRTQeEaRW9rg.webp",
+  "./wallpapers/033whDfLGiBeCZjlTFsx45.webp",
+  "./wallpapers/033whDf7ogKDqHXgGQOdmD.webp",
+  "./wallpapers/033whDf5TdPbWH4UnEAlGt.webp",
+  "./wallpapers/033whDeyGL7JxQdc3sqCGf.webp",
+  "./wallpapers/5i675oaNva3c5RVOnmJh9k.png"
+];
 /* ====== 图床数据结束 ====== */
 const EMBEDDED_GALLERY = GALLERY_URLS;
 
