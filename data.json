@@ -8,25 +8,54 @@
       "avatarClass": "av-blue",
       "metaColor": "var(--brand-blue)",
       "links": [
-        { "label": "🚀 主力线路", "url": "https://9280.kstore.vip/aiwex.json", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://9280.kstore.space/aiwex.json" },
-        { "label": "☁️ 备用线路3", "url": "http://ai.xn--4kq62z5rby2qupq9ub.top/" },
-        { "label": "☁️ 备用线路4", "url": "http://new.王二小放牛娃.top" },
-        { "label": "☁️ 备用线路5", "url": "http://new.999888123.xyz" },
-        { "label": "☁️ 备用线路6", "url": "http://new.999888987.xyz" }
+        {
+          "label": "🚀 主力线路",
+          "url": "https://9280.kstore.vip/aiwex.json",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://9280.kstore.space/aiwex.json"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://ai.xn--4kq62z5rby2qupq9ub.top/"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://new.王二小放牛娃.top"
+        },
+        {
+          "label": "☁️ 备用线路5",
+          "url": "http://new.999888123.xyz"
+        },
+        {
+          "label": "☁️ 备用线路6",
+          "url": "http://new.999888987.xyz"
+        }
       ]
     },
     {
       "id": "mi",
       "name": "小米",
-      "note": "全高清首选",
+      "note": "全高清+4K",
       "emoji": "🍚",
       "avatarClass": "av-rose",
       "metaColor": "var(--brand-rose)",
       "links": [
-        { "label": "🚀 主力线路", "url": "https://www.tangsan.fun/tv/DANMU.json", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json" },
-        { "label": "☁️ 备用线路2", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json" }
+        {
+          "label": "🚀 主力线路",
+          "url": "https://www.tangsan.fun/tv/DANMU.json",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://sscq-pay.kingnet.com/static/test.json"
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json"
+        }
       ]
     },
     {
@@ -37,10 +66,23 @@
       "avatarClass": "av-teal",
       "metaColor": "#14b8a6",
       "links": [
-        { "label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc" },
-        { "label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top" },
-        { "label": "☁️ 备用线路4", "url": "http://www.小不点.com" }
+        {
+          "label": "🚀 主力线路",
+          "url": "http://摸鱼儿.cc",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://我不是.摸鱼儿.cc"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://我不是.摸鱼儿.top"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://www.小不点.com"
+        }
       ]
     },
     {
@@ -51,11 +93,27 @@
       "avatarClass": "av-amber",
       "metaColor": "#8b5cf6",
       "links": [
-        { "label": "🚀 主力线路", "url": "http://fty.333232.xyz/tv", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://fty.888484.xyz/tv" },
-        { "label": "☁️ 备用线路3", "url": "http://fty.xxooo.cf/tv" },
-        { "label": "☁️ 备用线路4", "url": "http://www.饭太硬.art/tv" },
-        { "label": "☁️ 备用线路5", "url": "http://www.饭太硬.net/tv" }
+        {
+          "label": "🚀 主力线路",
+          "url": "http://fty.333232.xyz/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://fty.888484.xyz/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://fty.xxooo.cf/tv"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://www.饭太硬.art/tv"
+        },
+        {
+          "label": "☁️ 备用线路5",
+          "url": "http://www.饭太硬.net/tv"
+        }
       ]
     },
     {
@@ -66,9 +124,19 @@
       "avatarClass": "av-violet",
       "metaColor": "#f97316",
       "links": [
-        { "label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://肥猫.net/tv" },
-        { "label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif" }
+        {
+          "label": "🚀 主力线路",
+          "url": "http://肥猫.net/",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://肥猫.net/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "https://w.junce.dpdns.org/fm.gif"
+        }
       ]
     },
     {
@@ -79,7 +147,11 @@
       "avatarClass": "av-green",
       "metaColor": "#10b981",
       "links": [
-        { "label": "🚀 主力线路", "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json", "recommended": true }
+        {
+          "label": "🚀 主力线路",
+          "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json",
+          "recommended": true
+        }
       ]
     },
     {
@@ -90,9 +162,19 @@
       "avatarClass": "av-slate",
       "metaColor": "#64748b",
       "links": [
-        { "label": "🚀 主力线路", "url": "http://www.英格里希嗷呜.top/tv", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "http://itv666.cc/aowu/config.webp" },
-        { "label": "☁️ 备用线路3", "url": "https://9763.kstore.vip/aowu.json" }
+        {
+          "label": "🚀 主力线路",
+          "url": "http://www.英格里希嗷呜.top/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://itv666.cc/aowu/config.webp"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "https://9763.kstore.vip/aowu.json"
+        }
       ]
     },
     {
@@ -103,8 +185,15 @@
       "avatarClass": "av-indigo",
       "metaColor": "#6366f1",
       "links": [
-        { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=1", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=1" }
+        {
+          "label": "🚀 主力线路",
+          "url": "https://双龙.u.欧.我爱你/apia.php?id=1",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://双龙.v.nxog.top/apia.php?id=1"
+        }
       ]
     },
     {
@@ -115,8 +204,15 @@
       "avatarClass": "av-pink",
       "metaColor": "#ec4899",
       "links": [
-        { "label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=2", "recommended": true },
-        { "label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=2" }
+        {
+          "label": "🚀 主力线路",
+          "url": "https://双龙.u.欧.我爱你/apia.php?id=2",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://双龙.v.nxog.top/apia.php?id=2"
+        }
       ]
     }
   ]
