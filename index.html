@@ -198,14 +198,7 @@ body::before {
 .section-head .desc { color: var(--t2); font-size: 0.9rem; padding-bottom: 6px; }
 
 /* =========================  玻璃卡片通用  ========================= */
-.source-card, .app-card, .modal-step, .gallery-item {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  box-shadow: var(--glass-shadow);
-}
-
+.source-card, .app-card, .modal-step, 
 /* =========================  接口卡片  ========================= */
 .source-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .source-card {
@@ -383,7 +376,6 @@ body::before {
 .modal-step img { display: block; width: 100%; }
 
 /* =========================  图库  ========================= */
-.gallery-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .gallery-item {
   position: relative; border-radius: 20px; overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8); cursor: pointer;
@@ -391,49 +383,9 @@ body::before {
   transition: all 0.3s var(--ease);
 }
 .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(31, 38, 135, 0.2); }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s var(--ease); }
-.gallery-item:hover img { transform: scale(1.045); }
-.gallery-overlay {
-  position: absolute; inset: auto 0 0 0;
-  padding: 26px 14px 12px;
-  background: linear-gradient(transparent, rgba(15, 23, 42, 0.55));
-  opacity: 0; transition: opacity 0.25s;
-}
-.gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-action {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94); color: var(--t1);
-  border: 1px solid #fff;
-  font-family: var(--sans); font-size: 0.78rem; font-weight: 750; letter-spacing: 0.02em;
-  cursor: pointer; transition: all 0.18s var(--ease);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
-}
-.gallery-action:hover { background: var(--grad); color: #fff; border-color: transparent; transform: translateY(-1px); }
-.gallery-overlay { display: flex; align-items: flex-end; gap: 12px; padding: 26px 16px 14px; }
 .img-fallback { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--t3); }
 
 /* 灯箱 */
-.lightbox {
-  position: fixed; inset: 0; z-index: 950;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  display: none; align-items: center; justify-content: center;
-}
-.lightbox.open { display: flex; }
-.lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 20px; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4); }
-.lightbox-close, .lightbox-arrow {
-  position: absolute; width: 46px; height: 46px; border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  color: #fff; font-size: 1.15rem; cursor: pointer; transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center;
-}
-.lightbox-close { top: 26px; right: 26px; }
-.lightbox-arrow { top: 50%; transform: translateY(-50%); }
-.lightbox-arrow.prev { left: 26px; }
-.lightbox-arrow.next { right: 26px; }
-.lightbox-close:hover, .lightbox-arrow:hover { background: rgba(255, 255, 255, 0.45); }
 
 /* =========================  Toast  ========================= */
 .toast {
@@ -482,10 +434,7 @@ footer {
   .brand-mark { width: 27px; height: 27px; }
   .nav-links { gap: 10px; }
   .nav-links a { font-size: 0.74rem; padding: 5px 8px; white-space: nowrap; }
-  .hero { padding-top: 60px; }
-  .lightbox-arrow.prev { left: 12px; }
-  .lightbox-arrow.next { right: 12px; }
-}
+  .hero { padding-top: 60px; }}
 
 /* 减少动态偏好 */
 @media (prefers-reduced-motion: reduce) {
@@ -663,7 +612,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
     <div class="nav-links">
       <a href="#sources">接口源</a>
       <a href="#download">下载 · 教程</a>
-      <a href="#gallery">4K 图床</a>
     </div>
   </div>
 </nav>
@@ -679,7 +627,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
     <div class="hero-actions">
       <a class="btn btn-yellow" href="#sources">🚀 找接口</a>
       <a class="btn btn-white" href="#download">📥 下软件</a>
-      <a class="btn btn-blue" href="#gallery">🖼️ 拿壁纸</a>
     </div>
   </div>
   <div class="marquee">
@@ -800,18 +747,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 <!-- =========================
      4K 图床
      ========================= -->
-<section class="section" id="gallery">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="kicker pink">GALLERY</span>
-        <h2>壁纸图床</h2>
-      </div>
-      <div class="desc">悬停出按钮 · 点击看大图 · 支持 ← → 切换</div>
-    </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
-</section>
 </main>
 
 <footer>
@@ -819,14 +754,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 </footer>
 
 <div class="toast" id="toast">已复制到剪贴板</div>
-
-<!-- 图库大图预览 -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
-  <button class="lightbox-close" id="lightboxClose" aria-label="关闭">✕</button>
-  <button class="lightbox-arrow prev" id="lightboxPrevBtn" aria-label="上一张">‹</button>
-  <button class="lightbox-arrow next" id="lightboxNextBtn" aria-label="下一张">›</button>
-  <img id="lightboxImg" src="" alt="预览大图" />
-</div>
 
 <!-- 教程弹窗 × 3 -->
 <div class="modal-overlay" id="okTvModal" role="dialog" aria-modal="true" aria-labelledby="okTvTitle">
@@ -883,7 +810,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 
 <script>
 EMBEDDED_PROVIDERS = [{"id": "wang", "name": "王二小放牛娃", "note": "4K画质网盘首选", "emoji": "🐮", "avatarClass": "av-blue", "metaColor": "var(--brand-blue)", "links": [{"label": "🚀 主力线路", "url": "https://9280.kstore.vip/aiwex.json", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://9280.kstore.space/aiwex.json"}, {"label": "☁️ 备用线路3", "url": "http://ai.xn--4kq62z5rby2qupq9ub.top/"}, {"label": "☁️ 备用线路4", "url": "http://new.王二小放牛娃.top"}, {"label": "☁️ 备用线路5", "url": "http://new.999888123.xyz"}, {"label": "☁️ 备用线路6", "url": "http://new.999888987.xyz"}]}, {"id": "mi", "name": "小米", "note": "全高清+4K", "emoji": "🍚", "avatarClass": "av-rose", "metaColor": "var(--brand-rose)", "links": [{"label": "🚀 主力线路", "url": "https://www.tangsan.fun/tv/DANMU.json", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json"}, {"label": "☁️ 备用线路2", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json"}]}, {"id": "mo", "name": "摸鱼", "note": "全高清+4K", "emoji": "🐟", "avatarClass": "av-teal", "metaColor": "#14b8a6", "links": [{"label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc"}, {"label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top"}, {"label": "☁️ 备用线路4", "url": "http://www.小不点.com"}]}, {"id": "fan", "name": "饭太硬", "note": "全高清+4K", "emoji": "🍙", "avatarClass": "av-amber", "metaColor": "#8b5cf6", "links": [{"label": "🚀 主力线路", "url": "http://fty.333232.xyz/tv", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://fty.888484.xyz/tv"}, {"label": "☁️ 备用线路3", "url": "http://fty.xxooo.cf/tv"}, {"label": "☁️ 备用线路4", "url": "http://www.饭太硬.art/tv"}, {"label": "☁️ 备用线路5", "url": "http://www.饭太硬.net/tv"}]}, {"id": "fei", "name": "肥猫", "note": "全高清+4K", "emoji": "🐱", "avatarClass": "av-violet", "metaColor": "#f97316", "links": [{"label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://肥猫.net/tv"}, {"label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif"}]}, {"id": "xs", "name": "潇洒", "note": "全高清+4K", "emoji": "🍃", "avatarClass": "av-green", "metaColor": "#10b981", "links": [{"label": "🚀 主力线路", "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json", "recommended": true}]}, {"id": "aowu", "name": "嗷呜", "note": "全高清+4K", "emoji": "🌙", "avatarClass": "av-slate", "metaColor": "#64748b", "links": [{"label": "🚀 主力线路", "url": "http://www.英格里希嗷呜.top/tv", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://itv666.cc/aowu/config.webp"}, {"label": "☁️ 备用线路3", "url": "https://9763.kstore.vip/aowu.json"}]}, {"id": "og", "name": "讴歌多仓", "note": "全高清+4K", "emoji": "📻", "avatarClass": "av-indigo", "metaColor": "#6366f1", "links": [{"label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=1", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=1"}]}, {"id": "ogx", "name": "欧歌多线路", "note": "全高清+4K", "emoji": "📡", "avatarClass": "av-pink", "metaColor": "#ec4899", "links": [{"label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=2", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=2"}]}];
-EMBEDDED_GALLERY = ["./wallpapers/033wlKD4ZTB5cZrH62XHZM.png", "./wallpapers/0xJyZydu7qeHMUMOfWlRrh.png", "./wallpapers/5eJTrHBjvt2qeFTlS1m2ZA.png", "./wallpapers/0L15IQLz28QzICXNP79twc.png", "./wallpapers/033wlKA14NiH2bvCmTMo7B.jpg", "./wallpapers/033wrV5aNrGVF5ELMoKcjD.jpg", "./wallpapers/033wlKB6Qs0bedRLzNcDZA.jpg", "./wallpapers/033wlKBgz3tuC7pXoKnfaP.png", "./wallpapers/033whFFXI0xI6YXFLqNNiC.webp", "./wallpapers/033whFFVdK5hHCFwUDCk9i.webp", "./wallpapers/033whFFQT1jRQS6G1725eJ.webp", "./wallpapers/033whFFOWKCfpSJ8WNx0cG.webp", "./wallpapers/033whF5B5g7txuPaTcgE3H.webp", "./wallpapers/033whF5AzlQfrZr6YmRA3q.webp", "./wallpapers/033whF5And9emM0oZtKFKg.webp", "./wallpapers/033whF54T0UBu8s1OLaorR.webp", "./wallpapers/033whF50B86ppjMDqpNTom.webp", "./wallpapers/033whERXoTMtTWSvLZTM1t.webp", "./wallpapers/033whERXQNvz27bE04LeTf.webp", "./wallpapers/033whERSG68SfmGUi0Hx8u.webp", "./wallpapers/033whERNNijRZ9bpFR51Cq.webp", "./wallpapers/033whERInquv4BTfYl6pQV.webp", "./wallpapers/033whEIZzB7FxhCsZ60DzY.webp", "./wallpapers/033whDgC0JQGCOdHu7XDzU.webp", "./wallpapers/033whDg952xHR9Qahi4EEP.webp", "./wallpapers/033whDfvdFPrai0Q5yJLPU.webp", "./wallpapers/033whDfsbsqpubtXfIWJyJ.webp", "./wallpapers/033whDfgcV0RD5pRp2oH8W.webp", "./wallpapers/033whDfQ8yQRTQeEaRW9rg.webp", "./wallpapers/033whDfLGiBeCZjlTFsx45.webp", "./wallpapers/033whDf7ogKDqHXgGQOdmD.webp", "./wallpapers/033whDf5TdPbWH4UnEAlGt.webp", "./wallpapers/033whDeyGL7JxQdc3sqCGf.webp", "./wallpapers/5i675oaNva3c5RVOnmJh9k.png"];
 </script>
 
 <script>
@@ -892,9 +818,6 @@ EMBEDDED_GALLERY = ["./wallpapers/033wlKD4ZTB5cZrH62XHZM.png", "./wallpapers/0xJ
    =========================== */
 const SVG_COPY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 let sourcesData = [];
-let galleryData = [];
-let visibleGallery = [];
-let currentImgIndex = -1;
 
 const $ = (s, p = document) => p.querySelector(s);
 const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
@@ -981,55 +904,6 @@ function renderSources() {
 }
 
 /* ===========================
-   Gallery
-   =========================== */
-function renderGallery() {
-  const grid = $('#galleryGrid');
-  grid.innerHTML = '';
-  visibleGallery = galleryData.slice();
-  galleryData.forEach((url, idx) => {
-    const item = create('div', { class: 'gallery-item' });
-    const img = create('img', { src: url, alt: `4K 壁纸 ${idx + 1}`, loading: 'lazy', decoding: 'async' });
-    img.addEventListener('click', () => openLightbox(idx));
-    const overlay = create('div', { class: 'gallery-overlay' });
-    const view = create('button', { class: 'gallery-action', title: '预览大图', onclick: e => { e.stopPropagation(); openLightbox(idx); } }, '👁 预览');
-    const copy = create('button', { class: 'gallery-action', title: '复制图片完整网址', onclick: e => { e.stopPropagation(); copyText(new URL(url, location.href).href, '图片链接'); } }, '❐ 复制');
-    overlay.append(view, copy);
-    item.append(img, overlay);
-    grid.append(item);
-  });
-}
-
-/* ===========================
-   Lightbox
-   =========================== */
-function openLightbox(idx) {
-  currentImgIndex = idx;
-  $('#lightboxImg').src = visibleGallery[idx];
-  $('#lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  $('#lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-  currentImgIndex = -1;
-}
-function lightboxPrev() {
-  if (currentImgIndex < 0 || !visibleGallery.length) return;
-  currentImgIndex = (currentImgIndex - 1 + visibleGallery.length) % visibleGallery.length;
-  $('#lightboxImg').src = visibleGallery[currentImgIndex];
-}
-function lightboxNext() {
-  if (currentImgIndex < 0 || !visibleGallery.length) return;
-  currentImgIndex = (currentImgIndex + 1) % visibleGallery.length;
-  $('#lightboxImg').src = visibleGallery[currentImgIndex];
-}
-$('#lightboxClose').addEventListener('click', closeLightbox);
-$('#lightboxPrevBtn').addEventListener('click', e => { e.stopPropagation(); lightboxPrev(); });
-$('#lightboxNextBtn').addEventListener('click', e => { e.stopPropagation(); lightboxNext(); });
-$('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLightbox(); });
-
-/* ===========================
    Tutorial Modal
    =========================== */
 document.querySelectorAll('[data-modal]').forEach(btn => {
@@ -1052,13 +926,10 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 });
 
 document.addEventListener('keydown', e => {
-  const lbOpen = $('#lightbox').classList.contains('open');
   if (e.key === 'Escape') {
-    if (lbOpen) { closeLightbox(); return; }
     const opened = document.querySelectorAll('.modal-overlay.open');
     if (opened.length) { opened.forEach(o => o.classList.remove('open')); document.body.style.overflow = ''; }
-  } else if (lbOpen && e.key === 'ArrowLeft') lightboxPrev();
-  else if (lbOpen && e.key === 'ArrowRight') lightboxNext();
+  }
 });
 
 /* ===========================
@@ -1286,63 +1157,18 @@ var SITE_DATA = {
 };
 /* ====== 接口数据结束 ====== */
 const EMBEDDED_PROVIDERS = SITE_DATA.providers;
-/* ====== 图床数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 gallery.json）====== */
-var GALLERY_URLS = [
-  "./wallpapers/033wlKD4ZTB5cZrH62XHZM.png",
-  "./wallpapers/0xJyZydu7qeHMUMOfWlRrh.png",
-  "./wallpapers/5eJTrHBjvt2qeFTlS1m2ZA.png",
-  "./wallpapers/0L15IQLz28QzICXNP79twc.png",
-  "./wallpapers/033wlKA14NiH2bvCmTMo7B.jpg",
-  "./wallpapers/033wrV5aNrGVF5ELMoKcjD.jpg",
-  "./wallpapers/033wlKB6Qs0bedRLzNcDZA.jpg",
-  "./wallpapers/033wlKBgz3tuC7pXoKnfaP.png",
-  "./wallpapers/033whFFXI0xI6YXFLqNNiC.webp",
-  "./wallpapers/033whFFVdK5hHCFwUDCk9i.webp",
-  "./wallpapers/033whFFQT1jRQS6G1725eJ.webp",
-  "./wallpapers/033whFFOWKCfpSJ8WNx0cG.webp",
-  "./wallpapers/033whF5B5g7txuPaTcgE3H.webp",
-  "./wallpapers/033whF5AzlQfrZr6YmRA3q.webp",
-  "./wallpapers/033whF5And9emM0oZtKFKg.webp",
-  "./wallpapers/033whF54T0UBu8s1OLaorR.webp",
-  "./wallpapers/033whF50B86ppjMDqpNTom.webp",
-  "./wallpapers/033whERXoTMtTWSvLZTM1t.webp",
-  "./wallpapers/033whERXQNvz27bE04LeTf.webp",
-  "./wallpapers/033whERSG68SfmGUi0Hx8u.webp",
-  "./wallpapers/033whERNNijRZ9bpFR51Cq.webp",
-  "./wallpapers/033whERInquv4BTfYl6pQV.webp",
-  "./wallpapers/033whEIZzB7FxhCsZ60DzY.webp",
-  "./wallpapers/033whDgC0JQGCOdHu7XDzU.webp",
-  "./wallpapers/033whDg952xHR9Qahi4EEP.webp",
-  "./wallpapers/033whDfvdFPrai0Q5yJLPU.webp",
-  "./wallpapers/033whDfsbsqpubtXfIWJyJ.webp",
-  "./wallpapers/033whDfgcV0RD5pRp2oH8W.webp",
-  "./wallpapers/033whDfQ8yQRTQeEaRW9rg.webp",
-  "./wallpapers/033whDfLGiBeCZjlTFsx45.webp",
-  "./wallpapers/033whDf7ogKDqHXgGQOdmD.webp",
-  "./wallpapers/033whDf5TdPbWH4UnEAlGt.webp",
-  "./wallpapers/033whDeyGL7JxQdc3sqCGf.webp",
-  "./wallpapers/5i675oaNva3c5RVOnmJh9k.png"
-];
-/* ====== 图床数据结束 ====== */
-const EMBEDDED_GALLERY = GALLERY_URLS;
 
 function renderAll() {
   renderSources();
-  renderGallery();
 }
 
 async function loadData() {
-  let providers = null, images = null;
+  let providers = null;
   try {
-    const [a, b] = await Promise.all([
-      fetch('data.json').then(r => r.json()).catch(() => null),
-      fetch('gallery.json').then(r => r.json()).catch(() => null),
-    ]);
+    const a = await fetch('data.json').then(r => r.json()).catch(() => null);
     providers = a?.providers?.length ? a.providers : null;
-    images = b?.images?.length ? b.images : null;
   } catch (e) { /* file:// 等环境 */ }
   sourcesData = providers || EMBEDDED_PROVIDERS;
-  galleryData = images || EMBEDDED_GALLERY;
   renderAll();
 }
 
