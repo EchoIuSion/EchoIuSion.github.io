@@ -400,7 +400,16 @@ body::before {
   opacity: 0; transition: opacity 0.25s;
 }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-action { color: #fff; font-size: 0.78rem; font-weight: 650; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; }
+.gallery-action {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94); color: var(--t1);
+  border: 1px solid #fff;
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 750; letter-spacing: 0.02em;
+  cursor: pointer; transition: all 0.18s var(--ease);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);
+}
+.gallery-action:hover { background: var(--grad); color: #fff; border-color: transparent; transform: translateY(-1px); }
 .img-fallback { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--t3); }
 
 /* 灯箱 */
@@ -982,8 +991,8 @@ function renderGallery() {
     const img = create('img', { src: url, alt: `4K 壁纸 ${idx + 1}`, loading: 'lazy', decoding: 'async' });
     img.addEventListener('click', () => openLightbox(idx));
     const overlay = create('div', { class: 'gallery-overlay' });
-    const view = create('button', { class: 'gallery-action', title: '预览', onclick: e => { e.stopPropagation(); openLightbox(idx); } }, '👁');
-    const copy = create('button', { class: 'gallery-action', title: '复制链接', onclick: e => { e.stopPropagation(); copyText(url, '图片链接'); } }, '❐');
+    const view = create('button', { class: 'gallery-action', title: '预览大图', onclick: e => { e.stopPropagation(); openLightbox(idx); } }, '👁 预览');
+    const copy = create('button', { class: 'gallery-action', title: '复制图片链接', onclick: e => { e.stopPropagation(); copyText(url, '图片链接'); } }, '❐ 复制');
     overlay.append(view, copy);
     item.append(img, overlay);
     grid.append(item);
