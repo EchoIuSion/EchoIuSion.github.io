@@ -170,18 +170,26 @@ body::before {
 /* =========================  跑马灯（保留元素·玻璃皮肤）  ========================= */
 .marquee {
   margin-top: 36px;
-  background: rgba(255, 255, 255, 0.48);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.5) 30%, rgba(255, 255, 255, 0.5) 70%, rgba(255, 255, 255, 0.22));
   backdrop-filter: blur(22px) saturate(1.7); -webkit-backdrop-filter: blur(22px) saturate(1.7);
-  border-top: 1px solid rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.08);
-  color: var(--t2);
-  overflow: hidden; white-space: nowrap; padding: 15px 0;
-  font-family: var(--sans); font-weight: 700; font-size: 0.84rem; letter-spacing: 0.18em;
+  border-top: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.06);
+  color: var(--t1);
+  overflow: hidden; white-space: nowrap; padding: 18px 0;
+  font-size: 0.92rem; font-weight: 800; letter-spacing: 0.24em;
   text-transform: uppercase;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
-.marquee .hl { color: var(--accent); font-size: 0.78rem; opacity: 0.9; }
-.marquee span { display: inline-block; margin: 0 34px; }
+.marquee .hl {
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-size: 0.85rem; opacity: 0.9;
+}
+.marquee span { display: inline-block; margin: 0 36px; }
+.mq-ghost { color: transparent; -webkit-text-stroke: 1px rgba(71, 85, 105, 0.6); }
+.mq-solid { color: var(--t1); }
+.mq-brand { color: var(--accent); }
 .marquee-inner { display: inline-block; animation: scroll 30s linear infinite; }
 @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -638,8 +646,8 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
   </div>
   <div class="marquee">
     <div class="marquee-inner">
-      <span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span>
-      <span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span><span>4K QUALITY</span><span class="hl">★</span><span>TV + MOBILE</span><span class="hl">★</span><span>劉OKの影院</span><span class="hl">★</span>
+      <span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span>
+      <span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span><span class="mq-ghost">4K QUALITY</span><span class="hl">✦</span><span class="mq-solid">TV + MOBILE</span><span class="hl">✦</span><span class="mq-brand">劉OKの影院</span><span class="hl">✦</span>
     </div>
   </div>
 </header>
