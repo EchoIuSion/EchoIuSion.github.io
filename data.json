@@ -117,6 +117,29 @@
       ]
     },
     {
+      "id": "aowu",
+      "name": "嗷呜",
+      "note": "全高清+4K",
+      "emoji": "🌙",
+      "avatarClass": "av-slate",
+      "metaColor": "#64748b",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://www.英格里希嗷呜.top/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://www.2525666.xyz/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "https://9763.kstore.vip/aowu.json"
+        }
+      ]
+    },
+    {
       "id": "fei",
       "name": "肥猫",
       "note": "全高清+4K",
@@ -151,29 +174,6 @@
           "label": "🚀 主力线路",
           "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json",
           "recommended": true
-        }
-      ]
-    },
-    {
-      "id": "aowu",
-      "name": "嗷呜",
-      "note": "全高清+4K",
-      "emoji": "🌙",
-      "avatarClass": "av-slate",
-      "metaColor": "#64748b",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "http://www.英格里希嗷呜.top/tv",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "http://itv666.cc/aowu/config.webp"
-        },
-        {
-          "label": "☁️ 备用线路3",
-          "url": "https://9763.kstore.vip/aowu.json"
         }
       ]
     },
