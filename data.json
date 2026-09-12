@@ -36,56 +36,6 @@
       ]
     },
     {
-      "id": "mi",
-      "name": "小米",
-      "note": "全高清+4K",
-      "emoji": "🍚",
-      "avatarClass": "av-rose",
-      "metaColor": "var(--brand-rose)",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "https://www.tangsan.fun/tv/DANMU.json",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "https://sscq-pay.kingnet.com/static/test.json"
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json"
-        }
-      ]
-    },
-    {
-      "id": "mo",
-      "name": "摸鱼",
-      "note": "全高清+4K",
-      "emoji": "🐟",
-      "avatarClass": "av-teal",
-      "metaColor": "#14b8a6",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "http://摸鱼儿.cc",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "http://我不是.摸鱼儿.cc"
-        },
-        {
-          "label": "☁️ 备用线路3",
-          "url": "http://我不是.摸鱼儿.top"
-        },
-        {
-          "label": "☁️ 备用线路4",
-          "url": "http://www.小不点.com"
-        }
-      ]
-    },
-    {
       "id": "fan",
       "name": "饭太硬",
       "note": "全高清+4K",
