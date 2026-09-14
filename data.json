@@ -126,44 +126,6 @@
           "recommended": true
         }
       ]
-    },
-    {
-      "id": "og",
-      "name": "讴歌多仓",
-      "note": "全高清+4K",
-      "emoji": "📻",
-      "avatarClass": "av-indigo",
-      "metaColor": "#6366f1",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "https://双龙.u.欧.我爱你/apia.php?id=1",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "https://双龙.v.nxog.top/apia.php?id=1"
-        }
-      ]
-    },
-    {
-      "id": "ogx",
-      "name": "欧歌多线路",
-      "note": "全高清+4K",
-      "emoji": "📡",
-      "avatarClass": "av-pink",
-      "metaColor": "#ec4899",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "https://双龙.u.欧.我爱你/apia.php?id=2",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "https://双龙.v.nxog.top/apia.php?id=2"
-        }
-      ]
     }
   ]
 }
