@@ -8,7 +8,8 @@ let html = fs.readFileSync('index.html', 'utf8');
 let changed = false;
 
 /* ── 同步 data.json（接口数据）── */
-const dataContent = fs.readFileSync('data.json', 'utf8').trim();
+// 内容统一为 LF（data.json 在 Windows 检出时可能是 CRLF，避免整块 diff 噪音）
+const dataContent = fs.readFileSync('data.json', 'utf8').trim().replace(/\r\n/g, '\n');
 const dataStartMarker = '/* ====== 接口数据（由 GitHub Actions 自动同步，请勿手动修改，请编辑 data.json）====== */';
 const dataEndMarker = '/* ====== 接口数据结束 ====== */';
 const dataStartIdx = html.indexOf(dataStartMarker);
