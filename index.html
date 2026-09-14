@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#fdf6e3" />
+<meta name="theme-color" content="#eef1f8" />
 <title>劉Okの影院 · Frosted Glass — 4K影视接口导航</title>
 <link rel="icon" type="image/jpeg" href="favicon.jpg" />
 <link rel="apple-touch-icon" href="favicon.jpg" />
@@ -15,10 +15,8 @@
    Frosted Glass — iOS 玻璃拟态设计语言
    彩色柔光底 + 磨砂玻璃卡 + 通透轻盈
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --ink: #1e293b;
   --t1: #0f172a;
   --t2: #475569;
   --t3: #94a3b8;
@@ -37,7 +35,6 @@
   --container: 1200px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --sans: 'Manrope', -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-  --mono: 'Cascadia Code', Consolas, monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -158,13 +155,6 @@ body::before {
   background: rgba(255, 255, 255, 0.8); transform: translateY(-3px);
   box-shadow: 0 16px 40px rgba(31, 38, 135, 0.16);
 }
-.btn-blue {
-  background: rgba(255, 255, 255, 0.55); color: var(--t1);
-  border-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  box-shadow: var(--glass-shadow);
-}
-.btn-blue:hover { background: rgba(255, 255, 255, 0.8); transform: translateY(-3px); }
 .btn:active { transform: translateY(0); }
 
 /* =========================  跑马灯（保留元素·玻璃皮肤）  ========================= */
@@ -205,14 +195,13 @@ body::before {
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .kicker::before { content: ''; width: 30px; height: 3px; border-radius: 2px; background: var(--grad); }
-.kicker.yellow, .kicker.blue, .kicker.pink { background: var(--grad); -webkit-background-clip: text; background-clip: text; }
 .section-head h2 {
   font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; color: var(--t1); margin-top: 10px;
 }
 .section-head .desc { color: var(--t2); font-size: 0.9rem; padding-bottom: 6px; }
 
 /* =========================  玻璃卡片通用  ========================= */
-.source-card, .app-card, .modal-step, .gallery-item {
+.source-card, .app-card, .modal-step {
   background: var(--glass);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(24px) saturate(1.6);
@@ -289,7 +278,6 @@ body::before {
 .source-link:hover .copy-btn { border-color: rgba(99, 102, 241, 0.4); }
 .copy-btn:hover { color: #fff; background: var(--grad); border-color: transparent; }
 .copy-btn.done { background: linear-gradient(135deg, #10b981, #34d399); color: #fff; border-color: transparent; }
-.empty-tip { padding: 40px; text-align: center; color: var(--t3); }
 
 /* =========================  下载区  ========================= */
 .app-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
@@ -390,8 +378,6 @@ body::before {
 }
 .modal-step img { display: block; width: 100%; }
 
-/* =========================  图库  ========================= */
-.gallery-item:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(31, 38, 135, 0.2); }
 .img-fallback { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--t3); }
 
 /* 灯箱 */
@@ -410,21 +396,13 @@ body::before {
 }
 .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-/* =========================  Footer  ========================= */
-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  padding: 44px 0 52px; text-align: center;
-  color: var(--t2); font-size: 0.84rem;
-}
 
 /* =========================  响应式  ========================= */
 @media (max-width: 1024px) {
   .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
   .app-grid { grid-template-columns: minmax(0, 1fr); }
-  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section { padding: 64px 0; }
   .hero { padding: 72px 0 30px; }
   .nav-links { gap: 8px; }
@@ -453,14 +431,14 @@ footer {
 
 /* =========================  移动端增强  ========================= */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
+a, button, .source-link, .guide-cta-card, .app-cta, .btn {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 /* 不支持 backdrop-filter 的浏览器兜底：提高玻璃不透明度保证可读 */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .source-card, .app-card, .modal, .modal-step, .nav, .marquee, .hero-sticker,
-  .btn-white, .btn-quiet, .btn-main, .btn-blue, .toast, .guide-cta-card {
+  .btn-white, .toast, .guide-cta-card {
     background: #ffffff;
   }
   .nav { background: rgba(255, 255, 255, 0.97); }
@@ -470,7 +448,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 /* iOS 安全区 */
 @supports (padding: max(0px)) {
   .toast { bottom: max(34px, env(safe-area-inset-bottom)); }
-  footer { padding-bottom: max(52px, calc(env(safe-area-inset-bottom) + 24px)); }
 }
 .toast { max-width: calc(100vw - 40px); text-align: center; }
 /* 跑马灯 GPU 合成 */
@@ -485,13 +462,11 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 /* ---------- 移动端流畅性：降低玻璃合成开销 ---------- */
 @media (max-width: 768px) {
   .source-card, .app-card, .dm-panel, .dm-card, .modal, .modal-step,
-  .hero-sticker, .guide-cta-card, .btn-white, .btn-quiet, .btn-main, .btn-blue, .toast {
+  .hero-sticker, .guide-cta-card, .btn-white, .toast {
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   }
   .nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
   .marquee { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-  /* 图库卡片：视口外跳过渲染 */
-  .gallery-item { content-visibility: auto; contain-intrinsic-size: auto 190px; }
   /* 弹窗滚动：iOS 动量滚动 + 防滚动穿透 */
   .modal-scroll { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
   /* 触控目标下限 */
@@ -621,8 +596,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 .app-card { width: 100%; min-width: 0; }
 .app-card-body { width: 100%; min-width: 0; }
 
-/* 接口使用说明卡 */
-.src-guide { margin-bottom: 20px; }
 </style>
 
 </head>
@@ -670,12 +643,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
       <div>
         <span class="kicker yellow">SOURCES</span>
         <h2>接口源</h2>
-      </div>
-    </div>
-    <div class="src-guide">
-      <div class="dm-step">
-        <div class="dm-step-head"><span class="dm-step-num">✦</span><h3>接口使用说明</h3></div>
-        <p>选择一个自己喜欢使用的接口地址并<b>复制</b>。喜欢用<b>网盘看 4K 分辨率</b>，推荐<b>王二小</b>接口。具体使用教程看下方各 APP 的图文教程。</p>
       </div>
     </div>
     <div class="source-grid" id="sourceGrid"></div>
@@ -784,14 +751,7 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
   </div>
 </section>
 
-<!-- =========================
-     4K 图床
-     ========================= -->
 </main>
-
-<footer>
-  <div class="container">劉OKの影院 · NEUBRUTALISM EDITION — MADE WITH <span class="hl">♥</span> FOR BINGERS</div>
-</footer>
 
 <div class="toast" id="toast">已复制到剪贴板</div>
 
@@ -849,10 +809,6 @@ a, button, .source-link, .gallery-item, .guide-cta-card, .app-cta, .btn {
 </div>
 
 <script>
-EMBEDDED_PROVIDERS = [{"id": "wang", "name": "王二小放牛娃", "note": "4K画质网盘首选", "emoji": "🐮", "avatarClass": "av-blue", "metaColor": "var(--brand-blue)", "links": [{"label": "🚀 主力线路", "url": "https://9280.kstore.vip/aiwex.json", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://9280.kstore.space/aiwex.json"}, {"label": "☁️ 备用线路3", "url": "http://ai.xn--4kq62z5rby2qupq9ub.top/"}, {"label": "☁️ 备用线路4", "url": "http://new.王二小放牛娃.top"}, {"label": "☁️ 备用线路5", "url": "http://new.999888123.xyz"}, {"label": "☁️ 备用线路6", "url": "http://new.999888987.xyz"}]}, {"id": "mi", "name": "小米", "note": "全高清+4K", "emoji": "🍚", "avatarClass": "av-rose", "metaColor": "var(--brand-rose)", "links": [{"label": "🚀 主力线路", "url": "https://www.tangsan.fun/tv/DANMU.json", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://sscq-pay.kingnet.com/static/test.json"}, {"label": "☁️ 备用线路2", "url": "https://cnb.cool/xiaomi666888/devcontainer/-/git/raw/main/gege.json"}]}, {"id": "mo", "name": "摸鱼", "note": "全高清+4K", "emoji": "🐟", "avatarClass": "av-teal", "metaColor": "#14b8a6", "links": [{"label": "🚀 主力线路", "url": "http://摸鱼儿.cc", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://我不是.摸鱼儿.cc"}, {"label": "☁️ 备用线路3", "url": "http://我不是.摸鱼儿.top"}, {"label": "☁️ 备用线路4", "url": "http://www.小不点.com"}]}, {"id": "fan", "name": "饭太硬", "note": "全高清+4K", "emoji": "🍙", "avatarClass": "av-amber", "metaColor": "#8b5cf6", "links": [{"label": "🚀 主力线路", "url": "http://fty.333232.xyz/tv", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://fty.888484.xyz/tv"}, {"label": "☁️ 备用线路3", "url": "http://fty.xxooo.cf/tv"}, {"label": "☁️ 备用线路4", "url": "http://www.饭太硬.art/tv"}, {"label": "☁️ 备用线路5", "url": "http://www.饭太硬.net/tv"}]}, {"id": "fei", "name": "肥猫", "note": "全高清+4K", "emoji": "🐱", "avatarClass": "av-violet", "metaColor": "#f97316", "links": [{"label": "🚀 主力线路", "url": "http://肥猫.net/", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://肥猫.net/tv"}, {"label": "☁️ 备用线路3", "url": "https://w.junce.dpdns.org/fm.gif"}]}, {"id": "xs", "name": "潇洒", "note": "全高清+4K", "emoji": "🍃", "avatarClass": "av-green", "metaColor": "#10b981", "links": [{"label": "🚀 主力线路", "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json", "recommended": true}]}, {"id": "aowu", "name": "嗷呜", "note": "全高清+4K", "emoji": "🌙", "avatarClass": "av-slate", "metaColor": "#64748b", "links": [{"label": "🚀 主力线路", "url": "http://www.英格里希嗷呜.top/tv", "recommended": true}, {"label": "☁️ 备用线路2", "url": "http://itv666.cc/aowu/config.webp"}, {"label": "☁️ 备用线路3", "url": "https://9763.kstore.vip/aowu.json"}]}, {"id": "og", "name": "讴歌多仓", "note": "全高清+4K", "emoji": "📻", "avatarClass": "av-indigo", "metaColor": "#6366f1", "links": [{"label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=1", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=1"}]}, {"id": "ogx", "name": "欧歌多线路", "note": "全高清+4K", "emoji": "📡", "avatarClass": "av-pink", "metaColor": "#ec4899", "links": [{"label": "🚀 主力线路", "url": "https://双龙.u.欧.我爱你/apia.php?id=2", "recommended": true}, {"label": "☁️ 备用线路2", "url": "https://双龙.v.nxog.top/apia.php?id=2"}]}];
-</script>
-
-<script>
 /* ===========================
    数据 + 兜底
    =========================== */
@@ -860,7 +816,6 @@ const SVG_COPY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" st
 let sourcesData = [];
 
 const $ = (s, p = document) => p.querySelector(s);
-const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
 const create = (tag, attrs = {}, ...children) => {
   const el = document.createElement(tag);
   for (const k in attrs) {
