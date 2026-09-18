@@ -55,37 +55,6 @@
       ]
     },
     {
-      "id": "fan",
-      "name": "饭太硬",
-      "note": "全高清+4K",
-      "emoji": "🍙",
-      "avatarClass": "av-amber",
-      "metaColor": "#8b5cf6",
-      "links": [
-        {
-          "label": "🚀 主力线路",
-          "url": "http://fty.333232.xyz/tv",
-          "recommended": true
-        },
-        {
-          "label": "☁️ 备用线路2",
-          "url": "http://fty.888484.xyz/tv"
-        },
-        {
-          "label": "☁️ 备用线路3",
-          "url": "http://fty.xxooo.cf/tv"
-        },
-        {
-          "label": "☁️ 备用线路4",
-          "url": "http://www.饭太硬.art/tv"
-        },
-        {
-          "label": "☁️ 备用线路5",
-          "url": "http://www.饭太硬.net/tv"
-        }
-      ]
-    },
-    {
       "id": "mo",
       "name": "摸鱼",
       "note": "全高清+4K",
@@ -114,6 +83,37 @@
           "label": "☁️ 备用线路5",
           "url": "http://我不是.小不点.com"
         },
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "饭太硬",
+      "note": "全高清+4K",
+      "emoji": "🍙",
+      "avatarClass": "av-amber",
+      "metaColor": "#8b5cf6",
+      "links": [
+        {
+          "label": "🚀 主力线路",
+          "url": "http://fty.333232.xyz/tv",
+          "recommended": true
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "http://fty.888484.xyz/tv"
+        },
+        {
+          "label": "☁️ 备用线路3",
+          "url": "http://fty.xxooo.cf/tv"
+        },
+        {
+          "label": "☁️ 备用线路4",
+          "url": "http://www.饭太硬.art/tv"
+        },
+        {
+          "label": "☁️ 备用线路5",
+          "url": "http://www.饭太硬.net/tv"
+        }
       ]
     },
     {
