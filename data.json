@@ -94,22 +94,26 @@
       "metaColor": "#14b8a6",
       "links": [
         {
-          "label": "🚀 已失效勿用",
-          "url": "http://摸鱼儿.cc",
+          "label": "🚀 主力线路",
+          "url": "http://www.y456y.com",
           "recommended": true
         },
         {
-          "label": "☁️ 已失效勿用",
+          "label": "☁️ 备用线路2",
+          "url": "http://fish.y456y.com"
+        },
+        {
+          "label": "☁️ 备用线路3",
           "url": "http://我不是.摸鱼儿.cc"
         },
         {
-          "label": "☁️ 已失效勿用",
+          "label": "☁️ 备用线路4",
           "url": "http://我不是.摸鱼儿.top"
         },
         {
-          "label": "☁️ 已失效勿用",
-          "url": "http://www.小不点.com"
-        }
+          "label": "☁️ 备用线路5",
+          "url": "http://我不是.小不点.com"
+        },
       ]
     },
     {
