@@ -368,15 +368,20 @@ body::before {
 }
 .modal-close:hover { color: var(--t1); background: #fff; transform: rotate(90deg); }
 .modal-body { flex: 1; min-height: 0; }
-.modal-scroll { height: 100%; overflow-y: auto; padding: 26px; display: flex; flex-direction: column; gap: 24px; }
+.modal-scroll { height: 100%; overflow-y: auto; padding: 26px; display: flex; flex-direction: column; }
+/* gap 生效于直接子元素，而 .modal-step 在内层 .modal-body 中，故用 margin 补间距 */
+.modal-step + .modal-step { margin-top: 24px; }
 .modal-step { border-radius: 18px; overflow: hidden; }
 .modal-step-title {
   display: flex; align-items: center;
-  padding: 14px 18px; font-size: 0.86rem; font-weight: 750; color: var(--t1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 15px 18px; font-size: 0.86rem; font-weight: 750; color: var(--t1);
   background: rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
-.modal-step img { display: block; width: 100%; }
+.modal-step img {
+  display: block; width: 100%; box-sizing: border-box;
+  padding: 14px 18px 18px;
+}
 
 .img-fallback { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--t3); }
 
@@ -498,6 +503,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
 .dm-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
 .dm-panel-title { font-size: 1.15rem; font-weight: 800; color: var(--t1); }
 .dm-panel-desc { font-size: 0.82rem; color: var(--t2); margin-bottom: 20px; }
+.dm-panel-desc b { font-weight: 800; color: var(--t1); }
 .dm-run {
   padding: 11px 26px; border-radius: 999px; border: none;
   background: var(--grad); color: #fff; font-family: var(--sans);
@@ -556,6 +562,21 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
 }
 .dm-test:hover { background: var(--grad); color: #fff; border-color: transparent; }
 .dm-note { margin-top: 18px; font-size: 0.76rem; color: var(--t3); }
+.dm-tip {
+  display: flex; align-items: center; flex-wrap: wrap;
+  padding: 11px 16px; margin-bottom: 16px; border-radius: 12px;
+  font-size: 0.8rem; font-weight: 600; color: #4338ca;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.13), rgba(168, 85, 247, 0.11));
+  border: 1px solid rgba(99, 102, 241, 0.22);
+}
+.dm-tip b { font-weight: 800; color: #3730a3; }
+.dm-tip[hidden] { display: none; }
+.dm-status { margin-top: 9px; font-size: 0.74rem; line-height: 1.5; color: var(--t3); }
+.dm-status.ok { color: #059669; }
+.dm-status.warn { color: #b45309; }
+.dm-status.fail { color: #dc2626; }
+.dm-status:empty { display: none; }
+.dm-badge.warn { background: rgba(245, 158, 11, 0.14); color: #b45309; border-color: rgba(245, 158, 11, 0.3); }
 /* 使用步骤 */
 .dm-guide { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
 .dm-step {
@@ -641,7 +662,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="kicker yellow">SOURCES</span>
+        <span class="kicker">SOURCES</span>
         <h2>接口源</h2>
       </div>
     </div>
@@ -655,8 +676,8 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="kicker yellow">DANMU CONFIG</span>
-        <h2>弹幕配置 · 加速链接</h2>
+        <span class="kicker">DANMU CONFIG</span>
+        <h2>弹幕配置</h2>
       </div>
     </div>
     <div class="dm-guide">
@@ -681,7 +702,8 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
         <div class="dm-panel-title">在线配置加速链接</div>
         <button class="dm-run" id="dmRunAll">⚡ 并行测速</button>
       </div>
-      <div class="dm-panel-desc">并行检测，谁先返回就先显示。任选一条复制到 OK影视 / FongMi 的配置栏即可。</div>
+      <div class="dm-panel-desc">先点击<b>并行测速</b>，哪条延迟低哪条弹幕地址速度就快。选择延迟最低的一条地址复制到 OK影视 / FongMi 的<b>直播配置栏</b>中即可。</div>
+      <div class="dm-tip" id="dmTip" hidden></div>
       <div class="dm-grid" id="dmGrid"></div>
       <div class="dm-note">结果受当前网络、浏览器跨域和加速站状态影响，仅作选链接参考。</div>
     </div>
@@ -692,7 +714,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
   <div class="container">
     <div class="section-head">
       <div>
-        <span class="kicker blue">DOWNLOAD</span>
+        <span class="kicker">DOWNLOAD</span>
         <h2>下载 · 图文教程</h2>
       </div>
       <div class="desc">每一步都有截图，照着点就完事</div>
@@ -700,7 +722,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
     <div class="app-grid">
       <article class="app-card">
         <div class="app-card-header">
-          <div class="app-icon ok">🎬</div>
+          <div class="app-icon">🎬</div>
           <div>
             <h3>OK影视 APP</h3>
             <div class="sub">电视端 / 手机端 双端支持</div>
@@ -727,7 +749,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       </article>
       <article class="app-card">
         <div class="app-card-header">
-          <div class="app-icon ysc">🍿</div>
+          <div class="app-icon">🍿</div>
           <div>
             <h3>影视仓 APP</h3>
             <div class="sub">老牌稳定 · 电视端</div>
@@ -938,8 +960,6 @@ var SITE_DATA = {
       "name": "王二小放牛娃",
       "note": "4K画质网盘首选",
       "emoji": "🐮",
-      "avatarClass": "av-blue",
-      "metaColor": "var(--brand-blue)",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -973,8 +993,6 @@ var SITE_DATA = {
       "name": "摸鱼",
       "note": "全高清+4K",
       "emoji": "🐟",
-      "avatarClass": "av-teal",
-      "metaColor": "#14b8a6",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -996,7 +1014,7 @@ var SITE_DATA = {
         {
           "label": "☁️ 备用线路5",
           "url": "http://我不是.小不点.com"
-        },
+        }
       ]
     },
     {
@@ -1004,8 +1022,6 @@ var SITE_DATA = {
       "name": "饭太硬",
       "note": "全高清+4K",
       "emoji": "🍙",
-      "avatarClass": "av-amber",
-      "metaColor": "#8b5cf6",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -1035,8 +1051,6 @@ var SITE_DATA = {
       "name": "嗷呜",
       "note": "全高清+4K",
       "emoji": "🌙",
-      "avatarClass": "av-slate",
-      "metaColor": "#64748b",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -1058,8 +1072,6 @@ var SITE_DATA = {
       "name": "肥猫",
       "note": "全高清+4K",
       "emoji": "🐱",
-      "avatarClass": "av-violet",
-      "metaColor": "#f97316",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -1081,8 +1093,6 @@ var SITE_DATA = {
       "name": "潇洒",
       "note": "全高清+4K",
       "emoji": "🍃",
-      "avatarClass": "av-green",
-      "metaColor": "#10b981",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -1126,7 +1136,9 @@ loadData();
   ];
 
   const grid = document.getElementById('dmGrid');
+  const tipEl = document.getElementById('dmTip');
   const cards = [];
+  let results = [];
 
   DM_LINES.forEach((l, i) => {
     const card = create('div', { class: 'dm-card' },
@@ -1135,11 +1147,12 @@ loadData();
         create('span', { class: 'dm-badge', id: `dmBadge${i}` }, '未测试')),
       create('div', { class: 'dm-desc' }, l.desc),
       create('div', { class: 'dm-url' }, l.url),
+      create('div', { class: 'dm-status', id: `dmStatus${i}` }),
       create('div', { class: 'dm-actions' },
         create('button', { class: 'dm-copy', id: `dmCopy${i}` }, '复制链接'),
         create('button', { class: 'dm-test', id: `dmTest${i}` }, '单独检测')));
     grid.append(card);
-    cards.push({ ...l, card, badge: card.querySelector('.dm-badge') });
+    cards.push({ ...l, card, badge: card.querySelector('.dm-badge'), status: card.querySelector('.dm-status') });
 
     card.querySelector(`#dmCopy${i}`).addEventListener('click', async function () {
       const ok = await copyText(l.url, '链接');
@@ -1157,33 +1170,78 @@ loadData();
     b.textContent = text;
   }
 
-  async function dmMeasure(url) {
-    const t0 = performance.now();
+  function dmSetStatus(i, cls, text) {
+    const s = cards[i].status;
+    s.className = 'dm-status' + (cls ? ' ' + cls : '');
+    s.textContent = text || '';
+  }
+
+  /* 先按可读方式（cors）请求，能拿到正文就校验是否为弹幕配置；
+     CORS 受限时降级为 no-cors 连通性探测，并明确告知未校验内容。 */
+  async function dmProbe(url) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 8000);
+    let t0 = performance.now();
     try {
-      await fetch(url, { mode: 'no-cors', cache: 'no-store', signal: ctrl.signal });
+      const res = await fetch(url, { mode: 'cors', cache: 'no-store', signal: ctrl.signal });
+      const ms = Math.round(performance.now() - t0);
+      let body = '';
+      try { body = await res.text(); } catch (err) { body = ''; }
       clearTimeout(timer);
-      return Math.round(performance.now() - t0);
-    } catch (e) {
+      if (!res.ok) return { ms, state: 'fail', msg: '无法加载：服务器返回 HTTP ' + res.status };
+      if (!body) return { ms, state: 'warn', msg: '已连通，但未能读取到配置内容' };
+      try {
+        const json = JSON.parse(body);
+        if (json && Array.isArray(json.sites)) return { ms, state: 'verified', msg: '已校验到配置内容' };
+        return { ms, state: 'warn', msg: '已连通；返回内容不是弹幕配置，请谨慎使用' };
+      } catch (err) {
+        return { ms, state: 'warn', msg: '已连通；返回内容不是有效 JSON，可能被加速站拦截' };
+      }
+    } catch (err) {
       clearTimeout(timer);
-      return null;
+    }
+
+    const ctrl2 = new AbortController();
+    const timer2 = setTimeout(() => ctrl2.abort(), 8000);
+    t0 = performance.now();
+    try {
+      await fetch(url, { mode: 'no-cors', cache: 'no-store', signal: ctrl2.signal });
+      clearTimeout(timer2);
+      return { ms: Math.round(performance.now() - t0), state: 'reachable', msg: '可连通；受跨域限制，浏览器未校验内容，最终以播放器加载为准' };
+    } catch (err) {
+      clearTimeout(timer2);
+      return { ms: null, state: 'fail', msg: '无法加载：请检查网络或换一条线路' };
     }
   }
 
   async function dmRun(i) {
     dmSetBadge(i, 'testing', '检测中…');
-    const ms = await dmMeasure(cards[i].url);
-    if (ms === null) dmSetBadge(i, 'fail', '失败');
-    else dmSetBadge(i, 'ok', ms + ' ms');
-    return ms;
+    dmSetStatus(i, '', '');
+    const r = await dmProbe(cards[i].url);
+    if (r.ms === null) dmSetBadge(i, 'fail', '无法加载');
+    else if (r.state === 'warn') dmSetBadge(i, 'warn', '可加载 · ' + r.ms + ' ms');
+    else dmSetBadge(i, 'ok', '可加载 · ' + r.ms + ' ms');
+    dmSetStatus(i, r.state === 'verified' ? 'ok' : (r.state === 'fail' ? 'fail' : 'warn'), r.msg);
+    return { i, ms: r.ms, state: r.state };
+  }
+
+  function dmUpdateTip() {
+    const usable = results.filter(r => r.ms !== null).sort((a, b) => a.ms - b.ms);
+    if (!usable.length) { tipEl.hidden = true; tipEl.textContent = ''; return; }
+    const best = usable[0];
+    tipEl.hidden = false;
+    tipEl.innerHTML = '当前建议：<b>线路 ' + (best.i + 1) + '：' + DM_LINES[best.i].name + '</b>，耗时约 ' + best.ms + ' ms。';
   }
 
   document.getElementById('dmRunAll').addEventListener('click', async function () {
     this.disabled = true;
     this.textContent = '⏳ 测速中…';
-    cards.forEach((_, i) => dmSetBadge(i, 'testing', '检测中…'));
-    await Promise.allSettled(cards.map((_, i) => dmRun(i)));
+    results = [];
+    tipEl.hidden = true;
+    cards.forEach((_, i) => { dmSetBadge(i, 'testing', '检测中…'); dmSetStatus(i, '', ''); });
+    const settled = await Promise.allSettled(cards.map((_, i) => dmRun(i)));
+    settled.forEach(s => { if (s.status === 'fulfilled' && s.value) results.push(s.value); });
+    dmUpdateTip();
     this.disabled = false;
     this.textContent = '⚡ 并行测速';
   });

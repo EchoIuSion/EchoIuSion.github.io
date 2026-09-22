@@ -5,8 +5,6 @@
       "name": "王二小放牛娃",
       "note": "4K画质网盘首选",
       "emoji": "🐮",
-      "avatarClass": "av-blue",
-      "metaColor": "var(--brand-blue)",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -40,8 +38,6 @@
       "name": "摸鱼",
       "note": "全高清+4K",
       "emoji": "🐟",
-      "avatarClass": "av-teal",
-      "metaColor": "#14b8a6",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -63,7 +59,7 @@
         {
           "label": "☁️ 备用线路5",
           "url": "http://我不是.小不点.com"
-        },
+        }
       ]
     },
     {
@@ -71,8 +67,6 @@
       "name": "饭太硬",
       "note": "全高清+4K",
       "emoji": "🍙",
-      "avatarClass": "av-amber",
-      "metaColor": "#8b5cf6",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -102,8 +96,6 @@
       "name": "嗷呜",
       "note": "全高清+4K",
       "emoji": "🌙",
-      "avatarClass": "av-slate",
-      "metaColor": "#64748b",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -125,8 +117,6 @@
       "name": "肥猫",
       "note": "全高清+4K",
       "emoji": "🐱",
-      "avatarClass": "av-violet",
-      "metaColor": "#f97316",
       "links": [
         {
           "label": "🚀 主力线路",
@@ -148,8 +138,6 @@
       "name": "潇洒",
       "note": "全高清+4K",
       "emoji": "🍃",
-      "avatarClass": "av-green",
-      "metaColor": "#10b981",
       "links": [
         {
           "label": "🚀 主力线路",
