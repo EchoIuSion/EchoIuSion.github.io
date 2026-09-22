@@ -141,9 +141,13 @@
       "links": [
         {
           "label": "🚀 主力线路",
-          "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json",
+          "url": "https://9877.kstore.space/sun.json",
           "recommended": true
-        }
+        },
+        {
+          "label": "☁️ 备用线路2",
+          "url": "https://cnb.cool/fish2035/xs/-/git/raw/main/api.json"
+        },
       ]
     }
   ]
