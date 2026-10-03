@@ -386,6 +386,31 @@ body::before {
 
 .img-fallback { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--t3); }
 
+/* 教程图懒加载占位（骨架屏） */
+.modal-step .tut-img-wrap {
+  display: block; width: 100%; box-sizing: border-box;
+  padding: 14px 18px 18px;
+  background: linear-gradient(100deg,
+    rgba(148, 163, 184, 0.10) 30%,
+    rgba(148, 163, 184, 0.22) 50%,
+    rgba(148, 163, 184, 0.10) 70%);
+  background-size: 220% 100%;
+  animation: tut-shimmer 1.4s var(--ease) infinite;
+  min-height: 180px;
+}
+@keyframes tut-shimmer {
+  0%   { background-position: 140% 0; }
+  100% { background-position: -40% 0; }
+}
+.modal-step .tut-img-wrap.is-done { animation: none; background: none; min-height: 0; padding: 0; }
+/* 图片本体不再自带padding（padding 移到外层 wrap，避免叠加两次） */
+.modal-step .tut-img { padding: 0 !important; height: auto !important; max-width: 100%; }
+.modal-step .tut-img-wrap > .img-fallback { height: auto; padding: 40px 18px; }
+.modal-step .tut-img-wrap.is-done img { display: block; }
+@media (prefers-reduced-motion: reduce) {
+  .modal-step .tut-img-wrap { animation: none; }
+}
+
 /* 灯箱 */
 
 /* =========================  Toast  ========================= */
@@ -814,11 +839,11 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       <button class="modal-close" data-close-modal aria-label="关闭">✕</button>
     </div>
     <div class="modal-scroll"><div class="modal-body">
-      <div class="modal-step"><div class="modal-step-title">STEP 01 · 打开APP点击订阅选项</div><img src="https://pic1.imgdb.cn/i/034ZL1SvhKqh9pvske8L35.png" alt="STEP 01 · 打开APP点击订阅选项" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 02 · WX扫一扫进入配置页面</div><img src="https://pic1.imgdb.cn/i/034ZL1PE29lsxUjQHjxxjO.png" alt="STEP 02 · WX扫一扫进入配置页面" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机端复制接口</div><img src="https://pic1.imgdb.cn/i/034ZL1HrREI5Sa2BioUCfL.png" alt="STEP 03 · 手机端复制接口" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 04 · 主界面</div><img src="https://pic1.imgdb.cn/i/034ZL1YjmvMJ28SZ5lopSZ.png" alt="STEP 04 · 主界面" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 05 · 打开弹幕、广告过滤功能，即可返回主界面观看</div><img src="https://pic1.imgdb.cn/i/034ZL1JB1nQP7DXLHuHk0E.png" alt="STEP 05 · 打开弹幕、广告过滤功能，即可返回主界面观看" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 01 · 打开APP点击订阅选项</div><img class="tut-img" data-src="tut/nb-tv-01.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 02 · WX扫一扫进入配置页面</div><img class="tut-img" data-src="tut/nb-tv-02.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机端复制接口</div><img class="tut-img" data-src="tut/nb-tv-03.webp" width="1080" height="491" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 04 · 主界面</div><img class="tut-img" data-src="tut/nb-tv-04.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 05 · 打开弹幕、广告过滤功能，即可返回主界面观看</div><img class="tut-img" data-src="tut/nb-tv-05.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
 </div></div>
   </div>
 </div>
@@ -830,15 +855,15 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       <button class="modal-close" data-close-modal aria-label="关闭">✕</button>
     </div>
     <div class="modal-scroll"><div class="modal-body">
-      <div class="modal-step"><div class="modal-step-title">STEP 01 · 打开APP点击&lt;我的&gt;</div><img src="https://pic1.imgdb.cn/i/034ZM3LLqeZdajhHfvDGIs.png" alt="STEP 01 · 打开APP点击&lt;我的&gt;" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击订阅管理</div><img src="https://pic1.imgdb.cn/i/034ZM3L8svvcVf0P38j2j7.png" alt="STEP 02 · 点击订阅管理" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 03 · 点击右上角+号按键</div><img src="https://pic1.imgdb.cn/i/034ZM3L8IYZKubfK84TOlw.png" alt="STEP 03 · 点击右上角+号按键" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 04 · 如图所示</div><img src="https://pic1.imgdb.cn/i/034ZM3LFhzR5ujEE4CT0V8.png" alt="STEP 04 · 如图所示" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 05 · 第4步成功界面演示</div><img src="https://pic1.imgdb.cn/i/034ZM3LG00jQkBfJjuycCy.png" alt="STEP 05 · 第4步成功界面演示" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 06 · 设置弹幕以及广告过滤</div><img src="https://pic1.imgdb.cn/i/034ZM3XUz3SFqiIYrsV6O1.png" alt="STEP 06 · 设置弹幕以及广告过滤" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 07 · 进入设置界面</div><img src="https://pic1.imgdb.cn/i/034ZM3Uy8VSYywWLrq6XI6.png" alt="STEP 07 · 进入设置界面" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 08 · 打开广告过滤以及弹幕功能</div><img src="https://pic1.imgdb.cn/i/034ZM3UzhAo1X3CeityFvJ.png" alt="STEP 08 · 打开广告过滤以及弹幕功能" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 09 · 如图所示，最后返回主界面即可观看</div><img src="https://pic1.imgdb.cn/i/034ZM3V7yxOyBRzxrTxesu.png" alt="STEP 09 · 如图所示，最后返回主界面即可观看" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 01 · 打开APP点击&lt;我的&gt;</div><img class="tut-img" data-src="tut/nb-phone-01.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击订阅管理</div><img class="tut-img" data-src="tut/nb-phone-02.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 03 · 点击右上角+号按键</div><img class="tut-img" data-src="tut/nb-phone-03.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 04 · 如图所示</div><img class="tut-img" data-src="tut/nb-phone-04.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 05 · 第4步成功界面演示</div><img class="tut-img" data-src="tut/nb-phone-05.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 06 · 设置弹幕以及广告过滤</div><img class="tut-img" data-src="tut/nb-phone-06.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 07 · 进入设置界面</div><img class="tut-img" data-src="tut/nb-phone-07.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 08 · 打开广告过滤以及弹幕功能</div><img class="tut-img" data-src="tut/nb-phone-08.webp" width="1080" height="1920" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 09 · 如图所示，最后返回主界面即可观看</div><img class="tut-img" data-src="tut/nb-phone-09.webp" width="1051" height="1208" alt="步骤图" decoding="async" /></div>
 </div></div>
   </div>
 </div>
@@ -850,12 +875,12 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       <button class="modal-close" data-close-modal aria-label="关闭">✕</button>
     </div>
     <div class="modal-scroll"><div class="modal-body">
-      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击设置按键</div><img src="https://pic1.imgdb.cn/i/034ZL5EZvSFlBGLgB17PTQ.png" alt="步骤一" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击点播栏</div><img src="https://pic1.imgdb.cn/i/034ZL58RMRp6uxz3kJxcOR.png" alt="步骤二" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机扫描二维码</div><img src="https://pic1.imgdb.cn/i/034ZL5BiPkdL0KH7Oer1Qk.png" alt="步骤三" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 04 · 手机界面</div><img src="https://pic1.imgdb.cn/i/034ZL55nt5TQeYAXgjqHTO.png" alt="步骤四" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 05 · 遥控器点击确定</div><img src="https://pic1.imgdb.cn/i/034ZL57uPuqYOrU4Mvh2NW.png" alt="步骤五" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 06 · 成功界面</div><img src="https://pic1.imgdb.cn/i/034ZL5CDPb3qefBl7R8cTn.png" alt="步骤六" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击设置按键</div><img class="tut-img" data-src="tut/ok-tv-01.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击点播栏</div><img class="tut-img" data-src="tut/ok-tv-02.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机扫描二维码</div><img class="tut-img" data-src="tut/ok-tv-03.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 04 · 手机界面</div><img class="tut-img" data-src="tut/ok-tv-04.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 05 · 遥控器点击确定</div><img class="tut-img" data-src="tut/ok-tv-05.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 06 · 成功界面</div><img class="tut-img" data-src="tut/ok-tv-06.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
     </div></div>
   </div>
 </div>
@@ -867,11 +892,11 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       <button class="modal-close" data-close-modal aria-label="关闭">✕</button>
     </div>
     <div class="modal-scroll"><div class="modal-body">
-      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击下方齿轮按键</div><img src="https://pic1.imgdb.cn/i/034ZL8pehIM3fyqxaXZZJE.jpg" alt="步骤一" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击点播栏位置</div><img src="https://pic1.imgdb.cn/i/034ZL8povc58OfbsavNmrS.jpg" alt="步骤二" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 03 · 长按框内粘贴接口</div><img src="https://pic1.imgdb.cn/i/034ZL8qH6V3BixY37d7T52.jpg" alt="步骤三" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 04 · 粘贴后点确定</div><img src="https://pic1.imgdb.cn/i/034ZL8qwEh6GgDF7dnVYFv.png" alt="步骤四" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 05 · 成功界面</div><img src="https://pic1.imgdb.cn/i/034ZL8zbqCKWOLZkDc6wL7.png" alt="步骤五" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击下方齿轮按键</div><img class="tut-img" data-src="tut/ok-phone-01.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 02 · 点击点播栏位置</div><img class="tut-img" data-src="tut/ok-phone-02.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 03 · 长按框内粘贴接口</div><img class="tut-img" data-src="tut/ok-phone-03.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 04 · 粘贴后点确定</div><img class="tut-img" data-src="tut/ok-phone-04.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 05 · 成功界面</div><img class="tut-img" data-src="tut/ok-phone-05.webp" width="1080" height="2228" alt="步骤图" decoding="async" /></div>
     </div></div>
   </div>
 </div>
@@ -883,14 +908,14 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
       <button class="modal-close" data-close-modal aria-label="关闭">✕</button>
     </div>
     <div class="modal-scroll"><div class="modal-body">
-      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击配置按钮</div><img src="https://pic1.imgdb.cn/i/034ZL9lRHkl5OJoHkw1JCA.png" alt="步骤一" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 02 · 进入配置界面</div><img src="https://pic1.imgdb.cn/i/034ZL9lLR2A2uHshppFblO.png" alt="步骤二" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机端复制接口</div><img src="https://pic1.imgdb.cn/i/034ZL9cdaVFCaDOUzvp2uT.png" alt="步骤三" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 04 · 主界面</div><img src="https://pic1.imgdb.cn/i/034ZL9xn5gDO6TTabIr4pL.png" alt="步骤四" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 05 · 点击设置</div><img src="https://pic1.imgdb.cn/i/034ZL9sMIBP2GFk74zLpg8.png" alt="步骤五" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 06 · 点击影视仓实验室</div><img src="https://pic1.imgdb.cn/i/034ZLAKLRF8iHPWhs535Q6.png" alt="步骤六" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 07 · 开启去广告功能</div><img src="https://pic1.imgdb.cn/i/034ZLAF31mttyMtSwAOAMh.png" alt="步骤七" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
-      <div class="modal-step"><div class="modal-step-title">STEP 08 · 成功界面</div><img src="https://pic1.imgdb.cn/i/034ZLAKsO65X1xDEuqShhp.png" alt="步骤八" loading="lazy" onerror="this.outerHTML='<div class=\'img-fallback\'>📷 图片加载失败</div>'" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 01 · 点击配置按钮</div><img class="tut-img" data-src="tut/ysc-tv-01.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 02 · 进入配置界面</div><img class="tut-img" data-src="tut/ysc-tv-02.webp" width="1080" height="608" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 03 · 手机端复制接口</div><img class="tut-img" data-src="tut/ysc-tv-03.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 04 · 主界面</div><img class="tut-img" data-src="tut/ysc-tv-04.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 05 · 点击设置</div><img class="tut-img" data-src="tut/ysc-tv-05.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 06 · 点击影视仓实验室</div><img class="tut-img" data-src="tut/ysc-tv-06.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 07 · 开启去广告功能</div><img class="tut-img" data-src="tut/ysc-tv-07.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
+      <div class="modal-step"><div class="modal-step-title">STEP 08 · 成功界面</div><img class="tut-img" data-src="tut/ysc-tv-08.webp" width="1080" height="607" alt="步骤图" decoding="async" /></div>
     </div></div>
   </div>
 </div>
@@ -988,11 +1013,47 @@ function renderSources() {
 /* ===========================
    Tutorial Modal
    =========================== */
+/* 教程图按需加载：弹窗首次打开时才注入图片地址，避免一次性请求 33 张 */
+const TUT_LOADED = new WeakSet();
+function loadTutorialImages(modal, onlyFirst) {
+  const imgs = modal.querySelectorAll('img.tut-img[data-src]');
+  imgs.forEach((img, idx) => {
+    if (onlyFirst && idx > 0) return;
+    if (img.dataset.loading) return;
+    img.dataset.loading = '1';
+    const wrap = document.createElement('div');
+    wrap.className = 'tut-img-wrap';
+    img.parentNode.insertBefore(wrap, img);
+    wrap.appendChild(img);
+    const done = () => {
+      wrap.classList.add('is-done');
+      img.removeAttribute('data-loading');
+      img.removeAttribute('data-src');
+    };
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', () => {
+      wrap.classList.add('is-done');
+      img.removeAttribute('data-loading');
+      wrap.innerHTML = '<div class="img-fallback">📷 图片加载失败</div>';
+    }, { once: true });
+    img.src = img.dataset.src;
+  });
+}
+
 document.querySelectorAll('[data-modal]').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const modal = document.getElementById(btn.dataset.modal);
-    if (modal) { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (!TUT_LOADED.has(modal)) {
+      TUT_LOADED.add(modal);
+      loadTutorialImages(modal, false);   // 首次打开：全部注入
+      // 首屏优先：先让第 1 张立即解码
+      const first = modal.querySelector('img.tut-img[data-src]');
+      if (first) first.loading = 'eager';
+    }
   });
 });
 document.querySelectorAll('[data-close-modal]').forEach(btn => {
