@@ -369,7 +369,7 @@ body::before {
 }
 .modal-close:hover { color: var(--t1); background: #fff; transform: rotate(90deg); }
 .modal-body { flex: 1; min-height: 0; }
-.modal-scroll { height: 100%; overflow-y: auto; padding: 26px; display: flex; flex-direction: column; }
+.modal-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 26px; display: block; }
 /* gap 生效于直接子元素，而 .modal-step 在内层 .modal-body 中，故用 margin 补间距 */
 .modal-step + .modal-step { margin-top: 24px; }
 .modal-step { border-radius: 18px; overflow: hidden; }
@@ -388,8 +388,10 @@ body::before {
 
 /* 教程图懒加载占位（骨架屏） */
 .modal-step .tut-img-wrap {
-  display: block; width: 100%; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; box-sizing: border-box;
   padding: 14px 18px 18px;
+  min-height: 0;
   background: linear-gradient(100deg,
     rgba(148, 163, 184, 0.10) 30%,
     rgba(148, 163, 184, 0.22) 50%,
@@ -404,9 +406,20 @@ body::before {
 }
 .modal-step .tut-img-wrap.is-done { animation: none; background: none; min-height: 0; padding: 0; }
 /* 图片本体不再自带padding（padding 移到外层 wrap，避免叠加两次） */
-.modal-step .tut-img { padding: 0 !important; height: auto !important; max-width: 100%; }
+.modal-step .tut-img {
+  padding: 0 !important;
+  /* 竖屏截图按「高度」适配并水平居中，不再按宽度撑爆 */
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 58vh;
+  display: block;
+  margin: 0 auto;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  object-fit: contain;
+}
 .modal-step .tut-img-wrap > .img-fallback { height: auto; padding: 40px 18px; }
-.modal-step .tut-img-wrap.is-done img { display: block; }
+.modal-step .tut-img-wrap.is-done img { display: block; margin: 0 auto; }
 @media (prefers-reduced-motion: reduce) {
   .modal-step .tut-img-wrap { animation: none; }
 }
@@ -429,12 +442,21 @@ body::before {
 
 
 /* =========================  响应式  ========================= */
+@media (min-width: 1100px) {
+  .modal { width: min(820px, 92vw); }
+  .modal-step .tut-img { max-height: 62vh; }
+}
 @media (max-width: 1024px) {
   .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .app-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 768px) {
   .app-grid { grid-template-columns: minmax(0, 1fr); }
+  .modal-scroll { padding: 16px 12px; }
+  .modal-step .tut-img-wrap { padding: 10px 10px 12px; }
+  .modal-step .tut-img { max-height: 62vh; }
+  .modal-step-title { padding: 12px 14px; font-size: 0.8rem; }
+  .modal-step + .modal-step { margin-top: 16px; }
   .section { padding: 64px 0; }
   .hero { padding: 72px 0 30px; }
   .nav-links { gap: 8px; }
