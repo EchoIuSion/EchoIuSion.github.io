@@ -390,7 +390,7 @@ body::before {
 .modal-step .tut-img-wrap {
   display: flex; align-items: center; justify-content: center;
   width: 100%; box-sizing: border-box;
-  padding: 14px 18px 18px;
+  padding: 12px 14px 14px;
   min-height: 0;
   background: linear-gradient(100deg,
     rgba(148, 163, 184, 0.10) 30%,
@@ -408,23 +408,74 @@ body::before {
 /* 图片本体不再自带padding（padding 移到外层 wrap，避免叠加两次） */
 .modal-step .tut-img {
   padding: 0 !important;
-  /* 竖屏截图按「高度」适配并水平居中，不再按宽度撑爆 */
-  width: auto !important;
-  height: auto !important;
-  max-width: 100%;
-  max-height: 58vh;
-  display: block;
-  margin: 0 auto;
+  cursor: zoom-in;
+  display: block; margin: 0 auto;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   object-fit: contain;
 }
+/* 横屏截图：按高度限高，避免过高；水平居中 */
+.modal-step .tut-img-wrap.is-landscape .tut-img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: 70vh;
+}
+/* 竖屏截图：铺满宽度，不限高（避免左右大片留白） */
+.modal-step .tut-img-wrap.is-portrait .tut-img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+  /* 不限高，让手机截图铺满宽度；仅在极小屏兜底防溢出 */
+  max-height: none;
+}
+@media (max-height: 560px) {
+  .modal-step .tut-img-wrap.is-portrait .tut-img { max-height: 82vh; width: auto !important; }
+}
 .modal-step .tut-img-wrap > .img-fallback { height: auto; padding: 40px 18px; }
 .modal-step .tut-img-wrap.is-done img { display: block; margin: 0 auto; }
+/* 竖屏图铺满：容器去掉左右留白 */
+.modal-step .tut-img-wrap.is-portrait { padding: 10px 0 12px; }
 @media (prefers-reduced-motion: reduce) {
   .modal-step .tut-img-wrap { animation: none; }
 }
 
-/* 灯箱 */
+/* 灯箱：点击教程图全屏放大 */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(8, 12, 24, 0.94);
+  display: none; align-items: center; justify-content: center;
+  touch-action: none;
+}
+.lightbox.open { display: flex; }
+.lightbox-img {
+  max-width: 96vw; max-height: 92vh;
+  object-fit: contain; border-radius: 10px;
+  transform-origin: center center;
+  transition: transform 0.18s var(--ease);
+  cursor: grab;
+  user-select: none; -webkit-user-drag: none;
+}
+.lightbox-img.grabbing { cursor: grabbing; transition: none; }
+.lightbox-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(0,0,0,.55), transparent);
+  color: #fff; font-size: 0.8rem; font-weight: 700;
+}
+.lightbox-hint { opacity: 0.8; font-weight: 500; }
+.lightbox-close {
+  margin-left: auto;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
+  color: #fff; font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.lightbox-close:hover { background: rgba(255,255,255,.28); }
+.lightbox-tip {
+  position: absolute; bottom: 18px; left: 0; right: 0;
+  text-align: center; color: rgba(255,255,255,.72); font-size: 0.75rem;
+  pointer-events: none;
+}
 
 /* =========================  Toast  ========================= */
 .toast {
@@ -444,7 +495,7 @@ body::before {
 /* =========================  响应式  ========================= */
 @media (min-width: 1100px) {
   .modal { width: min(820px, 92vw); }
-  .modal-step .tut-img { max-height: 62vh; }
+  .modal-step .tut-img-wrap.is-landscape .tut-img { max-height: 74vh; }
 }
 @media (max-width: 1024px) {
   .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -454,7 +505,7 @@ body::before {
   .app-grid { grid-template-columns: minmax(0, 1fr); }
   .modal-scroll { padding: 16px 12px; }
   .modal-step .tut-img-wrap { padding: 10px 10px 12px; }
-  .modal-step .tut-img { max-height: 62vh; }
+  .modal-step .tut-img-wrap.is-landscape .tut-img { max-height: 74vh; }
   .modal-step-title { padding: 12px 14px; font-size: 0.8rem; }
   .modal-step + .modal-step { margin-top: 16px; }
   .section { padding: 64px 0; }
@@ -854,6 +905,17 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
 
 <div class="toast" id="toast">已复制到剪贴板</div>
 
+<!-- 灯箱：点击教程图放大 -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片放大查看">
+  <div class="lightbox-bar">
+    <span>教程截图</span>
+    <span class="lightbox-hint">双击或双指缩放 · 拖动查看</span>
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">✕</button>
+  </div>
+  <img class="lightbox-img" id="lightboxImg" alt="教程大图" />
+  <div class="lightbox-tip">点击空白处或按 Esc 关闭</div>
+</div>
+
 <div class="modal-overlay" id="nbTvModal" role="dialog" aria-modal="true" aria-labelledby="nbTvTitle">
   <div class="modal">
     <div class="modal-header">
@@ -1035,6 +1097,93 @@ function renderSources() {
 /* ===========================
    Tutorial Modal
    =========================== */
+/* ===========================
+   灯箱：点击教程图全屏放大
+   =========================== */
+(function () {
+  const box = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  const btn = document.getElementById('lightboxClose');
+  let scale = 1, tx = 0, ty = 0, dragging = false, sx = 0, sy = 0, pinch0 = 0, sc0 = 1;
+
+  const render = () => { img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`; };
+  const reset = () => { scale = 1; tx = ty = 0; render(); };
+
+  function open(src) {
+    img.src = src;
+    reset();
+    box.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    box.classList.remove('open');
+    document.body.style.overflow = '';
+    img.removeAttribute('src');
+    reset();
+  }
+
+  // 教程图点击放大（用事件委托，兼容懒加载后动态生成的 img）
+  document.addEventListener('click', e => {
+    const t = e.target.closest && e.target.closest('img.tut-img');
+    if (!t) return;
+    if (!t.src) t.src = t.dataset.src || '';
+    open(t.src || t.dataset.src);
+  });
+
+  box.addEventListener('click', e => {
+    if (e.target === box || e.target === btn || btn.contains(e.target)) close();
+  });
+
+  // 双击 / 双指放大
+  img.addEventListener('dblclick', e => {
+    e.preventDefault();
+    scale = scale > 1 ? 1 : 2.2;
+    render();
+  });
+
+  // 拖动
+  img.addEventListener('pointerdown', e => {
+    dragging = true; sx = e.clientX - tx; sy = e.clientY - ty;
+    img.classList.add('grabbing');
+    img.setPointerCapture(e.pointerId);
+  });
+  img.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    tx = e.clientX - sx; ty = e.clientY - sy; render();
+  });
+  const endDrag = e => {
+    dragging = false;
+    img.classList.remove('grabbing');
+    if (e.pointerId !== undefined && img.hasPointerCapture && img.hasPointerCapture(e.pointerId)) {
+      img.releasePointerCapture(e.pointerId);
+    }
+  };
+  img.addEventListener('pointerup', endDrag);
+  img.addEventListener('pointercancel', endDrag);
+
+  // 双指缩放
+  img.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinch0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                          e.touches[0].clientY - e.touches[1].clientY);
+      sc0 = scale;
+    }
+  }, { passive: true });
+  img.addEventListener('touchmove', e => {
+    if (e.touches.length === 2 && pinch0) {
+      e.preventDefault();
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                           e.touches[0].clientY - e.touches[1].clientY);
+      scale = Math.min(5, Math.max(1, sc0 * d / pinch0));
+      render();
+    }
+  }, { passive: false });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && box.classList.contains('open')) close();
+  });
+})();
+
 /* 教程图按需加载：弹窗首次打开时才注入图片地址，避免一次性请求 33 张 */
 const TUT_LOADED = new WeakSet();
 function loadTutorialImages(modal, onlyFirst) {
@@ -1049,6 +1198,9 @@ function loadTutorialImages(modal, onlyFirst) {
     wrap.appendChild(img);
     const done = () => {
       wrap.classList.add('is-done');
+      // 按图片实际宽高比分流：竖屏铺满宽度，横屏限高居中
+      const portrait = img.naturalHeight > img.naturalWidth;
+      wrap.classList.add(portrait ? 'is-portrait' : 'is-landscape');
       img.removeAttribute('data-loading');
       img.removeAttribute('data-src');
     };
