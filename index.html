@@ -448,16 +448,16 @@ body::before {
 }
 .lightbox.open { display: flex; }
 .lightbox-img {
-  max-width: 96vw; max-height: 92vh;
+  position: relative; z-index: 1;
+  max-width: 96vw; max-height: 88vh;
   object-fit: contain; border-radius: 10px;
   transform-origin: center center;
   transition: transform 0.18s var(--ease);
-  cursor: grab;
+  cursor: zoom-in;
   user-select: none; -webkit-user-drag: none;
 }
-.lightbox-img.grabbing { cursor: grabbing; transition: none; }
 .lightbox-bar {
-  position: absolute; top: 0; left: 0; right: 0;
+  position: absolute; top: 0; left: 0; right: 0; z-index: 3;
   display: flex; align-items: center; gap: 10px;
   padding: 14px 16px;
   background: linear-gradient(180deg, rgba(0,0,0,.55), transparent);
@@ -472,9 +472,10 @@ body::before {
 }
 .lightbox-close:hover { background: rgba(255,255,255,.28); }
 .lightbox-tip {
-  position: absolute; bottom: 18px; left: 0; right: 0;
+  position: absolute; bottom: 18px; left: 0; right: 0; z-index: 3;
   text-align: center; color: rgba(255,255,255,.72); font-size: 0.75rem;
   pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0,0,0,.9);
 }
 
 /* =========================  Toast  ========================= */
@@ -883,7 +884,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
         <div class="sp-row"><span class="sp-name">电脑模拟器<span class="sp-en">Emulator</span></span><span class="sp-yes">支持 ✅</span></div>
         <div class="sp-row"><span class="sp-name">苹果 iOS<span class="sp-en">iOS</span></span><span class="sp-no">不支持 ❌</span></div>
       </div>
-          <a class="app-cta qk" href="https://pan.quark.cn/s/5c2b9d00dbf1" target="_blank" rel="noopener">☁️ 夸克网盘下载 · 提取码 1111</a>
+          <a class="app-cta qk" href="https://pan.quark.cn/s/14731af002a4" target="_blank" rel="noopener">☁️ 夸克网盘下载</a>
           <a href="javascript:void(0)" class="guide-cta-card" data-modal="nbTvModal">
             <div class="guide-cta-icon">📺</div>
             <div><h4>电视端图文教程</h4><p>步骤图解 · 共 5 步</p></div>
@@ -909,11 +910,11 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片放大查看">
   <div class="lightbox-bar">
     <span>教程截图</span>
-    <span class="lightbox-hint">双击或双指缩放 · 拖动查看</span>
+    <span class="lightbox-hint">双击或双指缩放</span>
     <button class="lightbox-close" id="lightboxClose" aria-label="关闭">✕</button>
   </div>
   <img class="lightbox-img" id="lightboxImg" alt="教程大图" />
-  <div class="lightbox-tip">点击空白处或按 Esc 关闭</div>
+  <div class="lightbox-tip">点击空白处关闭</div>
 </div>
 
 <div class="modal-overlay" id="nbTvModal" role="dialog" aria-modal="true" aria-labelledby="nbTvTitle">
@@ -1104,10 +1105,11 @@ function renderSources() {
   const box = document.getElementById('lightbox');
   const img = document.getElementById('lightboxImg');
   const btn = document.getElementById('lightboxClose');
-  let scale = 1, tx = 0, ty = 0, dragging = false, sx = 0, sy = 0, pinch0 = 0, sc0 = 1;
+  let scale = 1, pinch0 = 0, sc0 = 1;
 
-  const render = () => { img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`; };
-  const reset = () => { scale = 1; tx = ty = 0; render(); };
+  /* 仅缩放，不平移 */
+  const render = () => { img.style.transform = 'scale(' + scale + ')'; };
+  const reset = () => { scale = 1; render(); };
 
   function open(src) {
     img.src = src;
@@ -1140,26 +1142,6 @@ function renderSources() {
     scale = scale > 1 ? 1 : 2.2;
     render();
   });
-
-  // 拖动
-  img.addEventListener('pointerdown', e => {
-    dragging = true; sx = e.clientX - tx; sy = e.clientY - ty;
-    img.classList.add('grabbing');
-    img.setPointerCapture(e.pointerId);
-  });
-  img.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    tx = e.clientX - sx; ty = e.clientY - sy; render();
-  });
-  const endDrag = e => {
-    dragging = false;
-    img.classList.remove('grabbing');
-    if (e.pointerId !== undefined && img.hasPointerCapture && img.hasPointerCapture(e.pointerId)) {
-      img.releasePointerCapture(e.pointerId);
-    }
-  };
-  img.addEventListener('pointerup', endDrag);
-  img.addEventListener('pointercancel', endDrag);
 
   // 双指缩放
   img.addEventListener('touchstart', e => {
