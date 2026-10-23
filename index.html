@@ -9,7 +9,8 @@
 <link rel="apple-touch-icon" href="favicon.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" /></noscript>
 <style>
 /* ============================================================
    Frosted Glass — iOS 玻璃拟态设计语言
@@ -727,6 +728,19 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
 .app-card { width: 100%; min-width: 0; }
 .app-card-body { width: 100%; min-width: 0; }
 
+/* 移动端：避免多个实时毛玻璃图层占满 GPU 合成资源 */
+@media (max-width: 768px), (prefers-reduced-transparency: reduce) {
+  .nav, .hero-sticker, .btn-white, .marquee,
+  .source-card, .app-card, .modal-step, .modal-overlay, .modal {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .nav { background: rgba(255, 255, 255, 0.92); }
+  .hero-sticker, .btn-white, .source-card, .app-card, .modal-step { background: rgba(255, 255, 255, 0.88); }
+  .modal-overlay { background: rgba(30, 27, 75, 0.48); }
+  .modal { background: rgba(255, 255, 255, 0.96); }
+}
+
 </style>
 
 </head>
@@ -1152,34 +1166,83 @@ function renderSources() {
   });
 })();
 
-/* 教程图按需加载：弹窗首次打开时才注入图片地址，避免一次性请求 33 张 */
-const TUT_LOADED = new WeakSet();
-function loadTutorialImages(modal, onlyFirst) {
-  const imgs = modal.querySelectorAll('img.tut-img[data-src]');
-  imgs.forEach((img, idx) => {
-    if (onlyFirst && idx > 0) return;
-    if (img.dataset.loading) return;
-    img.dataset.loading = '1';
-    const wrap = document.createElement('div');
+/* 教程图：首图优先，其余接近可视区域时再下载与解码 */
+const TUT_STATES = new WeakMap();
+
+function tutorialWrap(img) {
+  let wrap = img.closest('.tut-img-wrap');
+  if (!wrap) {
+    wrap = document.createElement('div');
     wrap.className = 'tut-img-wrap';
     img.parentNode.insertBefore(wrap, img);
     wrap.appendChild(img);
-    const done = () => {
-      wrap.classList.add('is-done');
-      // 按图片实际宽高比分流：竖屏铺满宽度，横屏限高居中
-      const portrait = img.naturalHeight > img.naturalWidth;
-      wrap.classList.add(portrait ? 'is-portrait' : 'is-landscape');
-      img.removeAttribute('data-loading');
-      img.removeAttribute('data-src');
-    };
-    img.addEventListener('load', done, { once: true });
-    img.addEventListener('error', () => {
-      wrap.classList.add('is-done');
-      img.removeAttribute('data-loading');
-      wrap.innerHTML = '<div class="img-fallback">📷 图片加载失败</div>';
-    }, { once: true });
-    img.src = img.dataset.src;
+  }
+  return wrap;
+}
+
+function loadTutorialImage(img) {
+  if (!img.dataset.src || img.dataset.loading === '1' || img.getAttribute('src')) return;
+  const wrap = tutorialWrap(img);
+  img.dataset.loading = '1';
+  img.loading = 'lazy';
+  img.hidden = false;
+  img.onload = () => {
+    wrap.classList.add('is-done');
+    wrap.classList.toggle('is-portrait', img.naturalHeight > img.naturalWidth);
+    wrap.classList.toggle('is-landscape', img.naturalWidth >= img.naturalHeight);
+    delete img.dataset.loading;
+  };
+  img.onerror = () => {
+    wrap.classList.add('is-done');
+    delete img.dataset.loading;
+    img.hidden = true;
+    if (!wrap.querySelector('.img-fallback')) {
+      wrap.insertAdjacentHTML('beforeend', '<div class="img-fallback">📷 图片加载失败</div>');
+    }
+  };
+  img.src = img.dataset.src;
+}
+
+function prepareTutorialImages(modal) {
+  const imgs = [...modal.querySelectorAll('img.tut-img[data-src]')];
+  if (!imgs.length) return;
+  TUT_STATES.get(modal)?.observer?.disconnect();
+  const root = modal.querySelector('.modal-scroll');
+  const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          loadTutorialImage(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { root, rootMargin: '320px 0px' })
+    : null;
+  imgs.slice(1).forEach(img => observer ? observer.observe(img) : loadTutorialImage(img));
+  loadTutorialImage(imgs[0]);
+  TUT_STATES.set(modal, { observer });
+}
+
+function releaseTutorialImages(modal) {
+  TUT_STATES.get(modal)?.observer?.disconnect();
+  TUT_STATES.delete(modal);
+  modal.querySelectorAll('img.tut-img[data-src]').forEach(img => {
+    img.onload = null;
+    img.onerror = null;
+    img.removeAttribute('src');
+    img.hidden = false;
+    delete img.dataset.loading;
+    const wrap = img.closest('.tut-img-wrap');
+    if (wrap) {
+      wrap.classList.remove('is-done', 'is-portrait', 'is-landscape');
+      wrap.querySelector('.img-fallback')?.remove();
+    }
   });
+}
+
+function closeTutorialModal(overlay) {
+  overlay.classList.remove('open');
+  releaseTutorialImages(overlay);
+  document.body.style.overflow = '';
 }
 
 document.querySelectorAll('[data-modal]').forEach(btn => {
@@ -1189,31 +1252,24 @@ document.querySelectorAll('[data-modal]').forEach(btn => {
     if (!modal) return;
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (!TUT_LOADED.has(modal)) {
-      TUT_LOADED.add(modal);
-      loadTutorialImages(modal, false);   // 首次打开：全部注入
-      // 首屏优先：先让第 1 张立即解码
-      const first = modal.querySelector('img.tut-img[data-src]');
-      if (first) first.loading = 'eager';
-    }
+    prepareTutorialImages(modal);
   });
 });
 document.querySelectorAll('[data-close-modal]').forEach(btn => {
   btn.addEventListener('click', () => {
     const overlay = btn.closest('.modal-overlay');
-    if (overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+    if (overlay) closeTutorialModal(overlay);
   });
 });
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', e => {
-    if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+    if (e.target === overlay) closeTutorialModal(overlay);
   });
 });
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    const opened = document.querySelectorAll('.modal-overlay.open');
-    if (opened.length) { opened.forEach(o => o.classList.remove('open')); document.body.style.overflow = ''; }
+    document.querySelectorAll('.modal-overlay.open').forEach(closeTutorialModal);
   }
 });
 
@@ -1382,14 +1438,23 @@ function renderAll() {
   renderSources();
 }
 
-async function loadData() {
-  let providers = null;
-  try {
-    const a = await fetch('data.json').then(r => r.json()).catch(() => null);
-    providers = a?.providers?.length ? a.providers : null;
-  } catch (e) { /* file:// 等环境 */ }
-  sourcesData = providers || EMBEDDED_PROVIDERS;
+function loadData() {
+  // 首屏立即用内嵌数据渲染，网络慢时不再让接口区空白。
+  sourcesData = EMBEDDED_PROVIDERS;
   renderAll();
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 3500);
+  fetch('data.json', { signal: ctrl.signal })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data?.providers?.length) {
+        sourcesData = data.providers;
+        renderAll();
+      }
+    })
+    .catch(() => { /* 内嵌数据已显示，无需额外处理 */ })
+    .finally(() => clearTimeout(timer));
 }
 
 // 内嵌数据由构建脚本注入下方；先渲染再加载
