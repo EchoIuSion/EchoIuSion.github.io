@@ -317,6 +317,10 @@ body::before {
   background: linear-gradient(135deg, #f59e0b, #ef4444);
   box-shadow: 0 6px 16px rgba(239, 68, 68, 0.28);
 }
+.app-badge.muted {
+  background: linear-gradient(135deg, #64748b, #475569);
+  box-shadow: 0 6px 16px rgba(71, 85, 105, 0.24);
+}
 .app-card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .app-cta {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -863,7 +867,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
         <div class="app-card-header">
           <div class="app-icon">🎬</div>
           <div>
-            <h3>OK影视 APP</h3>
+            <h3>OK影视 APP<span class="app-badge muted">已停更 暂不推荐</span></h3>
             <div class="sub">电视端 / 手机端 双端支持</div>
           </div>
         </div>
@@ -908,7 +912,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
         <div class="app-card-header">
           <div class="app-icon">📦</div>
           <div>
-            <h3>NewBox APP</h3>
+            <h3>NewBox APP<span class="app-badge">手机端推荐使用</span></h3>
             <div class="sub">全新盒子 · 电视端 / 手机端</div>
           </div>
         </div>
