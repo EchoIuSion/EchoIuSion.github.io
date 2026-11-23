@@ -309,6 +309,14 @@ body::before {
 }
 .app-card-header h3 { font-size: 0.99rem; font-weight: 800; color: var(--t1); letter-spacing: -0.01em; }
 .app-card-header .sub { font-size: 0.75rem; color: var(--t2); margin-top: 2px; line-height: 1.4; }
+.app-badge {
+  display: inline-block; vertical-align: middle;
+  margin-left: 7px; padding: 2px 9px; border-radius: 999px;
+  font-size: 0.66rem; font-weight: 800; letter-spacing: 0.02em;
+  color: #fff; white-space: nowrap;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.28);
+}
 .app-card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .app-cta {
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -882,7 +890,7 @@ a, button, .source-link, .guide-cta-card, .app-cta, .btn {
         <div class="app-card-header">
           <div class="app-icon">🍿</div>
           <div>
-            <h3>刘OK影视 APP</h3>
+            <h3>刘OK影视 APP<span class="app-badge">电视端推荐使用</span></h3>
             <div class="sub">电视端</div>
           </div>
         </div>
